@@ -20,6 +20,7 @@ Créer :
 - Son ou ses points de retraits
 - Recherche les autres Artisans de son secteur d'activité / proche de sa localisation Carte interactive
 
+
 CARTE INTERACTIVE
 Carte de France Maison
 Carte Région Maison
