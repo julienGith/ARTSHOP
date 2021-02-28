@@ -1,0 +1,26 @@
+PARTENAIRE CLIENT
+Recherche par :
+- Localisation boutique / Carte interactive
+- Localisation point de retrait
+- Produit
+- Croisée localisation / produit 
+
+Achat :
+- Tous moyens de paiement
+- Sauvegarde carte banquaire
+- Historique commande
+- Sauvegarde panier en cours
+
+Page d'acceuil personnalisée par localisation / produit acheté
+
+PARTENAIRE ARTISAN
+Créer :
+- Sa ou ses Boutiques page de présentation image/texte/vidéo
+- Ajoute des produits image/texte/vidéo
+- Son ou ses points de retraits
+- Recherche les autres Artisans de son secteur d'activité / proche de sa localisation Carte interactive
+
+CARTE INTERACTIVE
+Carte de France Maison
+Carte Région Maison
+Carte département Open street Map
