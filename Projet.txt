@@ -1,0 +1,19 @@
+Plateforme web dédié aux Artisans FR
+
+Permet à minima une présence sur internet de l'Artisan.
+L'argent est collecté sur les ventes et sur un abonnement variable.
+L'argent collecté paye les frais du site dont mon salaire. Une autre partie est sauvegardée.
+
+
+Permet le "click and collect" avec collaboration de plusieurs artisans sur un même point de collecte.
+
+
+Les Artisans peuvent faire partie d'un comité.
+Le comité gère l'argent sauvegardé.
+Le comité pourra voter pour ou contre l'augmentation de ma paie. 
+Le comité est tiré au sort parmis les Artisans qui veulent en être membre.
+L'argent sauvegardé : 
+- aide direct d'un ou plusieurs Artisans.
+- dévelopement des points de retraits (bye bye les grandes surfaces)
+- dévelopement de la logistique 
+- dévelopement des action commerciales : la pub, les promos (on fait une promo mais les artisans gagnent la même somme), 
