@@ -1,0 +1,31 @@
+
+--compte
+le partenaire peut créer un compte en renseignant :
+- son e-mail
+- son pseudo
+- son mot de passe
+les autres infos sont prises lors de sa première commande ou création de Boutique
+
+Panier
+Historique commandes client/artisan
+Facture pdf
+
+--Boutique
+Présentation de la boutique
+- Point relais
+l'artisan peut proposer des points relais pour le retrait des commandes.
+- Produits
+l'artisan choisi le ou les modes de livraisons de ses produits
+
+--Recherche
+
+- Par type d'activité
+- Par catégorie sous catégorie
+- Moteur de recherche
+- Par produit avec un rabais
+
+Carte de france intéractive
+- Par proximité géographique >> voir les boutiques près de chez moi
+- par point retrait >> voir les boutique rattachée à un point de retrait
+
+
