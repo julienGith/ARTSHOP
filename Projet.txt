@@ -16,4 +16,5 @@ L'argent sauvegardé :
 - aide direct d'un ou plusieurs Artisans.
 - dévelopement des points de retraits (bye bye les grandes surfaces)
 - dévelopement de la logistique 
-- dévelopement des action commerciales : la pub, les promos (on fait une promo mais les artisans gagnent la même somme), 
+- dévelopement des action commerciales : la pub, les promos (on fait une promo mais les artisans gagnent la même somme)
+- embauche : agent d'aide à l'informatisation des artisans, commercial 
