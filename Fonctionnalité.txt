@@ -9,7 +9,7 @@ Achat :
 - Tous moyens de paiement
 - Sauvegarde carte banquaire
 - Historique commande
-- Sauvegarde panier en cours
+- Sauvegarde panier en cours via session
 
 Page d'acceuil personnalisée par localisation / produit acheté
 
