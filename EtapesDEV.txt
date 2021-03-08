@@ -1,0 +1,6 @@
+Mettre en place l'authentification
+intégre identy avec la bdd
+mettre en place sendgrid pour la confirmation mail
+personnaliser le menu en fonction du type d'utilisateur
+créer un jeu de données
+créer les pages/controleurs
