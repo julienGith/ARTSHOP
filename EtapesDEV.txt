@@ -6,9 +6,43 @@ intégrer identity avec la bdd
 scafold de la bdd
 update avec identity
 relier aspnetusers à la bdd
+ou faire un identity custom dans la bdd 
+https://www.youtube.com/watch?v=GblxFZpR10w
+
+1 scafold la bdd
+je rajoute les héritages identity
+
 
 
 mettre en place sendgrid pour la confirmation mail
 personnaliser le menu en fonction du type d'utilisateur
 créer un jeu de données
+
+
 créer les pages/controleurs
+
+
+2)Controleurs / Vues/pages
+
+-- Acceuil > Gallerie de vignettes boutiques / Gallerie Vignettes produits 
+Main menu / Catégories menu / moteur de recherche
+
+-- recherche produit
+Main menu / Catégories menu / moteur de recherche
+
+-- Panier
+
+-- Création de compte
+
+-- Mon compte
+Commande en cours / Historique commandes
+Bouton créer ma boutique
+
+-- Creation d'une Boutique
+
+-- Ajout/Edition/Suppression de produits 
+menu principal ++ item Ma boutique accès sécurisé
+
+-- Admin
+menu principal ++ item Administration accès sécurisé
+CRUD de compte / boutique / produit
