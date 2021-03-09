@@ -1,5 +1,13 @@
-Mettre en place l'authentification
-intégre identy avec la bdd
+1)Mettre en place l'authentification
+
+
+
+intégrer identity avec la bdd
+scafold de la bdd
+update avec identity
+relier aspnetusers à la bdd
+
+
 mettre en place sendgrid pour la confirmation mail
 personnaliser le menu en fonction du type d'utilisateur
 créer un jeu de données
