@@ -1,5 +1,11 @@
-Système d'authentification
+--Système d'authentification
+Type d'utilisateur :
+Vendeur Full CRUD sur ses boutiques
+Client
+Admin Départemental / Régionnal Full CRUD / ou partial CRUD
+SuperAdmin
 
+système de RMA > return merchandise authorization
 
 PARTENAIRE CLIENT
 Recherche par :
