@@ -1,0 +1,1 @@
+Scaffold-DbContext "Server=.\;Database=ARTSHOP;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir ModelsFull
