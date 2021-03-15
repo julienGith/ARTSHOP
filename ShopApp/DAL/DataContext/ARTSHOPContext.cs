@@ -9,7 +9,7 @@ namespace DAL.Entities
 {
     public partial class ARTSHOPContext : DbContext
     {
-        AppConfiguration appConfiguration = new AppConfiguration();
+        private readonly AppConfiguration _appConfiguration;
         public ARTSHOPContext()
         {
         }
@@ -57,7 +57,7 @@ namespace DAL.Entities
             
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(appConfiguration.SqlConnectionString);
+                optionsBuilder.UseSqlServer(_appConfiguration.SqlConnectionString);
             }
         }
 
