@@ -8296,14 +8296,16 @@ DAT 1615730304</a:History>
 </o:Column>
 <o:Column Id="o470">
 <a:ObjectID>46374EA6-CB8D-4F58-9F59-6B7C2A036AB6</a:ObjectID>
-<a:Name>Cat_CatégorieID</a:Name>
-<a:Code>CAT_CATEGORIEID</a:Code>
+<a:Name>Cat_ParentID</a:Name>
+<a:Code>CAT_PARENTID</a:Code>
 <a:CreationDate>1615730304</a:CreationDate>
 <a:Creator>perso</a:Creator>
-<a:ModificationDate>1615730304</a:ModificationDate>
+<a:ModificationDate>1615733282</a:ModificationDate>
 <a:Modifier>perso</a:Modifier>
 <a:History>ORG {95C0D093-F364-4F69-B5F3-F0709176D419},{93740FC6-BE9B-445C-B820-D1B720B6881E}
-DAT 1615730304</a:History>
+DAT 1615730304
+ATT NAME
+ATT CODE</a:History>
 <a:DataType>int</a:DataType>
 <a:Column.Mandatory>1</a:Column.Mandatory>
 <a:AutoMigrated>1</a:AutoMigrated>
@@ -12182,7 +12184,7 @@ DAT 1615730304</a:History>
 <a:Code>ARTSHOPMCD</a:Code>
 <a:CreationDate>1615730304</a:CreationDate>
 <a:Creator>perso</a:Creator>
-<a:ModificationDate>1615730304</a:ModificationDate>
+<a:ModificationDate>1615732378</a:ModificationDate>
 <a:Modifier>perso</a:Modifier>
 <a:TargetModelURL>file:///C|/ARTSHOP/ARTSHOPMCD5.mcd</a:TargetModelURL>
 <a:TargetModelID>AF2BB36B-5E52-4385-AD27-8F40589E27DF</a:TargetModelID>

@@ -1,29 +1,8 @@
 /*==============================================================*/
 /* Nom de SGBD :  Microsoft SQL Server 2016                     */
-/* Date de création :  14/03/2021 16:40:38                      */
+/* Date de création :  15/03/2021 14:18:40                      */
 /*==============================================================*/
 
-
-if exists (select 1
-   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('AVIS') and o.name = 'FK_AVIS_AVIS_PRODUIT')
-alter table AVIS
-   drop constraint FK_AVIS_AVIS_PRODUIT
-go
-
-if exists (select 1
-   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('AVIS') and o.name = 'FK_AVIS_AVIS2_PARTENAI')
-alter table AVIS
-   drop constraint FK_AVIS_AVIS2_PARTENAI
-go
-
-if exists (select 1
-   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('AVIS') and o.name = 'FK_AVIS_AVIS3_BOUTIQUE')
-alter table AVIS
-   drop constraint FK_AVIS_AVIS3_BOUTIQUE
-go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
@@ -41,9 +20,65 @@ go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('CATNAV') and o.name = 'FK_CATNAV_REGROUPER_CATEGORI')
-alter table CATNAV
-   drop constraint FK_CATNAV_REGROUPER_CATEGORI
+   where r.fkeyid = object_id('BOUTIQUECOMMANDE') and o.name = 'FK_BOUTIQUE_ASSOCIER_CLIENTCO')
+alter table BOUTIQUECOMMANDE
+   drop constraint FK_BOUTIQUE_ASSOCIER_CLIENTCO
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('BOUTIQUECOMMANDE') and o.name = 'FK_BOUTIQUE_COMPRENDR_CMDETAT')
+alter table BOUTIQUECOMMANDE
+   drop constraint FK_BOUTIQUE_COMPRENDR_CMDETAT
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('BOUTIQUECOMMANDE') and o.name = 'FK_BOUTIQUE_ENGENDRER_LITIGE')
+alter table BOUTIQUECOMMANDE
+   drop constraint FK_BOUTIQUE_ENGENDRER_LITIGE
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('BOUTIQUECOMMANDE') and o.name = 'FK_BOUTIQUE_RECEVOIR_BOUTIQUE')
+alter table BOUTIQUECOMMANDE
+   drop constraint FK_BOUTIQUE_RECEVOIR_BOUTIQUE
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('BTQCMDDETAIL') and o.name = 'FK_BTQCMDDE_COMPORTER_BOUTIQUE')
+alter table BTQCMDDETAIL
+   drop constraint FK_BTQCMDDE_COMPORTER_BOUTIQUE
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('BTQCMDDETAIL') and o.name = 'FK_BTQCMDDE_COMPORTER_PRODUIT')
+alter table BTQCMDDETAIL
+   drop constraint FK_BTQCMDDE_COMPORTER_PRODUIT
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('BTQCMDDETAIL') and o.name = 'FK_BTQCMDDE_COMPORTER_LIVRAISO')
+alter table BTQCMDDETAIL
+   drop constraint FK_BTQCMDDE_COMPORTER_LIVRAISO
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('BTQPOSTE') and o.name = 'FK_BTQPOSTE_PROPOSER_BOUTIQUE')
+alter table BTQPOSTE
+   drop constraint FK_BTQPOSTE_PROPOSER_BOUTIQUE
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('BTQPOSTE') and o.name = 'FK_BTQPOSTE_PROPOSER2_LOCALISA')
+alter table BTQPOSTE
+   drop constraint FK_BTQPOSTE_PROPOSER2_LOCALISA
 go
 
 if exists (select 1
@@ -55,100 +90,58 @@ go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('CMDBTQDETAIL') and o.name = 'FK_CMDBTQDE_COMPORTER_COMMANDE')
-alter table CMDBTQDETAIL
-   drop constraint FK_CMDBTQDE_COMPORTER_COMMANDE
+   where r.fkeyid = object_id('CATNAV') and o.name = 'FK_CATNAV_REGROUPER_CATEGORI')
+alter table CATNAV
+   drop constraint FK_CATNAV_REGROUPER_CATEGORI
 go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('CMDBTQDETAIL') and o.name = 'FK_CMDBTQDE_COMPORTER_PRODUIT')
-alter table CMDBTQDETAIL
-   drop constraint FK_CMDBTQDE_COMPORTER_PRODUIT
+   where r.fkeyid = object_id('CLIENTCOMMANDE') and o.name = 'FK_CLIENTCO_DETENIR_CMDETAT')
+alter table CLIENTCOMMANDE
+   drop constraint FK_CLIENTCO_DETENIR_CMDETAT
 go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('CMDBTQDETAIL') and o.name = 'FK_CMDBTQDE_COMPORTER_LIVRAISO')
-alter table CMDBTQDETAIL
-   drop constraint FK_CMDBTQDE_COMPORTER_LIVRAISO
+   where r.fkeyid = object_id('CLIENTCOMMANDE') and o.name = 'FK_CLIENTCO_GENERER2_FACTURE')
+alter table CLIENTCOMMANDE
+   drop constraint FK_CLIENTCO_GENERER2_FACTURE
 go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('CMDCLTDETAIL') and o.name = 'FK_CMDCLTDE_LISTER_COMMANDE')
-alter table CMDCLTDETAIL
-   drop constraint FK_CMDCLTDE_LISTER_COMMANDE
+   where r.fkeyid = object_id('CLIENTCOMMANDE') and o.name = 'FK_CLIENTCO_PASSER_PARTENAI')
+alter table CLIENTCOMMANDE
+   drop constraint FK_CLIENTCO_PASSER_PARTENAI
 go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('CMDCLTDETAIL') and o.name = 'FK_CMDCLTDE_LISTER2_PRODUIT')
-alter table CMDCLTDETAIL
-   drop constraint FK_CMDCLTDE_LISTER2_PRODUIT
+   where r.fkeyid = object_id('CLIENTCOMMANDE') and o.name = 'FK_CLIENTCO_PRENDRE2_PAIEMENT')
+alter table CLIENTCOMMANDE
+   drop constraint FK_CLIENTCO_PRENDRE2_PAIEMENT
 go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('CMDCLTDETAIL') and o.name = 'FK_CMDCLTDE_LISTER3_LIVRAISO')
-alter table CMDCLTDETAIL
-   drop constraint FK_CMDCLTDE_LISTER3_LIVRAISO
+   where r.fkeyid = object_id('CLTCMDDETAIL') and o.name = 'FK_CLTCMDDE_LISTER_CLIENTCO')
+alter table CLTCMDDETAIL
+   drop constraint FK_CLTCMDDE_LISTER_CLIENTCO
 go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('COMMANDEBOUTIQUE') and o.name = 'FK_COMMANDE_ASSOCIER_COMMANDE')
-alter table COMMANDEBOUTIQUE
-   drop constraint FK_COMMANDE_ASSOCIER_COMMANDE
+   where r.fkeyid = object_id('CLTCMDDETAIL') and o.name = 'FK_CLTCMDDE_LISTER2_PRODUIT')
+alter table CLTCMDDETAIL
+   drop constraint FK_CLTCMDDE_LISTER2_PRODUIT
 go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('COMMANDEBOUTIQUE') and o.name = 'FK_COMMANDE_COMPRENDR_ETATCMD')
-alter table COMMANDEBOUTIQUE
-   drop constraint FK_COMMANDE_COMPRENDR_ETATCMD
-go
-
-if exists (select 1
-   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('COMMANDEBOUTIQUE') and o.name = 'FK_COMMANDE_ENGENDRER_LITIGE')
-alter table COMMANDEBOUTIQUE
-   drop constraint FK_COMMANDE_ENGENDRER_LITIGE
-go
-
-if exists (select 1
-   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('COMMANDEBOUTIQUE') and o.name = 'FK_COMMANDE_RECEVOIR_BOUTIQUE')
-alter table COMMANDEBOUTIQUE
-   drop constraint FK_COMMANDE_RECEVOIR_BOUTIQUE
-go
-
-if exists (select 1
-   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('COMMANDECLIENT') and o.name = 'FK_COMMANDE_DETENIR_ETATCMD')
-alter table COMMANDECLIENT
-   drop constraint FK_COMMANDE_DETENIR_ETATCMD
-go
-
-if exists (select 1
-   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('COMMANDECLIENT') and o.name = 'FK_COMMANDE_GENERER2_FACTURE')
-alter table COMMANDECLIENT
-   drop constraint FK_COMMANDE_GENERER2_FACTURE
-go
-
-if exists (select 1
-   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('COMMANDECLIENT') and o.name = 'FK_COMMANDE_PASSER_PARTENAI')
-alter table COMMANDECLIENT
-   drop constraint FK_COMMANDE_PASSER_PARTENAI
-go
-
-if exists (select 1
-   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('COMMANDECLIENT') and o.name = 'FK_COMMANDE_PRENDRE2_PAIEMENT')
-alter table COMMANDECLIENT
-   drop constraint FK_COMMANDE_PRENDRE2_PAIEMENT
+   where r.fkeyid = object_id('CLTCMDDETAIL') and o.name = 'FK_CLTCMDDE_LISTER3_LIVRAISO')
+alter table CLTCMDDETAIL
+   drop constraint FK_CLTCMDDE_LISTER3_LIVRAISO
 go
 
 if exists (select 1
@@ -174,9 +167,9 @@ go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('FACTURE') and o.name = 'FK_FACTURE_GENERER_COMMANDE')
+   where r.fkeyid = object_id('FACTURE') and o.name = 'FK_FACTURE_GENERER_CLIENTCO')
 alter table FACTURE
-   drop constraint FK_FACTURE_GENERER_COMMANDE
+   drop constraint FK_FACTURE_GENERER_CLIENTCO
 go
 
 if exists (select 1
@@ -202,9 +195,9 @@ go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('LITIGE') and o.name = 'FK_LITIGE_ENGENDRER_COMMANDE')
+   where r.fkeyid = object_id('LITIGE') and o.name = 'FK_LITIGE_ENGENDRER_BOUTIQUE')
 alter table LITIGE
-   drop constraint FK_LITIGE_ENGENDRER_COMMANDE
+   drop constraint FK_LITIGE_ENGENDRER_BOUTIQUE
 go
 
 if exists (select 1
@@ -279,9 +272,30 @@ go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('PAIEMENT') and o.name = 'FK_PAIEMENT_PRENDRE_COMMANDE')
+   where r.fkeyid = object_id('OPINION') and o.name = 'FK_OPINION_AVIS_PRODUIT')
+alter table OPINION
+   drop constraint FK_OPINION_AVIS_PRODUIT
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('OPINION') and o.name = 'FK_OPINION_AVIS2_PARTENAI')
+alter table OPINION
+   drop constraint FK_OPINION_AVIS2_PARTENAI
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('OPINION') and o.name = 'FK_OPINION_AVIS3_BOUTIQUE')
+alter table OPINION
+   drop constraint FK_OPINION_AVIS3_BOUTIQUE
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('PAIEMENT') and o.name = 'FK_PAIEMENT_PRENDRE_CLIENTCO')
 alter table PAIEMENT
-   drop constraint FK_PAIEMENT_PRENDRE_COMMANDE
+   drop constraint FK_PAIEMENT_PRENDRE_CLIENTCO
 go
 
 if exists (select 1
@@ -293,20 +307,6 @@ go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('PANDETAIL') and o.name = 'FK_PANDETAI_CONTENIR_PANIER')
-alter table PANDETAIL
-   drop constraint FK_PANDETAI_CONTENIR_PANIER
-go
-
-if exists (select 1
-   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('PANDETAIL') and o.name = 'FK_PANDETAI_CONTENIR2_PRODUIT')
-alter table PANDETAIL
-   drop constraint FK_PANDETAI_CONTENIR2_PRODUIT
-go
-
-if exists (select 1
-   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
    where r.fkeyid = object_id('PANIER') and o.name = 'FK_PANIER_DISPOSER_PARTENAI')
 alter table PANIER
    drop constraint FK_PANIER_DISPOSER_PARTENAI
@@ -314,23 +314,23 @@ go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('PANIERDETAIL') and o.name = 'FK_PANIERDE_CONTENIR_PANIER')
+alter table PANIERDETAIL
+   drop constraint FK_PANIERDE_CONTENIR_PANIER
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('PANIERDETAIL') and o.name = 'FK_PANIERDE_CONTENIR2_PRODUIT')
+alter table PANIERDETAIL
+   drop constraint FK_PANIERDE_CONTENIR2_PRODUIT
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
    where r.fkeyid = object_id('PARTENAIRE') and o.name = 'FK_PARTENAI_DISPOSER2_PANIER')
 alter table PARTENAIRE
    drop constraint FK_PARTENAI_DISPOSER2_PANIER
-go
-
-if exists (select 1
-   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('POINTRELAIS') and o.name = 'FK_POINTREL_PROPOSER_BOUTIQUE')
-alter table POINTRELAIS
-   drop constraint FK_POINTREL_PROPOSER_BOUTIQUE
-go
-
-if exists (select 1
-   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('POINTRELAIS') and o.name = 'FK_POINTREL_PROPOSER2_LOCALISA')
-alter table POINTRELAIS
-   drop constraint FK_POINTREL_PROPOSER2_LOCALISA
 go
 
 if exists (select 1
@@ -398,40 +398,6 @@ go
 
 if exists (select 1
             from  sysindexes
-           where  id    = object_id('AVIS')
-            and   name  = 'AVIS3_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index AVIS.AVIS3_FK
-go
-
-if exists (select 1
-            from  sysindexes
-           where  id    = object_id('AVIS')
-            and   name  = 'AVIS2_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index AVIS.AVIS2_FK
-go
-
-if exists (select 1
-            from  sysindexes
-           where  id    = object_id('AVIS')
-            and   name  = 'AVIS_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index AVIS.AVIS_FK
-go
-
-if exists (select 1
-            from  sysobjects
-           where  id = object_id('AVIS')
-            and   type = 'U')
-   drop table AVIS
-go
-
-if exists (select 1
-            from  sysindexes
            where  id    = object_id('BOUTIQUE')
             and   name  = 'CREER_FK'
             and   indid > 0
@@ -453,6 +419,108 @@ if exists (select 1
            where  id = object_id('BOUTIQUE')
             and   type = 'U')
    drop table BOUTIQUE
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('BOUTIQUECOMMANDE')
+            and   name  = 'ENGENDRER2_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index BOUTIQUECOMMANDE.ENGENDRER2_FK
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('BOUTIQUECOMMANDE')
+            and   name  = 'COMPRENDRE_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index BOUTIQUECOMMANDE.COMPRENDRE_FK
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('BOUTIQUECOMMANDE')
+            and   name  = 'ASSOCIER_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index BOUTIQUECOMMANDE.ASSOCIER_FK
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('BOUTIQUECOMMANDE')
+            and   name  = 'RECEVOIR_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index BOUTIQUECOMMANDE.RECEVOIR_FK
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('BOUTIQUECOMMANDE')
+            and   type = 'U')
+   drop table BOUTIQUECOMMANDE
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('BTQCMDDETAIL')
+            and   name  = 'COMPORTER3_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index BTQCMDDETAIL.COMPORTER3_FK
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('BTQCMDDETAIL')
+            and   name  = 'COMPORTER2_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index BTQCMDDETAIL.COMPORTER2_FK
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('BTQCMDDETAIL')
+            and   name  = 'COMPORTER_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index BTQCMDDETAIL.COMPORTER_FK
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('BTQCMDDETAIL')
+            and   type = 'U')
+   drop table BTQCMDDETAIL
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('BTQPOSTE')
+            and   name  = 'PROPOSER2_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index BTQPOSTE.PROPOSER2_FK
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('BTQPOSTE')
+            and   name  = 'PROPOSER_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index BTQPOSTE.PROPOSER_FK
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('BTQPOSTE')
+            and   type = 'U')
+   drop table BTQPOSTE
 go
 
 if exists (select 1
@@ -496,156 +564,86 @@ go
 
 if exists (select 1
             from  sysindexes
-           where  id    = object_id('CMDBTQDETAIL')
-            and   name  = 'COMPORTER3_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index CMDBTQDETAIL.COMPORTER3_FK
-go
-
-if exists (select 1
-            from  sysindexes
-           where  id    = object_id('CMDBTQDETAIL')
-            and   name  = 'COMPORTER2_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index CMDBTQDETAIL.COMPORTER2_FK
-go
-
-if exists (select 1
-            from  sysindexes
-           where  id    = object_id('CMDBTQDETAIL')
-            and   name  = 'COMPORTER_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index CMDBTQDETAIL.COMPORTER_FK
-go
-
-if exists (select 1
-            from  sysobjects
-           where  id = object_id('CMDBTQDETAIL')
-            and   type = 'U')
-   drop table CMDBTQDETAIL
-go
-
-if exists (select 1
-            from  sysindexes
-           where  id    = object_id('CMDCLTDETAIL')
-            and   name  = 'LISTER3_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index CMDCLTDETAIL.LISTER3_FK
-go
-
-if exists (select 1
-            from  sysindexes
-           where  id    = object_id('CMDCLTDETAIL')
-            and   name  = 'LISTER2_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index CMDCLTDETAIL.LISTER2_FK
-go
-
-if exists (select 1
-            from  sysindexes
-           where  id    = object_id('CMDCLTDETAIL')
-            and   name  = 'LISTER_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index CMDCLTDETAIL.LISTER_FK
-go
-
-if exists (select 1
-            from  sysobjects
-           where  id = object_id('CMDCLTDETAIL')
-            and   type = 'U')
-   drop table CMDCLTDETAIL
-go
-
-if exists (select 1
-            from  sysindexes
-           where  id    = object_id('COMMANDEBOUTIQUE')
-            and   name  = 'ENGENDRER2_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index COMMANDEBOUTIQUE.ENGENDRER2_FK
-go
-
-if exists (select 1
-            from  sysindexes
-           where  id    = object_id('COMMANDEBOUTIQUE')
-            and   name  = 'COMPRENDRE_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index COMMANDEBOUTIQUE.COMPRENDRE_FK
-go
-
-if exists (select 1
-            from  sysindexes
-           where  id    = object_id('COMMANDEBOUTIQUE')
-            and   name  = 'ASSOCIER_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index COMMANDEBOUTIQUE.ASSOCIER_FK
-go
-
-if exists (select 1
-            from  sysindexes
-           where  id    = object_id('COMMANDEBOUTIQUE')
-            and   name  = 'RECEVOIR_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index COMMANDEBOUTIQUE.RECEVOIR_FK
-go
-
-if exists (select 1
-            from  sysobjects
-           where  id = object_id('COMMANDEBOUTIQUE')
-            and   type = 'U')
-   drop table COMMANDEBOUTIQUE
-go
-
-if exists (select 1
-            from  sysindexes
-           where  id    = object_id('COMMANDECLIENT')
+           where  id    = object_id('CLIENTCOMMANDE')
             and   name  = 'PRENDRE2_FK'
             and   indid > 0
             and   indid < 255)
-   drop index COMMANDECLIENT.PRENDRE2_FK
+   drop index CLIENTCOMMANDE.PRENDRE2_FK
 go
 
 if exists (select 1
             from  sysindexes
-           where  id    = object_id('COMMANDECLIENT')
+           where  id    = object_id('CLIENTCOMMANDE')
             and   name  = 'DETENIR_FK'
             and   indid > 0
             and   indid < 255)
-   drop index COMMANDECLIENT.DETENIR_FK
+   drop index CLIENTCOMMANDE.DETENIR_FK
 go
 
 if exists (select 1
             from  sysindexes
-           where  id    = object_id('COMMANDECLIENT')
+           where  id    = object_id('CLIENTCOMMANDE')
             and   name  = 'PASSER_FK'
             and   indid > 0
             and   indid < 255)
-   drop index COMMANDECLIENT.PASSER_FK
+   drop index CLIENTCOMMANDE.PASSER_FK
 go
 
 if exists (select 1
             from  sysindexes
-           where  id    = object_id('COMMANDECLIENT')
+           where  id    = object_id('CLIENTCOMMANDE')
             and   name  = 'GENERER2_FK'
             and   indid > 0
             and   indid < 255)
-   drop index COMMANDECLIENT.GENERER2_FK
+   drop index CLIENTCOMMANDE.GENERER2_FK
 go
 
 if exists (select 1
             from  sysobjects
-           where  id = object_id('COMMANDECLIENT')
+           where  id = object_id('CLIENTCOMMANDE')
             and   type = 'U')
-   drop table COMMANDECLIENT
+   drop table CLIENTCOMMANDE
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('CLTCMDDETAIL')
+            and   name  = 'LISTER3_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index CLTCMDDETAIL.LISTER3_FK
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('CLTCMDDETAIL')
+            and   name  = 'LISTER2_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index CLTCMDDETAIL.LISTER2_FK
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('CLTCMDDETAIL')
+            and   name  = 'LISTER_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index CLTCMDDETAIL.LISTER_FK
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('CLTCMDDETAIL')
+            and   type = 'U')
+   drop table CLTCMDDETAIL
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('CMDETAT')
+            and   type = 'U')
+   drop table CMDETAT
 go
 
 if exists (select 1
@@ -680,13 +678,6 @@ if exists (select 1
            where  id = object_id('ECHANGE')
             and   type = 'U')
    drop table ECHANGE
-go
-
-if exists (select 1
-            from  sysobjects
-           where  id = object_id('ETATCMD')
-            and   type = 'U')
-   drop table ETATCMD
 go
 
 if exists (select 1
@@ -889,6 +880,40 @@ go
 
 if exists (select 1
             from  sysindexes
+           where  id    = object_id('OPINION')
+            and   name  = 'AVIS3_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index OPINION.AVIS3_FK
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('OPINION')
+            and   name  = 'AVIS2_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index OPINION.AVIS2_FK
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('OPINION')
+            and   name  = 'AVIS_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index OPINION.AVIS_FK
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('OPINION')
+            and   type = 'U')
+   drop table OPINION
+go
+
+if exists (select 1
+            from  sysindexes
            where  id    = object_id('PAIEMENT')
             and   name  = 'PRENDRE_FK'
             and   indid > 0
@@ -914,31 +939,6 @@ go
 
 if exists (select 1
             from  sysindexes
-           where  id    = object_id('PANDETAIL')
-            and   name  = 'CONTENIR2_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index PANDETAIL.CONTENIR2_FK
-go
-
-if exists (select 1
-            from  sysindexes
-           where  id    = object_id('PANDETAIL')
-            and   name  = 'CONTENIR_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index PANDETAIL.CONTENIR_FK
-go
-
-if exists (select 1
-            from  sysobjects
-           where  id = object_id('PANDETAIL')
-            and   type = 'U')
-   drop table PANDETAIL
-go
-
-if exists (select 1
-            from  sysindexes
            where  id    = object_id('PANIER')
             and   name  = 'DISPOSER_FK'
             and   indid > 0
@@ -955,6 +955,31 @@ go
 
 if exists (select 1
             from  sysindexes
+           where  id    = object_id('PANIERDETAIL')
+            and   name  = 'CONTENIR2_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index PANIERDETAIL.CONTENIR2_FK
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('PANIERDETAIL')
+            and   name  = 'CONTENIR_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index PANIERDETAIL.CONTENIR_FK
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('PANIERDETAIL')
+            and   type = 'U')
+   drop table PANIERDETAIL
+go
+
+if exists (select 1
+            from  sysindexes
            where  id    = object_id('PARTENAIRE')
             and   name  = 'DISPOSER2_FK'
             and   indid > 0
@@ -967,31 +992,6 @@ if exists (select 1
            where  id = object_id('PARTENAIRE')
             and   type = 'U')
    drop table PARTENAIRE
-go
-
-if exists (select 1
-            from  sysindexes
-           where  id    = object_id('POINTRELAIS')
-            and   name  = 'PROPOSER2_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index POINTRELAIS.PROPOSER2_FK
-go
-
-if exists (select 1
-            from  sysindexes
-           where  id    = object_id('POINTRELAIS')
-            and   name  = 'PROPOSER_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index POINTRELAIS.PROPOSER_FK
-go
-
-if exists (select 1
-            from  sysobjects
-           where  id = object_id('POINTRELAIS')
-            and   type = 'U')
-   drop table POINTRELAIS
 go
 
 if exists (select 1
@@ -1125,52 +1125,6 @@ if exists (select 1
 go
 
 /*==============================================================*/
-/* Table : AVIS                                                 */
-/*==============================================================*/
-create table AVIS (
-   PRODID               int                  not null,
-   PARTENAIREID         int                  not null,
-   BTQID                int                  not null,
-   A_NOTE               smallint             null,
-   A_DATE               datetime             null,
-   A_TEXTE              nvarchar(255)        null,
-   A_REPONSE            nvarchar(255)        null,
-   A_REPDATE            datetime             null,
-   constraint PK_AVIS primary key (PRODID, PARTENAIREID, BTQID)
-)
-go
-
-/*==============================================================*/
-/* Index : AVIS_FK                                              */
-/*==============================================================*/
-
-
-
-
-create nonclustered index AVIS_FK on AVIS (PRODID ASC)
-go
-
-/*==============================================================*/
-/* Index : AVIS2_FK                                             */
-/*==============================================================*/
-
-
-
-
-create nonclustered index AVIS2_FK on AVIS (PARTENAIREID ASC)
-go
-
-/*==============================================================*/
-/* Index : AVIS3_FK                                             */
-/*==============================================================*/
-
-
-
-
-create nonclustered index AVIS3_FK on AVIS (BTQID ASC)
-go
-
-/*==============================================================*/
 /* Table : BOUTIQUE                                             */
 /*==============================================================*/
 create table BOUTIQUE (
@@ -1221,6 +1175,134 @@ go
 
 
 create nonclustered index CREER_FK on BOUTIQUE (PARTENAIREID ASC)
+go
+
+/*==============================================================*/
+/* Table : BOUTIQUECOMMANDE                                     */
+/*==============================================================*/
+create table BOUTIQUECOMMANDE (
+   BTQCMDID             int                  not null,
+   CMDETATID            int                  not null,
+   LITIGEID             int                  null,
+   CLTCMDID             int                  null,
+   BTQID                int                  not null,
+   BTQCMDDATECREA       datetime             null,
+   BTQCMDDATEDEBUT      datetime             null,
+   BTQCMDDATEFIN        datetime             null,
+   constraint PK_BOUTIQUECOMMANDE primary key (BTQCMDID)
+)
+go
+
+/*==============================================================*/
+/* Index : RECEVOIR_FK                                          */
+/*==============================================================*/
+
+
+
+
+create nonclustered index RECEVOIR_FK on BOUTIQUECOMMANDE (BTQID ASC)
+go
+
+/*==============================================================*/
+/* Index : ASSOCIER_FK                                          */
+/*==============================================================*/
+
+
+
+
+create nonclustered index ASSOCIER_FK on BOUTIQUECOMMANDE (CLTCMDID ASC)
+go
+
+/*==============================================================*/
+/* Index : COMPRENDRE_FK                                        */
+/*==============================================================*/
+
+
+
+
+create nonclustered index COMPRENDRE_FK on BOUTIQUECOMMANDE (CMDETATID ASC)
+go
+
+/*==============================================================*/
+/* Index : ENGENDRER2_FK                                        */
+/*==============================================================*/
+
+
+
+
+create nonclustered index ENGENDRER2_FK on BOUTIQUECOMMANDE (LITIGEID ASC)
+go
+
+/*==============================================================*/
+/* Table : BTQCMDDETAIL                                         */
+/*==============================================================*/
+create table BTQCMDDETAIL (
+   BTQCMDID             int                  not null,
+   PRODID               int                  not null,
+   LIVRAISONID          int                  not null,
+   B_CMD_QTEPROD        smallint             null,
+   constraint PK_BTQCMDDETAIL primary key (BTQCMDID, PRODID, LIVRAISONID)
+)
+go
+
+/*==============================================================*/
+/* Index : COMPORTER_FK                                         */
+/*==============================================================*/
+
+
+
+
+create nonclustered index COMPORTER_FK on BTQCMDDETAIL (BTQCMDID ASC)
+go
+
+/*==============================================================*/
+/* Index : COMPORTER2_FK                                        */
+/*==============================================================*/
+
+
+
+
+create nonclustered index COMPORTER2_FK on BTQCMDDETAIL (PRODID ASC)
+go
+
+/*==============================================================*/
+/* Index : COMPORTER3_FK                                        */
+/*==============================================================*/
+
+
+
+
+create nonclustered index COMPORTER3_FK on BTQCMDDETAIL (LIVRAISONID ASC)
+go
+
+/*==============================================================*/
+/* Table : BTQPOSTE                                             */
+/*==============================================================*/
+create table BTQPOSTE (
+   BTQID                int                  not null,
+   LOCALISATIONID       int                  not null,
+   constraint PK_BTQPOSTE primary key (BTQID, LOCALISATIONID)
+)
+go
+
+/*==============================================================*/
+/* Index : PROPOSER_FK                                          */
+/*==============================================================*/
+
+
+
+
+create nonclustered index PROPOSER_FK on BTQPOSTE (BTQID ASC)
+go
+
+/*==============================================================*/
+/* Index : PROPOSER2_FK                                         */
+/*==============================================================*/
+
+
+
+
+create nonclustered index PROPOSER2_FK on BTQPOSTE (LOCALISATIONID ASC)
 go
 
 /*==============================================================*/
@@ -1275,158 +1357,18 @@ create table CIVILITE (
 go
 
 /*==============================================================*/
-/* Table : CMDBTQDETAIL                                         */
+/* Table : CLIENTCOMMANDE                                       */
 /*==============================================================*/
-create table CMDBTQDETAIL (
-   CMDBTQID             int                  not null,
-   PRODID               int                  not null,
-   LIVRAISONID          int                  not null,
-   B_CMD_QTEPROD        smallint             null,
-   constraint PK_CMDBTQDETAIL primary key (CMDBTQID, PRODID, LIVRAISONID)
-)
-go
-
-/*==============================================================*/
-/* Index : COMPORTER_FK                                         */
-/*==============================================================*/
-
-
-
-
-create nonclustered index COMPORTER_FK on CMDBTQDETAIL (CMDBTQID ASC)
-go
-
-/*==============================================================*/
-/* Index : COMPORTER2_FK                                        */
-/*==============================================================*/
-
-
-
-
-create nonclustered index COMPORTER2_FK on CMDBTQDETAIL (PRODID ASC)
-go
-
-/*==============================================================*/
-/* Index : COMPORTER3_FK                                        */
-/*==============================================================*/
-
-
-
-
-create nonclustered index COMPORTER3_FK on CMDBTQDETAIL (LIVRAISONID ASC)
-go
-
-/*==============================================================*/
-/* Table : CMDCLTDETAIL                                         */
-/*==============================================================*/
-create table CMDCLTDETAIL (
-   CMDCLTID             int                  not null,
-   PRODID               int                  not null,
-   LIVRAISONID          int                  not null,
-   C_CMD_QTEPROD        smallint             null,
-   constraint PK_CMDCLTDETAIL primary key (CMDCLTID, PRODID, LIVRAISONID)
-)
-go
-
-/*==============================================================*/
-/* Index : LISTER_FK                                            */
-/*==============================================================*/
-
-
-
-
-create nonclustered index LISTER_FK on CMDCLTDETAIL (CMDCLTID ASC)
-go
-
-/*==============================================================*/
-/* Index : LISTER2_FK                                           */
-/*==============================================================*/
-
-
-
-
-create nonclustered index LISTER2_FK on CMDCLTDETAIL (PRODID ASC)
-go
-
-/*==============================================================*/
-/* Index : LISTER3_FK                                           */
-/*==============================================================*/
-
-
-
-
-create nonclustered index LISTER3_FK on CMDCLTDETAIL (LIVRAISONID ASC)
-go
-
-/*==============================================================*/
-/* Table : COMMANDEBOUTIQUE                                     */
-/*==============================================================*/
-create table COMMANDEBOUTIQUE (
-   CMDBTQID             int                  not null,
-   ETATID               int                  not null,
-   LITIGEID             int                  null,
-   CMDCLTID             int                  null,
-   BTQID                int                  not null,
-   DATECREA             datetime             null,
-   DATEDEBUT            datetime             null,
-   DATEFIN              datetime             null,
-   constraint PK_COMMANDEBOUTIQUE primary key (CMDBTQID)
-)
-go
-
-/*==============================================================*/
-/* Index : RECEVOIR_FK                                          */
-/*==============================================================*/
-
-
-
-
-create nonclustered index RECEVOIR_FK on COMMANDEBOUTIQUE (BTQID ASC)
-go
-
-/*==============================================================*/
-/* Index : ASSOCIER_FK                                          */
-/*==============================================================*/
-
-
-
-
-create nonclustered index ASSOCIER_FK on COMMANDEBOUTIQUE (CMDCLTID ASC)
-go
-
-/*==============================================================*/
-/* Index : COMPRENDRE_FK                                        */
-/*==============================================================*/
-
-
-
-
-create nonclustered index COMPRENDRE_FK on COMMANDEBOUTIQUE (ETATID ASC)
-go
-
-/*==============================================================*/
-/* Index : ENGENDRER2_FK                                        */
-/*==============================================================*/
-
-
-
-
-create nonclustered index ENGENDRER2_FK on COMMANDEBOUTIQUE (LITIGEID ASC)
-go
-
-/*==============================================================*/
-/* Table : COMMANDECLIENT                                       */
-/*==============================================================*/
-create table COMMANDECLIENT (
-   CMDCLTID             int                  not null,
+create table CLIENTCOMMANDE (
+   CLTCMDID             int                  not null,
    PARTENAIREID         int                  not null,
-   ETATID               int                  not null,
+   CMDETATID            int                  not null,
    PAIEMENTID           int                  null,
    FACTUREID            int                  null,
-   CMDCLTDATE           datetime             null,
-   CMDCLTDATEDEBUT      datetime             null,
-   CMDCLTDATEFIN        datetime             null,
-   constraint PK_COMMANDECLIENT primary key (CMDCLTID)
+   CLTCMDDATE           datetime             null,
+   CLTCMDDATEDEBUT      datetime             null,
+   CLTCMDDATEFIN        datetime             null,
+   constraint PK_CLIENTCOMMANDE primary key (CLTCMDID)
 )
 go
 
@@ -1437,7 +1379,7 @@ go
 
 
 
-create nonclustered index GENERER2_FK on COMMANDECLIENT (FACTUREID ASC)
+create nonclustered index GENERER2_FK on CLIENTCOMMANDE (FACTUREID ASC)
 go
 
 /*==============================================================*/
@@ -1447,7 +1389,7 @@ go
 
 
 
-create nonclustered index PASSER_FK on COMMANDECLIENT (PARTENAIREID ASC)
+create nonclustered index PASSER_FK on CLIENTCOMMANDE (PARTENAIREID ASC)
 go
 
 /*==============================================================*/
@@ -1457,7 +1399,7 @@ go
 
 
 
-create nonclustered index DETENIR_FK on COMMANDECLIENT (ETATID ASC)
+create nonclustered index DETENIR_FK on CLIENTCOMMANDE (CMDETATID ASC)
 go
 
 /*==============================================================*/
@@ -1467,7 +1409,59 @@ go
 
 
 
-create nonclustered index PRENDRE2_FK on COMMANDECLIENT (PAIEMENTID ASC)
+create nonclustered index PRENDRE2_FK on CLIENTCOMMANDE (PAIEMENTID ASC)
+go
+
+/*==============================================================*/
+/* Table : CLTCMDDETAIL                                         */
+/*==============================================================*/
+create table CLTCMDDETAIL (
+   CLTCMDID             int                  not null,
+   PRODID               int                  not null,
+   LIVRAISONID          int                  not null,
+   C_CMD_QTEPROD        smallint             null,
+   constraint PK_CLTCMDDETAIL primary key (CLTCMDID, PRODID, LIVRAISONID)
+)
+go
+
+/*==============================================================*/
+/* Index : LISTER_FK                                            */
+/*==============================================================*/
+
+
+
+
+create nonclustered index LISTER_FK on CLTCMDDETAIL (CLTCMDID ASC)
+go
+
+/*==============================================================*/
+/* Index : LISTER2_FK                                           */
+/*==============================================================*/
+
+
+
+
+create nonclustered index LISTER2_FK on CLTCMDDETAIL (PRODID ASC)
+go
+
+/*==============================================================*/
+/* Index : LISTER3_FK                                           */
+/*==============================================================*/
+
+
+
+
+create nonclustered index LISTER3_FK on CLTCMDDETAIL (LIVRAISONID ASC)
+go
+
+/*==============================================================*/
+/* Table : CMDETAT                                              */
+/*==============================================================*/
+create table CMDETAT (
+   CMDETATID            int                  not null,
+   CMDETAT              varchar(15)          null,
+   constraint PK_CMDETAT primary key (CMDETATID)
+)
 go
 
 /*==============================================================*/
@@ -1516,21 +1510,11 @@ create nonclustered index ECHANGE3_FK on ECHANGE (BTQID ASC)
 go
 
 /*==============================================================*/
-/* Table : ETATCMD                                              */
-/*==============================================================*/
-create table ETATCMD (
-   ETATID               int                  not null,
-   ETATCMD              varchar(15)          null,
-   constraint PK_ETATCMD primary key (ETATID)
-)
-go
-
-/*==============================================================*/
 /* Table : FACTURE                                              */
 /*==============================================================*/
 create table FACTURE (
    FACTUREID            int                  not null,
-   CMDCLTID             int                  not null,
+   CLTCMDID             int                  not null,
    FACTLIEN             nvarchar(255)        null,
    constraint PK_FACTURE primary key (FACTUREID)
 )
@@ -1543,7 +1527,7 @@ go
 
 
 
-create nonclustered index GENERER_FK on FACTURE (CMDCLTID ASC)
+create nonclustered index GENERER_FK on FACTURE (CLTCMDID ASC)
 go
 
 /*==============================================================*/
@@ -1588,7 +1572,7 @@ create table LITIGE (
    LITIGEID             int                  not null,
    REMBOURSEMENTID      int                  null,
    RETOURID             int                  null,
-   CMDBTQID             int                  not null,
+   BTQCMDID             int                  not null,
    LTGMSG               nvarchar(255)        null,
    constraint PK_LITIGE primary key (LITIGEID)
 )
@@ -1601,7 +1585,7 @@ go
 
 
 
-create nonclustered index ENGENDRER_FK on LITIGE (CMDBTQID ASC)
+create nonclustered index ENGENDRER_FK on LITIGE (BTQCMDID ASC)
 go
 
 /*==============================================================*/
@@ -1802,12 +1786,58 @@ create nonclustered index UTILISER_FK on MOYENDEPAIEMENT (PARTENAIREID ASC)
 go
 
 /*==============================================================*/
+/* Table : OPINION                                              */
+/*==============================================================*/
+create table OPINION (
+   PRODID               int                  not null,
+   PARTENAIREID         int                  not null,
+   BTQID                int                  not null,
+   A_NOTE               smallint             null,
+   A_DATE               datetime             null,
+   A_TEXTE              nvarchar(255)        null,
+   A_REPONSE            nvarchar(255)        null,
+   A_REPDATE            datetime             null,
+   constraint PK_OPINION primary key (PRODID, PARTENAIREID, BTQID)
+)
+go
+
+/*==============================================================*/
+/* Index : AVIS_FK                                              */
+/*==============================================================*/
+
+
+
+
+create nonclustered index AVIS_FK on OPINION (PRODID ASC)
+go
+
+/*==============================================================*/
+/* Index : AVIS2_FK                                             */
+/*==============================================================*/
+
+
+
+
+create nonclustered index AVIS2_FK on OPINION (PARTENAIREID ASC)
+go
+
+/*==============================================================*/
+/* Index : AVIS3_FK                                             */
+/*==============================================================*/
+
+
+
+
+create nonclustered index AVIS3_FK on OPINION (BTQID ASC)
+go
+
+/*==============================================================*/
 /* Table : PAIEMENT                                             */
 /*==============================================================*/
 create table PAIEMENT (
    PAIEMENTID           int                  not null,
    MDPID                int                  not null,
-   CMDCLTID             int                  not null,
+   CLTCMDID             int                  not null,
    P_MONTANT            decimal(9,2)         null,
    constraint PK_PAIEMENT primary key (PAIEMENTID)
 )
@@ -1830,38 +1860,7 @@ go
 
 
 
-create nonclustered index PRENDRE_FK on PAIEMENT (CMDCLTID ASC)
-go
-
-/*==============================================================*/
-/* Table : PANDETAIL                                            */
-/*==============================================================*/
-create table PANDETAIL (
-   PANIERID             int                  not null,
-   PRODID               int                  not null,
-   P_QTEPROD            smallint             null,
-   constraint PK_PANDETAIL primary key (PANIERID, PRODID)
-)
-go
-
-/*==============================================================*/
-/* Index : CONTENIR_FK                                          */
-/*==============================================================*/
-
-
-
-
-create nonclustered index CONTENIR_FK on PANDETAIL (PANIERID ASC)
-go
-
-/*==============================================================*/
-/* Index : CONTENIR2_FK                                         */
-/*==============================================================*/
-
-
-
-
-create nonclustered index CONTENIR2_FK on PANDETAIL (PRODID ASC)
+create nonclustered index PRENDRE_FK on PAIEMENT (CLTCMDID ASC)
 go
 
 /*==============================================================*/
@@ -1882,6 +1881,37 @@ go
 
 
 create nonclustered index DISPOSER_FK on PANIER (PARTENAIREID ASC)
+go
+
+/*==============================================================*/
+/* Table : PANIERDETAIL                                         */
+/*==============================================================*/
+create table PANIERDETAIL (
+   PANIERID             int                  not null,
+   PRODID               int                  not null,
+   P_QTEPROD            smallint             null,
+   constraint PK_PANIERDETAIL primary key (PANIERID, PRODID)
+)
+go
+
+/*==============================================================*/
+/* Index : CONTENIR_FK                                          */
+/*==============================================================*/
+
+
+
+
+create nonclustered index CONTENIR_FK on PANIERDETAIL (PANIERID ASC)
+go
+
+/*==============================================================*/
+/* Index : CONTENIR2_FK                                         */
+/*==============================================================*/
+
+
+
+
+create nonclustered index CONTENIR2_FK on PANIERDETAIL (PRODID ASC)
 go
 
 /*==============================================================*/
@@ -1907,36 +1937,6 @@ go
 
 
 create nonclustered index DISPOSER2_FK on PARTENAIRE (PANIERID ASC)
-go
-
-/*==============================================================*/
-/* Table : POINTRELAIS                                          */
-/*==============================================================*/
-create table POINTRELAIS (
-   BTQID                int                  not null,
-   LOCALISATIONID       int                  not null,
-   constraint PK_POINTRELAIS primary key (BTQID, LOCALISATIONID)
-)
-go
-
-/*==============================================================*/
-/* Index : PROPOSER_FK                                          */
-/*==============================================================*/
-
-
-
-
-create nonclustered index PROPOSER_FK on POINTRELAIS (BTQID ASC)
-go
-
-/*==============================================================*/
-/* Index : PROPOSER2_FK                                         */
-/*==============================================================*/
-
-
-
-
-create nonclustered index PROPOSER2_FK on POINTRELAIS (LOCALISATIONID ASC)
 go
 
 /*==============================================================*/
@@ -2124,21 +2124,6 @@ create table "TRANSACTION" (
 )
 go
 
-alter table AVIS
-   add constraint FK_AVIS_AVIS_PRODUIT foreign key (PRODID)
-      references PRODUIT (PRODID)
-go
-
-alter table AVIS
-   add constraint FK_AVIS_AVIS2_PARTENAI foreign key (PARTENAIREID)
-      references PARTENAIRE (PARTENAIREID)
-go
-
-alter table AVIS
-   add constraint FK_AVIS_AVIS3_BOUTIQUE foreign key (BTQID)
-      references BOUTIQUE (BTQID)
-go
-
 alter table BOUTIQUE
    add constraint FK_BOUTIQUE_APPLIQUER_POLITIQU foreign key (POLITIQUEID)
       references POLITIQUE (POLITIQUEID)
@@ -2149,84 +2134,94 @@ alter table BOUTIQUE
       references PARTENAIRE (PARTENAIREID)
 go
 
-alter table CATNAV
-   add constraint FK_CATNAV_REGROUPER1_CATEGORI foreign key (CATEGORIEID)
-      references CATEGORIE (CATEGORIEID)
+alter table BOUTIQUECOMMANDE
+   add constraint FK_BOUTIQUE_ASSOCIER_CLIENTCO foreign key (CLTCMDID)
+      references CLIENTCOMMANDE (CLTCMDID)
 go
 
-alter table CATNAV
-   add constraint FK_CATNAV_REGROUPER2_CATEGORI foreign key (CAT_PARENTID)
-      references CATEGORIE (CATEGORIEID)
+alter table BOUTIQUECOMMANDE
+   add constraint FK_BOUTIQUE_COMPRENDR_CMDETAT foreign key (CMDETATID)
+      references CMDETAT (CMDETATID)
 go
 
-alter table CMDBTQDETAIL
-   add constraint FK_CMDBTQDE_COMPORTER_COMMANDE foreign key (CMDBTQID)
-      references COMMANDEBOUTIQUE (CMDBTQID)
-go
-
-alter table CMDBTQDETAIL
-   add constraint FK_CMDBTQDE_COMPORTER_PRODUIT foreign key (PRODID)
-      references PRODUIT (PRODID)
-go
-
-alter table CMDBTQDETAIL
-   add constraint FK_CMDBTQDE_COMPORTER_LIVRAISO foreign key (LIVRAISONID)
-      references LIVRAISON (LIVRAISONID)
-go
-
-alter table CMDCLTDETAIL
-   add constraint FK_CMDCLTDE_LISTER_COMMANDE foreign key (CMDCLTID)
-      references COMMANDECLIENT (CMDCLTID)
-go
-
-alter table CMDCLTDETAIL
-   add constraint FK_CMDCLTDE_LISTER2_PRODUIT foreign key (PRODID)
-      references PRODUIT (PRODID)
-go
-
-alter table CMDCLTDETAIL
-   add constraint FK_CMDCLTDE_LISTER3_LIVRAISO foreign key (LIVRAISONID)
-      references LIVRAISON (LIVRAISONID)
-go
-
-alter table COMMANDEBOUTIQUE
-   add constraint FK_COMMANDE_ASSOCIER_COMMANDE foreign key (CMDCLTID)
-      references COMMANDECLIENT (CMDCLTID)
-go
-
-alter table COMMANDEBOUTIQUE
-   add constraint FK_COMMANDE_COMPRENDR_ETATCMD foreign key (ETATID)
-      references ETATCMD (ETATID)
-go
-
-alter table COMMANDEBOUTIQUE
-   add constraint FK_COMMANDE_ENGENDRER_LITIGE foreign key (LITIGEID)
+alter table BOUTIQUECOMMANDE
+   add constraint FK_BOUTIQUE_ENGENDRER_LITIGE foreign key (LITIGEID)
       references LITIGE (LITIGEID)
 go
 
-alter table COMMANDEBOUTIQUE
-   add constraint FK_COMMANDE_RECEVOIR_BOUTIQUE foreign key (BTQID)
+alter table BOUTIQUECOMMANDE
+   add constraint FK_BOUTIQUE_RECEVOIR_BOUTIQUE foreign key (BTQID)
       references BOUTIQUE (BTQID)
 go
 
-alter table COMMANDECLIENT
-   add constraint FK_COMMANDE_DETENIR_ETATCMD foreign key (ETATID)
-      references ETATCMD (ETATID)
+alter table BTQCMDDETAIL
+   add constraint FK_BTQCMDDE_COMPORTER_BOUTIQUE foreign key (BTQCMDID)
+      references BOUTIQUECOMMANDE (BTQCMDID)
 go
 
-alter table COMMANDECLIENT
-   add constraint FK_COMMANDE_GENERER2_FACTURE foreign key (FACTUREID)
+alter table BTQCMDDETAIL
+   add constraint FK_BTQCMDDE_COMPORTER_PRODUIT foreign key (PRODID)
+      references PRODUIT (PRODID)
+go
+
+alter table BTQCMDDETAIL
+   add constraint FK_BTQCMDDE_COMPORTER_LIVRAISO foreign key (LIVRAISONID)
+      references LIVRAISON (LIVRAISONID)
+go
+
+alter table BTQPOSTE
+   add constraint FK_BTQPOSTE_PROPOSER_BOUTIQUE foreign key (BTQID)
+      references BOUTIQUE (BTQID)
+go
+
+alter table BTQPOSTE
+   add constraint FK_BTQPOSTE_PROPOSER2_LOCALISA foreign key (LOCALISATIONID)
+      references LOCALISATION (LOCALISATIONID)
+go
+
+alter table CATNAV
+   add constraint FK_CATNAV_REGROUPER_CATEGORI1 foreign key (CATEGORIEID)
+      references CATEGORIE (CATEGORIEID)
+go
+
+alter table CATNAV
+   add constraint FK_CATNAV_REGROUPER_CATEGORI2 foreign key (CAT_PARENTID)
+      references CATEGORIE (CATEGORIEID)
+go
+
+alter table CLIENTCOMMANDE
+   add constraint FK_CLIENTCO_DETENIR_CMDETAT foreign key (CMDETATID)
+      references CMDETAT (CMDETATID)
+go
+
+alter table CLIENTCOMMANDE
+   add constraint FK_CLIENTCO_GENERER2_FACTURE foreign key (FACTUREID)
       references FACTURE (FACTUREID)
 go
 
-alter table COMMANDECLIENT
-   add constraint FK_COMMANDE_PASSER_PARTENAI foreign key (PARTENAIREID)
+alter table CLIENTCOMMANDE
+   add constraint FK_CLIENTCO_PASSER_PARTENAI foreign key (PARTENAIREID)
       references PARTENAIRE (PARTENAIREID)
 go
 
-alter table COMMANDECLIENT
-   add constraint FK_COMMANDE_PRENDRE2_PAIEMENT foreign key (PAIEMENTID)
+alter table CLIENTCOMMANDE
+   add constraint FK_CLIENTCO_PRENDRE2_PAIEMENT foreign key (PAIEMENTID)
       references PAIEMENT (PAIEMENTID)
+go
+
+alter table CLTCMDDETAIL
+   add constraint FK_CLTCMDDE_LISTER_CLIENTCO foreign key (CLTCMDID)
+      references CLIENTCOMMANDE (CLTCMDID)
+go
+
+alter table CLTCMDDETAIL
+   add constraint FK_CLTCMDDE_LISTER2_PRODUIT foreign key (PRODID)
+      references PRODUIT (PRODID)
+go
+
+alter table CLTCMDDETAIL
+   add constraint FK_CLTCMDDE_LISTER3_LIVRAISO foreign key (LIVRAISONID)
+      references LIVRAISON (LIVRAISONID)
 go
 
 alter table ECHANGE
@@ -2245,8 +2240,8 @@ alter table ECHANGE
 go
 
 alter table FACTURE
-   add constraint FK_FACTURE_GENERER_COMMANDE foreign key (CMDCLTID)
-      references COMMANDECLIENT (CMDCLTID)
+   add constraint FK_FACTURE_GENERER_CLIENTCO foreign key (CLTCMDID)
+      references CLIENTCOMMANDE (CLTCMDID)
 go
 
 alter table IDENTIFICATION
@@ -2265,8 +2260,8 @@ alter table LITIGE
 go
 
 alter table LITIGE
-   add constraint FK_LITIGE_ENGENDRER_COMMANDE foreign key (CMDBTQID)
-      references COMMANDEBOUTIQUE (CMDBTQID)
+   add constraint FK_LITIGE_ENGENDRER_BOUTIQUE foreign key (BTQCMDID)
+      references BOUTIQUECOMMANDE (BTQCMDID)
 go
 
 alter table LITIGE
@@ -2319,9 +2314,24 @@ alter table MOYENDEPAIEMENT
       references PARTENAIRE (PARTENAIREID)
 go
 
+alter table OPINION
+   add constraint FK_OPINION_AVIS_PRODUIT foreign key (PRODID)
+      references PRODUIT (PRODID)
+go
+
+alter table OPINION
+   add constraint FK_OPINION_AVIS2_PARTENAI foreign key (PARTENAIREID)
+      references PARTENAIRE (PARTENAIREID)
+go
+
+alter table OPINION
+   add constraint FK_OPINION_AVIS3_BOUTIQUE foreign key (BTQID)
+      references BOUTIQUE (BTQID)
+go
+
 alter table PAIEMENT
-   add constraint FK_PAIEMENT_PRENDRE_COMMANDE foreign key (CMDCLTID)
-      references COMMANDECLIENT (CMDCLTID)
+   add constraint FK_PAIEMENT_PRENDRE_CLIENTCO foreign key (CLTCMDID)
+      references CLIENTCOMMANDE (CLTCMDID)
 go
 
 alter table PAIEMENT
@@ -2329,34 +2339,24 @@ alter table PAIEMENT
       references MOYENDEPAIEMENT (MDPID)
 go
 
-alter table PANDETAIL
-   add constraint FK_PANDETAI_CONTENIR_PANIER foreign key (PANIERID)
-      references PANIER (PANIERID)
-go
-
-alter table PANDETAIL
-   add constraint FK_PANDETAI_CONTENIR2_PRODUIT foreign key (PRODID)
-      references PRODUIT (PRODID)
-go
-
 alter table PANIER
    add constraint FK_PANIER_DISPOSER_PARTENAI foreign key (PARTENAIREID)
       references PARTENAIRE (PARTENAIREID)
 go
 
-alter table PARTENAIRE
-   add constraint FK_PARTENAI_DISPOSER2_PANIER foreign key (PANIERID)
+alter table PANIERDETAIL
+   add constraint FK_PANIERDE_CONTENIR_PANIER foreign key (PANIERID)
       references PANIER (PANIERID)
 go
 
-alter table POINTRELAIS
-   add constraint FK_POINTREL_PROPOSER_BOUTIQUE foreign key (BTQID)
-      references BOUTIQUE (BTQID)
+alter table PANIERDETAIL
+   add constraint FK_PANIERDE_CONTENIR2_PRODUIT foreign key (PRODID)
+      references PRODUIT (PRODID)
 go
 
-alter table POINTRELAIS
-   add constraint FK_POINTREL_PROPOSER2_LOCALISA foreign key (LOCALISATIONID)
-      references LOCALISATION (LOCALISATIONID)
+alter table PARTENAIRE
+   add constraint FK_PARTENAI_DISPOSER2_PANIER foreign key (PANIERID)
+      references PANIER (PANIERID)
 go
 
 alter table PRODUIT
