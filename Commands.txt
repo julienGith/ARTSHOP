@@ -1,1 +1,10 @@
 Scaffold-DbContext "Server=.\;Database=ARTSHOP;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir ModelsFull
+
+Add-Migration
+
+A-z123456
+
+
+
+3 layers architecture asp.net core
+https://www.youtube.com/watch?v=PybhA-Uabbw
