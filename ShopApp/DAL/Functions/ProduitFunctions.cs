@@ -11,7 +11,7 @@ namespace DAL.Functions
 {
     public class ProduitFunctions : Iproduit
     {
-
+        //CRUD Produit
         //Add New Produit
         public async Task<Produit> AddProduit(int Btqid, int Categorieid, int Livrtypid, decimal Prix, string Nom, string DescriptionC, string DescriptionL,
             short Stock, short Disponibilite, short Rabais, short Preparation, string Pseo, string PMetaKeywords, string PMetaTitre, bool Publier)
@@ -42,7 +42,37 @@ namespace DAL.Functions
 
             return newProduit;
         }
+        //Update Produit
+        public async Task<Boolean> UpdateProduit(string Prodid, int Categorieid, int Livrtypid, decimal Prix, string Nom, string DescriptionC, string DescriptionL,
+    short Stock, short Disponibilite, short Rabais, short Preparation, string Pseo, string PMetaKeywords, string PMetaTitre, bool Publier)
+        {
+            Produit produit = new Produit();
+            using (var context = new ARTSHOPContext(ARTSHOPContext.ops.dbOptions))
+            {
+                produit = await context.Produits.FirstOrDefaultAsync(p => p.Prodid == int.Parse(Prodid));
+                produit.Categorieid = Categorieid;
+                produit.Lvrtypid = Livrtypid;
+                produit.Prix = Prix;
+                produit.PNom = Nom;
+                produit.PDescriptionC = DescriptionC;
+                produit.PDescriptionL = DescriptionL;
+                produit.Stock = Stock;
+                produit.Disponibilite = Disponibilite;
+                produit.Rabais = Rabais;
+                produit.Preparation = Preparation;
+                produit.PSeo = Pseo;
+                produit.PMetaKeywords = PMetaKeywords;
+                produit.PMetaTitre = PMetaTitre;
+                produit.Publier = Publier;
 
+                //context.Produits.Update(produit);
+                await context.SaveChangesAsync();
+            }
+
+            return true;
+        }
+
+        //Recherche Produits
         //Get All Produits
         public async Task<List<Produit>> GetAllProduits()
         {
@@ -55,8 +85,8 @@ namespace DAL.Functions
             return produits;
         }
 
-        //Recherche Produits
-        public async Task<List<Produit>> GetProduits(string query)
+        //Par mot clé
+        public async Task<List<Produit>> GetProduitsKW(string query)
         {
             List<Produit> produits = new List<Produit>();
             using (var context = new ARTSHOPContext(ARTSHOPContext.ops.dbOptions))
@@ -65,6 +95,18 @@ namespace DAL.Functions
 
             }
             return produits;
+        }
+
+        //Par ID produit
+        public async Task<Produit> GetProduitID(string query)
+        {
+            Produit produit = new Produit();
+            using (var context = new ARTSHOPContext(ARTSHOPContext.ops.dbOptions))
+            {
+                produit = await context.Produits.FirstOrDefaultAsync(p => p.Prodid == int.Parse(query));
+
+            }
+            return produit;
         }
     }
 }
