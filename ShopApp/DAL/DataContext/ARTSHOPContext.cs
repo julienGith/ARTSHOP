@@ -71,7 +71,7 @@ namespace DAL.Entities
             
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(ops.settings.SqlConnectionString);
+                //optionsBuilder.UseSqlServer(ops.settings.SqlConnectionString);
             }
         }
 

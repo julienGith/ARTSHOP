@@ -11,7 +11,6 @@ namespace DAL.Functions
 {
     public class ProduitFunctions : Iproduit
     {
-        private readonly ARTSHOPContext _context = new ARTSHOPContext();
 
         //Add New Produit
         public async Task<Produit> AddProduit(int Btqid, int Categorieid, int Livrtypid, decimal Prix, string Nom, string DescriptionC, string DescriptionL,
@@ -35,8 +34,12 @@ namespace DAL.Functions
                 PMetaTitre = PMetaTitre,
                 Publier = Publier
             };
-            await _context.Produits.AddAsync(newProduit);
-            await _context.SaveChangesAsync();
+            using (var context = new ARTSHOPContext(ARTSHOPContext.ops.dbOptions))
+            {
+                await context.Produits.AddAsync(newProduit);
+                await context.SaveChangesAsync();
+            }
+
             return newProduit;
         }
 
@@ -44,7 +47,11 @@ namespace DAL.Functions
         public async Task<List<Produit>> GetAllProduits()
         {
             List<Produit> produits = new List<Produit>();
-            produits = await _context.Produits.Where(p => p.Publier == true).ToListAsync();
+            using (var context = new ARTSHOPContext(ARTSHOPContext.ops.dbOptions))
+            {
+                produits = await context.Produits.Where(p => p.Publier == true).ToListAsync();
+
+            }
             return produits;
         }
     }
