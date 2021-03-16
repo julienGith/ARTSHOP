@@ -13,5 +13,7 @@ namespace DAL.Interfaces
             short Stock, short Disponibilite, short Rabais, short Preparation, string Pseo, string PMetaKeywords, string PMetaTitre, bool Publier);
 
         Task<List<Produit>> GetAllProduits();
+
+        Task<List<Produit>> GetProduits(string query);
     }
 }

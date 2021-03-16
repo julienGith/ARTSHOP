@@ -41,5 +41,13 @@ namespace BOL.ProduitLogic
             produits = await _produit.GetAllProduits();
             return produits;
         }
+        //Recherche Produits
+        public async Task<List<Produit>> GetProduits(string query)
+        {
+            List<Produit> produits = new List<Produit>();
+            produits = await _produit.GetProduits(query);
+
+            return produits;
+        }
     }
 }

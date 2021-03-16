@@ -54,5 +54,17 @@ namespace DAL.Functions
             }
             return produits;
         }
+
+        //Recherche Produits
+        public async Task<List<Produit>> GetProduits(string query)
+        {
+            List<Produit> produits = new List<Produit>();
+            using (var context = new ARTSHOPContext(ARTSHOPContext.ops.dbOptions))
+            {
+                produits = await context.Produits.Where(p => p.PMetaKeywords.ToLower().Contains(query.ToLower())).ToListAsync();
+
+            }
+            return produits;
+        }
     }
 }
