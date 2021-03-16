@@ -11,7 +11,7 @@ namespace DAL.Functions
 {
     public class ProduitFunctions : Iproduit
     {
-        private readonly ARTSHOPContext _context;
+        private readonly ARTSHOPContext _context = new ARTSHOPContext();
 
         //Add New Produit
         public async Task<Produit> AddProduit(int Btqid, int Categorieid, int Livrtypid, decimal Prix, string Nom, string DescriptionC, string DescriptionL,

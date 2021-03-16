@@ -9,7 +9,21 @@ namespace DAL.Entities
 {
     public partial class ARTSHOPContext : DbContext
     {
-        private readonly AppConfiguration _appConfiguration;
+        public class OptionsBuild
+        {
+            public OptionsBuild()
+            {
+                settings = new AppConfiguration();
+                opsBuilder = new DbContextOptionsBuilder<ARTSHOPContext>();
+                opsBuilder.UseSqlServer(settings.SqlConnectionString);
+                dbOptions = opsBuilder.Options;
+            }
+            public DbContextOptionsBuilder<ARTSHOPContext> opsBuilder { get; set; }
+            public DbContextOptions<ARTSHOPContext> dbOptions { get; set; }
+            public AppConfiguration settings { get; set; }
+        }
+        public static OptionsBuild ops = new OptionsBuild();
+
         public ARTSHOPContext()
         {
         }
@@ -57,7 +71,7 @@ namespace DAL.Entities
             
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(_appConfiguration.SqlConnectionString);
+                optionsBuilder.UseSqlServer(ops.settings.SqlConnectionString);
             }
         }
 
