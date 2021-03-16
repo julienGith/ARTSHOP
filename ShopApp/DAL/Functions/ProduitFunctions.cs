@@ -46,9 +46,12 @@ namespace DAL.Functions
         public async Task<Boolean> UpdateProduit(string Prodid, int Categorieid, int Livrtypid, decimal Prix, string Nom, string DescriptionC, string DescriptionL,
     short Stock, short Disponibilite, short Rabais, short Preparation, string Pseo, string PMetaKeywords, string PMetaTitre, bool Publier)
         {
+            int result = 0;
+            int changes = 0;
             Produit produit = new Produit();
             using (var context = new ARTSHOPContext(ARTSHOPContext.ops.dbOptions))
             {
+                changes = await context.SaveChangesAsync();
                 produit = await context.Produits.FirstOrDefaultAsync(p => p.Prodid == int.Parse(Prodid));
                 produit.Categorieid = Categorieid;
                 produit.Lvrtypid = Livrtypid;
@@ -65,11 +68,40 @@ namespace DAL.Functions
                 produit.PMetaTitre = PMetaTitre;
                 produit.Publier = Publier;
 
-                //context.Produits.Update(produit);
-                await context.SaveChangesAsync();
+                context.Produits.Update(produit);
+                result = await context.SaveChangesAsync();
+            }
+            if (result > changes)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        //Supprimer Produit
+        public async Task<Boolean> DeleteProduitID(string query)
+        {
+            int result = 0;
+            int changes = 0;
+            Produit produit = new Produit();
+            using (var context = new ARTSHOPContext(ARTSHOPContext.ops.dbOptions))
+            {
+                changes = await context.SaveChangesAsync();
+                produit = await context.Produits.FirstOrDefaultAsync(p => p.Prodid == int.Parse(query));
+                context.Produits.Remove(produit);
+                result = await context.SaveChangesAsync();
+            }
+            if (result>changes)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
 
-            return true;
         }
 
         //Recherche Produits

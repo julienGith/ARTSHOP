@@ -43,6 +43,12 @@ namespace BOL.ProduitLogic
              Stock, Disponibilite, Rabais, Preparation, Pseo, PMetaKeywords, PMetaTitre, Publier);
             return result;
         }
+        //Supprimer Produit
+        public async Task<Boolean> DeleteProduitID(string query)
+        {
+            var result = await _produit.DeleteProduitID(query);
+            return result;
+        }
 
         //Recherche Produits
         //Get All Produits

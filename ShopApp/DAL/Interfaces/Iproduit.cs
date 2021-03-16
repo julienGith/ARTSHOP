@@ -16,6 +16,8 @@ namespace DAL.Interfaces
         //Update Produit
         Task<Boolean> UpdateProduit(string Prodid, int Categorieid, int Livrtypid, decimal Prix, string Nom, string DescriptionC, string DescriptionL,
     short Stock, short Disponibilite, short Rabais, short Preparation, string Pseo, string PMetaKeywords, string PMetaTitre, bool Publier);
+        //Supprimer Produit
+        Task<Boolean> DeleteProduitID(string query)
 
         //Recherche Produit
         //Get All Produits
