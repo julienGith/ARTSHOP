@@ -3,7 +3,7 @@ Scaffold-DbContext "Server=.\;Database=ARTSHOP;Trusted_Connection=True;" Microso
 Scaffold-DbContext "Server=.\;Database=ARTSHOP;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -d -OutputDir ModelsFull
 Add-Migration
 Update from db à tester..
-Scaffold-DbContext "Server=.\;Database=ARTSHOP;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -force
+Scaffold-DbContext "Server=.\;Database=ARTSHOP;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entities -force
 
 A-z123456
 
