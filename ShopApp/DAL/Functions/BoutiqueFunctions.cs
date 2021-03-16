@@ -12,8 +12,7 @@ namespace DAL.Functions
 
     public class BoutiqueFunctions : Iboutique
     {
-        private readonly ARTSHOPContext _context;
-
+        //CRUD Boutique
         //ADD new Boutique
         public async Task<Boutique> AddBoutique(int partenaireid, int politiqueid,
             string descriptionC,string descriptionL,string raisonsociale,string siret,
@@ -25,26 +24,58 @@ namespace DAL.Functions
 
             Boutique newboutique = new Boutique
             {
-                BDescriptionC = descriptionC
+                Partenaireid = partenaireid,
+                Politiqueid = politiqueid,
+                BDescriptionC = descriptionC,
+                BDescriptionL = descriptionL,
+                Raisonsociale = raisonsociale,
+                Siret = siret,
+                Siren = siren,
+                Btqtel = tel,
+                Codenaf = codenaf,
+                Codebanque = codebanque,
+                Codeguichet = codeguichet,
+                Numcompte = numcompte,
+                Clerib = clerib,
+                Domiciliation = domiciliation,
+                Iban = iban,
+                Bic = bic,
+                Titulaire = titulaire,
+                Btqtmail = mail,
+                Btqmessage = message,
+                Ca = ca,
+                Nbsalarie = nbsalarie,
+                Siteweb = siteweb,
+                Statutjuridique = statutjuridique,
+                Btqseo = btqseo
             };
+            using (var context = new ARTSHOPContext(ARTSHOPContext.ops.dbOptions))
+            {
+                await context.Boutiques.AddAsync(newboutique);
+                await context.SaveChangesAsync();
+            }
 
-            await _context.Boutiques.AddAsync(newboutique);
-            await _context.SaveChangesAsync();
             return newboutique;
         }
-        //GET partenaire's boutiques
+        //GET Mes Boutiques
         public async Task<List<Boutique>> GetPartenaireBoutiques(string partenaireID)
         {
             int id = int.Parse(partenaireID);
             List<Boutique> mesboutiques = new List<Boutique>();
-            mesboutiques = await _context.Boutiques.Where(b => b.Partenaireid == id).ToListAsync();
+            using (var context = new ARTSHOPContext(ARTSHOPContext.ops.dbOptions))
+            {
+                mesboutiques = await context.Boutiques.Where(b => b.Partenaireid == id).ToListAsync();
+            }
             return mesboutiques;
         }
         //GET All Boutiques
         public async Task<List<Boutique>> GetAllBoutiques()
         {
             List<Boutique> allboutiques = new List<Boutique>();
-            allboutiques = await _context.Boutiques.ToListAsync();
+            using (var context = new ARTSHOPContext(ARTSHOPContext.ops.dbOptions))
+            {
+                allboutiques = await context.Boutiques.ToListAsync();
+            }
             return allboutiques;
         }
     }

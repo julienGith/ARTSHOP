@@ -11,8 +11,8 @@ namespace BOL.BoutiqueLogic
    public class BoutiqueLogic
    {
         private Iboutique _boutique = new DAL.Functions.BoutiqueFunctions();
-        
-        //Add boutique
+        //CRUD Boutique
+        //Add Boutique
         public async Task<Boolean> AddBoutique(int partenaireid, int politiqueid,
     string descriptionC, string descriptionL, string raisonsociale, string siret,
     string siren, string tel, string codenaf, string codebanque, string codeguichet,
@@ -43,12 +43,20 @@ namespace BOL.BoutiqueLogic
             }
         }
 
-        //Get All boutiques
+
+        //Get Mes boutiques
         public async Task<List<Boutique>> GetPartenaireBoutiques(string partenaireID)
         {
-            List<Boutique> boutiques = await _boutique.GetAllBoutiques();
+            List<Boutique> boutiques = await _boutique.GetPartenaireBoutiques(partenaireID);
             return boutiques;
         }
+        //GET All Boutiques
+        public async Task<List<Boutique>> GetAllBoutiques()
+        {
+            List<Boutique> allboutiques = await _boutique.GetAllBoutiques();
 
-   }
+            return allboutiques;
+        }
+
+    }
 }
