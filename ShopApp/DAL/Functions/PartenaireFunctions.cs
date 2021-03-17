@@ -1,5 +1,4 @@
-﻿using DAL.Entities;
-using DAL.Interfaces;
+﻿using DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +9,5 @@ namespace DAL.Functions
 {
     public class PartenaireFunctions : Ipartenaire
     {
-        //CRUD Partenaire
-        //ADD new Partenaire
-        //public async Task<Partenaire> AddPartenaire(bool admin, bool vendeur, DateTime dateenr, int userid)
-        //{
-
-        //}
     }
 }

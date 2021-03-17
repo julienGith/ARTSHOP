@@ -59,16 +59,8 @@ namespace BOL.BoutiqueLogic
 
             return true;
         }
-        //Supprimer Boutique
-        public async Task<Boolean> DeleteBoutique(string btqid)
-        {
-            var result = await _boutique.DeleteBoutique(btqid);
 
-            return true;
-        }
-
-        //Recherche Boutiques
-        //Get Mes Boutiques
+        //Get Mes boutiques
         public async Task<List<Boutique>> GetPartenaireBoutiques(string partenaireID)
         {
             List<Boutique> boutiques = await _boutique.GetPartenaireBoutiques(partenaireID);
