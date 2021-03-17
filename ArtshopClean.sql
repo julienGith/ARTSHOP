@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* Nom de SGBD :  Microsoft SQL Server 2016                     */
-/* Date de création :  17/03/2021 01:55:40                      */
+/* Date de création :  17/03/2021 02:53:37                      */
 /*==============================================================*/
 
 
@@ -2060,11 +2060,11 @@ go
 /* Table : REMPLACEMENT                                         */
 /*==============================================================*/
 create table REMPLACEMENT (
-   RETOURID             int                  not null,
+   REMPID               int                  identity,
    LITIGEID             int                  not null,
    R_SUIVINUM           nvarchar(255)        null,
    R_SUIVILIEN          nvarchar(255)        null,
-   constraint PK_REMPLACEMENT primary key (RETOURID)
+   constraint PK_REMPLACEMENT primary key (REMPID)
 )
 go
 
@@ -2266,7 +2266,7 @@ go
 
 alter table LITIGE
    add constraint FK_LITIGE_ENVOYER2_REMPLACE foreign key (RETOURID)
-      references REMPLACEMENT (RETOURID)
+      references REMPLACEMENT (REMPID)
 go
 
 alter table LIVRAISON
