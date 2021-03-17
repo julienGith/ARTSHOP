@@ -1,0 +1,14 @@
+public class OptionsBuild
+        {
+            public OptionsBuild()
+            {
+                settings = new AppConfiguration();
+                opsBuilder = new DbContextOptionsBuilder<ARTSHOPContext>();
+                opsBuilder.UseSqlServer(settings.SqlConnectionString);
+                dbOptions = opsBuilder.Options;
+            }
+            public DbContextOptionsBuilder<ARTSHOPContext> opsBuilder { get; set; }
+            public DbContextOptions<ARTSHOPContext> dbOptions { get; set; }
+            public AppConfiguration settings { get; set; }
+        }
+        public static OptionsBuild ops = new OptionsBuild();
