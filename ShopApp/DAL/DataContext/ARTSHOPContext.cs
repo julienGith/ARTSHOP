@@ -483,8 +483,6 @@ namespace DAL.Entities
 
             modelBuilder.Entity<Remplacement>(entity =>
             {
-                entity.Property(e => e.Retourid).ValueGeneratedNever();
-
                 entity.HasOne(d => d.Litige)
                     .WithMany(p => p.Remplacements)
                     .HasForeignKey(d => d.Litigeid)

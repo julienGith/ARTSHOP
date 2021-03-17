@@ -18,8 +18,8 @@ namespace DAL.Entities
         }
 
         [Key]
-        [Column("RETOURID")]
-        public int Retourid { get; set; }
+        [Column("REMPID")]
+        public int Rempid { get; set; }
         [Column("LITIGEID")]
         public int Litigeid { get; set; }
         [Column("R_SUIVINUM")]
