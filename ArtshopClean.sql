@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* Nom de SGBD :  Microsoft SQL Server 2016                     */
-/* Date de création :  15/03/2021 14:18:40                      */
+/* Date de création :  17/03/2021 01:55:40                      */
 /*==============================================================*/
 
 
@@ -1128,7 +1128,7 @@ go
 /* Table : BOUTIQUE                                             */
 /*==============================================================*/
 create table BOUTIQUE (
-   BTQID                int                  not null,
+   BTQID                int                  identity,
    PARTENAIREID         int                  not null,
    POLITIQUEID          int                  not null,
    B_DESCRIPTION_C      nvarchar(100)        null,
@@ -1181,7 +1181,7 @@ go
 /* Table : BOUTIQUECOMMANDE                                     */
 /*==============================================================*/
 create table BOUTIQUECOMMANDE (
-   BTQCMDID             int                  not null,
+   BTQCMDID             int                  identity,
    CMDETATID            int                  not null,
    LITIGEID             int                  null,
    CLTCMDID             int                  null,
@@ -1309,7 +1309,7 @@ go
 /* Table : CATEGORIE                                            */
 /*==============================================================*/
 create table CATEGORIE (
-   CATEGORIEID          int                  not null,
+   CATEGORIEID          int                  identity,
    CATEGORIENOM         varchar(255)         null,
    constraint PK_CATEGORIE primary key (CATEGORIEID)
 )
@@ -1349,7 +1349,7 @@ go
 /* Table : CIVILITE                                             */
 /*==============================================================*/
 create table CIVILITE (
-   CIVID                int                  not null,
+   CIVID                int                  identity,
    ABREGE               nvarchar(5)          null,
    COMPLET              nvarchar(15)         null,
    constraint PK_CIVILITE primary key (CIVID)
@@ -1360,7 +1360,7 @@ go
 /* Table : CLIENTCOMMANDE                                       */
 /*==============================================================*/
 create table CLIENTCOMMANDE (
-   CLTCMDID             int                  not null,
+   CLTCMDID             int                  identity,
    PARTENAIREID         int                  not null,
    CMDETATID            int                  not null,
    PAIEMENTID           int                  null,
@@ -1458,7 +1458,7 @@ go
 /* Table : CMDETAT                                              */
 /*==============================================================*/
 create table CMDETAT (
-   CMDETATID            int                  not null,
+   CMDETATID            int                  identity,
    CMDETAT              varchar(15)          null,
    constraint PK_CMDETAT primary key (CMDETATID)
 )
@@ -1513,7 +1513,7 @@ go
 /* Table : FACTURE                                              */
 /*==============================================================*/
 create table FACTURE (
-   FACTUREID            int                  not null,
+   FACTUREID            int                  identity,
    CLTCMDID             int                  not null,
    FACTLIEN             nvarchar(255)        null,
    constraint PK_FACTURE primary key (FACTUREID)
@@ -1534,7 +1534,7 @@ go
 /* Table : IDENTIFICATION                                       */
 /*==============================================================*/
 create table IDENTIFICATION (
-   IDENTID              int                  not null,
+   IDENTID              int                  identity,
    PARTENAIREID         int                  not null,
    CIVID                int                  not null,
    NOM                  nvarchar(70)         null,
@@ -1569,7 +1569,7 @@ go
 /* Table : LITIGE                                               */
 /*==============================================================*/
 create table LITIGE (
-   LITIGEID             int                  not null,
+   LITIGEID             int                  identity,
    REMBOURSEMENTID      int                  null,
    RETOURID             int                  null,
    BTQCMDID             int                  not null,
@@ -1612,7 +1612,7 @@ go
 /* Table : LIVRAISON                                            */
 /*==============================================================*/
 create table LIVRAISON (
-   LIVRAISONID          int                  not null,
+   LIVRAISONID          int                  identity,
    LVRTYPID             int                  not null,
    LVRETATID            int                  not null,
    LOCALISATIONID       int                  not null,
@@ -1657,7 +1657,7 @@ go
 /* Table : LIVRAISONETAT                                        */
 /*==============================================================*/
 create table LIVRAISONETAT (
-   LVRETATID            int                  not null,
+   LVRETATID            int                  identity,
    LVRETAT              nvarchar(15)         null,
    constraint PK_LIVRAISONETAT primary key (LVRETATID)
 )
@@ -1667,7 +1667,7 @@ go
 /* Table : LIVRAISONTYPE                                        */
 /*==============================================================*/
 create table LIVRAISONTYPE (
-   LVRTYPID             int                  not null,
+   LVRTYPID             int                  identity,
    LVRDESIGNATION       nvarchar(15)         null,
    LVRDELAI             smallint             null,
    LVRCOUT              decimal(9,2)         null,
@@ -1679,7 +1679,7 @@ go
 /* Table : LOCALISATION                                         */
 /*==============================================================*/
 create table LOCALISATION (
-   LOCALISATIONID       int                  not null,
+   LOCALISATIONID       int                  identity,
    BTQID                int                  not null,
    PARTENAIREID         int                  not null,
    ADRESSE              nvarchar(255)        null,
@@ -1717,7 +1717,7 @@ go
 /* Table : MEDIA                                                */
 /*==============================================================*/
 create table MEDIA (
-   MEDIAID              int                  not null,
+   MEDIAID              int                  identity,
    PRODID               int                  null,
    LITIGEID             int                  null,
    BTQID                int                  null,
@@ -1764,7 +1764,7 @@ go
 /* Table : MOYENDEPAIEMENT                                      */
 /*==============================================================*/
 create table MOYENDEPAIEMENT (
-   MDPID                int                  not null,
+   MDPID                int                  identity,
    PARTENAIREID         int                  not null,
    CB_NUM               nvarchar(16)         null,
    CVC                  nvarchar(4)          null,
@@ -1835,7 +1835,7 @@ go
 /* Table : PAIEMENT                                             */
 /*==============================================================*/
 create table PAIEMENT (
-   PAIEMENTID           int                  not null,
+   PAIEMENTID           int                  identity,
    MDPID                int                  not null,
    CLTCMDID             int                  not null,
    P_MONTANT            decimal(9,2)         null,
@@ -1867,7 +1867,7 @@ go
 /* Table : PANIER                                               */
 /*==============================================================*/
 create table PANIER (
-   PANIERID             int                  not null,
+   PANIERID             int                  identity,
    PARTENAIREID         int                  null,
    constraint PK_PANIER primary key (PANIERID)
 )
@@ -1918,7 +1918,7 @@ go
 /* Table : PARTENAIRE                                           */
 /*==============================================================*/
 create table PARTENAIRE (
-   PARTENAIREID         int                  not null,
+   PARTENAIREID         int                  identity,
    PANIERID             int                  null,
    ADMIN                bit                  null,
    VENDEUR              bit                  null,
@@ -1943,7 +1943,7 @@ go
 /* Table : POLITIQUE                                            */
 /*==============================================================*/
 create table POLITIQUE (
-   POLITIQUEID          int                  not null,
+   POLITIQUEID          int                  identity,
    ECHANGE              bit                  null,
    REMBOURSEMENT        bit                  null,
    PLTQDESCRIPTION      nvarchar(255)        null,
@@ -1955,7 +1955,7 @@ go
 /* Table : PRODUIT                                              */
 /*==============================================================*/
 create table PRODUIT (
-   PRODID               int                  not null,
+   PRODID               int                  identity,
    BTQID                int                  not null,
    CATEGORIEID          int                  not null,
    LVRTYPID             int                  not null,
@@ -2039,7 +2039,7 @@ go
 /* Table : REMBOURSEMENT                                        */
 /*==============================================================*/
 create table REMBOURSEMENT (
-   REMBOURSEMENTID      int                  not null,
+   REMBOURSEMENTID      int                  identity,
    LITIGEID             int                  not null,
    R_MONTANT            decimal(9,2)         null,
    constraint PK_REMBOURSEMENT primary key (REMBOURSEMENTID)
@@ -2112,7 +2112,7 @@ go
 /* Table : "TRANSACTION"                                        */
 /*==============================================================*/
 create table "TRANSACTION" (
-   TRANSACTIONID        int                  not null,
+   TRANSACTIONID        int                  identity,
    CODE                 nvarchar(100)        null,
    TYPE                 smallint             null,
    MODE                 smallint             null,
