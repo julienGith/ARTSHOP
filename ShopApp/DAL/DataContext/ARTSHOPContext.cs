@@ -83,6 +83,7 @@ namespace DAL.Entities
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "French_CI_AS");
+            modelBuilder.Entity<Partenaire>().Ignore(c => c.Id);
             modelBuilder.Entity<Partenaire>(b =>
             {
                 // Each User can have many UserClaims
@@ -108,6 +109,7 @@ namespace DAL.Entities
                     .WithOne(e => e.Partenaire)
                     .HasForeignKey(ur => ur.Partenaireid)
                     .IsRequired();
+
             });
             
             modelBuilder.Entity<Role>(b =>
