@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* Nom de SGBD :  Microsoft SQL Server 2016                     */
-/* Date de création :  17/03/2021 02:53:37                      */
+/* Date de création :  18/03/2021 12:14:04                      */
 /*==============================================================*/
 
 
@@ -1920,11 +1920,6 @@ go
 create table PARTENAIRE (
    PARTENAIREID         int                  identity,
    PANIERID             int                  null,
-   ADMIN                bit                  null,
-   VENDEUR              bit                  null,
-   DATEENR              datetime             null,
-   DATECON              datetime             null,
-   USERID               int                  not null,
    constraint PK_PARTENAIRE primary key (PARTENAIREID)
 )
 go

@@ -1,5 +1,6 @@
 ﻿using System;
 using DAL.DataContext;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -7,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DAL.Entities
 {
-    public partial class ARTSHOPContext : DbContext
+    public partial class ARTSHOPContext : IdentityDbContext<Partenaire, Role,int, UserClaim, UserRole, UserLogin, RoleClaim,UserToken>
     {
         public class OptionsBuild
         {
@@ -66,6 +67,10 @@ namespace DAL.Entities
         public virtual DbSet<Rtransact> Rtransacts { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
 
+        //public virtual DbSet<UserLogin> UserLogins { get; set; }
+        //public virtual DbSet<UserClaim> UserClaims { get; set; }
+        //public virtual DbSet<UserRole> UserRoles { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             
@@ -78,7 +83,48 @@ namespace DAL.Entities
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "French_CI_AS");
+            modelBuilder.Entity<Partenaire>(b =>
+            {
+                // Each User can have many UserClaims
+                b.HasMany(e => e.Claims)
+                    .WithOne(e => e.Partenaire)
+                    .HasForeignKey(uc => uc.Partenaireid)
+                    .IsRequired();
 
+                // Each User can have many UserLogins
+                b.HasMany(e => e.Logins)
+                    .WithOne(e => e.Partenaire)
+                    .HasForeignKey(ul => ul.Partenaireid)
+                    .IsRequired();
+
+                // Each User can have many UserTokens
+                b.HasMany(e => e.Tokens)
+                    .WithOne(e => e.Partenaire)
+                    .HasForeignKey(ut => ut.Partenaireid)
+                    .IsRequired();
+
+                // Each User can have many entries in the UserRole join table
+                b.HasMany(e => e.UserRoles)
+                    .WithOne(e => e.Partenaire)
+                    .HasForeignKey(ur => ur.Partenaireid)
+                    .IsRequired();
+            });
+            
+            modelBuilder.Entity<Role>(b =>
+            {
+                // Each Role can have many entries in the UserRole join table
+                b.HasMany(e => e.UserRoles)
+                    .WithOne(e => e.Role)
+                    .HasForeignKey(ur => ur.RoleId)
+                    .IsRequired();
+
+                // Each Role can have many associated RoleClaims
+                b.HasMany(e => e.RoleClaims)
+                    .WithOne(e => e.Role)
+                    .HasForeignKey(rc => rc.RoleId)
+                    .IsRequired();
+            });
+            ///////////////////////////////////////////
             modelBuilder.Entity<Boutique>(entity =>
             {
                 entity.HasOne(d => d.Partenaire)

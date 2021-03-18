@@ -20,3 +20,45 @@ public class OptionsBuild
             modelBuilder.Ignore<IdentityUserToken<string>>();
             modelBuilder.Ignore<IdentityUser<string>>();
             modelBuilder.Ignore<ApplicationUser>();
+
+            modelBuilder.Entity<Partenaire>(b =>
+            {
+                // Each User can have many UserClaims
+                b.HasMany(e => e.Claims)
+                    .WithOne(e => e.Partenaire)
+                    .HasForeignKey(uc => uc.Partenaireid)
+                    .IsRequired();
+
+                // Each User can have many UserLogins
+                b.HasMany(e => e.Logins)
+                    .WithOne(e => e.Partenaire)
+                    .HasForeignKey(ul => ul.Partenaireid)
+                    .IsRequired();
+
+                // Each User can have many UserTokens
+                b.HasMany(e => e.Tokens)
+                    .WithOne(e => e.Partenaire)
+                    .HasForeignKey(ut => ut.Partenaireid)
+                    .IsRequired();
+
+                // Each User can have many entries in the UserRole join table
+                b.HasMany(e => e.UserRoles)
+                    .WithOne(e => e.Partenaire)
+                    .HasForeignKey(ur => ur.Partenaireid)
+                    .IsRequired();
+            });
+            
+            modelBuilder.Entity<Role>(b =>
+            {
+                // Each Role can have many entries in the UserRole join table
+                b.HasMany(e => e.UserRoles)
+                    .WithOne(e => e.Role)
+                    .HasForeignKey(ur => ur.RoleId)
+                    .IsRequired();
+
+                // Each Role can have many associated RoleClaims
+                b.HasMany(e => e.RoleClaims)
+                    .WithOne(e => e.Role)
+                    .HasForeignKey(rc => rc.RoleId)
+                    .IsRequired();
+            });
