@@ -11,6 +11,6 @@ namespace DAL.Interfaces
     {
         //CRUD Partenaire
         //Add new Partenaire
-        Task<Partenaire> AddPartenaire(string email, string password);
+        //Task<Partenaire> AddPartenaire(string email, string password);
     }
 }

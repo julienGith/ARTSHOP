@@ -9,26 +9,26 @@ namespace BOL.PartenaireLogic
 {
     public class PartenaireLogic
     {
-        private Ipartenaire _partenaire = new DAL.Functions.PartenaireFunctions();
-        public async Task<Boolean> AddPartenaire(string email,string  password)
-        {
-            try
-            {
-                var result = await _partenaire.AddPartenaire(email, password);
-                if (result.Partenaireid > 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch (Exception)
-            {
+        //private Ipartenaire _partenaire = new DAL.Functions.PartenaireFunctions();
+        //public async Task<Boolean> AddPartenaire(string email,string  password)
+        //{
+        //    try
+        //    {
+        //        var result = await _partenaire.AddPartenaire(email, password);
+        //        if (result.Partenaireid > 0)
+        //        {
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
 
-                return false;
-            }
-        }
+        //        return false;
+        //    }
+        //}
     }
 }

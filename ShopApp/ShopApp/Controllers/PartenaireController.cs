@@ -10,18 +10,19 @@ namespace ShopApp.Controllers
 {
     public class PartenaireController : Controller
     {
-        private PartenaireLogic partenaire = new PartenaireLogic();
-        [Route("Add")]
-        [HttpPost]
-        public async Task<Boolean> Add(PartenaireViewModel model)
-        {
-            return await partenaire.AddPartenaire(model.Email, model.Password);
-        }
-        [Route("Register")]
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View("Register");
-        }
+        
+        //private PartenaireLogic partenaire = new PartenaireLogic();
+        //[Route("Add")]
+        //[HttpPost]
+        //public async Task<Boolean> Add(PartenaireViewModel model)
+        //{
+        //    return await partenaire.AddPartenaire(model.Email, model.Password);
+        //}
+        //[Route("Register")]
+        //[HttpGet]
+        //public IActionResult Register()
+        //{
+        //    return View("Register");
+        //}
     }
 }
