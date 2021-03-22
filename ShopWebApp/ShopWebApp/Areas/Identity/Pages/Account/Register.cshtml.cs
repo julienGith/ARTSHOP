@@ -77,10 +77,11 @@ namespace ShopWebApp.Areas.Identity.Pages.Account
             {
                 var user = new Partenaire { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                user.Id = user.Partenaireid;
+                await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-                    user.Id = user.Partenaireid;
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(

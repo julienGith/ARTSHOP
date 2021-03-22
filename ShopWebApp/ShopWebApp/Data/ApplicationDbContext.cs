@@ -65,7 +65,6 @@ namespace ShopWebApp.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "French_CI_AS");
-            modelBuilder.Entity<Partenaire>().Ignore(c => c.Id);
             modelBuilder.Entity<Partenaire>(b =>
             {
                 // Each User can have many UserClaims
