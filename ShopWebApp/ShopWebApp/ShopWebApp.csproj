@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Functions\" />
+    <ProjectReference Include="..\LOGIC\LOGIC.csproj" />
   </ItemGroup>
 
 </Project>
