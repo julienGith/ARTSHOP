@@ -51,8 +51,10 @@ namespace ShopWebApp.Data.Functions
             int changes = 0;
             Produit produit = new Produit();
 
-                changes = await _context.SaveChangesAsync();
-                produit = await _context.Produits.FirstOrDefaultAsync(p => p.Prodid == int.Parse(Prodid));
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                changes = await context.SaveChangesAsync();
+                produit = await context.Produits.FirstOrDefaultAsync(p => p.Prodid == int.Parse(Prodid));
                 produit.Categorieid = Categorieid;
                 produit.Lvrtypid = Livrtypid;
                 produit.Prix = Prix;
@@ -67,9 +69,6 @@ namespace ShopWebApp.Data.Functions
                 produit.PMetaKeywords = PMetaKeywords;
                 produit.PMetaTitre = PMetaTitre;
                 produit.Publier = Publier;
-
-            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
-            {
                 context.Produits.Update(produit);
                 result = await context.SaveChangesAsync();
             }
