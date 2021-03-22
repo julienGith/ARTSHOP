@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ShopWebApp.Models
 {
-    public class CartItem
+    public class CartItemViewModel
     {
         public Produit Produit { get; set; }
         public int Quantity { get; set; }

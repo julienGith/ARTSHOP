@@ -1,5 +1,6 @@
-﻿using LOGIC;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using ShopWebApp.Data.Interfaces;
 using ShopWebApp.Entities;
 using System;
 using System.Collections.Generic;
@@ -33,11 +34,12 @@ namespace ShopWebApp.Data.Functions
                 PMetaTitre = PMetaTitre,
                 Publier = Publier
             };
-            using (var context = new ApplicationDbContext())
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
                 await context.Produits.AddAsync(newProduit);
                 await context.SaveChangesAsync();
             }
+
 
             return newProduit;
         }
@@ -48,10 +50,9 @@ namespace ShopWebApp.Data.Functions
             int result = 0;
             int changes = 0;
             Produit produit = new Produit();
-            using (var context = new ApplicationDbContext())
-            {
-                changes = await context.SaveChangesAsync();
-                produit = await context.Produits.FirstOrDefaultAsync(p => p.Prodid == int.Parse(Prodid));
+
+                changes = await _context.SaveChangesAsync();
+                produit = await _context.Produits.FirstOrDefaultAsync(p => p.Prodid == int.Parse(Prodid));
                 produit.Categorieid = Categorieid;
                 produit.Lvrtypid = Livrtypid;
                 produit.Prix = Prix;
@@ -67,6 +68,8 @@ namespace ShopWebApp.Data.Functions
                 produit.PMetaTitre = PMetaTitre;
                 produit.Publier = Publier;
 
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
                 context.Produits.Update(produit);
                 result = await context.SaveChangesAsync();
             }
@@ -85,7 +88,7 @@ namespace ShopWebApp.Data.Functions
             int result = 0;
             int changes = 0;
             Produit produit = new Produit();
-            using (var context = new ApplicationDbContext())
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
                 changes = await context.SaveChangesAsync();
                 produit = await context.Produits.FirstOrDefaultAsync(p => p.Prodid == int.Parse(query));
@@ -108,11 +111,13 @@ namespace ShopWebApp.Data.Functions
         public async Task<List<Produit>> GetAllProduits()
         {
             List<Produit> produits = new List<Produit>();
-            using (var context = new ApplicationDbContext())
+
+                
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
                 produits = await context.Produits.Where(p => p.Publier == true).ToListAsync();
-
             }
+
             return produits;
         }
 
@@ -120,11 +125,12 @@ namespace ShopWebApp.Data.Functions
         public async Task<List<Produit>> GetProduitsKW(string query)
         {
             List<Produit> produits = new List<Produit>();
-            using (var context = new ApplicationDbContext())
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
                 produits = await context.Produits.Where(p => p.PMetaKeywords.ToLower().Contains(query.ToLower())).ToListAsync();
 
             }
+
             return produits;
         }
 
@@ -132,11 +138,12 @@ namespace ShopWebApp.Data.Functions
         public async Task<Produit> GetProduitID(string query)
         {
             Produit produit = new Produit();
-            using (var context = new ApplicationDbContext())
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
                 produit = await context.Produits.FirstOrDefaultAsync(p => p.Prodid == int.Parse(query));
 
             }
+
             return produit;
         }
     }

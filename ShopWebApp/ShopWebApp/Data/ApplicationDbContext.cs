@@ -9,9 +9,20 @@ namespace ShopWebApp.Data
 {
     public partial class ApplicationDbContext : IdentityDbContext<Partenaire, Role, int, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
     {
-        public ApplicationDbContext()
+        public class OptionsBuild
         {
+            public OptionsBuild()
+            {
+                settings = new AppConfiguration();
+                opsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+                opsBuilder.UseSqlServer(settings.SqlConnectionString);
+                dbOptions = opsBuilder.Options;
+            }
+            public DbContextOptionsBuilder<ApplicationDbContext> opsBuilder { get; set; }
+            public DbContextOptions<ApplicationDbContext> dbOptions { get; set; }
+            public AppConfiguration settings { get; set; }
         }
+        public static OptionsBuild ops = new OptionsBuild();
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
