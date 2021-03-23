@@ -76,8 +76,11 @@ namespace ShopWebApp.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "French_CI_AS");
+
+                
             modelBuilder.Entity<Partenaire>(b =>
             {
+                
                 // Each User can have many UserClaims
                 b.HasMany(e => e.Claims)
                     .WithOne(e => e.Partenaire)
