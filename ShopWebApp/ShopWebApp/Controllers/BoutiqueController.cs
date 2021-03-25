@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShopWebApp.Entities;
 using ShopWebApp.Logic.BoutiqueLogic;
+using ShopWebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,19 +14,12 @@ namespace ShopWebApp.Controllers
     {
         private BoutiqueLogic boutiqueLogic = new BoutiqueLogic();
 
-        [HttpPost]
-        public async Task<Boolean> AddBoutique()
+        [HttpGet]
+        public IActionResult Etape0()
         {
-            if (ModelState.IsValid)
-            {
-                Boutique boutique = new Boutique
-                {
-
-                }; 
-
-            }
-            return await boutiqueLogic.AddBoutique();
+            return View("BoutiqueEtape0");
         }
+
         [HttpGet]
         public IActionResult CreateBoutique()
         {

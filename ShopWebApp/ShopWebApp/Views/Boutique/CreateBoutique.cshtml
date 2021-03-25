@@ -1,0 +1,36 @@
+﻿@model BoutiqueModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Formulaire de Création d'une Boutique";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("AddBoutique", "Boutique", FormMethod.Post))
+        {
+            <h4>Veuillez remplir le formualaire</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            //@Html.HiddenFor(model => model.)
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.Raisonsociale"></label>
+                <input asp-for="Input.Raisonsociale" class="form-control" />
+                @Html.ValidationMessageFor(model => model.Input.Raisonsociale, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.BDescriptionC"></label>
+                <textarea rows="3" asp-for="Input.BDescriptionC" class="form-control"></textarea>
+                <span asp-validation-for="Input.BDescriptionC" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.BDescriptionL"></label>
+                <textarea rows="6" asp-for="Input.BDescriptionL" class="form-control"></textarea>
+                <span asp-validation-for="Input.BDescriptionL" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Valider</button>
+        }
+    </div>
+</div>

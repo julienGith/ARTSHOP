@@ -1,16 +1,34 @@
-ï»¿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
+using ShopWebApp.Entities;
+using ShopWebApp.Logic.BoutiqueLogic;
 
-namespace ShopWebApp.Models
+namespace ShopWebApp.Pages
 {
-    public class BoutiqueViewModel
+    [Authorize]
+    public class CreateBoutiqueModel : PageModel
     {
+        private readonly UserManager<Partenaire> _userManager;
+        private readonly ILogger<CreateBoutiqueModel> _logger;
+
+        public CreateBoutiqueModel(UserManager<Partenaire> userManager, ILogger<CreateBoutiqueModel> logger)
+        {
+            _userManager = userManager;
+            _logger = logger;
+
+        }
+
         [BindProperty]
         public InputModel Input { get; set; }
+
         public class InputModel
         {
             public int Btqid { get; set; }
@@ -19,22 +37,22 @@ namespace ShopWebApp.Models
 
             [Required]
             [StringLength(100)]
-            [Display(Name = "Description courte (100 caractÃ¨res)")]
+            [Display(Name = "Description courte (100 caractères)")]
             public string BDescriptionC { get; set; }
             [Required]
             [StringLength(255)]
-            [Display(Name = "Description Longue (255 caractÃ¨res)")]
+            [Display(Name = "Description Longue (255 caractères)")]
             public string BDescriptionL { get; set; }
             [Required]
             [StringLength(255)]
             [Display(Name = "Raison Sociale")]
             public string Raisonsociale { get; set; }
             [Required]
-            [StringLength(14,ErrorMessage ="Le numÃ©ro SIRET doit comporter 14 chiffres",MinimumLength =14)]
+            [StringLength(14, ErrorMessage = "Le numéro SIRET doit comporter 14 chiffres", MinimumLength = 14)]
             [Display(Name = "Siret")]
             public string Siret { get; set; }
             [Required]
-            [StringLength(9,ErrorMessage ="Le numÃ©ro SIREN doit comporter 9 chiffres",MinimumLength =9)]
+            [StringLength(9, ErrorMessage = "Le numéro SIREN doit comporter 9 chiffres", MinimumLength = 9)]
             [Display(Name = "Siren")]
             public string Siren { get; set; }
             [Required]
@@ -42,7 +60,7 @@ namespace ShopWebApp.Models
             [Display(Name = "Tel")]
             public string Btqtel { get; set; }
             [Required]
-            [StringLength(14,ErrorMessage ="Le code NAF doit comporter 14 chiffres",MinimumLength =14)]
+            [StringLength(14, ErrorMessage = "Le code NAF doit comporter 14 chiffres", MinimumLength = 14)]
             [Display(Name = "Code NAF")]
             public string Codenaf { get; set; }
             [Required]
@@ -54,15 +72,15 @@ namespace ShopWebApp.Models
             [Display(Name = "Code Guichet")]
             public string Codeguichet { get; set; }
             [Required]
-            [StringLength(11, ErrorMessage = "Le NumÃ©ro de Compte doit comporter 11 chiffres", MinimumLength = 11)]
-            [Display(Name = "NumÃ©ro de Compte")]
+            [StringLength(11, ErrorMessage = "Le Numéro de Compte doit comporter 11 chiffres", MinimumLength = 11)]
+            [Display(Name = "Numéro de Compte")]
             public string Numcompte { get; set; }
             [Required]
-            [StringLength(2, ErrorMessage = "La ClÃ© RIB doit comporter 2 chiffres", MinimumLength = 2)]
-            [Display(Name = "ClÃ© RIB")]
+            [StringLength(2, ErrorMessage = "La Clé RIB doit comporter 2 chiffres", MinimumLength = 2)]
+            [Display(Name = "Clé RIB")]
             public string Clerib { get; set; }
             [Required]
-            [StringLength(24, ErrorMessage = "La Domiciliation doit comporter 24 caratÃ¨res", MinimumLength = 24)]
+            [StringLength(24, ErrorMessage = "La Domiciliation doit comporter 24 caratères", MinimumLength = 24)]
             [Display(Name = "Domiciliation")]
             public string Domiciliation { get; set; }
             [Required]
@@ -82,15 +100,38 @@ namespace ShopWebApp.Models
             [Display(Name = "Email")]
             public string Btqtmail { get; set; }
 
-            //public string Btqmessage { get; set; }
+            public string Btqmessage { get; set; }
             public int? Ca { get; set; }
             public int? Nbsalarie { get; set; }
             public string Siteweb { get; set; }
             public string Statutjuridique { get; set; }
             [Required]
             [StringLength(100)]
-            [Display(Name = "Mots ClÃ©")]
+            [Display(Name = "Mots Clé")]
             public string Btqseo { get; set; }
+        }
+        
+        //public async Task<IActionResult> OnGetAsync()
+        //{
+        //    if (user==null)
+        //    {
+        //        return Redirect("~/");
+        //    }
+        //    return Page();
+        //}
+        public async Task<IActionResult> OnPostAsync(BoutiqueLogic boutiqueLogic)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetUserAsync(User);
+
+                //await boutiqueLogic.AddBoutique();
+                return RedirectToPage();
+            }
+            else
+            {
+                return Page();
+            }
         }
     }
 }

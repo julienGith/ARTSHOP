@@ -23,8 +23,7 @@ namespace ShopWebApp.Entities
             Moyendepaiements = new HashSet<Moyendepaiement>();
             Opinions = new HashSet<Opinion>();
             Paniers = new HashSet<Panier>();
-
-
+            
         }
 
         [Key]

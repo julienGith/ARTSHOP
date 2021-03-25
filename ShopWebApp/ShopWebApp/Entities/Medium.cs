@@ -23,6 +23,8 @@ namespace ShopWebApp.Entities
         public int? Litigeid { get; set; }
         [Column("BTQID")]
         public int? Btqid { get; set; }
+        //[Column("CATEGORIEID")]
+        //public int? Categorieid { get; set; }
         [Column("LIEN")]
         [StringLength(255)]
         public string Lien { get; set; }
@@ -46,5 +48,8 @@ namespace ShopWebApp.Entities
         [ForeignKey(nameof(Prodid))]
         [InverseProperty(nameof(Produit.Media))]
         public virtual Produit Prod { get; set; }
+        //[ForeignKey(nameof(Categorieid))]
+        //[InverseProperty(nameof(Categorie.Media))]
+        //public virtual Categorie Cat { get; set; }
     }
 }

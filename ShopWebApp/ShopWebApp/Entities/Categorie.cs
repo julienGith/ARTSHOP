@@ -16,6 +16,7 @@ namespace ShopWebApp.Entities
             CatnavCatParents = new HashSet<Catnav>();
             CatnavCategories = new HashSet<Catnav>();
             Produits = new HashSet<Produit>();
+            //Media = new HashSet<Medium>();
         }
 
         [Key]
@@ -31,5 +32,8 @@ namespace ShopWebApp.Entities
         public virtual ICollection<Catnav> CatnavCategories { get; set; }
         [InverseProperty(nameof(Produit.Categorie))]
         public virtual ICollection<Produit> Produits { get; set; }
+        //[InverseProperty(nameof(Medium.Categorieid))]
+        //public virtual ICollection<Medium> Media { get; set; }
+
     }
 }

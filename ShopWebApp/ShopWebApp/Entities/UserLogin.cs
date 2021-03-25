@@ -10,7 +10,10 @@ using System.Threading.Tasks;
 namespace ShopWebApp.Entities
 {
     public class UserLogin : IdentityUserLogin<int>
-    {
+    {public UserLogin()
+        {
+            
+        }
         [Key]
         public int UserLoginID { get; set; }
         //[Column("PARTENAIREID")]

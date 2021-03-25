@@ -11,11 +11,16 @@ namespace ShopWebApp.Entities
 {
     public class UserToken : IdentityUserToken<int>
     {
+        public UserToken()
+        {
+            
+        }
         [Key]
         public int UserTokenID { get; set; }
         public virtual Partenaire Partenaire { get; set; }
 
         //[Column("PARTENAIREID")]
         public int Partenaireid { get; set; }
+
     }
 }
