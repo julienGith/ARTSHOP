@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace E_Shop.Migrations
 {
-    public partial class Identity : Migration
+    public partial class identity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,7 @@ namespace E_Shop.Migrations
                 {
                     CATEGORIEID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CATEGORIENOM = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: true)
+                    CATEGORIENOM = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -91,6 +91,21 @@ namespace E_Shop.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TRANSACTION",
                 columns: table => new
                 {
@@ -102,11 +117,25 @@ namespace E_Shop.Migrations
                     TRANSACTSTATUT = table.Column<short>(type: "smallint", nullable: true),
                     TRANSACTCREA = table.Column<DateTime>(type: "datetime", nullable: true),
                     TRANSACTMODIF = table.Column<DateTime>(type: "datetime", nullable: true),
-                    TRANSACTCONTENU = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
+                    TRANSACTCONTENU = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TRANSACTION", x => x.TRANSACTIONID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
                 });
 
             migrationBuilder.CreateTable(
@@ -134,6 +163,27 @@ namespace E_Shop.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RoleClaims_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AVIS",
                 columns: table => new
                 {
@@ -142,8 +192,8 @@ namespace E_Shop.Migrations
                     BTQID = table.Column<int>(type: "int", nullable: false),
                     A_NOTE = table.Column<short>(type: "smallint", nullable: true),
                     A_DATE = table.Column<DateTime>(type: "datetime", nullable: true),
-                    A_TEXTE = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    A_REPONSE = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    A_TEXTE = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
+                    A_REPONSE = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
                     A_REPDATE = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
                 constraints: table =>
@@ -183,8 +233,8 @@ namespace E_Shop.Migrations
                     ID = table.Column<int>(type: "int", nullable: false),
                     PRODID = table.Column<int>(type: "int", nullable: false),
                     BTQID = table.Column<int>(type: "int", nullable: false),
-                    E_QUEST = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    E_REP = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    E_QUEST = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
+                    E_REP = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
                     E_QUESTDATE = table.Column<DateTime>(type: "datetime", nullable: true),
                     E_REPDATE = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
@@ -223,8 +273,8 @@ namespace E_Shop.Migrations
                     LVRTYPID = table.Column<int>(type: "int", nullable: false),
                     LVRETATID = table.Column<int>(type: "int", nullable: false),
                     LOCALISATIONID = table.Column<int>(type: "int", nullable: false),
-                    SUIVINUM = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    SUIVILIEN = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    SUIVINUM = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SUIVILIEN = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DATEENVOI = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
                 constraints: table =>
@@ -264,7 +314,7 @@ namespace E_Shop.Migrations
                     DESCRIPTION = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     IMAGE = table.Column<bool>(type: "bit", nullable: true),
                     VIDEO = table.Column<bool>(type: "bit", nullable: true),
-                    HTML = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
+                    HTML = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -286,15 +336,15 @@ namespace E_Shop.Migrations
                     CATEGORIEID = table.Column<int>(type: "int", nullable: false),
                     LVRTYPID = table.Column<int>(type: "int", nullable: false),
                     PRIX = table.Column<decimal>(type: "decimal(9,2)", nullable: true),
-                    P_NOM = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    P_DESCRIPTION_C = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    P_DESCRIPTION_L = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    P_NOM = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    P_DESCRIPTION_C = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
+                    P_DESCRIPTION_L = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     STOCK = table.Column<short>(type: "smallint", nullable: true),
                     DISPONIBILITE = table.Column<short>(type: "smallint", nullable: true),
                     RABAIS = table.Column<short>(type: "smallint", nullable: true),
                     PREPARATION = table.Column<short>(type: "smallint", nullable: true),
-                    P_SEO = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    P_META_KEYWORDS = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    P_SEO = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
+                    P_META_KEYWORDS = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
                     P_META_TITRE = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     PUBLIER = table.Column<bool>(type: "bit", nullable: true)
                 },
@@ -374,7 +424,7 @@ namespace E_Shop.Migrations
                     REMBOURSEMENTID = table.Column<int>(type: "int", nullable: true),
                     REMPID = table.Column<int>(type: "int", nullable: true),
                     BTQCMDID = table.Column<int>(type: "int", nullable: false),
-                    LTGMSG = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
+                    LTGMSG = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -414,8 +464,8 @@ namespace E_Shop.Migrations
                     REMPID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LITIGEID = table.Column<int>(type: "int", nullable: false),
-                    R_SUIVINUM = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    R_SUIVILIEN = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
+                    R_SUIVINUM = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    R_SUIVILIEN = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -509,7 +559,7 @@ namespace E_Shop.Migrations
                     FACTUREID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CLTCMDID = table.Column<int>(type: "int", nullable: false),
-                    FACTLIEN = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
+                    FACTLIEN = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -615,7 +665,7 @@ namespace E_Shop.Migrations
                 name: "PARTENAIRE",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PANIERID = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -635,7 +685,7 @@ namespace E_Shop.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PARTENAIRE", x => x.ID);
+                    table.PrimaryKey("PK_PARTENAIRE", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -646,8 +696,8 @@ namespace E_Shop.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ID = table.Column<int>(type: "int", nullable: false),
                     POLITIQUEID = table.Column<int>(type: "int", nullable: false),
-                    B_DESCRIPTION_C = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    B_DESCRIPTION_L = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    B_DESCRIPTION_C = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    B_DESCRIPTION_L = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RAISONSOCIALE = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     SIRET = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: true),
                     SIREN = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: true),
@@ -667,7 +717,7 @@ namespace E_Shop.Migrations
                     NBSALARIE = table.Column<int>(type: "int", nullable: true),
                     SITEWEB = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     STATUTJURIDIQUE = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: true),
-                    BTQSEO = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
+                    BTQSEO = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -682,7 +732,7 @@ namespace E_Shop.Migrations
                         name: "FK_BOUTIQUE_CREER_PARTENAI",
                         column: x => x.ID,
                         principalTable: "PARTENAIRE",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -706,7 +756,7 @@ namespace E_Shop.Migrations
                         name: "FK_MOYENDEP_UTILISER_PARTENAI",
                         column: x => x.ID,
                         principalTable: "PARTENAIRE",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -725,8 +775,73 @@ namespace E_Shop.Migrations
                         name: "FK_PANIER_DISPOSER_PARTENAI",
                         column: x => x.ID,
                         principalTable: "PARTENAIRE",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserClaims_PARTENAIRE_UserId",
+                        column: x => x.UserId,
+                        principalTable: "PARTENAIRE",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK_UserLogins_PARTENAIRE_UserId",
+                        column: x => x.UserId,
+                        principalTable: "PARTENAIRE",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_UserRoles_PARTENAIRE_UserId",
+                        column: x => x.UserId,
+                        principalTable: "PARTENAIRE",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserRoles_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -1014,6 +1129,26 @@ namespace E_Shop.Migrations
                 table: "REMPLACEMENT",
                 column: "LITIGEID");
 
+            migrationBuilder.CreateIndex(
+                name: "IX_RoleClaims_RoleId",
+                table: "RoleClaims",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserClaims_UserId",
+                table: "UserClaims",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserLogins_UserId",
+                table: "UserLogins",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRoles_RoleId",
+                table: "UserRoles",
+                column: "RoleId");
+
             migrationBuilder.AddForeignKey(
                 name: "FK_AVIS_AVIS_PRODUIT",
                 table: "AVIS",
@@ -1027,7 +1162,7 @@ namespace E_Shop.Migrations
                 table: "AVIS",
                 column: "ID",
                 principalTable: "PARTENAIRE",
-                principalColumn: "ID",
+                principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
@@ -1067,7 +1202,7 @@ namespace E_Shop.Migrations
                 table: "ECHANGE",
                 column: "ID",
                 principalTable: "PARTENAIRE",
-                principalColumn: "ID",
+                principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
@@ -1091,7 +1226,7 @@ namespace E_Shop.Migrations
                 table: "LOCALISATION",
                 column: "ID",
                 principalTable: "PARTENAIRE",
-                principalColumn: "ID",
+                principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
@@ -1163,7 +1298,7 @@ namespace E_Shop.Migrations
                 table: "IDENTIFICATION",
                 column: "ID",
                 principalTable: "PARTENAIRE",
-                principalColumn: "ID",
+                principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
@@ -1203,7 +1338,7 @@ namespace E_Shop.Migrations
                 table: "CLIENTCOMMANDE",
                 column: "ID",
                 principalTable: "PARTENAIRE",
-                principalColumn: "ID",
+                principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
@@ -1299,6 +1434,21 @@ namespace E_Shop.Migrations
                 name: "REMB_TRANSACT");
 
             migrationBuilder.DropTable(
+                name: "RoleClaims");
+
+            migrationBuilder.DropTable(
+                name: "UserClaims");
+
+            migrationBuilder.DropTable(
+                name: "UserLogins");
+
+            migrationBuilder.DropTable(
+                name: "UserRoles");
+
+            migrationBuilder.DropTable(
+                name: "UserTokens");
+
+            migrationBuilder.DropTable(
                 name: "LIVRAISON");
 
             migrationBuilder.DropTable(
@@ -1309,6 +1459,9 @@ namespace E_Shop.Migrations
 
             migrationBuilder.DropTable(
                 name: "TRANSACTION");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "LIVRAISONETAT");
