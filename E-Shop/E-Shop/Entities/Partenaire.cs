@@ -29,9 +29,9 @@ namespace E_Shop.Entities
             UserRoles = new HashSet<UserRole>();
         }
 
-        [Key]
-        [Column("ID")]
-        new public int Id { get; set; }
+        //[Key]
+        //[Column("ID")]
+        //new public int Id { get; set; }
         [Column("PANIERID")]
         public int? Panierid { get; set; }
 
