@@ -77,8 +77,7 @@ namespace E_Shop.Areas.Identity.Pages.Account
             {
                 var user = new Partenaire { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                //user. = user.Id;
-                await _userManager.UpdateAsync(user);
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
