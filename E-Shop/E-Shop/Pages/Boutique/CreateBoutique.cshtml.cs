@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using E_Shop.Extensions;
 
 namespace E_Shop.Pages.Boutique
 {
@@ -14,21 +15,30 @@ namespace E_Shop.Pages.Boutique
         public int Id { get; set; }
         public int Politiqueid { get; set; }
         [BindProperty]
-        public InputModel Input { get; set; }
-        public class InputModel
+        public Step1 step1 { get; set; }
+        [BindProperty]
+        public Step2 step2 { get; set; }
+        [BindProperty]
+        public Step3 step3 { get; set; }
+
+        public class Step1
         {
             [Required]
-            [StringLength(100)]
-            [Display(Name = "Description courte (100 caractères)")]
+            [StringLength(500)]
+            [Display(Name = "Description courte")]
             public string BDescriptionC { get; set; }
             [Required]
-            [StringLength(255)]
-            [Display(Name = "Description Longue (255 caractères)")]
+            [StringLength(4000)]
+            [Display(Name = "Description Longue")]
             public string BDescriptionL { get; set; }
             [Required]
             [StringLength(255)]
             [Display(Name = "Raison Sociale")]
             public string Raisonsociale { get; set; }
+        }
+        public class Step2
+        {
+            public Step2() { }
             [Required]
             [StringLength(14, ErrorMessage = "Le numéro SIRET doit comporter 14 chiffres", MinimumLength = 14)]
             [Display(Name = "Siret")]
@@ -41,6 +51,23 @@ namespace E_Shop.Pages.Boutique
             [StringLength(15)]
             [Display(Name = "Tel")]
             public string Btqtel { get; set; }
+            [Required]
+            [EmailAddress]
+            [Display(Name = "Email")]
+            public string Btqtmail { get; set; }
+            public string Btqmessage { get; set; }
+            public int? Ca { get; set; }
+            public int? Nbsalarie { get; set; }
+            public string Siteweb { get; set; }
+            public string Statutjuridique { get; set; }
+            [Required]
+            [StringLength(100)]
+            [Display(Name = "Mots Clé")]
+            public string Btqseo { get; set; }
+        }
+        public class Step3
+        {
+            public Step3() { }
             [Required]
             [StringLength(14, ErrorMessage = "Le code NAF doit comporter 14 chiffres", MinimumLength = 14)]
             [Display(Name = "Code NAF")]
@@ -77,20 +104,22 @@ namespace E_Shop.Pages.Boutique
             [StringLength(140)]
             [Display(Name = "Titulaire")]
             public string Titulaire { get; set; }
-            [Required]
-            [EmailAddress]
-            [Display(Name = "Email")]
-            public string Btqtmail { get; set; }
+        }
+        //public Task<IActionResult> SetStep1()
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        HttpContext.Session.Set<Step1>("step1", step1);
+        //    }
+        //    return Page();
+        //}
+        public async Task SetStep2()
+        {
 
-            public string Btqmessage { get; set; }
-            public int? Ca { get; set; }
-            public int? Nbsalarie { get; set; }
-            public string Siteweb { get; set; }
-            public string Statutjuridique { get; set; }
-            [Required]
-            [StringLength(100)]
-            [Display(Name = "Mots Clé")]
-            public string Btqseo { get; set; }
+        }
+        public async Task SetStep3()
+        {
+
         }
         public void OnGet()
         {

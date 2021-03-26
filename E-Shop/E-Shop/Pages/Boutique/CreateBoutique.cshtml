@@ -5,29 +5,31 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-
-<div class="row justify-content-center">
-    <div>
-        <form method="post">
-            <h4>Create a new account.</h4>
-            <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Input.Raisonsociale"></label>
-                <input asp-for="Input.Raisonsociale" class="form-control" />
-                <span asp-validation-for="Input.Raisonsociale" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.BDescriptionC"></label>
-                <textarea cols="100" rows="3" asp-for="Input.BDescriptionC" class="form-control"></textarea>
-                <span asp-validation-for="Input.BDescriptionC" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.BDescriptionL"></label>
-                <textarea cols="100" rows="20" asp-for="Input.BDescriptionL" class="form-control"></textarea>
-                <span asp-validation-for="Input.BDescriptionL" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-primary">Suivant</button>
-        </form>
+@if (true)
+{
+    <div class="row justify-content-center">
+        <div>
+            <form asp-action="Step1">
+                <h4> Etape 1 </h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Input.Raisonsociale"></label>
+                    <input asp-for="Input.Raisonsociale" class="form-control" />
+                    <span asp-validation-for="Input.Raisonsociale" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.BDescriptionC"></label>
+                    <textarea cols="100" rows="3" asp-for="Input.BDescriptionC" class="form-control"></textarea>
+                    <span asp-validation-for="Input.BDescriptionC" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.BDescriptionL"></label>
+                    <textarea cols="100" rows="20" asp-for="Input.BDescriptionL" class="form-control"></textarea>
+                    <span asp-validation-for="Input.BDescriptionL" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Suivant</button>
+            </form>
+        </div>
     </div>
-</div>
+}
