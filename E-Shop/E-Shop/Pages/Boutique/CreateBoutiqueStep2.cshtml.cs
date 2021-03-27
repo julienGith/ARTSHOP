@@ -37,8 +37,8 @@ namespace E_Shop.Pages.Boutique
             [Display(Name = "Email")]
             public string Btqtmail { get; set; }
             public string Btqmessage { get; set; }
-            public int? Ca { get; set; }
-            public int? Nbsalarie { get; set; }
+            public int Ca { get; set; }
+            public int Nbsalarie { get; set; }
             public string Siteweb { get; set; }
             public string Statutjuridique { get; set; }
             [Required]

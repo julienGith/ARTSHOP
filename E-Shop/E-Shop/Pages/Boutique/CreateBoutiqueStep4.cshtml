@@ -2,3 +2,29 @@
 @model E_Shop.Pages.Boutique.CreateBoutiqueStep4Model
 @{
 }
+<div class="row justify-content-center">
+    <div>
+        <form method="post">
+            <h4> Etape 1 </h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="step4.Echange"></label>
+                <input asp-for="step4.Echange" class="form-control" />
+                <span asp-validation-for="step4.Echange" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="step4.Remboursement"></label>
+                <input asp-for="step4.Remboursement" class="form-control"/>
+                <span asp-validation-for="step4.Remboursement" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="step4.Pltqdescription"></label>
+                <input asp-for="step4.Pltqdescription" class="form-control"/>
+                <span asp-validation-for="step4.Pltqdescription" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Suivant</button>
+            <button type="submit" asp-page-handler="Back" class="btn btn-primary">Précédent</button>
+        </form>
+    </div>
+</div>
