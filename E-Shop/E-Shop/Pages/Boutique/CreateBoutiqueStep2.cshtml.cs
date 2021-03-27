@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using E_Shop.Extensions;
+using E_Shop.Logic;
 
 namespace E_Shop.Pages.Boutique
 {
@@ -49,6 +50,17 @@ namespace E_Shop.Pages.Boutique
         {
             if (ModelState.IsValid)
             {
+                if (!Luhn.CheckLuhn(step2.Siren))
+                {
+                    ModelState.AddModelError("Siren", "Le numéro Siren est incorrect");
+                    return Page();
+                }
+                if (!Luhn.CheckLuhn(step2.Siret))
+                {
+                    ModelState.AddModelError("Siret", "Le numéro Siret est incorrect");
+                    return Page();
+                }
+
                 HttpContext.Session.Set<Step2>("step1", step2);
                 return Redirect("/boutique/CreateBoutiqueStep3");
             }

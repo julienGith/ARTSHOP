@@ -45,8 +45,10 @@ namespace E_Shop.Pages.Boutique
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByEmailAsync(User.Identity.Name);
-                step1.UserId = user.Id;
+                //var user = await _userManager.FindByEmailAsync(User.Identity.Name);
+                //step1.UserId = user.Id;
+                step1.BDescriptionL = step1.BDescriptionL.ToHtml();
+                step1.BDescriptionC = step1.BDescriptionC.ToHtml();
                 HttpContext.Session.Set<Step1>("step1", step1);
                 step1 = HttpContext.Session.Get<Step1>("step1");
                 return RedirectToPage("/boutique/CreateBoutiqueStep2");
@@ -60,7 +62,6 @@ namespace E_Shop.Pages.Boutique
             {
                 step1 = HttpContext.Session.Get<Step1>("step1");
             }
-
             return Page();
         }
     }

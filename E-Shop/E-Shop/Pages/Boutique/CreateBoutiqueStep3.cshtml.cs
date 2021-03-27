@@ -56,7 +56,7 @@ namespace E_Shop.Pages.Boutique
             if (ModelState.IsValid)
             {
                 HttpContext.Session.Set<Step3>("step1", step3);
-
+                //boutiqueLogic.AddBoutique()
                 return Redirect("/boutique/CreateBoutiqueStep4");
             }
             return Page();
@@ -64,9 +64,6 @@ namespace E_Shop.Pages.Boutique
         public IActionResult OnPostBack()
         {
             HttpContext.Session.Set<Step3>("step3", step3);
-
-            //boutiqueLogic.AddBoutique()
-
             return Redirect("/boutique/CreateBoutiqueStep2");
         }
         public void OnGet()
