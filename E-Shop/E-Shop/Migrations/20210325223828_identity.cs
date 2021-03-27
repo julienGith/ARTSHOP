@@ -707,7 +707,7 @@ namespace E_Shop.Migrations
                     CODEGUICHET = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: true),
                     NUMCOMPTE = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true),
                     CLERIB = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: true),
-                    DOMICILIATION = table.Column<string>(type: "nvarchar(24)", maxLength: 24, nullable: true),
+                    DOMICILIATION = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IBAN = table.Column<string>(type: "nvarchar(27)", maxLength: 27, nullable: true),
                     BIC = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true),
                     TITULAIRE = table.Column<string>(type: "nvarchar(140)", maxLength: 140, nullable: true),
