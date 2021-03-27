@@ -38,7 +38,6 @@ namespace E_Shop.Pages.Boutique
         }
         public class Step2
         {
-            public Step2() { }
             [Required]
             [StringLength(14, ErrorMessage = "Le numéro SIRET doit comporter 14 chiffres", MinimumLength = 14)]
             [Display(Name = "Siret")]
@@ -47,6 +46,10 @@ namespace E_Shop.Pages.Boutique
             [StringLength(9, ErrorMessage = "Le numéro SIREN doit comporter 9 chiffres", MinimumLength = 9)]
             [Display(Name = "Siren")]
             public string Siren { get; set; }
+            [Required]
+            [StringLength(14, ErrorMessage = "Le code NAF doit comporter 14 chiffres", MinimumLength = 14)]
+            [Display(Name = "Code NAF")]
+            public string Codenaf { get; set; }
             [Required]
             [StringLength(15)]
             [Display(Name = "Tel")]
@@ -67,11 +70,6 @@ namespace E_Shop.Pages.Boutique
         }
         public class Step3
         {
-            public Step3() { }
-            [Required]
-            [StringLength(14, ErrorMessage = "Le code NAF doit comporter 14 chiffres", MinimumLength = 14)]
-            [Display(Name = "Code NAF")]
-            public string Codenaf { get; set; }
             [Required]
             [StringLength(5, ErrorMessage = "Le code Banque doit comporter 5 chiffres", MinimumLength = 5)]
             [Display(Name = "Code Banque")]
@@ -105,24 +103,19 @@ namespace E_Shop.Pages.Boutique
             [Display(Name = "Titulaire")]
             public string Titulaire { get; set; }
         }
-        //public Task<IActionResult> SetStep1()
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        HttpContext.Session.Set<Step1>("step1", step1);
-        //    }
-        //    return Page();
-        //}
-        public async Task SetStep2()
+        public async Task<IActionResult> SetStep1()
+        {
+            if (ModelState.IsValid)
+            {
+                HttpContext.Session.Set<Step1>("step1", step1);
+                return Redirect("/boutique/CreateBoutiqueStep2");
+            }
+            return Page();
+        }
+
+        public async Task OnGet()
         {
 
-        }
-        public async Task SetStep3()
-        {
-
-        }
-        public void OnGet()
-        {
         }
 
     }

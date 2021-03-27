@@ -1,0 +1,30 @@
+﻿@page
+@model E_Shop.Pages.Boutique.CreateBoutiqueStep1Model
+@{
+}
+
+    <div class="row justify-content-center">
+        <div>
+            <form method="post">
+                <h4> Etape 1 </h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="step1.Raisonsociale"></label>
+                    <input asp-for="step1.Raisonsociale" class="form-control" />
+                    <span asp-validation-for="step1.Raisonsociale" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="step1.BDescriptionC"></label>
+                    <textarea cols="100" rows="3" asp-for="step1.BDescriptionC" class="form-control"></textarea>
+                    <span asp-validation-for="step1.BDescriptionC" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="step1.BDescriptionL"></label>
+                    <textarea cols="100" rows="20" asp-for="step1.BDescriptionL" class="form-control"></textarea>
+                    <span asp-validation-for="step1.BDescriptionL" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Suivant</button>
+            </form>
+        </div>
+    </div>
