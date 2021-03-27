@@ -49,7 +49,7 @@ namespace E_Shop.Pages.Boutique
             [Display(Name = "Titulaire")]
             public string Titulaire { get; set; }
         }
-        public async Task<IActionResult> SetStep3()
+        public async Task<IActionResult> OnPostStep3()
         {
             if (ModelState.IsValid)
             {
@@ -57,6 +57,11 @@ namespace E_Shop.Pages.Boutique
                 return Redirect("/boutique/CreateBoutiqueStep4");
             }
             return Page();
+        }
+        public IActionResult OnPostBack()
+        {
+            HttpContext.Session.Set<Step3>("step3", step3);
+            return Redirect("/boutique/CreateBoutiqueStep2");
         }
         public void OnGet()
         {
