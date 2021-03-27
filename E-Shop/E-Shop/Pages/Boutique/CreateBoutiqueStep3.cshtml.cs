@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using E_Shop.Extensions;
-
+using E_Shop.Logic.BoutiqueLogic;
 
 namespace E_Shop.Pages.Boutique
 {
     public class CreateBoutiqueStep3Model : PageModel
     {
+        private BoutiqueLogic boutiqueLogic = new BoutiqueLogic();
+        
         [BindProperty]
         public Step3 step3 { get; set; }
         public class Step3
@@ -33,7 +35,7 @@ namespace E_Shop.Pages.Boutique
             [Display(Name = "Clé RIB")]
             public string Clerib { get; set; }
             [Required]
-            [StringLength(24, ErrorMessage = "La Domiciliation doit comporter 24 caratères", MinimumLength = 24)]
+            //[StringLength(24, ErrorMessage = "La Domiciliation doit comporter 24 caratères", MinimumLength = 24)]
             [Display(Name = "Domiciliation")]
             public string Domiciliation { get; set; }
             [Required]
@@ -49,11 +51,12 @@ namespace E_Shop.Pages.Boutique
             [Display(Name = "Titulaire")]
             public string Titulaire { get; set; }
         }
-        public async Task<IActionResult> OnPostStep3()
+        public async Task<IActionResult> OnPost()
         {
             if (ModelState.IsValid)
             {
                 HttpContext.Session.Set<Step3>("step1", step3);
+
                 return Redirect("/boutique/CreateBoutiqueStep4");
             }
             return Page();
@@ -61,10 +64,17 @@ namespace E_Shop.Pages.Boutique
         public IActionResult OnPostBack()
         {
             HttpContext.Session.Set<Step3>("step3", step3);
+
+            //boutiqueLogic.AddBoutique()
+
             return Redirect("/boutique/CreateBoutiqueStep2");
         }
         public void OnGet()
         {
+            if (HttpContext.Session.Get<Step3>("step3") != null)
+            {
+                step3 = HttpContext.Session.Get<Step3>("step3");
+            }
         }
     }
 }

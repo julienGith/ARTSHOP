@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using E_Shop.Extensions;
-using static E_Shop.Pages.Boutique.CreateBoutiqueStep1Model;
 
 namespace E_Shop.Pages.Boutique
 {

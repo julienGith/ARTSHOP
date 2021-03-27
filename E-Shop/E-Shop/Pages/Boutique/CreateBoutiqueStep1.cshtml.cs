@@ -6,16 +6,28 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using E_Shop.Extensions;
+using Microsoft.AspNetCore.Identity;
+using E_Shop.Entities;
 
 
 namespace E_Shop.Pages.Boutique
 {
     public class CreateBoutiqueStep1Model : PageModel
     {
+        private readonly UserManager<Partenaire> _userManager;
+
+        public CreateBoutiqueStep1Model(UserManager<Partenaire> userManager)
+        {
+            _userManager = userManager;
+
+        }
+
         [BindProperty]
         public Step1 step1 { get; set; }
         public class Step1
         {
+            public int UserId { get; set; }
+
             [Required]
             [StringLength(500)]
             [Display(Name = "Description courte")]
@@ -29,10 +41,12 @@ namespace E_Shop.Pages.Boutique
             [Display(Name = "Raison Sociale")]
             public string Raisonsociale { get; set; }
         }
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.FindByEmailAsync(User.Identity.Name);
+                step1.UserId = user.Id;
                 HttpContext.Session.Set<Step1>("step1", step1);
                 step1 = HttpContext.Session.Get<Step1>("step1");
                 return RedirectToPage("/boutique/CreateBoutiqueStep2");
