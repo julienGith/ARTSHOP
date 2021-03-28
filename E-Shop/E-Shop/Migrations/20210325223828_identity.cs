@@ -249,8 +249,8 @@ namespace E_Shop.Migrations
                 {
                     LOCALISATIONID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BTQID = table.Column<int>(type: "int", nullable: false),
-                    ID = table.Column<int>(type: "int", nullable: false),
+                    BTQID = table.Column<int>(type: "int", nullable: true),
+                    ID = table.Column<int>(type: "int", nullable: true),
                     ADRESSE = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     RUE = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     NUM = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
