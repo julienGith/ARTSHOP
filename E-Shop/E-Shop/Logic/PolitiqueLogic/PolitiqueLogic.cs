@@ -13,25 +13,10 @@ namespace E_Shop.Logic.PolitiqueLogic
         private IPolitique _politique = new PolitiqueFunctions();
         //CRUD Politque
         //ADD new Politique
-        public async Task<Boolean> AddPolitique(bool Echange, bool Remboursement, string Description)
+        public async Task<Politique> AddPolitique(bool Echange, bool Remboursement, string Description)
         {
-            try
-            {
-                var result = await _politique.AddPolitique(Echange, Remboursement, Description);
-                if (result.Politiqueid > 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch (Exception)
-            {
-
-                return false;
-            }
+            var result = await _politique.AddPolitique(Echange, Remboursement, Description);
+            return result;
         }
         //Update Politque
         public async Task<Boolean> UpdatePolitque(int politiqueid, bool Echange, bool Remboursement, string Description)

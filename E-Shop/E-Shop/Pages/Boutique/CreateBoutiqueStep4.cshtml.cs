@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using E_Shop.Extensions;
+using E_Shop.Logic.BoutiqueLogic;
+using E_Shop.Logic.PolitiqueLogic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using static E_Shop.Pages.Boutique.CreateBoutiqueStep1Model;
@@ -15,6 +17,7 @@ namespace E_Shop.Pages.Boutique
     public class CreateBoutiqueStep4Model : PageModel
     {
         private BoutiqueLogic boutiqueLogic = new BoutiqueLogic();
+        private PolitiqueLogic politiqueLogic = new PolitiqueLogic();
 
         [BindProperty]
         public Step4 step4 { get; set; }
@@ -43,8 +46,8 @@ namespace E_Shop.Pages.Boutique
                 step1 = HttpContext.Session.Get<Step1>("step1");
                 step2 = HttpContext.Session.Get<Step2>("step2");
                 step3 = HttpContext.Session.Get<Step3>("step3");
-
-                await boutiqueLogic.AddBoutique(step1.UserId, 0, step1.BDescriptionC, step1.BDescriptionL, step1.Raisonsociale, step2.Siret, step2.Siren, step2.Btqtel,
+                var result = await politiqueLogic.AddPolitique(step4.Echange, step4.Remboursement, step4.Pltqdescription);
+                await boutiqueLogic.AddBoutique(step1.UserId, result.Politiqueid, step1.BDescriptionC, step1.BDescriptionL, step1.Raisonsociale, step2.Siret, step2.Siren, step2.Btqtel,
                     step2.Codenaf, step3.Codebanque, step3.Codeguichet, step3.Numcompte, step3.Clerib, step3.Domiciliation, step3.Iban, step3.Bic, step3.Titulaire, step2.Btqtmail,
                     null, step2.Ca, step2.Nbsalarie, step2.Siteweb, step2.Statutjuridique, step2.Btqseo);
                 return Redirect("/boutique/CreateBoutiqueStep5");
