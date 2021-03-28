@@ -1,4 +1,5 @@
-﻿using E_Shop.Entities;
+﻿using E_Shop.Data.Interfaces;
+using E_Shop.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,71 +8,123 @@ using System.Threading.Tasks;
 
 namespace E_Shop.Data.Functions
 {
-    public class LocalisationFunctions
+    public class LocalisationFunctions : ILocalisation
     {
         //CRUD Localisation
-        //ADD new Localisation
-        //public async Task<Localisation> AddLocalisation()
-        //{
-
-        //    //Localisation newlocalisation = new Localisation
-        //    //{
-        //    //    Echange = Echange,
-        //    //    Remboursement = Remboursement,
-        //    //    Pltqdescription = Description
-
-        //    //};
-        //    //using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
-        //    //{
-        //    //    await context.Politiques.AddAsync(newpolitique);
-        //    //    await context.SaveChangesAsync();
-        //    //}
-
-        //    //return newpolitique;
-        //}
-        //Update Politque
-        public async Task<Boolean> UpdatePolitque(int politiqueid, bool Echange, bool Remboursement, string Description)
+        //ADD new BoutiqueLocalisation
+        public async Task<Localisation> AddBoutiqueLocalisation(int boutiqueId,string rue,string num,string ville, string codePostal,string pays)
         {
+
+            Localisation newlocalisation = new Localisation
+            {
+                Btqid = boutiqueId,
+                Rue = rue,
+                Num = num,
+                Ville= ville,
+                Pays = pays
+
+            };
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                Politique newpolitique = new Politique
-                {
-                    Politiqueid = politiqueid,
-                    Echange = Echange,
-                    Remboursement = Remboursement,
-                    Pltqdescription = Description
-
-                };
-
-                context.Politiques.Update(newpolitique);
+                await context.Localisations.AddAsync(newlocalisation);
                 await context.SaveChangesAsync();
             }
 
-            return true;
+            return newlocalisation;
         }
-        //Supprimer Boutique
-        public async Task<Boolean> DeletePolitque(int politiqueid)
+        //ADD new PartenaireLocalisation
+        public async Task<Localisation> AddPartenaireLocalisation(int id, string rue, string num, string ville, string codePostal, string pays)
         {
-            Politique politique = new Politique();
+
+            Localisation newlocalisation = new Localisation
+            {
+                Id = id,
+                Rue = rue,
+                Num = num,
+                Ville = ville,
+                Pays = pays
+
+            };
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                politique = await context.Politiques.FirstOrDefaultAsync(p => p.Politiqueid == politiqueid);
-                context.Politiques.Remove(politique);
+                await context.Localisations.AddAsync(newlocalisation);
+                await context.SaveChangesAsync();
+            }
+
+            return newlocalisation;
+        }
+        //ADD new PointRelaisLocalisation
+        public async Task<Localisation> AddRelaisLocalisation(int boutiqueId, string rue, string num, string ville, string codePostal, string pays,string relaisNom)
+        {
+
+            Localisation newlocalisation = new Localisation
+            {
+                Btqid = boutiqueId,
+                Rue = rue,
+                Num = num,
+                Ville = ville,
+                Pays = pays,
+                PrNom = relaisNom,
+            };
+            RelaisLocB relaisLocB = new RelaisLocB();
+            newlocalisation.RelaisLocBs.Add(relaisLocB);
+
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                await context.Localisations.AddAsync(newlocalisation);
+                await context.SaveChangesAsync();
+            }
+
+            return newlocalisation;
+        }
+        //Update Localisation
+        public async Task<Localisation> UpdateLocalisation(int localisationId, string rue, string num, string ville, string codePostal, string pays)
+        {
+            Localisation localisation = new Localisation();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                localisation = await context.Localisations.FirstOrDefaultAsync(l => l.Localisationid == localisationId);
+                localisation.Rue = rue;
+                localisation.Num = num;
+                localisation.Ville = ville;
+                localisation.Codepostal = codePostal;
+                localisation.Pays = pays;
+                context.Localisations.Update(localisation);
+                await context.SaveChangesAsync();
+            }
+            return localisation;
+        }
+        //Supprimer Localisation
+        public async Task<Boolean> DeleteLocalisation(int localisationId)
+        {
+            Localisation localisation = new Localisation();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                localisation = await context.Localisations.FirstOrDefaultAsync(p => p.Localisationid == localisationd);
+                context.Localisations.Remove(localisation);
                 await context.SaveChangesAsync();
             }
             return true;
         }
-        //GET Ma Politique
-        public async Task<Politique> GetBoutiqPolitique(int boutiqueId)
+        //GET Mes Localisations de boutique
+        public async Task<List<Localisation>> GetLocalisationsBoutique(int boutiqueId)
         {
-            Politique politique = new Politique();
-            int politiqueid = 0;
+            List<Localisation> localisations = new List<Localisation>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                politiqueid = context.Boutiques.FirstOrDefault(b => b.Btqid == boutiqueId).Politiqueid;
-                politique = await context.Politiques.FirstOrDefaultAsync(p => p.Politiqueid == politiqueid);
+                localisations = await context.Localisations.Where(b => b.Btqid == boutiqueId).ToListAsync();
             }
-            return politique;
+            return localisations;
+        }
+        //GET Mes Localisations de Partenaire
+        public async Task<List<Localisation>> GetLocalisationsPartenaire(int Id)
+        {
+            List<Localisation> localisations = new List<Localisation>();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                localisations = await context.Localisations.Where(b => b.Id == Id).ToListAsync();
+            }
+            return localisations;
         }
     }
 }
