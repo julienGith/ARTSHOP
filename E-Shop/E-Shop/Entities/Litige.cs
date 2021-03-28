@@ -32,7 +32,6 @@ namespace E_Shop.Entities
         [Column("BTQCMDID")]
         public int Btqcmdid { get; set; }
         [Column("LTGMSG")]
-        [StringLength(255)]
         public string Ltgmsg { get; set; }
 
         [ForeignKey(nameof(Btqcmdid))]

@@ -36,13 +36,12 @@ namespace E_Shop.Entities
         [Column("PRIX", TypeName = "decimal(9, 2)")]
         public decimal? Prix { get; set; }
         [Column("P_NOM")]
-        [StringLength(20)]
+        [StringLength(30)]
         public string PNom { get; set; }
         [Column("P_DESCRIPTION_C")]
-        [StringLength(100)]
+        [StringLength(450)]
         public string PDescriptionC { get; set; }
         [Column("P_DESCRIPTION_L")]
-        [StringLength(255)]
         public string PDescriptionL { get; set; }
         [Column("STOCK")]
         public short? Stock { get; set; }
@@ -53,10 +52,10 @@ namespace E_Shop.Entities
         [Column("PREPARATION")]
         public short? Preparation { get; set; }
         [Column("P_SEO")]
-        [StringLength(100)]
+        [StringLength(450)]
         public string PSeo { get; set; }
         [Column("P_META_KEYWORDS")]
-        [StringLength(100)]
+        [StringLength(450)]
         public string PMetaKeywords { get; set; }
         [Column("P_META_TITRE")]
         [StringLength(100)]

@@ -37,7 +37,6 @@ namespace E_Shop.Entities
         [Column("VIDEO")]
         public bool? Video { get; set; }
         [Column("HTML")]
-        [StringLength(255)]
         public string Html { get; set; }
 
         [ForeignKey(nameof(Btqid))]

@@ -23,9 +23,9 @@ namespace E_Shop.Entities
         [Column("LOCALISATIONID")]
         public int Localisationid { get; set; }
         [Column("BTQID")]
-        public int Btqid { get; set; }
+        public int? Btqid { get; set; }
         [Column("ID")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
         [Column("ADRESSE")]
         [StringLength(255)]
         public string Adresse { get; set; }

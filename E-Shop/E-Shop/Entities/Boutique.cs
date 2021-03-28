@@ -32,10 +32,8 @@ namespace E_Shop.Entities
         [Column("POLITIQUEID")]
         public int Politiqueid { get; set; }
         [Column("B_DESCRIPTION_C")]
-        [StringLength(100)]
         public string BDescriptionC { get; set; }
         [Column("B_DESCRIPTION_L")]
-        [StringLength(255)]
         public string BDescriptionL { get; set; }
         [Column("RAISONSOCIALE")]
         [StringLength(255)]
@@ -65,7 +63,6 @@ namespace E_Shop.Entities
         [StringLength(2)]
         public string Clerib { get; set; }
         [Column("DOMICILIATION")]
-        [StringLength(24)]
         public string Domiciliation { get; set; }
         [Column("IBAN")]
         [StringLength(27)]
@@ -93,7 +90,7 @@ namespace E_Shop.Entities
         [StringLength(25)]
         public string Statutjuridique { get; set; }
         [Column("BTQSEO")]
-        [StringLength(100)]
+        [StringLength(450)]
         public string Btqseo { get; set; }
 
         [ForeignKey(nameof(Id))]

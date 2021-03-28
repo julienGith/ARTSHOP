@@ -23,7 +23,6 @@ namespace E_Shop.Entities
         [Column("CLTCMDID")]
         public int Cltcmdid { get; set; }
         [Column("FACTLIEN")]
-        [StringLength(255)]
         public string Factlien { get; set; }
 
         [ForeignKey(nameof(Cltcmdid))]

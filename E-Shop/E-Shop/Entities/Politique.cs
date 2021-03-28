@@ -24,7 +24,6 @@ namespace E_Shop.Entities
         [Column("REMBOURSEMENT")]
         public bool? Remboursement { get; set; }
         [Column("PLTQDESCRIPTION")]
-        [StringLength(255)]
         public string Pltqdescription { get; set; }
 
         [InverseProperty(nameof(Boutique.Politique))]

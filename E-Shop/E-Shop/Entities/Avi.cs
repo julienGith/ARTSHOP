@@ -28,10 +28,10 @@ namespace E_Shop.Entities
         [Column("A_DATE", TypeName = "datetime")]
         public DateTime? ADate { get; set; }
         [Column("A_TEXTE")]
-        [StringLength(255)]
+        [StringLength(450)]
         public string ATexte { get; set; }
         [Column("A_REPONSE")]
-        [StringLength(255)]
+        [StringLength(450)]
         public string AReponse { get; set; }
         [Column("A_REPDATE", TypeName = "datetime")]
         public DateTime? ARepdate { get; set; }

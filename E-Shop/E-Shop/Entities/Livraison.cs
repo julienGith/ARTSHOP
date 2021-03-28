@@ -30,10 +30,8 @@ namespace E_Shop.Entities
         [Column("LOCALISATIONID")]
         public int Localisationid { get; set; }
         [Column("SUIVINUM")]
-        [StringLength(255)]
         public string Suivinum { get; set; }
         [Column("SUIVILIEN")]
-        [StringLength(255)]
         public string Suivilien { get; set; }
         [Column("DATEENVOI", TypeName = "datetime")]
         public DateTime? Dateenvoi { get; set; }

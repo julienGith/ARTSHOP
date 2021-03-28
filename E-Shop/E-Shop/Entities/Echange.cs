@@ -24,10 +24,10 @@ namespace E_Shop.Entities
         [Column("BTQID")]
         public int Btqid { get; set; }
         [Column("E_QUEST")]
-        [StringLength(255)]
+        [StringLength(450)]
         public string EQuest { get; set; }
         [Column("E_REP")]
-        [StringLength(255)]
+        [StringLength(450)]
         public string ERep { get; set; }
         [Column("E_QUESTDATE", TypeName = "datetime")]
         public DateTime? EQuestdate { get; set; }

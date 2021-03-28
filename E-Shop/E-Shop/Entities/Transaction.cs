@@ -34,7 +34,6 @@ namespace E_Shop.Entities
         [Column("TRANSACTMODIF", TypeName = "datetime")]
         public DateTime? Transactmodif { get; set; }
         [Column("TRANSACTCONTENU")]
-        [StringLength(255)]
         public string Transactcontenu { get; set; }
 
         [InverseProperty(nameof(PaieTransact.Transaction))]

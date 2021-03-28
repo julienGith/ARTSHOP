@@ -1,18 +1,25 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+
+#nullable disable
 
 namespace E_Shop.Entities
 {
-    public class UserLogin : IdentityUserLogin<int>
+    [Index(nameof(UserId), Name = "IX_UserLogins_UserId")]
+    public partial class UserLogin
     {
+        [Key]
+        public string LoginProvider { get; set; }
+        [Key]
+        public string ProviderKey { get; set; }
+        public string ProviderDisplayName { get; set; }
+        public int UserId { get; set; }
+
         [ForeignKey(nameof(UserId))]
-        [InverseProperty("Logins")]
-        public virtual Partenaire Partenaire { get; set; }
+        [InverseProperty(nameof(Partenaire.UserLogins))]
+        public virtual Partenaire User { get; set; }
     }
 }

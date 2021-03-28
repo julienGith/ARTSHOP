@@ -23,10 +23,8 @@ namespace E_Shop.Entities
         [Column("LITIGEID")]
         public int Litigeid { get; set; }
         [Column("R_SUIVINUM")]
-        [StringLength(255)]
         public string RSuivinum { get; set; }
         [Column("R_SUIVILIEN")]
-        [StringLength(255)]
         public string RSuivilien { get; set; }
 
         [ForeignKey(nameof(Litigeid))]
