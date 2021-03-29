@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using E_Shop.Extensions;
 using E_Shop.Logic.LocalisationLogic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using static E_Shop.Pages.Boutique.CreateBoutiqueStep5Model;
@@ -14,6 +15,7 @@ namespace E_Shop.Pages.Boutique
     public class CreateBoutiqueStep7Model : PageModel
     {
         LocalisationLogic localisation = new LocalisationLogic();
+
 
         [BindProperty]
         public Step7 step7 { get; set; }
@@ -54,6 +56,7 @@ namespace E_Shop.Pages.Boutique
             await localisation.AddRelaisLocalisation(step5.boutiqueId, step7.Rue, step7.Num, step7.Ville, step7.Codepostal, "France",step7.PrNom);
             return RedirectToPage("/boutique/CreateBoutiqueStep8");
         }
+
         public IActionResult OnPostBack()
         {
             HttpContext.Session.Set<Step7>("step7", step7);
