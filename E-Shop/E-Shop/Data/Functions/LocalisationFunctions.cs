@@ -100,7 +100,7 @@ namespace E_Shop.Data.Functions
             Localisation localisation = new Localisation();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                localisation = await context.Localisations.FirstOrDefaultAsync(p => p.Localisationid == localisationd);
+                localisation = await context.Localisations.FirstOrDefaultAsync(p => p.Localisationid == localisationId);
                 context.Localisations.Remove(localisation);
                 await context.SaveChangesAsync();
             }

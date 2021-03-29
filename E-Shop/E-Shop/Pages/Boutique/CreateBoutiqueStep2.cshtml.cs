@@ -7,15 +7,28 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using E_Shop.Extensions;
 using E_Shop.Logic;
+using Microsoft.AspNetCore.Identity;
+using E_Shop.Entities;
 
 namespace E_Shop.Pages.Boutique
 {
     public class CreateBoutiqueStep2Model : PageModel
     {
+        private readonly UserManager<Partenaire> _userManager;
+
+        public CreateBoutiqueStep2Model(UserManager<Partenaire> userManager)
+        {
+            _userManager = userManager;
+
+        }
         [BindProperty]
         public Step2 step2 { get; set; }
         public class Step2
         {
+            [Required]
+            [StringLength(255)]
+            [Display(Name = "Raison Sociale")]
+            public string Raisonsociale { get; set; }
             [Required]
             [StringLength(14, ErrorMessage = "Le numéro SIRET doit comporter 14 chiffres", MinimumLength = 14)]
             [Display(Name = "Siret")]
@@ -25,7 +38,7 @@ namespace E_Shop.Pages.Boutique
             [Display(Name = "Siren")]
             public string Siren { get; set; }
             [Required]
-            [StringLength(14, ErrorMessage = "Le code NAF doit comporter 14 chiffres", MinimumLength = 14)]
+            [StringLength(6, ErrorMessage = "Le code NAF doit comporter 6 caractères", MinimumLength = 6)]
             [Display(Name = "Code NAF")]
             public string Codenaf { get; set; }
             [Required]
@@ -37,7 +50,6 @@ namespace E_Shop.Pages.Boutique
             [Display(Name = "Email")]
             public string Btqtmail { get; set; }
             public string Btqmessage { get; set; }
-            public int Ca { get; set; }
             public int Nbsalarie { get; set; }
             public string Siteweb { get; set; }
             public string Statutjuridique { get; set; }
@@ -45,22 +57,15 @@ namespace E_Shop.Pages.Boutique
             [StringLength(100)]
             [Display(Name = "Mots Clé")]
             public string Btqseo { get; set; }
+            public int UserId { get; set; }
+
         }
         public IActionResult OnPost()
         {
             if (ModelState.IsValid)
             {
-                if (!Luhn.CheckLuhn(step2.Siren))
-                {
-                    ModelState.AddModelError("Siren", "Le numéro Siren est incorrect");
-                    return Page();
-                }
-                if (!Luhn.CheckLuhn(step2.Siret))
-                {
-                    ModelState.AddModelError("Siret", "Le numéro Siret est incorrect");
-                    return Page();
-                }
-
+                Console.WriteLine(step2);
+                //var user = await _userManager.FindByEmailAsync(User.Identity.Name);
                 HttpContext.Session.Set<Step2>("step1", step2);
                 return Redirect("/boutique/CreateBoutiqueStep3");
             }

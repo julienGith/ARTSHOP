@@ -1,24 +1,17 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-
-#nullable disable
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace E_Shop.Entities
 {
-    [Index(nameof(RoleId), Name = "IX_RoleClaims_RoleId")]
-    public partial class RoleClaim
+    public class RoleClaim : IdentityRoleClaim<int>
     {
-        [Key]
-        public int Id { get; set; }
-        public int RoleId { get; set; }
-        public string ClaimType { get; set; }
-        public string ClaimValue { get; set; }
-
         [ForeignKey(nameof(RoleId))]
-        [InverseProperty("RoleClaims")]
         public virtual Role Role { get; set; }
     }
 }

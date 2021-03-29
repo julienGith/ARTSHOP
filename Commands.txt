@@ -3,14 +3,15 @@ Scaffold-DbContext "Server=.\;Database=ARTSHOP;Trusted_Connection=True;" Microso
 Scaffold-DbContext "Server=.\;Database=ARTSHOP;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -d -OutputDir ModelsFull
 Add-Migration
 Update from db à tester..
-Scaffold-DbContext "Server=.\;Database=ARTSHOP;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -d -OutputDir Entities -force
+Scaffold-DbContext "Server=.\;Database=EShop;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -d -OutputDir Entities -force
 
 A-z123456
+siret 49007206300061
 
 
 
 3 layers architecture asp.net core
 https://www.youtube.com/watch?v=PybhA-Uabbw
 
-Identy propety qui saoulent 
+Identy propety qui saoulent à pas faire ..:
 https://entityframework.net/knowledge-base/25559878/asp-net-identity-remove-column-from-aspnetusers-table

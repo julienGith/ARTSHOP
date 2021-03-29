@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 #nullable disable
@@ -10,7 +11,7 @@ namespace E_Shop.Entities
 {
     [Table("PARTENAIRE")]
     [Index(nameof(Panierid), Name = "DISPOSER2_FK")]
-    public partial class Partenaire
+    public partial class Partenaire : IdentityUser<int>
     {
         public Partenaire()
         {
@@ -27,25 +28,9 @@ namespace E_Shop.Entities
             UserRoles = new HashSet<UserRole>();
         }
 
-        [Key]
-        public int Id { get; set; }
         [Column("PANIERID")]
         public int? Panierid { get; set; }
-        public string UserName { get; set; }
-        public string NormalizedUserName { get; set; }
-        public string Email { get; set; }
-        public string NormalizedEmail { get; set; }
-        public bool EmailConfirmed { get; set; }
-        public string PasswordHash { get; set; }
-        public string SecurityStamp { get; set; }
-        public string ConcurrencyStamp { get; set; }
-        public string PhoneNumber { get; set; }
-        public bool PhoneNumberConfirmed { get; set; }
-        public bool TwoFactorEnabled { get; set; }
-        public DateTimeOffset? LockoutEnd { get; set; }
-        public bool LockoutEnabled { get; set; }
-        public int AccessFailedCount { get; set; }
-
+        
         [ForeignKey(nameof(Panierid))]
         [InverseProperty("Partenaires")]
         public virtual Panier Panier { get; set; }
@@ -65,11 +50,8 @@ namespace E_Shop.Entities
         public virtual ICollection<Moyendepaiement> Moyendepaiements { get; set; }
         [InverseProperty("IdNavigation")]
         public virtual ICollection<Panier> Paniers { get; set; }
-        [InverseProperty(nameof(UserClaim.User))]
         public virtual ICollection<UserClaim> UserClaims { get; set; }
-        [InverseProperty(nameof(UserLogin.User))]
         public virtual ICollection<UserLogin> UserLogins { get; set; }
-        [InverseProperty(nameof(UserRole.User))]
         public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }

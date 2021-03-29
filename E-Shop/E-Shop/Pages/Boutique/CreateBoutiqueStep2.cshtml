@@ -8,6 +8,12 @@
             <h4> Etape 2 </h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="step2.Siret"></label>
+                <input id="tbSiret" asp-for="step2.Siret" class="form-control" />
+                <span asp-validation-for="step2.Siret" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="step2.Btqtel"></label>
                 <input asp-for="step2.Btqtel" class="form-control" />
@@ -24,44 +30,97 @@
                 <span asp-validation-for="step2.Siteweb" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="step2.Siren"></label>
-                <input asp-for="step2.Siren" class="form-control" />
-                <span asp-validation-for="step2.Siren" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="step2.Siret"></label>
-                <input asp-for="step2.Siret" class="form-control" />
-                <span asp-validation-for="step2.Siret" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="step2.Codenaf"></label>
-                <input asp-for="step2.Codenaf" class="form-control" />
-                <span asp-validation-for="step2.Codenaf" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="step2.Statutjuridique"></label>
-                <input asp-for="step2.Statutjuridique" class="form-control" />
-                <span asp-validation-for="step2.Statutjuridique" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="step2.Ca"></label>
-                <input asp-for="step2.Ca" class="form-control" />
-                <span asp-validation-for="step2.Ca" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="step2.Nbsalarie"></label>
-                <input asp-for="step2.Nbsalarie" class="form-control" />
-                <span asp-validation-for="step2.Nbsalarie" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="step2.Btqseo"></label>
                 <input asp-for="step2.Btqseo" class="form-control" />
                 <span asp-validation-for="step2.Btqseo" class="text-danger"></span>
             </div>
 
-            <button type="submit" class="btn btn-primary">Suivant</button>
+            <input hidden id="tbCodenaf" asp-for="step2.Codenaf" class="form-control" />
+            <input hidden id="tbNbsal" asp-for="step2.Nbsalarie" class="form-control" />
+            <input hidden id="tbRaison" asp-for="step2.Raisonsociale" class="form-control" />
+            <input hidden id="tbSiren" asp-for="step2.Siren" class="form-control" />
+
+
+
+
+            <button id="btnNext" type="submit" class="btn btn-primary">Suivant</button>
             <button type="submit" asp-page-handler="Back" class="btn btn-primary">Précédent</button>
 
         </form>
     </div>
 </div>
+
+@section scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded",function () {
+            var tbSiret = document.getElementById('tbSiret');
+            tbSiret.addEventListener('keyup', GetEntreprise);
+            function GetEntreprise()
+            {
+                if (tbSiret.value.length == 14) {
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.responseType = 'json';
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            LoadEntreprise(xhttp.response);
+                        }
+                        else {
+                            console.log(xhttp.status);
+                        }
+                    };
+                    xhttp.open("GET", "https://entreprise.data.gouv.fr/api/sirene/v3/etablissements/" + tbSiret.value, true);
+                    xhttp.send();
+
+                }
+
+            }
+            function LoadEntreprise(response = null) {
+                console.log(response);
+                console.log(response.etablissement.siren.toString());
+                console.log(response.etablissement.activite_principale.toString());
+                console.log(response.etablissement.tranche_effectifs.toString());
+                console.log(response.etablissement.unite_legale.denomination.toString());
+                document.getElementById('tbSiren').value = response.etablissement.siren.toString();
+                document.getElementById('tbCodenaf').value = response.etablissement.activite_principale.toString();
+                document.getElementById('tbNbsal').value = response.etablissement.tranche_effectifs.toString();
+                document.getElementById('tbRaison').value = response.etablissement.unite_legale.denomination.toString();
+
+
+
+
+            }
+        });
+        //$(document).ready(function () {
+            
+        //    console.log($("#tbSiret"));
+        //    $("#tbSiret").keyup(GetEntreprise);
+
+        //    function GetEntreprise(e) {
+        //        console.log($("#tbSiret"));
+        //        console.log($("#tbSiret").val().length);
+        //        console.log($("#tbSiret").val());
+
+        //        if ($("#tbSiret").val().length == 14) {
+        //            var siret = $("#tbSiret").val();
+        //            $.ajax({
+        //                url: "https://entreprise.data.gouv.fr/api/sirene/v3/etablissements/" + siret,
+        //                type: "get",
+        //                data: {
+                            
+        //                },
+        //                success: function (response) {
+        //                    var entreprise = response;
+        //                    console.log(entreprise);
+        //                    console.log(entreprise.etablissement.activite_principale);
+        //                    console.log(entreprise.etablissement.siren);
+        //                    $("#tbSiren").val(entreprise.etablissement.siren.toString());
+        //                },
+        //                error: function (xhr) {
+        //                    //Do Something to handle error
+        //                }
+        //            });
+        //        }
+        //    }
+        //});
+    </script>
+}

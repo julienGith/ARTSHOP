@@ -1,26 +1,20 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-
-#nullable disable
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace E_Shop.Entities
 {
-    [Index(nameof(RoleId), Name = "IX_UserRoles_RoleId")]
-    public partial class UserRole
+    public class UserRole : IdentityUserRole<int>
     {
-        [Key]
-        public int UserId { get; set; }
-        [Key]
-        public int RoleId { get; set; }
-
         [ForeignKey(nameof(RoleId))]
-        [InverseProperty("UserRoles")]
         public virtual Role Role { get; set; }
         [ForeignKey(nameof(UserId))]
-        [InverseProperty(nameof(Partenaire.UserRoles))]
-        public virtual Partenaire User { get; set; }
+        [InverseProperty("UserRoles")]
+        public virtual Partenaire Partenaire { get; set; }
     }
 }
