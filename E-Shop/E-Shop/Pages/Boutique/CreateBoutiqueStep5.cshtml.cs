@@ -71,8 +71,11 @@ namespace E_Shop.Pages.Boutique
             if (HttpContext.Session.Get<Step5>("step5") != null)
             {
                 step5 = HttpContext.Session.Get<Step5>("step5");
+                if (step5.boutiqueId>0)
+                {
+                    await boutiqueLogic.DeleteBoutique(step5.boutiqueId);
 
-                await boutiqueLogic.DeleteBoutique(step5.boutiqueId);
+                }
             }
             return Page();
         }

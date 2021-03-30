@@ -63,7 +63,11 @@ namespace E_Shop.Pages.Boutique
             if (HttpContext.Session.Get<Step6>("step6") != null)
             {
                 step6 = HttpContext.Session.Get<Step6>("step6");
-                await localisation.DeleteLocalisation(step6.locaId);
+                if (step6.locaId>0)
+                {
+                    await localisation.DeleteLocalisation(step6.locaId);
+
+                }
             }
             return Page();
         }

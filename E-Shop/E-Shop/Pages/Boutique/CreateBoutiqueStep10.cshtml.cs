@@ -73,7 +73,10 @@ namespace E_Shop.Pages.Boutique
             if (HttpContext.Session.Get<Step10>("step10") != null)
             {
                 step10 = HttpContext.Session.Get<Step10>("step10");
-                await media.DeleteMedia(step10.MediaId);
+                if (step10.MediaId>0)
+                {
+                    await media.DeleteMedia(step10.MediaId);
+                }
             }
             return Page();
         }
