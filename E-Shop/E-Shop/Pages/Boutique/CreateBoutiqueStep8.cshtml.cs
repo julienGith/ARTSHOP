@@ -62,6 +62,7 @@ namespace E_Shop.Pages.Boutique
                     Imager.SaveJpeg(path, newimg);
                     step8.Lien = "/images/" + newname;
                     HttpContext.Session.Set<string>("step8lien", step8.Lien.ToString());
+                    HttpContext.Session.Set<Step8>("step8", step8);
 
                 }
             }

@@ -2,7 +2,12 @@
 @model E_Shop.Pages.Boutique.CreateBoutiqueStep7Model
 @{
 }
-<div class="row justify-content-center">
+<div>Souhaitez-vous ajouter un point relais ?</div>
+<button id="btnOui" class="btn btn-primary">Oui</button>
+<form method="post">
+    <button id="btnNon" asp-page-handler="Next" type="submit" class="btn btn-primary">Non</button>
+</form>
+<div id="formPdr" class="row justify-content-center" hidden>
     <div>
         <form method="post">
             <h4> Etape 7 </h4>
@@ -42,3 +47,17 @@
         </form>
     </div>
 </div>
+@section scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("btnOui").addEventListener("click", function () {
+                document.getElementById("formPdr").removeAttribute("hidden");
+            })
+            document.getElementById("btnNon").addEventListener("click", function () {
+                document.getElementById("formPdr").hidden = true;;
+            })
+            
+        });
+
+    </script>
+}

@@ -19,37 +19,40 @@
 
         @if (Model.step8 != null)
         {
+            @if (Model.step8.Lien != null)
+            {
+                <br />
+                <style>
+                    div.imageborder {
+                        border-radius: 999em;
+                        width: 125px;
+                        height: 125px;
+                        padding: 1px;
+                        line-height: 0;
+                        border: 5px solid #808080;
+                        background-color: #eee;
+                    }
 
-            <br />
-            <style>
-                div.imageborder {
-                    border-radius: 999em;
-                    width: 125px;
-                    height: 125px;
-                    padding: 1px;
-                    line-height: 0;
-                    border: 5px solid #808080;
-                    background-color: #eee;
-                }
+                    img {
+                        border-radius: 999em;
+                        height: 100%;
+                        width: 100%;
+                        margin: 0;
+                    }
+                </style>
+                <div class="imageborder">
+                    <span>
+                        <img src="@Model.step8.Lien" />
+                    </span>
+                </div>
+                <form method="post">
+                    <button id="btnNext" type="submit" asp-page-handler="Next" class="btn btn-primary">Suivant</button>
+                </form>
+            }
 
-                img {
-                    border-radius: 999em;
-                    height: 100%;
-                    width: 100%;
-                    margin: 0;
-                }
-            </style>
-            <div class="imageborder">
-                <span>
-                    <img src="@Model.step8.Lien" />
-                </span>
-            </div>
-            <form method="post">
-                <button id="btnNext" type="submit" asp-page-handler="Next" class="btn btn-primary">Suivant</button>
-            </form>
         }
-    <form method="post">
-        <button type="submit" asp-page-handler="Back" class="btn btn-primary">Précédent</button>
-    </form>
+        <form method="post">
+            <button type="submit" asp-page-handler="Back" class="btn btn-primary">Précédent</button>
+        </form>
     </div>
 </div>
