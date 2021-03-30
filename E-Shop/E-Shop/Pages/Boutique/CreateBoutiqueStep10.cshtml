@@ -6,10 +6,24 @@
     <div>
         <form method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <label asp-for="step10.FileNameImg"></label>
-                <input asp-for="step10.FileNameImg" class="form-control" />
-                <span asp-validation-for="step10.FileNameImg" class="text-danger"></span>
+                <label asp-for="step10.Lien"></label>
+                <input asp-for="step10.Lien" class="form-control" />
+                <span asp-validation-for="step10.Lien" class="text-danger"></span>
             </div>
+            <button type="submit" asp-page-handler="Vid" class="btn btn-primary">Envoyer</button>
+
         </form>
+        @if (Model.step10 != null)
+        {
+            <br />
+            <span>
+                <iframe width="690" height="330" src="@Model.step10.Lien" frameborder='0' allowfullscreen='0'>
+                </iframe>
+            </span>
+            <form method="post">
+                <button id="btnNext" type="submit" asp-page-handler="Next" class="btn btn-primary">Suivant</button>
+            </form>
+
+        }
     </div>
 </div>

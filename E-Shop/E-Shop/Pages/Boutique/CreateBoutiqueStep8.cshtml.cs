@@ -33,7 +33,7 @@ namespace E_Shop.Pages.Boutique
         public class Step8
         {
             public string Lien { get; set; }
-            public int? Btqid { get; set; }
+            public int Btqid { get; set; }
             public string Description { get; set; }
             public bool Image { get; set; }
             public bool Video { get; set; }

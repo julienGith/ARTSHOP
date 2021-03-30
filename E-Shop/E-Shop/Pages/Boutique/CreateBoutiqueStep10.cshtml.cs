@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using E_Shop.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using static E_Shop.Pages.Boutique.CreateBoutiqueStep5Model;
 
 namespace E_Shop.Pages.Boutique
 {
@@ -16,7 +19,7 @@ namespace E_Shop.Pages.Boutique
         public class Step10
         {
             public string Lien { get; set; }
-            public int? Btqid { get; set; }
+            public int Btqid { get; set; }
             public string Description { get; set; }
             public bool Image { get; set; }
             public bool Video { get; set; }
@@ -24,8 +27,50 @@ namespace E_Shop.Pages.Boutique
             [Display(Name = "Indiquer le lien vers votre vidéo de présentation de votre boutique")]
             public string VideoLink { get; set; }
         }
+        public IActionResult OnPostVid()
+        {
+            step10.Lien = GetYoutubeId(step10.Lien);
+            
+            HttpContext.Session.Set<string>("step10lien", step10.Lien);
+            return Page();
+        }
+
+        private string GetYoutubeId(string lien)
+        {
+            const string pattern = @"(?:https?:\/\/)?(?:www\.)?(?:(?:(?:youtube.com\/watch\?[^?]*v=|youtu.be\/)([\w\-]+))(?:[^\s?]+)?)";
+            const string replacement = "https://www.youtube.com/embed/$1";
+
+            var rgx = new Regex(pattern);
+            var result = rgx.Replace(lien, replacement);
+            return result;
+
+        }
+
+        public IActionResult OnPostBack()
+        {
+            HttpContext.Session.Set<Step10>("step10", step10);
+            return Redirect("/boutique/CreateBoutiqueStep9");
+        }
+        public async Task<IActionResult> OnPostNext()
+        {
+            Step5 step5 = new Step5();
+            step5 = HttpContext.Session.Get<Step5>("step5");
+            step10.Video = true;
+            step10.Description = "boutique";
+            step10.Lien = HttpContext.Session.Get<string>("step10lien");
+
+            HttpContext.Session.Set<Step10>("step10", step10);
+
+            //await media.AddBoutiqueMedias(step5.boutiqueId, step9.Lien, step9.Image, step9.Video, step9.Description);
+            return RedirectToPage("/boutique/CreateBoutiqueStep11");
+        }
         public void OnGet()
         {
+            if (HttpContext.Session.Get<Step10>("step10") != null)
+            {
+                step10 = HttpContext.Session.Get<Step10>("step10");
+            }
         }
     }
+
 }
