@@ -76,12 +76,12 @@ namespace E_Shop.Pages.Boutique
             step3 = new Step3
             {
                 Bic = "12121212121",
-                Clerib = "2",
+                Clerib = "21",
                 Codebanque = "12345",
                 Codeguichet = "12345",
                 Domiciliation = "Banque du sud",
-                Iban = "123123123123123123123123123",
-                Numcompte = "12312312312",
+                Iban = "FR7630001007941234567890185",
+                Numcompte = "12345678912",
                 Titulaire = "Julien Boisserie"
             };
             return Page();

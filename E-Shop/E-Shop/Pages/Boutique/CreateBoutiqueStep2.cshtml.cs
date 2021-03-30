@@ -60,13 +60,13 @@ namespace E_Shop.Pages.Boutique
             public int UserId { get; set; }
 
         }
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (ModelState.IsValid)
             {
-                Console.WriteLine(step2);
-                //var user = await _userManager.FindByEmailAsync(User.Identity.Name);
-                HttpContext.Session.Set<Step2>("step1", step2);
+                var user = await _userManager.FindByEmailAsync(User.Identity.Name);
+                step2.UserId = user.Id;
+                HttpContext.Session.Set<Step2>("step2", step2);
                 return Redirect("/boutique/CreateBoutiqueStep3");
             }
             return Page();

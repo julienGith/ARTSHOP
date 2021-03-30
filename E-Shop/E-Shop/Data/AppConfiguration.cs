@@ -15,7 +15,7 @@ namespace E_Shop.Data
             var path = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
             configBuilder.AddJsonFile(path, false);
             var root = configBuilder.Build();
-            var appSetting = root.GetSection("ConnectionStrings:ARTSHOP");
+            var appSetting = root.GetSection("ConnectionStrings:EShop");
             SqlConnectionString = appSetting.Value;
         }
         public string SqlConnectionString { get; set; }
