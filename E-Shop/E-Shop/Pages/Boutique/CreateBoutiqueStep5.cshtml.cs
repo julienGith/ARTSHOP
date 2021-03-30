@@ -60,11 +60,12 @@ namespace E_Shop.Pages.Boutique
             return Page();
 
         }
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
             if (HttpContext.Session.Get<Step5>("step5") != null)
             {
                 step5 = HttpContext.Session.Get<Step5>("step5");
+                await boutiqueLogic.DeleteBoutique(step5.boutiqueId);
             }
             return Page();
         }

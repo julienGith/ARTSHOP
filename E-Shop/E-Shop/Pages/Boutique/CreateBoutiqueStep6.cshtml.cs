@@ -18,6 +18,7 @@ namespace E_Shop.Pages.Boutique
         public Step6 step6 { get; set; }
         public class Step6
         {
+            public int locaId { get; set; }
             public int Btqid { get; set; }
             [Required]
             [StringLength(255)]
@@ -46,8 +47,10 @@ namespace E_Shop.Pages.Boutique
             Step5 step5 = new Step5();
             step5 = HttpContext.Session.Get<Step5>("step5");
 
+            var result = await localisation.AddBoutiqueLocalisation(step5.boutiqueId,step6.Rue,step6.Num,step6.Ville,step6.Codepostal,"France");
+            step6.locaId = result.Localisationid;
             HttpContext.Session.Set<Step6>("step6", step6);
-            await localisation.AddBoutiqueLocalisation(step5.boutiqueId,step6.Rue,step6.Num,step6.Ville,step6.Codepostal,"France");
+
             return RedirectToPage("/boutique/CreateBoutiqueStep7");
         }
         public IActionResult OnPostBack()
@@ -55,12 +58,14 @@ namespace E_Shop.Pages.Boutique
             HttpContext.Session.Set<Step6>("step6", step6);
             return Redirect("/boutique/CreateBoutiqueStep5");
         }
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
             if (HttpContext.Session.Get<Step6>("step6") != null)
             {
                 step6 = HttpContext.Session.Get<Step6>("step6");
+                await localisation.DeleteLocalisation(step6.locaId);
             }
+            return Page();
         }
     }
 }

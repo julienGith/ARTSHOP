@@ -98,16 +98,15 @@ namespace E_Shop.Data.Functions
             return true;
         }
         //Supprimer Boutique
-        public async Task<Boolean> DeleteBoutique(string btqid)
+        public async Task<Boolean> DeleteBoutique(int btqid)
         {
-            int id = int.Parse(btqid);
             Boutique boutique = new Boutique();
             List<Produit> btqproduits = new List<Produit>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                btqproduits = await context.Produits.Where(p => p.Btqid == id).ToListAsync();
+                btqproduits = await context.Produits.Where(p => p.Btqid == btqid).ToListAsync();
                 context.Produits.RemoveRange(btqproduits);
-                boutique = await context.Boutiques.FirstOrDefaultAsync(b => b.Btqid == id);
+                boutique = await context.Boutiques.FirstOrDefaultAsync(b => b.Btqid == btqid);
                 context.Boutiques.Remove(boutique);
                 await context.SaveChangesAsync();
             }

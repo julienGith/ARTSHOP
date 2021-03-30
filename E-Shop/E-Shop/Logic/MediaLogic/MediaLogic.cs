@@ -17,5 +17,9 @@ namespace E_Shop.Logic.MediaLogic
         {
             return await _media.AddBoutiqueMedias(boutiqueId, lien, image, video, description);
         }
+        public async Task<Boolean> DeleteMedia(int mediaId)
+        {
+            return await _media.DeleteMedia(mediaId);
+        }
     }
 }

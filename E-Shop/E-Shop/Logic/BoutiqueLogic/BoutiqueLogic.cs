@@ -55,5 +55,11 @@ namespace E_Shop.Logic.BoutiqueLogic
             return await _boutique.GetAllBoutiques();
         }
 
+        //Delete boutique
+        public async Task<Boolean> DeleteBoutique(int btqid)
+        {
+            return await _boutique.DeleteBoutique(btqid);
+        }
+
     }
 }

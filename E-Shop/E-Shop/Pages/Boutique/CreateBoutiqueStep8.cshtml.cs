@@ -32,6 +32,7 @@ namespace E_Shop.Pages.Boutique
 
         public class Step8
         {
+            public int MediaId { get; set; }
             public string Lien { get; set; }
             public int Btqid { get; set; }
             public string Description { get; set; }
@@ -74,9 +75,10 @@ namespace E_Shop.Pages.Boutique
             step8.Description = "vignette";
             step8.Lien= HttpContext.Session.Get<string>("step8lien");
 
+            var result = await media.AddBoutiqueMedias(step5.boutiqueId, step8.Lien, step8.Image, step8.Video, step8.Description);
+            step8.MediaId = result.Mediaid;
             HttpContext.Session.Set<Step8>("step8", step8);
 
-            //await media.AddBoutiqueMedias(step5.boutiqueId, step8.Lien, step8.Image, step8.Video, step8.Description);
             return RedirectToPage("/boutique/CreateBoutiqueStep9");
         }
         public IActionResult OnPostBack()
@@ -84,13 +86,14 @@ namespace E_Shop.Pages.Boutique
             HttpContext.Session.Set<Step8>("step8", step8);
             return Redirect("/boutique/CreateBoutiqueStep7");
         }
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
             if (HttpContext.Session.Get<Step8>("step8") != null)
             {
                 step8 = HttpContext.Session.Get<Step8>("step8");
-                var test = step8.Lien;
+                await media.DeleteMedia(step8.MediaId);
             }
+            return Page();
         }
     }
 }

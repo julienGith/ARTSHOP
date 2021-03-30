@@ -23,7 +23,7 @@ namespace E_Shop.Data.Interfaces
             string titulaire, string mail, string message, int ca, int nbsalarie, string siteweb,
             string statutjuridique, string btqseo);
         //Supprimer Boutique
-        Task<Boolean> DeleteBoutique(string btqid);
+        Task<Boolean> DeleteBoutique(int btqid);
 
         //Recherche Boutique
         //Mes Boutiques
