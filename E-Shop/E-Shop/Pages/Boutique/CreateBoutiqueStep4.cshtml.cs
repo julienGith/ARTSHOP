@@ -38,7 +38,7 @@ namespace E_Shop.Pages.Boutique
         {
             if (ModelState.IsValid)
             {
-                step4.Pltqdescription = step4.Pltqdescription.ToHtml();
+                step4.Pltqdescription = step4.Pltqdescription;
                 var result = await politiqueLogic.AddPolitique(step4.Echange, step4.Remboursement, step4.Pltqdescription);
                 step4.Politiqueid = result.Politiqueid;
                 HttpContext.Session.Set<Step4>("step4", step4);
