@@ -30,6 +30,10 @@ namespace E_Shop.Pages.Boutique
             [Display(Name = "Raison Sociale")]
             public string Raisonsociale { get; set; }
             [Required]
+            [StringLength(255)]
+            [Display(Name = "Nom de la boutique")]
+            public string Nom { get; set; }
+            [Required]
             [StringLength(14, ErrorMessage = "Le numéro SIRET doit comporter 14 chiffres", MinimumLength = 14)]
             [Display(Name = "Siret")]
             public string Siret { get; set; }

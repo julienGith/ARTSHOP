@@ -11,13 +11,13 @@ namespace E_Shop.Data.Interfaces
         //CRUD Boutique
         //ADD Boutique
         Task<Boutique> AddBoutique(int partenaireid, int politiqueid, string descriptionC,
-            string descriptionL, string raisonsociale, string siret, string siren, string tel,
+            string descriptionL, string raisonsociale, string Nom, string siret, string siren, string tel,
             string codenaf, string codebanque, string codeguichet, string numcompte, string clerib,
             string domiciliation, string iban, string bic, string titulaire, string mail,
             string message, int ca, int nbsalarie, string siteweb, string statutjuridique, string btqseo);
         //Update Boutique
         Task<Boolean> UpdateBoutique(int Btqid, int politiqueid,
-            string descriptionC, string descriptionL, string raisonsociale, string siret,
+            string descriptionC, string descriptionL, string raisonsociale, string Nom, string siret,
             string siren, string tel, string codenaf, string codebanque, string codeguichet,
             string numcompte, string clerib, string domiciliation, string iban, string bic,
             string titulaire, string mail, string message, int ca, int nbsalarie, string siteweb,

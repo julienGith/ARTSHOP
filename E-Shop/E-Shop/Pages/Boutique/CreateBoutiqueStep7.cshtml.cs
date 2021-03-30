@@ -21,6 +21,7 @@ namespace E_Shop.Pages.Boutique
         public Step7 step7 { get; set; }
         public class Step7
         {
+
             public int locaId { get; set; }
             public int Btqid { get; set; }
             [Required]
@@ -43,6 +44,7 @@ namespace E_Shop.Pages.Boutique
             [StringLength(255)]
             [Display(Name = "Pays")]
             public string Pays { get; set; }
+            [Required]
             [Display(Name = "Nom du point relais")]
             [StringLength(255)]
             public string PrNom { get; set; }

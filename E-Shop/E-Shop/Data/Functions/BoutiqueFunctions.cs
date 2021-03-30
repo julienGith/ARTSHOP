@@ -13,7 +13,7 @@ namespace E_Shop.Data.Functions
         //CRUD Boutique
         //ADD new Boutique
         public async Task<Boutique> AddBoutique(int Id, int politiqueid,
-            string descriptionC, string descriptionL, string raisonsociale, string siret,
+            string descriptionC, string descriptionL, string raisonsociale, string Nom, string siret,
             string siren, string tel, string codenaf, string codebanque, string codeguichet,
             string numcompte, string clerib, string domiciliation, string iban, string bic,
             string titulaire, string mail, string message, int ca, int nbsalarie, string siteweb,
@@ -27,6 +27,7 @@ namespace E_Shop.Data.Functions
                 BDescriptionC = descriptionC,
                 BDescriptionL = descriptionL,
                 Raisonsociale = raisonsociale,
+                BtqNom = Nom,
                 Siret = siret,
                 Siren = siren,
                 Btqtel = tel,
@@ -57,7 +58,7 @@ namespace E_Shop.Data.Functions
         }
         //Update Boutique
         public async Task<Boolean> UpdateBoutique(int Btqid, int politiqueid,
-    string descriptionC, string descriptionL, string raisonsociale, string siret,
+    string descriptionC, string descriptionL, string raisonsociale, string Nom, string siret,
     string siren, string tel, string codenaf, string codebanque, string codeguichet,
     string numcompte, string clerib, string domiciliation, string iban, string bic,
     string titulaire, string mail, string message, int ca, int nbsalarie, string siteweb,
@@ -71,6 +72,7 @@ namespace E_Shop.Data.Functions
                 boutique.BDescriptionC = descriptionC;
                 boutique.BDescriptionC = descriptionL;
                 boutique.Raisonsociale = raisonsociale;
+                boutique.BtqNom = Nom;
                 boutique.Siret = siret;
                 boutique.Siren = siren;
                 boutique.Btqtel = tel;

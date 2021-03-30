@@ -21,7 +21,8 @@ namespace E_Shop.Data.Functions
                 Rue = rue,
                 Num = num,
                 Ville= ville,
-                Pays = pays
+                Pays = pays,
+                Codepostal=codePostal
 
             };
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))

@@ -14,13 +14,13 @@ namespace E_Shop.Logic.BoutiqueLogic
         //CRUD Boutique
         //Add Boutique
         public async Task<Boutique> AddBoutique(int partenaireid, int politiqueid,
-    string descriptionC, string descriptionL, string raisonsociale, string siret,
+    string descriptionC, string descriptionL, string raisonsociale, string Nom, string siret,
     string siren, string tel, string codenaf, string codebanque, string codeguichet,
     string numcompte, string clerib, string domiciliation, string iban, string bic,
     string titulaire, string mail, string message, int ca, int nbsalarie, string siteweb,
     string statutjuridique, string btqseo)
         {
-            return await _boutique.AddBoutique(partenaireid, politiqueid, descriptionC, descriptionL, raisonsociale, siret,
+            return await _boutique.AddBoutique(partenaireid, politiqueid, descriptionC, descriptionL, raisonsociale, Nom, siret,
             siren, tel, codenaf, codebanque, codeguichet,
             numcompte, clerib, domiciliation, iban, bic,
             titulaire, mail, message, ca, nbsalarie, siteweb,
@@ -28,14 +28,14 @@ namespace E_Shop.Logic.BoutiqueLogic
         }
         //Update Boutique
         public async Task<Boolean> UpdateBoutique(int Btqid, int politiqueid,
-    string descriptionC, string descriptionL, string raisonsociale, string siret,
+    string descriptionC, string descriptionL, string raisonsociale, string Nom, string siret,
     string siren, string tel, string codenaf, string codebanque, string codeguichet,
     string numcompte, string clerib, string domiciliation, string iban, string bic,
     string titulaire, string mail, string message, int ca, int nbsalarie, string siteweb,
     string statutjuridique, string btqseo)
         {
             var result = await _boutique.UpdateBoutique(Btqid, politiqueid,
-     descriptionC, descriptionL, raisonsociale, siret,
+     descriptionC, descriptionL, raisonsociale,Nom, siret,
      siren, tel, codenaf, codebanque, codeguichet,
      numcompte, clerib, domiciliation, iban, bic,
      titulaire, mail, message, ca, nbsalarie, siteweb,

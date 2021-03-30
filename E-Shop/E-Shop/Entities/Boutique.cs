@@ -48,7 +48,7 @@ namespace E_Shop.Entities
         [StringLength(15)]
         public string Btqtel { get; set; }
         [Column("CODENAF")]
-        [StringLength(5)]
+        [StringLength(6)]
         public string Codenaf { get; set; }
         [Column("CODEBANQUE")]
         [StringLength(5)]
@@ -79,6 +79,9 @@ namespace E_Shop.Entities
         [Column("BTQMESSAGE")]
         [StringLength(255)]
         public string Btqmessage { get; set; }
+        [Column("BTQNOM")]
+        [StringLength(255)]
+        public string BtqNom { get; set; }
         [Column("CA")]
         public int? Ca { get; set; }
         [Column("NBSALARIE")]
