@@ -13,14 +13,16 @@
             <div asp-validation-summary="All" class="text-danger"></div>
 
             <div class="form-group">
-                <label asp-for="step8.FileNameImg1"></label>
-                <input type="file" name="photo1" accept="image/*" asp-for="step8.FileNameImg1" class="form-control" />
-                <span asp-validation-for="step8.FileNameImg1" class="text-danger"></span>
+                <label asp-for="step8.FileNameImg"></label>
+                <input type="file" name="photo" accept="image/*" asp-for="step8.FileNameImg" class="form-control" />
+                <span asp-validation-for="step8.FileNameImg" class="text-danger"></span>
             </div>
-            <button type="submit" asp-page-handler="Img1" class="btn btn-primary">Envoyer</button>
-            @if (Model.step8!=null)
-            {
-        
+            <button type="submit" asp-page-handler="Img" class="btn btn-primary">Envoyer</button>
+        </form>
+
+        @if (Model.step8 != null)
+        {
+
             <br />
             <style>
                 div.imageborder {
@@ -40,30 +42,17 @@
                     margin: 0;
                 }
             </style>
-                <div class="imageborder">
-                    <span>
-                        <img src="@Model.step8.Lien" height="125" width="125" />
-                    </span>
-                </div>
-        
-            }
-            <div class="form-group">
-                <label asp-for="step8.FileNameImg2"></label>
-                <input type="file" asp-for="step8.FileNameImg2" class="form-control" />
-                <span asp-validation-for="step8.FileNameImg2" class="text-danger"></span>
+            <div class="imageborder">
+                <span>
+                    <img src="@Model.step8.Lien" />
+                </span>
             </div>
-            <button type="submit" asp-page-handler="Img2" class="btn btn-primary">Envoyer</button>
-
-            <div class="form-group">
-                <label asp-for="step8.VideoLink"></label>
-                <input asp-for="step8.VideoLink" class="form-control" />
-                <span asp-validation-for="step8.VideoLink" class="text-danger"></span>
-            </div>
-
-
-            <button id="btnNext" type="submit" class="btn btn-primary">Suivant</button>
-            <button type="submit" asp-page-handler="Back" class="btn btn-primary">Précédent</button>
-
-        </form>
+            <form method="post">
+                <button id="btnNext" type="submit" asp-page-handler="Next" class="btn btn-primary">Suivant</button>
+            </form>
+        }
+    <form method="post">
+        <button type="submit" asp-page-handler="Back" class="btn btn-primary">Précédent</button>
+    </form>
     </div>
 </div>

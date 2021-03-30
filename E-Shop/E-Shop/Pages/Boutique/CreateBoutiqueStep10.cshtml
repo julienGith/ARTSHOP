@@ -1,0 +1,15 @@
+﻿@page
+@model E_Shop.Pages.Boutique.CreateBoutiqueStep10Model
+@{
+}
+<div class="row justify-content-center">
+    <div>
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label asp-for="step10.FileNameImg"></label>
+                <input asp-for="step10.FileNameImg" class="form-control" />
+                <span asp-validation-for="step10.FileNameImg" class="text-danger"></span>
+            </div>
+        </form>
+    </div>
+</div>

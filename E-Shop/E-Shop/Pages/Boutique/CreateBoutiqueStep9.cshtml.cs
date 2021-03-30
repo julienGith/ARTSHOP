@@ -16,21 +16,19 @@ using static E_Shop.Pages.Boutique.CreateBoutiqueStep5Model;
 
 namespace E_Shop.Pages.Boutique
 {
-
-    public class CreateBoutiqueStep8Model : PageModel
+    public class CreateBoutiqueStep9Model : PageModel
     {
         MediaLogic media = new MediaLogic();
         private IWebHostEnvironment _webHostEnvironment;
 
-        public CreateBoutiqueStep8Model(IWebHostEnvironment webHostEnvironment)
+        public CreateBoutiqueStep9Model(IWebHostEnvironment webHostEnvironment)
         {
             _webHostEnvironment = webHostEnvironment;
         }
         [BindProperty]
-        public Step8 step8 { get; set; }
+        public Step9 step9 { get; set; }
 
-
-        public class Step8
+        public class Step9
         {
             public string Lien { get; set; }
             public int? Btqid { get; set; }
@@ -38,11 +36,11 @@ namespace E_Shop.Pages.Boutique
             public bool Image { get; set; }
             public bool Video { get; set; }
             public string Html { get; set; }
-            [Display(Name = "Télécharger une image de vous")]
+            [Display(Name = "Télécharger une image inspirant l'esprit de votre boutique")]
             public string FileNameImg { get; set; }
-
+            [Display(Name = "Indiquer le lien vers votre vidéo de présentation de votre boutique")]
+            public string VideoLink { get; set; }
         }
-
         public async Task<IActionResult> OnPostImg(IFormFile photo)
         {
             if (photo == null || photo.Length == 0)
@@ -55,12 +53,12 @@ namespace E_Shop.Pages.Boutique
                 await photo.CopyToAsync(memoryStream);
                 using (var img = Image.FromStream(memoryStream))
                 {
-                    var newimg = Imager.Resize(img, 125, 125, false);
+                    var newimg = Imager.Resize(img, 835, 300, false);
                     var newname = Guid.NewGuid().ToString() + ".jpeg";
                     var path = Path.Combine(_webHostEnvironment.WebRootPath, "images", newname);
                     Imager.SaveJpeg(path, newimg);
-                    step8.Lien = "/images/" + newname;
-                    HttpContext.Session.Set<string>("step8lien", step8.Lien.ToString());
+                    step9.Lien = "/images/" + newname;
+                    HttpContext.Session.Set<string>("step9lien", step9.Lien.ToString());
 
                 }
             }
@@ -70,26 +68,25 @@ namespace E_Shop.Pages.Boutique
         {
             Step5 step5 = new Step5();
             step5 = HttpContext.Session.Get<Step5>("step5");
-            step8.Image = true;
-            step8.Description = "vignette";
-            step8.Lien= HttpContext.Session.Get<string>("step8lien");
+            step9.Image = true;
+            step9.Description = "pano";
+            step9.Lien = HttpContext.Session.Get<string>("step9lien");
 
-            HttpContext.Session.Set<Step8>("step8", step8);
+            HttpContext.Session.Set<Step9>("step9", step9);
 
-            //await media.AddBoutiqueMedias(step5.boutiqueId, step8.Lien, step8.Image, step8.Video, step8.Description);
+            //await media.AddBoutiqueMedias(step5.boutiqueId, step9.Lien, step9.Image, step9.Video, step9.Description);
             return RedirectToPage("/boutique/CreateBoutiqueStep9");
         }
         public IActionResult OnPostBack()
         {
-            HttpContext.Session.Set<Step8>("step8", step8);
-            return Redirect("/boutique/CreateBoutiqueStep7");
+            HttpContext.Session.Set<Step9>("step9", step9);
+            return Redirect("/boutique/CreateBoutiqueStep8");
         }
         public void OnGet()
         {
-            if (HttpContext.Session.Get<Step8>("step8") != null)
+            if (HttpContext.Session.Get<Step9>("step9") != null)
             {
-                step8 = HttpContext.Session.Get<Step8>("step8");
-                var test = step8.Lien;
+                step9 = HttpContext.Session.Get<Step9>("step9");
             }
         }
     }
