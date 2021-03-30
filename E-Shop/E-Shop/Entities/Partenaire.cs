@@ -23,8 +23,8 @@ namespace E_Shop.Entities
             Localisations = new HashSet<Localisation>();
             Moyendepaiements = new HashSet<Moyendepaiement>();
             Paniers = new HashSet<Panier>();
-            UserClaims = new HashSet<UserClaim>();
-            UserLogins = new HashSet<UserLogin>();
+            Claims = new HashSet<UserClaim>();
+            Logins = new HashSet<UserLogin>();
             UserRoles = new HashSet<UserRole>();
         }
 
@@ -50,8 +50,8 @@ namespace E_Shop.Entities
         public virtual ICollection<Moyendepaiement> Moyendepaiements { get; set; }
         [InverseProperty("IdNavigation")]
         public virtual ICollection<Panier> Paniers { get; set; }
-        public virtual ICollection<UserClaim> UserClaims { get; set; }
-        public virtual ICollection<UserLogin> UserLogins { get; set; }
+        public virtual ICollection<UserClaim> Claims { get; set; }
+        public virtual ICollection<UserLogin> Logins { get; set; }
         public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }

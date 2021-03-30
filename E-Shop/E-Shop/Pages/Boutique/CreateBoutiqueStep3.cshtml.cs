@@ -66,12 +66,26 @@ namespace E_Shop.Pages.Boutique
             HttpContext.Session.Set<Step3>("step3", step3);
             return Redirect("/boutique/CreateBoutiqueStep2");
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
+
             if (HttpContext.Session.Get<Step3>("step3") != null)
             {
                 step3 = HttpContext.Session.Get<Step3>("step3");
             }
+            step3 = new Step3
+            {
+                Bic = "12121212121",
+                Clerib = "2",
+                Codebanque = "12345",
+                Codeguichet = "12345",
+                Domiciliation = "Banque du sud",
+                Iban = "123123123123123123123123123",
+                Numcompte = "12312312312",
+                Titulaire = "Julien Boisserie"
+            };
+            return Page();
         }
+   
     }
 }
