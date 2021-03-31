@@ -2,15 +2,49 @@
 @model E_Shop.Pages.Boutique.CreateBoutiqueStep11Model
 @{
 }
+<style>
+    div.imageborder {
+        border-radius: 999em;
+        width: 125px;
+        height: 125px;
+        padding: 1px;
+        line-height: 0;
+        border: 5px solid #808080;
+        background-color: #eee;
+    }
+
+    img {
+        border-radius: 999em;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+    }
+</style>
 <div class="row">
     <div class="col-4">
+        <div>@Model.step11.BtqNom</div>
+        <br />
+        <div class="imageborder">
+            <span>
+                <img src="@Model.step11.lienImg1" />
+            </span>
+        </div>
     </div>
     <div class="col-8">
         <div class="row">
+            @if (Model.step11.lienVideo != null)
+            {
+                <iframe width="690" height="330" src="@Model.step11.lienVideo" frameborder='0' allowfullscreen='0'></iframe>
 
+            }
+            @if (Model.step11.lienVideo == null)
+            {
+            <img src="@Model.step11.lienImg2" />
+
+            }
         </div>
         <div class="row">
-
+<div>@Model.step11.BtqDescription</div>
         </div>
     </div>
 </div>

@@ -78,7 +78,7 @@ namespace E_Shop.Pages.Boutique
             step9.MediaId = result.Mediaid;
             HttpContext.Session.Set<Step9>("step9", step9);
 
-            return RedirectToPage("/boutique/CreateBoutiqueStep9");
+            return RedirectToPage("/boutique/CreateBoutiqueStep10");
         }
         public IActionResult OnPostBack()
         {

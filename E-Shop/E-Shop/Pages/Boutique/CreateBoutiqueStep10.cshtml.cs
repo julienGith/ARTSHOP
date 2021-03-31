@@ -22,6 +22,7 @@ namespace E_Shop.Pages.Boutique
         public class Step10
         {
             public int MediaId { get; set; }
+            [Display(Name = "Indiquer le lien vers votre vidéo de présentation de votre boutique")]
             public string Lien { get; set; }
             public int Btqid { get; set; }
             public string Description { get; set; }

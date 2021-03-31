@@ -18,13 +18,16 @@
         </form>
         @if (Model.step9 != null)
         {
-            <br />
-            <span>
-                <img src="@Model.step9.Lien" />
-            </span>
-            <form method="post">
-                <button id="btnNext" type="submit" asp-page-handler="Next" class="btn btn-primary">Suivant</button>
-            </form>
+            @if (@Model.step9.Lien != null)
+            {
+                <br />
+                <span>
+                    <img src="@Model.step9.Lien" />
+                </span>
+                <form method="post">
+                    <button id="btnNext" type="submit" asp-page-handler="Next" class="btn btn-primary">Suivant</button>
+                </form>
+            }
 
         }
         <form method="post">
