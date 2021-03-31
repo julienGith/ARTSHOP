@@ -69,6 +69,7 @@ namespace E_Shop.Pages.Boutique
 
             return RedirectToPage("/boutique/CreateBoutiqueStep11");
         }
+
         public async Task<IActionResult> OnGet()
         {
             if (HttpContext.Session.Get<Step10>("step10") != null)

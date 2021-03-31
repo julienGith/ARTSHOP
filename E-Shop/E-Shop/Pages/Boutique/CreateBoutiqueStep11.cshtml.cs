@@ -39,7 +39,7 @@ namespace E_Shop.Pages.Boutique
             step9 = HttpContext.Session.Get<Step9>("step9");
             step10 = HttpContext.Session.Get<Step10>("step10");
 
-            Step11 step11 = new Step11
+            step11 = new Step11
             {
                 BtqDescription = step5.BDescriptionL,
                 BtqNom = step2.Nom,
@@ -47,10 +47,6 @@ namespace E_Shop.Pages.Boutique
                 lienImg2 = step9.Lien,
                 lienVideo = step10.Lien
             };
-
-
-
-
         }
     }
 }
