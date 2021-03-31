@@ -44,6 +44,9 @@ namespace E_Shop.Entities
         [Column("PAYS")]
         [StringLength(255)]
         public string Pays { get; set; }
+        [Column("DEPARTEMENT")]
+        [StringLength(255)]
+        public string Departement { get; set; }
         [Column("PR_NOM")]
         [StringLength(255)]
         public string PrNom { get; set; }

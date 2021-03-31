@@ -40,6 +40,8 @@ namespace E_Shop.Pages.Boutique
             [StringLength(255)]
             [Display(Name = "Pays")]
             public string Pays { get; set; }
+            [Required]
+            public string Departement { get; set; }
         }
 
         public async Task<IActionResult> OnPost()

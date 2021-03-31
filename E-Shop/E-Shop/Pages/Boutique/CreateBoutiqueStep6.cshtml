@@ -22,13 +22,16 @@
             </div>
             <div class="form-group">
                 <label asp-for="step6.Codepostal"></label>
-                <input asp-for="step6.Codepostal" class="form-control" />
+                <input id="tbCp" asp-for="step6.Codepostal" class="form-control" />
                 <span asp-validation-for="step6.Codepostal" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="step6.Ville"></label>
                 <input asp-for="step6.Ville" class="form-control" />
                 <span asp-validation-for="step6.Ville" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input id="tbDept" asp-for="step6.Departement" class="form-control" hidden />
             </div>
 
 
@@ -43,20 +46,29 @@
 @section scripts
 {
     <script>
-        //document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("tbCp").addEventListener("keyup", GetDept);
 
-        //    var xhttp = new XMLHttpRequest();
-        //    xhttp.responseType = 'json';
-        //    xhttp.onreadystatechange = function () {
-        //        if (this.readyState == 4 && this.status == 200) {
-        //            LoadEntreprise(xhttp.response);
-        //        }
-        //        else {
-        //            console.log(xhttp.status);
-        //        }
-        //    };
-        //    xhttp.open("GET", "http://api.zippopotam.us/FR/" + CP, true);
-        //    xhttp.send();
-        //}
+            function GetDept() {
+                if (document.getElementById("tbCp").value.length == 5) {
+                    console.log(document.getElementById("tbCp").value[0])
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.responseType = 'json';
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            console.log(xhttp.response);
+                            document.getElementById("tbDept").value = xhttp.response.nom;
+                        }
+                        else {
+                            console.log(xhttp.status);
+                        }
+                    };
+                    xhttp.open("GET", "https://geo.api.gouv.fr/departements/" + document.getElementById("tbCp").value[0] + document.getElementById("tbCp").value[1], true);
+                    xhttp.send();
+                }
+
+            }
+
+        });
     </script>
     }
