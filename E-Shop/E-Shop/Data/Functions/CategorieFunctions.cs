@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace E_Shop.Data.Functions
 {
-    public class CategrieFunctions : ICategorie
+    public class CategorieFunctions : ICategorie
     {
         //CRUD
         //Créer une catégorie

@@ -10,12 +10,17 @@ namespace E_Shop.Logic.CategorieLogic
 {
     public class CategorieLogic
     {
-        private ICategorie Categorie = new CategrieFunctions();
+        private ICategorie Categorie = new CategorieFunctions();
         //CRUD
         //Créer une catégorie
         public async Task<Categorie> AddCategorie(string catNom, int? CatParentID)
         {
             return await Categorie.AddCategorie(catNom, CatParentID);
+        }
+        //Get all categories
+        public async Task<List<Categorie>> GetAllCategories()
+        {
+            return await Categorie.GetAllCategories();
         }
     }
 }
