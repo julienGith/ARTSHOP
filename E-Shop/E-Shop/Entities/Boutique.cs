@@ -95,6 +95,10 @@ namespace E_Shop.Entities
         [Column("BTQSEO")]
         [StringLength(450)]
         public string Btqseo { get; set; }
+        [Column("DATECREATION")]
+        [StringLength(50)]
+        public string DateCreation { get; set; }
+
 
         [ForeignKey(nameof(Id))]
         [InverseProperty(nameof(Partenaire.Boutiques))]

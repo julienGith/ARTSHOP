@@ -25,6 +25,9 @@ namespace E_Shop.Pages.Boutique
             public string BtqDescription { get; set; }
             public string BtqNom { get; set; }
             public string Dept { get; set; }
+            public string RaisonSociale { get; set; }
+            public string Siret { get; set; }
+            public string dateCreation { get; set; }
 
 
         }
@@ -51,7 +54,10 @@ namespace E_Shop.Pages.Boutique
                 lienImg1 = step8.Lien,
                 lienImg2 = step9.Lien,
                 lienVideo = step10.Lien,
-                Dept = step6.Departement
+                Dept = step6.Departement,
+                RaisonSociale = step2.Raisonsociale,
+                Siret = step2.Siret,
+                dateCreation = step5.dateCreation
             };
         }
     }
