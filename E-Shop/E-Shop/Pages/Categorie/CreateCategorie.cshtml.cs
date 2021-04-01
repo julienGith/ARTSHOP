@@ -11,31 +11,42 @@ namespace E_Shop.Pages.Categorie
 {
     public class CreateCategorieModel : PageModel
     {
+
         private CategorieLogic categorieLogic = new CategorieLogic();
 
 
         [BindProperty]
         public Input input { get; set; }
 
-        public SelectList Options { get; set; }
-
+        public List<SelectListItem> Options { get; set; }
         public class Input
         {
-            public string CatNom { get; set; }
-            public int CatId { get; set; }
+            public string Categorienom { get; set; }
+            public int Categorieid { get; set; }
 
         }
         public async Task<IActionResult> OnPostAdd()
         {
-            await categorieLogic.AddCategorie(input.CatNom, int.Parse(Options.DataValueField));
+            if (input.Categorieid > 0)
+            {
+                await categorieLogic.AddCategorie(input.Categorienom, input.Categorieid);
+            }
+            else
+            {
+                await categorieLogic.AddCategorie(input.Categorienom, null);
+                var Categories = await categorieLogic.GetAllCategories();
+                ViewData["Categories"] = Categories;
+
+            }
+
             return Page();
         }
-        public async void OnGet()
+        public void OnGet()
         {
-
-            var categories = await categorieLogic.GetAllCategories();
-
-            Options = new SelectList(categories, nameof(input.CatId), nameof(input.CatNom));
+            Options =  categorieLogic.GetDictionnaryCategories();
+            //ViewData["Categories"] = Categories;
+            //Options =  categorieLogic.GetDictionnaryCategories();
+            //Options = new SelectList(dictionary, "Categorieid", "Categorienom");
         }
     }
 }

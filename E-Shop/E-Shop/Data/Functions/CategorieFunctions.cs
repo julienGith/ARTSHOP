@@ -1,5 +1,6 @@
 ﻿using E_Shop.Data.Interfaces;
 using E_Shop.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace E_Shop.Data.Functions
 {
     public class CategorieFunctions : ICategorie
     {
+        public List<SelectListItem> Options { get; set; }
         //CRUD
         //Créer une catégorie
         public async Task<Categorie> AddCategorie(string catNom, int? CatParentID)
@@ -69,6 +71,19 @@ namespace E_Shop.Data.Functions
                 categories = await context.Categories.ToListAsync();
             }
             return categories;
+        }
+        //Get Categories Dictionnary
+        public List<SelectListItem> GetDictionnaryCategories()
+        {
+            List<Categorie> categories = new List<Categorie>();
+            Dictionary<int, string> dictionary = new Dictionary<int, string>();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                Options = context.Categories.Select(a =>new SelectListItem{Value = a.Categorieid.ToString(),Text = a.Categorienom}).ToList();
+                //categories = await context.Categories.ToListAsync();
+                //var dico = context.Categories.ToDictionary<int,string>(k => k.Categorieid, v => v.Categorienom);
+            }
+            return Options;
         }
 
     }

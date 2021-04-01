@@ -1,6 +1,7 @@
 ﻿using E_Shop.Data.Functions;
 using E_Shop.Data.Interfaces;
 using E_Shop.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,12 @@ namespace E_Shop.Logic.CategorieLogic
         public async Task<List<Categorie>> GetAllCategories()
         {
             return await Categorie.GetAllCategories();
+        }
+        //Get Categories Dictionnary
+        public List<SelectListItem> GetDictionnaryCategories()
+        {
+
+            return  Categorie.GetDictionnaryCategories();
         }
     }
 }
