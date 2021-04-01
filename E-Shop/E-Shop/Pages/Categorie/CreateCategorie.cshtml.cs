@@ -44,9 +44,7 @@ namespace E_Shop.Pages.Categorie
         public void OnGet()
         {
             Options =  categorieLogic.GetDictionnaryCategories();
-            //ViewData["Categories"] = Categories;
-            //Options =  categorieLogic.GetDictionnaryCategories();
-            //Options = new SelectList(dictionary, "Categorieid", "Categorienom");
+
         }
     }
 }

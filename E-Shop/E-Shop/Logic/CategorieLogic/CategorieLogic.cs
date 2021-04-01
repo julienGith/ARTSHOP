@@ -27,7 +27,7 @@ namespace E_Shop.Logic.CategorieLogic
         public List<SelectListItem> GetDictionnaryCategories()
         {
 
-            return  Categorie.GetDictionnaryCategories();
+            return  Categorie.GetSelectListItemCategories();
         }
     }
 }

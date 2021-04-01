@@ -17,6 +17,6 @@ namespace E_Shop.Data.Interfaces
         //Get all catégories
         Task<List<Categorie>> GetAllCategories();
         //Get Categories Dictionnary
-        List<SelectListItem> GetDictionnaryCategories();
+        List<SelectListItem> GetSelectListItemCategories();
     }
 }

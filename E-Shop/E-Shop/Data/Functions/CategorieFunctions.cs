@@ -41,22 +41,13 @@ namespace E_Shop.Data.Functions
                 using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
                 {
                     context.Categories.Add(categorie);
+                    context.SaveChanges();
                     categorieParent = await context.Categories.FirstOrDefaultAsync(c => c.Categorieid == CatParentID);
-                    catnav = await context.Catnavs.FirstAsync(c => c.CatCategorieid == categorieParent.Categorieid);
-                    if (catnav==null)
-                    {
+
                         catnav.CatCategorieid = categorieParent.Categorieid;
                         catnav.Categorieid = categorie.Categorieid;
                         context.Catnavs.Add(catnav);
                         context.SaveChanges();
-
-                    }
-                    else
-                    {
-                        catnav.Categorie.Categorieid = categorie.Categorieid;
-                        context.Catnavs.Update(catnav);
-                        context.SaveChanges();
-                    }
                 }
                 return categorie;
 
@@ -72,16 +63,12 @@ namespace E_Shop.Data.Functions
             }
             return categories;
         }
-        //Get Categories Dictionnary
-        public List<SelectListItem> GetDictionnaryCategories()
+        //Get Categories SelectListItem
+        public List<SelectListItem> GetSelectListItemCategories()
         {
-            List<Categorie> categories = new List<Categorie>();
-            Dictionary<int, string> dictionary = new Dictionary<int, string>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
                 Options = context.Categories.Select(a =>new SelectListItem{Value = a.Categorieid.ToString(),Text = a.Categorienom}).ToList();
-                //categories = await context.Categories.ToListAsync();
-                //var dico = context.Categories.ToDictionary<int,string>(k => k.Categorieid, v => v.Categorienom);
             }
             return Options;
         }
