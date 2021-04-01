@@ -13,7 +13,7 @@ namespace E_Shop.Pages.Categorie
         public class Input
         {
             public string CatNom { get; set; }
-            ICollection<string>Categories { get; set; }
+            ICollection<Categorie> Categories { get; set; }
         }
         public void OnGet()
         {

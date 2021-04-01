@@ -1,4 +1,5 @@
-﻿using E_Shop.Entities;
+﻿using E_Shop.Data.Interfaces;
+using E_Shop.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace E_Shop.Data.Functions
 {
-    public class CategrieFunctions
+    public class CategrieFunctions : ICategorie
     {
         //CRUD
         //Créer une catégorie
-        public async Task<Categorie> AddCategorie(string catNom, int CatParentID)
+        public async Task<Categorie> AddCategorie(string catNom, int? CatParentID)
         {
-            if (CatParentID==0)
+            if (CatParentID==null)
             {
                 Categorie categorie = new Categorie
                 {
@@ -59,5 +60,16 @@ namespace E_Shop.Data.Functions
 
             }
         }
+        //Get all categories
+        public async Task<List<Categorie>> GetAllCategories()
+        {
+            List<Categorie> categories = new List<Categorie>();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                categories = await context.Categories.ToListAsync();
+            }
+            return categories;
+        }
+
     }
 }
