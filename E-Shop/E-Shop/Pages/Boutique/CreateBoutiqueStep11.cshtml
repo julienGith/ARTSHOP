@@ -12,13 +12,18 @@
         border: 5px solid #808080;
         background-color: #eee;
     }
-
-    img {
+    .imgMiniBout {
+        display: block;
+        background: transparent;
+        padding: 8px;
+        border: 1px solid #ccc;
+        box-shadow: 10px 10px 10px #999;
         border-radius: 999em;
         height: 100%;
         width: 100%;
         margin: 0;
     }
+
 </style>
 <div class="row">
     <div class="col-4">
@@ -26,7 +31,7 @@
         <br />
         <div class="imageborder">
             <span>
-                <img src="@Model.step11.lienImg1" />
+                <img class="imgMiniBout" src="@Model.step11.lienImg1" />
                 <br />
             </span>
             <div>@Model.step11.Dept</div>
@@ -66,8 +71,7 @@
                     <p>Raison sociale : @Model.step11.RaisonSociale</p>
                     <p>N° SIRET : @Model.step11.Siret</p>
                     <p>Adresse : </p>
-                    <p>Inscrit depui le : </p>
-                    <p>Raison sociale :</p>
+                    <p>Inscrit depuis le : @Model.step11.dateCreation</p>
                 </div>
             </div>
         </div>
