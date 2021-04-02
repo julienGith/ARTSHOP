@@ -27,6 +27,7 @@ namespace E_Shop.Pages.Categorie
         }
         public async Task<IActionResult> OnPostAdd()
         {
+
             if (input.Categorieid > 0)
             {
                 await categorieLogic.AddCategorie(input.Categorienom, input.Categorieid);
@@ -38,13 +39,13 @@ namespace E_Shop.Pages.Categorie
                 ViewData["Categories"] = Categories;
 
             }
-
+            input.Categorienom = "";
+            Options = categorieLogic.GetDictionnaryCategories();
             return Page();
         }
         public void OnGet()
         {
             Options =  categorieLogic.GetDictionnaryCategories();
-
         }
     }
 }
