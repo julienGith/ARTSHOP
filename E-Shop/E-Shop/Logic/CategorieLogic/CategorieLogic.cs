@@ -26,8 +26,17 @@ namespace E_Shop.Logic.CategorieLogic
         //Get Categories Dictionnary
         public List<SelectListItem> GetDictionnaryCategories()
         {
-
             return  Categorie.GetSelectListItemCategories();
+        }
+        //Get All categories parents alimentaires
+        public async Task<List<Categorie>> GetAllCategoriesParentsAlim()
+        {
+            return await Categorie.GetAllCategoriesParentsAlim();
+        }
+        //Get All categories enfants par id de catégorie parent
+        public async Task<List<Categorie>> GetAllCategoriesEnfantsByParentId(int categorieParentId)
+        {
+            return await Categorie.GetAllCategoriesEnfantsByParentId(categorieParentId);
         }
     }
 }

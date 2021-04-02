@@ -21,7 +21,7 @@ namespace E_Shop.Pages.Categorie
 
         public async Task OnGet()
         {
-           await categorieLogic.GetAllCategories();
+           await categorieLogic.();
         }
     }
 }
