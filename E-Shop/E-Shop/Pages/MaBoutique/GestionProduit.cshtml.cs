@@ -2,15 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using E_Shop.Logic.CategorieLogic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace E_Shop.Pages.MaBoutique
 {
-    public class TableauDeBordModel : PageModel
+    public class GestionProduitModel : PageModel
     {
-        private CategorieLogic categorieLogic = new CategorieLogic();
+        public List<Entities.Categorie> CatParents { get; set; }
+        public List<Entities.Categorie> Catenfants1 { get; set; }
+        public List<Entities.Categorie> Catenfants2 { get; set; }
 
         public void OnGet()
         {

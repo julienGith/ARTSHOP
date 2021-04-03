@@ -27,6 +27,22 @@ namespace E_Shop.Data.Functions
             }
             return media;
         }
+        //Add Produit Médias
+        public async Task<Medium> AddProduitMedias(int prodId, string lien, bool image, bool video, string description)
+        {
+            Medium media = new Medium();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                media.Prodid = prodId;
+                media.Lien = lien;
+                media.Image = image;
+                media.Video = video;
+                media.Description = description;
+                await context.Media.AddAsync(media);
+                await context.SaveChangesAsync();
+            }
+            return media;
+        }
         //Delete Media
         public async Task<Boolean> DeleteMedia(int mediaId)
         {

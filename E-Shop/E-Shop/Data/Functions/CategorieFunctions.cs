@@ -93,6 +93,7 @@ namespace E_Shop.Data.Functions
             }
             return categories;
         }
+        //SelectList
         //Get Categories SelectListItem
         public List<SelectListItem> GetSelectListItemCategories()
         {
@@ -100,6 +101,41 @@ namespace E_Shop.Data.Functions
             {
                 Options = context.Categories.Select(a =>new SelectListItem{Value = a.Categorieid.ToString(),Text = a.Categorienom}).ToList();
             }
+            return Options;
+        }
+        //Get Categories parents SelectListItem
+        public async Task<List<SelectListItem>> GetSelectListItemCategoriesParents()
+        {
+            List<Catnav> Catnavs = new List<Catnav>();
+            List<Categorie> categories = new List<Categorie>();
+
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                Catnavs = await context.Catnavs.Include(c => c.Categorie).Where(c => c.CatCategorieid == 3).ToListAsync();
+                foreach (var item in Catnavs)
+                {
+                    categories.Add(item.Categorie);
+                }
+                Options = categories.Select(a => new SelectListItem { Value = a.Categorieid.ToString(), Text = a.Categorienom }).ToList();
+            }
+            return Options;
+        }
+        //Get Categories enfant SelectListItem
+        public async Task<List<SelectListItem>> GetSelectListItemCategoriesEnfants(int categorieParentId)
+        {
+            List<Categorie> categories = new List<Categorie>();
+            List<Catnav> Catnavs = new List<Catnav>();
+
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                Catnavs = await context.Catnavs.Include(c => c.Categorie).Where(c => c.CatCategorieid == categorieParentId).ToListAsync();
+                foreach (var item in Catnavs)
+                {
+                    categories.Add(item.Categorie);
+                }
+            }
+            Options = categories.Select(a => new SelectListItem { Value = a.Categorieid.ToString(), Text = a.Categorienom }).ToList();
+
             return Options;
         }
 

@@ -24,7 +24,7 @@ namespace E_Shop.Logic.CategorieLogic
             return await Categorie.GetAllCategories();
         }
         //Get Categories Dictionnary
-        public List<SelectListItem> GetDictionnaryCategories()
+        public List<SelectListItem> GetSelectListItemCategories()
         {
             return  Categorie.GetSelectListItemCategories();
         }

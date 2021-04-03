@@ -40,12 +40,12 @@ namespace E_Shop.Pages.Categorie
 
             }
             input.Categorienom = "";
-            Options = categorieLogic.GetDictionnaryCategories();
+            Options = categorieLogic.GetSelectListItemCategories();
             return Page();
         }
         public void OnGet()
         {
-            Options =  categorieLogic.GetDictionnaryCategories();
+            Options =  categorieLogic.GetSelectListItemCategories();
         }
     }
 }

@@ -13,5 +13,7 @@ namespace E_Shop.Data.Interfaces
         Task<Medium> AddBoutiqueMedias(int boutiqueId, string lien, bool image, bool video, string description);
         //Delete Media
         Task<Boolean> DeleteMedia(int mediaId);
+        //Add Produit Médias
+        Task<Medium> AddProduitMedias(int prodId, string lien, bool image, bool video, string description);
     }
 }
