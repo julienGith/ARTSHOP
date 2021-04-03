@@ -25,7 +25,7 @@ namespace E_Shop.Data.Functions
                 using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
                 {
                     context.Categories.Add(categorie);
-                    context.SaveChanges();
+                    await context .SaveChangesAsync();
                 }
                 return categorie;
 
@@ -47,7 +47,7 @@ namespace E_Shop.Data.Functions
                         catnav.CatCategorieid = categorieParent.Categorieid;
                         catnav.Categorieid = categorie.Categorieid;
                         context.Catnavs.Add(catnav);
-                        context.SaveChanges();
+                        await context.SaveChangesAsync();
                 }
                 return categorie;
 
