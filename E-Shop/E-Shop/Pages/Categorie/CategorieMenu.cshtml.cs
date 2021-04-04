@@ -22,10 +22,10 @@ namespace E_Shop.Pages.Categorie
 
         public async Task OnGet()
         {
-            stringBuilder.Append($"<nav class='navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3'>" +
-                $"<div class='container'><button class='navbar-toggler' type='button' data-toggle='collapse' data-target='.navbar-collapse' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>" +
-                $"<span class='navbar-toggler-icon'></span></button>" +
-                $"<div class='navbar-collapse collapse d-sm-inline-flex justify-content-between'><ul class='navbar-nav flex-grow-1'>");
+            //stringBuilder.Append($"<nav class='navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3'>" +
+            //    $"<button class='navbar-toggler' type='button' data-toggle='collapse' data-target='.navbar-collapse' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>" +
+            //    $"<span class='navbar-toggler-icon'></span></button>" +
+            //    $"<div class='navbar-collapse collapse d-sm-inline-flex justify-content-between'><ul class='navbar-nav flex-grow-1'>");
             CatParentsAlim = await categorieLogic.GetAllCategoriesParentsAlim();
             foreach (var item in CatParentsAlim)
             {
@@ -46,7 +46,7 @@ namespace E_Shop.Pages.Categorie
             {
                 CatEnfants2 = await categorieLogic.GetAllCategoriesEnfantsByParentId(item.Categorieid);
             }
-            stringBuilder.Append($"</ul></div></div></nav>");
+            //stringBuilder.Append($"</ul></div></nav>");
             code = stringBuilder.ToString();
         }
     }
