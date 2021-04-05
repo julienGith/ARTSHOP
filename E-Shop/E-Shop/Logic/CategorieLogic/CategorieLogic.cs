@@ -23,7 +23,7 @@ namespace E_Shop.Logic.CategorieLogic
         {
             return await Categorie.GetAllCategories();
         }
-        //Get Categories Dictionnary
+        //Get Categories SelectListItem
         public List<SelectListItem> GetSelectListItemCategories()
         {
             return  Categorie.GetSelectListItemCategories();
@@ -37,6 +37,16 @@ namespace E_Shop.Logic.CategorieLogic
         public async Task<List<Categorie>> GetAllCategoriesEnfantsByParentId(int categorieParentId)
         {
             return await Categorie.GetAllCategoriesEnfantsByParentId(categorieParentId);
+        }
+        //Get Categories parents SelectListItem
+        public async Task<List<SelectListItem>> GetSelectListItemCategoriesParents()
+        {
+            return await Categorie.GetSelectListItemCategoriesParents();
+        }
+        //Get Categories enfant SelectListItem
+        public async Task<List<SelectListItem>> GetSelectListItemCategoriesEnfants(int categorieParentId)
+        {
+            return await Categorie.GetSelectListItemCategoriesEnfants(categorieParentId);
         }
     }
 }
