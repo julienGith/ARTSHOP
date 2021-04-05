@@ -22,6 +22,7 @@ namespace E_Shop.Entities
             Media = new HashSet<Medium>();
             Produits = new HashSet<Produit>();
             RelaisLocBs = new HashSet<RelaisLocB>();
+            Livraisontypes = new HashSet<Livraisontype>();
         }
 
         [Key]
@@ -120,5 +121,8 @@ namespace E_Shop.Entities
         public virtual ICollection<Produit> Produits { get; set; }
         [InverseProperty(nameof(RelaisLocB.Btq))]
         public virtual ICollection<RelaisLocB> RelaisLocBs { get; set; }
+
+        [InverseProperty(nameof(Livraisontype.Btq))]
+        public virtual ICollection<Livraisontype> Livraisontypes { get; set; }
     }
 }

@@ -20,6 +20,8 @@ namespace E_Shop.Entities
         [Key]
         [Column("LVRTYPID")]
         public int Lvrtypid { get; set; }
+        [Column("BTQID")]
+        public int Btqid { get; set; }
         [Column("LVRDESIGNATION")]
         public string Lvrdesignation { get; set; }
         [Column("LVRDELAI")]
@@ -33,5 +35,8 @@ namespace E_Shop.Entities
         public virtual ICollection<Livraison> Livraisons { get; set; }
         [InverseProperty(nameof(Produit.Lvrtyp))]
         public virtual ICollection<Produit> Produits { get; set; }
+
+        [InverseProperty(nameof(Boutique.Livraisontypes))]
+        public virtual Boutique Btq { get; set; }
     }
 }
