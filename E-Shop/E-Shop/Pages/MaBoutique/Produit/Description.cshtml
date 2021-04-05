@@ -2,3 +2,28 @@
 @model E_Shop.Pages.MaBoutique.Produit.DescriptionModel
 @{
 }
+<div class="row justify-content-center">
+    <div>
+        <form method="post">
+            <h4> Description de votre Produit </h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="input.PNom"></label>
+                <input asp-for="input.PNom" class="form-control"/>
+                <span asp-validation-for="input.PNom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="input.PDescriptionC"></label>
+                <textarea cols="100" rows="3" asp-for="input.PDescriptionC" class="form-control"></textarea>
+                <span asp-validation-for="input.PDescriptionC" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="input.PDescriptionL"></label>
+                <textarea cols="100" rows="20" asp-for="input.PDescriptionL" class="form-control"></textarea>
+                <span asp-validation-for="input.PDescriptionL" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Suivant</button>
+        </form>
+    </div>
+</div>

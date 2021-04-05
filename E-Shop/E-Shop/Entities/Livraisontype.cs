@@ -21,12 +21,13 @@ namespace E_Shop.Entities
         [Column("LVRTYPID")]
         public int Lvrtypid { get; set; }
         [Column("LVRDESIGNATION")]
-        [StringLength(15)]
         public string Lvrdesignation { get; set; }
         [Column("LVRDELAI")]
         public short? Lvrdelai { get; set; }
         [Column("LVRCOUT", TypeName = "decimal(9, 2)")]
         public decimal? Lvrcout { get; set; }
+        [Column("LVRCOUTPSUP", TypeName = "decimal(9, 2)")]
+        public decimal? LvrcoutPsup { get; set; }
 
         [InverseProperty(nameof(Livraison.Lvrtyp))]
         public virtual ICollection<Livraison> Livraisons { get; set; }

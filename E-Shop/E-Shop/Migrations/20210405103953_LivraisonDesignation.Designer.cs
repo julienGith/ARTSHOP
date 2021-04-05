@@ -4,14 +4,16 @@ using E_Shop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace E_Shop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210405103953_LivraisonDesignation")]
+    partial class LivraisonDesignation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -661,10 +663,6 @@ namespace E_Shop.Migrations
                     b.Property<decimal?>("Lvrcout")
                         .HasColumnType("decimal(9,2)")
                         .HasColumnName("LVRCOUT");
-
-                    b.Property<decimal?>("LvrcoutPsup")
-                        .HasColumnType("decimal(9,2)")
-                        .HasColumnName("LVRCOUTPSUP");
 
                     b.Property<short?>("Lvrdelai")
                         .HasColumnType("smallint")
