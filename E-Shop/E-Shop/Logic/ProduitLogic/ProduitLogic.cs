@@ -29,5 +29,12 @@ namespace E_Shop.Logic.ProduitLogic
         {
             return await produit.DeleteProduit(prodId);
         }
+
+        //Recherche Produit
+        //Produits par boutique
+        public async Task<List<Produit>> GetBoutiqueProduits(int btqId)
+        {
+            return await produit.GetBoutiqueProduits(btqId);
+        }
     }
 }

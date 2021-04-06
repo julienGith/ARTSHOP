@@ -34,7 +34,7 @@ namespace E_Shop.Pages.MaBoutique.LivraisonType
         public async Task<IActionResult> OnGet()
         {
 
-            if (HttpContext.Session.Get<string>("user") != null)
+            if (HttpContext.Session.Get<int>("user") > 0)
             {
                 var userId = HttpContext.Session.Get<int>("user");
                 Livraisontypes = await livraisonTypeLogic.GetLivraisonTypeByUserId(userId);

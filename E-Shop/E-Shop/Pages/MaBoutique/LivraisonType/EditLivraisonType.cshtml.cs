@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using E_Shop.Entities;
@@ -23,9 +24,17 @@ namespace E_Shop.Pages.MaBoutique.LivraisonType
         public Input input { get; set; }
         public class Input
         {
+            [Required]
+            [Display(Name = "Type de livraison")]
             public string Designation { get; set; }
+            [Required]
+            [Display(Name = "Délai de livraison en jour")]
             public short? LvrDelai { get; set; }
+            [Required]
+            [Display(Name = "Coût fixe de la livraison")]
             public decimal? LvrCout { get; set; }
+            [Required]
+            [Display(Name = "Coût par kilogramme supplémentaire")]
             public decimal? LvrCoutPsup { get; set; }
         }
         public async Task<IActionResult> OnPostAdd()

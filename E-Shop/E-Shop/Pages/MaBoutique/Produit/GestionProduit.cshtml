@@ -1,0 +1,66 @@
+﻿@page
+@model E_Shop.Pages.MaBoutique.Produit.GestionProduitModel
+@{
+}
+<form method="post">
+    <button type="submit" asp-page-handler="CrLivraisonType" class="btn btn-primary">Ajouter un nouveau Produit</button>
+</form>
+<div class="row">
+    @if (Model.produits.Count == 0)
+    {
+        <div>
+            Liste vide
+            <form method="post">
+                <input method="post" type="submit" asp-page-handler="CrLivraisonType" value="Ajouter un nouveau Produit" />
+            </form>
+        </div>
+    }
+    else
+    {
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-inline">Liste de vos Produits</div>
+                    <form class="d-inline" method="post">
+                        <input method="post" type="submit" asp-page-handler="CrLivraisonType" value="Ajouter un nouveau Produit" />
+                    </form>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead class="thead-light"><tr><th>Nom</th><th>Description</th><th>Prix</th><th>Action</th></tr></thead>
+
+                        @foreach (var item in Model.produits)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td width="50%">@item.PNom</td>
+                                    <td width="15%">@item.PDescriptionC </td>
+                                    <td width="15%">@item.Prix</td>
+                                    <td>
+                                        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                                            <a class="navbar-brand" href="#"></a>
+                                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupported" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                                <span class="navbar-toggler-icon"></span>
+                                            </button>
+                                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                                <ul class="navbar-nav mr-auto">
+                                                    <li class="nav-item">
+                                                        <form method="post">
+                                                            <input hidden asp-for="@Model.prodId" value="@item.Prodid" />
+                                                            <button type="submit" asp-page-handler="UpProduit" class="btn btn-primary">Modifier<span class='sr-only'>(current)</span></button>
+                                                            <button type="submit" asp-page-handler="DelProduit" class="btn btn-primary">Supprimer<span class='sr-only'>(current)</span></button>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </nav>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>

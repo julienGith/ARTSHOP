@@ -30,7 +30,7 @@ namespace E_Shop.Pages.MaBoutique
         }
         public IActionResult OnPostGestionProd()
         {
-            return Redirect("/MaBoutique/LivraisonType/EditLivraisonType");
+            return Redirect("/MaBoutique/Produit/GestionProduit");
         }
         public async Task OnGetAsync()
         {
@@ -39,9 +39,6 @@ namespace E_Shop.Pages.MaBoutique
             Boutiques = await _boutiqueLogic.GetPartenaireBoutiques(user.Id);
             var btqId = Boutiques.FirstOrDefault().Btqid;
             HttpContext.Session.Set<int>("btqId", btqId);
-
-
-
         }
     }
 }

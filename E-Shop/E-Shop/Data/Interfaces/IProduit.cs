@@ -17,5 +17,9 @@ namespace E_Shop.Data.Interfaces
             short stock, short disponibilite, short rabais, short preparation, string seo, string metaKw, string metaTitre, bool publier);
         //Delete Produit
         Task<Boolean> DeleteProduit(int prodId);
+
+        //Recherche Produit
+        //Produits par boutique
+        Task<List<Produit>> GetBoutiqueProduits(int btqId);
     }
 }

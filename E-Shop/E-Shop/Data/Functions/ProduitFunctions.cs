@@ -89,5 +89,17 @@ namespace E_Shop.Data.Functions
                 return true;
             }
         }
+
+        //Recherche Produit
+        //Produits par boutique
+        public async Task<List<Produit>> GetBoutiqueProduits(int btqId)
+        {
+            List<Produit> produits = new List<Produit>();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                produits = await context.Produits.Where(b=>b.Btqid == btqId).ToListAsync();
+            }
+            return produits;
+        }
     }
 }
