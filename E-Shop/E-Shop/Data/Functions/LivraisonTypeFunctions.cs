@@ -12,7 +12,7 @@ namespace E_Shop.Data.Functions
     {
         //CRUD LivraisonType
         //Création LivraisonType
-        public async Task<Livraisontype> AddLivraisonType(int btqId,string lvrDésignation,short lvrDelai, decimal lvrCout,decimal lvrCoutPsup)
+        public async Task<Livraisontype> AddLivraisonType(int btqId,string lvrDésignation,short? lvrDelai, decimal? lvrCout,decimal? lvrCoutPsup)
         {
             Livraisontype livraisontype = new Livraisontype();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
@@ -43,7 +43,7 @@ namespace E_Shop.Data.Functions
             return livraisontype;
         }
         //Update LivraisonType
-        public async Task<Livraisontype> UpdateLivraisonType(int lvrTypeId,string lvrDésignation, short lvrDelai, decimal lvrCout, decimal lvrCoutPsup)
+        public async Task<Livraisontype> UpdateLivraisonType(int lvrTypeId,string lvrDésignation, short? lvrDelai, decimal? lvrCout, decimal? lvrCoutPsup)
         {
             Livraisontype livraisontype = new Livraisontype();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
@@ -57,6 +57,18 @@ namespace E_Shop.Data.Functions
                 await context.SaveChangesAsync();
             }
             return livraisontype;
+        }
+        //Delete LivraisonType
+        public async Task<Boolean> DeleteLivraisonTypeById(int lvrTypId)
+        {
+            Livraisontype livraisontype = new Livraisontype();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                livraisontype = await context.Livraisontypes.FirstOrDefaultAsync(l => l.Lvrtypid == lvrTypId);
+                context.Livraisontypes.Remove(livraisontype);
+                await context.SaveChangesAsync();
+            }
+            return true;
         }
 
         //Recherche LivraisonType

@@ -13,7 +13,7 @@ namespace E_Shop.Logic.LivraisonTypeLogic
         private ILivraisonType livraisonType = new LivraisonTypeFunctions();
         //CRUD LivraisonType
         //Création LivraisonType
-        public async Task<Livraisontype> AddLivraisonType(int btqId, string lvrDésignation, short lvrDelai, decimal lvrCout, decimal lvrCoutPsup)
+        public async Task<Livraisontype> AddLivraisonType(int btqId, string lvrDésignation, short? lvrDelai, decimal? lvrCout, decimal? lvrCoutPsup)
         {
             return await livraisonType.AddLivraisonType(btqId, lvrDésignation, lvrDelai, lvrCout, lvrCoutPsup);
         }
@@ -23,9 +23,14 @@ namespace E_Shop.Logic.LivraisonTypeLogic
             return await livraisonType.AddLivraisonTypeProduit(lvrTypeId, prodId);
         }
         //Update LivraisonType
-        public async Task<Livraisontype> UpdateLivraisonType(int lvrTypeId, string lvrDésignation, short lvrDelai, decimal lvrCout, decimal lvrCoutPsup)
+        public async Task<Livraisontype> UpdateLivraisonType(int lvrTypeId, string lvrDésignation, short? lvrDelai, decimal? lvrCout, decimal? lvrCoutPsup)
         {
             return await livraisonType.UpdateLivraisonType(lvrTypeId, lvrDésignation, lvrDelai, lvrCout, lvrCoutPsup);
+        }
+        //Delete LivraisonType
+        public async Task<Boolean> DeleteLivraisonTypeById(int lvrTypId)
+        {
+            return await livraisonType.DeleteLivraisonTypeById(lvrTypId);
         }
 
 

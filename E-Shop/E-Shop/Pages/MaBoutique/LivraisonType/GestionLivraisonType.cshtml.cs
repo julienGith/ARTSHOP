@@ -15,10 +15,21 @@ namespace E_Shop.Pages.MaBoutique.LivraisonType
     {
         private LivraisonTypeLogic livraisonTypeLogic = new LivraisonTypeLogic();
         public List<Livraisontype> Livraisontypes = new List<Livraisontype>();
+        public int lvrTypeId { get; set; }
 
         public IActionResult OnPostCrLivraisonType()
         {
             return Redirect("/MaBoutique/LivraisonType/EditLivraison");
+        }
+        public IActionResult OnPostUpLivraisonType()
+        {
+            HttpContext.Session.Set<int>("lvrTypeId", lvrTypeId);
+            return Redirect("/MaBoutique/LivraisonType/EditLivraison");
+        }
+        public async Task<IActionResult> OnPostDelLivraisonType()
+        {
+            await livraisonTypeLogic.DeleteLivraisonTypeById(lvrTypeId);
+            return Page();
         }
         public async Task<IActionResult> OnGet()
         {

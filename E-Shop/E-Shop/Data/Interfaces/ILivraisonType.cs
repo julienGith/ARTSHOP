@@ -10,11 +10,13 @@ namespace E_Shop.Data.Interfaces
     {
         //CRUD LivraisonType
         //Création LivraisonType
-        Task<Livraisontype> AddLivraisonType(int btqId, string lvrDésignation, short lvrDelai, decimal lvrCout, decimal lvrCoutPsup);
+        Task<Livraisontype> AddLivraisonType(int btqId, string lvrDésignation, short? lvrDelai, decimal? lvrCout, decimal? lvrCoutPsup);
         //Add livraisonType à un Produit
         Task<Livraisontype> AddLivraisonTypeProduit(int lvrTypeId, int prodId);
         //Update LivraisonType
-        Task<Livraisontype> UpdateLivraisonType(int lvrTypeId, string lvrDésignation, short lvrDelai, decimal lvrCout, decimal lvrCoutPsup);
+        Task<Livraisontype> UpdateLivraisonType(int lvrTypeId, string lvrDésignation, short? lvrDelai, decimal? lvrCout, decimal? lvrCoutPsup);
+        //Delete LivraisonType
+        Task<Boolean> DeleteLivraisonTypeById(int lvrTypId);
 
         //Recherche LivraisonType
         //Get LivraisonType par Boutique

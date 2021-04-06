@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using E_Shop.Entities;
 using E_Shop.Extensions;
 using E_Shop.Logic.LivraisonTypeLogic;
 using Microsoft.AspNetCore.Mvc;
@@ -13,22 +14,32 @@ namespace E_Shop.Pages.MaBoutique.LivraisonType
     public class EditLivraisonTypeModel : PageModel
     {
         private LivraisonTypeLogic livraisonTypeLogic = new LivraisonTypeLogic();
+        public Livraisontype livraisonType = new Livraisontype();
         public int Btqid { get; set; }
+        public int lvrTypeId { get; set; }
+
         public List<SelectListItem> Options { get; set; }
         [BindProperty]
         public Input input { get; set; }
         public class Input
         {
             public string Designation { get; set; }
-            public short LvrDelai { get; set; }
-            public decimal LvrCout { get; set; }
-            public decimal LvrCoutPsup { get; set; }
+            public short? LvrDelai { get; set; }
+            public decimal? LvrCout { get; set; }
+            public decimal? LvrCoutPsup { get; set; }
         }
         public async Task<IActionResult> OnPostAdd()
         {
             if (ModelState.IsValid)
             {
-                await livraisonTypeLogic.AddLivraisonType(Btqid, input.Designation, input.LvrDelai, input.LvrCout, input.LvrCoutPsup);
+                if (lvrTypeId>0)
+                {
+                    await livraisonTypeLogic.UpdateLivraisonType(lvrTypeId, input.Designation, input.LvrDelai, input.LvrCout, input.LvrCoutPsup);
+                }
+                else
+                {
+                    await livraisonTypeLogic.AddLivraisonType(Btqid, input.Designation, input.LvrDelai, input.LvrCout, input.LvrCoutPsup);
+                }
             }
             return RedirectToPage("/MaBoutique/Produit/GestionLivraisonType");
 
@@ -39,7 +50,7 @@ namespace E_Shop.Pages.MaBoutique.LivraisonType
 
         }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
             Options = new List<SelectListItem> {
 
@@ -56,7 +67,16 @@ namespace E_Shop.Pages.MaBoutique.LivraisonType
                 Btqid = HttpContext.Session.Get<int>("btqId");
 
             }
-
+            if (HttpContext.Session.Get<int>("lvrTypeId")>0)
+            {
+                lvrTypeId = HttpContext.Session.Get<int>("lvrTypeId");
+                livraisonType = await livraisonTypeLogic.GetLivraisonTypeById(lvrTypeId);
+                input.Designation = livraisonType.Lvrdesignation;
+                input.LvrCout = livraisonType.Lvrcout;
+                input.LvrCoutPsup = livraisonType.LvrcoutPsup;
+                input.LvrDelai = livraisonType.Lvrdelai;
+            }
+            return Page();
 
         }
     }
