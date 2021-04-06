@@ -7,6 +7,7 @@ using E_Shop.Logic.CategorieLogic;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using E_Shop.Extensions;
 
 namespace E_Shop.Pages.MaBoutique
 {
@@ -29,6 +30,7 @@ namespace E_Shop.Pages.MaBoutique
         public async Task OnGetAsync()
         {
             //var user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            //HttpContext.Session.Set<string>("user", user.Id);
 
 
         }

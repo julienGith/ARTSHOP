@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using E_Shop.Extensions;
 using E_Shop.Logic.LivraisonTypeLogic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -51,6 +52,7 @@ namespace E_Shop.Pages.MaBoutique.LivraisonType
             new SelectListItem { Value = "6", Text = "Mondial Relais" }
 
             };
+
 
         }
     }

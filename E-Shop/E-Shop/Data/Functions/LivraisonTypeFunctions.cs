@@ -70,6 +70,18 @@ namespace E_Shop.Data.Functions
             }
             return livraisontypes;
         }
+        //Get LivraisonType par userId
+        public async Task<List<Livraisontype>> GetLivraisonTypeByUserId(int userId)
+        {
+            List<Livraisontype> livraisontypes = new List<Livraisontype>();
+            Partenaire partenaire = new Partenaire();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                partenaire = await context.Partenaires.Include(p=>p.Boutiques).ThenInclude(b=>b.Livraisontypes).FirstOrDefaultAsync(p => p.Id == userId);
+                livraisontypes =  partenaire.Boutiques.FirstOrDefault().Livraisontypes.ToList();
+            }
+            return livraisontypes;
+        }
         //Get LivraisonType by Id
         public async Task<Livraisontype> GetLivraisonTypeById(int lvrTypId)
         {
