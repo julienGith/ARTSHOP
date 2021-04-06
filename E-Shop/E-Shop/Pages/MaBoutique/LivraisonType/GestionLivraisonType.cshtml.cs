@@ -13,13 +13,13 @@ namespace E_Shop.Pages.MaBoutique.LivraisonType
     public class GestionLivraisonTypeModel : PageModel
     {
         public List<Livraisontype> Livraisontypes { get; set; }
-        public void OnGet()
+        public async IActionResult OnGet()
         {
 
             if (HttpContext.Session.Get<string>("user") != null)
             {
                 var userId = HttpContext.Session.Get<string>("user");
-
+                Livraisontypes = await 
             }
         }
     }

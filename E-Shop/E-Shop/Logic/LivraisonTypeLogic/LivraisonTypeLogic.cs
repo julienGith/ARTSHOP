@@ -40,5 +40,10 @@ namespace E_Shop.Logic.LivraisonTypeLogic
         {
             return await livraisonType.GetLivraisonTypeById(lvrTypId);
         }
+        //Get LivraisonType par userId
+        public async Task<List<Livraisontype>> GetLivraisonTypeByUserId(int userId)
+        {
+            return await livraisonType.GetLivraisonTypeByUserId(userId);
+        }
     }
 }
