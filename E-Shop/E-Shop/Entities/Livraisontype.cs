@@ -14,7 +14,6 @@ namespace E_Shop.Entities
         public Livraisontype()
         {
             Livraisons = new HashSet<Livraison>();
-            Produits = new HashSet<Produit>();
         }
 
         [Key]
@@ -22,6 +21,8 @@ namespace E_Shop.Entities
         public int Lvrtypid { get; set; }
         [Column("BTQID")]
         public int Btqid { get; set; }
+        [Column("PRODID")]
+        public int? Prodid { get; set; }
         [Column("LVRDESIGNATION")]
         public string Lvrdesignation { get; set; }
         [Column("LVRDELAI")]
@@ -33,10 +34,12 @@ namespace E_Shop.Entities
 
         [InverseProperty(nameof(Livraison.Lvrtyp))]
         public virtual ICollection<Livraison> Livraisons { get; set; }
-        [InverseProperty(nameof(Produit.Lvrtyp))]
-        public virtual ICollection<Produit> Produits { get; set; }
+
 
         [InverseProperty(nameof(Boutique.Livraisontypes))]
         public virtual Boutique Btq { get; set; }
+
+        [InverseProperty(nameof(Produit.LivraisonTypes))]
+        public virtual Produit Prod { get; set; }
     }
 }

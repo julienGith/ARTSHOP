@@ -12,7 +12,7 @@ namespace E_Shop.Data.Functions
     {
         //CRUD Produit
         //Add New Produit
-        public async Task<Produit> AddProduit(int boutiqueId, int categorieId, int livraisonTypeId, decimal prix, string nom, string descriptionC,string descriptionL,
+        public async Task<Produit> AddProduit(int boutiqueId, int categorieId, decimal prix, string nom, string descriptionC,string descriptionL,
             short stock, short disponibilite,short rabais,short preparation,string seo,string metaKw,string metaTitre,bool publier)
         {
             Produit newproduit = new Produit();
@@ -22,7 +22,6 @@ namespace E_Shop.Data.Functions
                 {
                     Btqid = boutiqueId,
                     Categorieid = categorieId,
-                    Lvrtypid = livraisonTypeId,
                     Prix = prix,
                     PNom = nom,
                     PDescriptionC = descriptionC,
@@ -43,7 +42,7 @@ namespace E_Shop.Data.Functions
         }
 
         //Modifier Produit
-        public async Task<Produit> UpdateProduit(int prodId, int categorieId, int livraisonTypeId, decimal prix, string nom, string descriptionC, string descriptionL,
+        public async Task<Produit> UpdateProduit(int prodId, int categorieId, decimal prix, string nom, string descriptionC, string descriptionL,
             short stock, short disponibilite, short rabais, short preparation, string seo, string metaKw, string metaTitre, bool publier)
         {
             Produit produit = new Produit();
@@ -53,7 +52,6 @@ namespace E_Shop.Data.Functions
                 produit = new Produit
                 {
                     Categorieid = categorieId,
-                    Lvrtypid = livraisonTypeId,
                     Prix = prix,
                     PNom = nom,
                     PDescriptionC = descriptionC,

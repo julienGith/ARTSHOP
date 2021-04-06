@@ -477,11 +477,7 @@ namespace E_Shop.Data
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PRODUIT_APPARTENI_CATEGORI");
 
-                entity.HasOne(d => d.Lvrtyp)
-                    .WithMany(p => p.Produits)
-                    .HasForeignKey(d => d.Lvrtypid)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PRODUIT_AVOIR_LIVRAISO");
+
             });
 
             modelBuilder.Entity<RelaisLocB>(entity =>

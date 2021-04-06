@@ -10,7 +10,6 @@ namespace E_Shop.Entities
 {
     [Table("PRODUIT")]
     [Index(nameof(Categorieid), Name = "APPARTENIR_FK")]
-    [Index(nameof(Lvrtypid), Name = "AVOIR_FK")]
     [Index(nameof(Btqid), Name = "VENDRE_FK")]
     public partial class Produit
     {
@@ -22,6 +21,7 @@ namespace E_Shop.Entities
             Echanges = new HashSet<Echange>();
             Media = new HashSet<Medium>();
             PDetails = new HashSet<PDetail>();
+            LivraisonTypes = new HashSet<Livraisontype>();
         }
 
         [Key]
@@ -31,8 +31,7 @@ namespace E_Shop.Entities
         public int Btqid { get; set; }
         [Column("CATEGORIEID")]
         public int Categorieid { get; set; }
-        [Column("LVRTYPID")]
-        public int Lvrtypid { get; set; }
+
         [Column("PRIX", TypeName = "decimal(9, 2)")]
         public decimal? Prix { get; set; }
         [Column("P_NOM")]
@@ -69,9 +68,7 @@ namespace E_Shop.Entities
         [ForeignKey(nameof(Categorieid))]
         [InverseProperty("Produits")]
         public virtual Categorie Categorie { get; set; }
-        [ForeignKey(nameof(Lvrtypid))]
-        [InverseProperty(nameof(Livraisontype.Produits))]
-        public virtual Livraisontype Lvrtyp { get; set; }
+
         [InverseProperty(nameof(Avi.Prod))]
         public virtual ICollection<Avi> Avis { get; set; }
         [InverseProperty(nameof(BcDetail.Prod))]
@@ -84,5 +81,8 @@ namespace E_Shop.Entities
         public virtual ICollection<Medium> Media { get; set; }
         [InverseProperty(nameof(PDetail.Prod))]
         public virtual ICollection<PDetail> PDetails { get; set; }
+
+        [InverseProperty(nameof(Livraisontype.Prod))]
+        public virtual ICollection<Livraisontype> LivraisonTypes { get; set; }
     }
 }

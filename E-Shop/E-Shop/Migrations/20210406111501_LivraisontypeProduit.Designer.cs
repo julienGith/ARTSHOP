@@ -4,14 +4,16 @@ using E_Shop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace E_Shop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210406111501_LivraisontypeProduit")]
+    partial class LivraisontypeProduit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -678,7 +680,7 @@ namespace E_Shop.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("LVRDESIGNATION");
 
-                    b.Property<int?>("Prodid")
+                    b.Property<int>("Prodid")
                         .HasColumnType("int")
                         .HasColumnName("PRODID");
 
@@ -1665,7 +1667,9 @@ namespace E_Shop.Migrations
 
                     b.HasOne("E_Shop.Entities.Produit", "Prod")
                         .WithMany("LivraisonTypes")
-                        .HasForeignKey("Prodid");
+                        .HasForeignKey("Prodid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Btq");
 
