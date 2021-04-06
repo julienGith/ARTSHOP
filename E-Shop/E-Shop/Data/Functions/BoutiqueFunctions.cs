@@ -116,13 +116,12 @@ namespace E_Shop.Data.Functions
             return true;
         }
         //GET Mes Boutiques
-        public async Task<List<Boutique>> GetPartenaireBoutiques(string UserID)
+        public async Task<List<Boutique>> GetPartenaireBoutiques(int UserID)
         {
-            int id = int.Parse(UserID);
             List<Boutique> mesboutiques = new List<Boutique>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                mesboutiques = await context.Boutiques.Where(b => b.Id == id).ToListAsync();
+                mesboutiques = await context.Boutiques.Where(b => b.Id == UserID).ToListAsync();
             }
             return mesboutiques;
         }

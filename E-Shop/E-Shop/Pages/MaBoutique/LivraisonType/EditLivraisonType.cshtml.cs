@@ -13,7 +13,7 @@ namespace E_Shop.Pages.MaBoutique.LivraisonType
     public class EditLivraisonTypeModel : PageModel
     {
         private LivraisonTypeLogic livraisonTypeLogic = new LivraisonTypeLogic();
-        public int MyProperty { get; set; }
+        public int Btqid { get; set; }
         public List<SelectListItem> Options { get; set; }
         [BindProperty]
         public Input input { get; set; }
@@ -23,15 +23,14 @@ namespace E_Shop.Pages.MaBoutique.LivraisonType
             public short LvrDelai { get; set; }
             public decimal LvrCout { get; set; }
             public decimal LvrCoutPsup { get; set; }
-            public int Btqid { get; set; }
         }
         public async Task<IActionResult> OnPostAdd()
         {
             if (ModelState.IsValid)
             {
-                await livraisonTypeLogic.AddLivraisonType(input.Btqid, input.Designation, input.LvrDelai, input.LvrCout, input.LvrCoutPsup);
+                await livraisonTypeLogic.AddLivraisonType(Btqid, input.Designation, input.LvrDelai, input.LvrCout, input.LvrCoutPsup);
             }
-            return Page();
+            return RedirectToPage("/MaBoutique/Produit/GestionLivraisonType");
 
         }
         public IActionResult OnPost()
@@ -52,6 +51,11 @@ namespace E_Shop.Pages.MaBoutique.LivraisonType
             new SelectListItem { Value = "6", Text = "Mondial Relais" }
 
             };
+            if (HttpContext.Session.Get<int>("btqId")>0)
+            {
+                Btqid = HttpContext.Session.Get<int>("btqId");
+
+            }
 
 
         }

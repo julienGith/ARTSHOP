@@ -45,7 +45,7 @@ namespace E_Shop.Logic.BoutiqueLogic
         }
 
         //Get Mes boutiques
-        public async Task<List<Boutique>> GetPartenaireBoutiques(string partenaireID)
+        public async Task<List<Boutique>> GetPartenaireBoutiques(int partenaireID)
         {
             return await _boutique.GetPartenaireBoutiques(partenaireID);
         }
