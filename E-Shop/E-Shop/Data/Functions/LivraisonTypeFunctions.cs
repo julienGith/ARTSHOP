@@ -42,6 +42,24 @@ namespace E_Shop.Data.Functions
             }
             return livraisontype;
         }
+        //Update LivraisonType
+        public async Task<Livraisontype> UpdateLivraisonType(int lvrTypeId,string lvrDésignation, short lvrDelai, decimal lvrCout, decimal lvrCoutPsup)
+        {
+            Livraisontype livraisontype = new Livraisontype();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                livraisontype = await context.Livraisontypes.FirstOrDefaultAsync(l => l.Lvrtypid == lvrTypeId);
+                livraisontype.Lvrdesignation = lvrDésignation;
+                livraisontype.Lvrdelai = lvrDelai;
+                livraisontype.Lvrcout = lvrCout;
+                livraisontype.LvrcoutPsup = lvrCoutPsup;
+                context.Livraisontypes.Update(livraisontype);
+                await context.SaveChangesAsync();
+            }
+            return livraisontype;
+        }
+
+        //Recherche LivraisonType
         //Get LivraisonType par Boutique
         public async Task<List<Livraisontype>> GetLivraisonTypeByBoutique(int btqId)
         {

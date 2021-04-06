@@ -22,6 +22,14 @@ namespace E_Shop.Logic.LivraisonTypeLogic
         {
             return await livraisonType.AddLivraisonTypeProduit(lvrTypeId, prodId);
         }
+        //Update LivraisonType
+        public async Task<Livraisontype> UpdateLivraisonType(int lvrTypeId, string lvrDésignation, short lvrDelai, decimal lvrCout, decimal lvrCoutPsup)
+        {
+            return await livraisonType.UpdateLivraisonType(lvrTypeId, lvrDésignation, lvrDelai, lvrCout, lvrCoutPsup);
+        }
+
+
+        //Recherche LivraisonType
         //Get LivraisonType par Boutique
         public async Task<List<Livraisontype>> GetLivraisonTypeByBoutique(int btqId)
         {
