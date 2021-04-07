@@ -61,6 +61,9 @@ namespace E_Shop.Entities
         public string PMetaTitre { get; set; }
         [Column("PUBLIER")]
         public bool? Publier { get; set; }
+        [Column("POIDS")]
+        public int? Poids { get; set; }
+
 
         [ForeignKey(nameof(Btqid))]
         [InverseProperty(nameof(Boutique.Produits))]

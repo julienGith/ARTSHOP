@@ -22,6 +22,11 @@ namespace E_Shop.Logic.LivraisonTypeLogic
         {
             return await livraisonType.AddLivraisonTypeProduit(lvrTypeId, prodId);
         }
+        //Remove livraisonType à un Produit
+        public async Task<Livraisontype> RemoveLivraisonTypeProduit(int lvrTypeId)
+        {
+            return await livraisonType.RemoveLivraisonTypeProduit(lvrTypeId);
+        }
         //Update LivraisonType
         public async Task<Livraisontype> UpdateLivraisonType(int lvrTypeId, string lvrDésignation, short? lvrDelai, decimal? lvrCout, decimal? lvrCoutPsup)
         {

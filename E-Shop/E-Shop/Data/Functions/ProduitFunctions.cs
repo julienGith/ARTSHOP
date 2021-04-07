@@ -13,7 +13,7 @@ namespace E_Shop.Data.Functions
         //CRUD Produit
         //Add New Produit
         public async Task<Produit> AddProduit(int boutiqueId, int categorieId, decimal prix, string nom, string descriptionC,string descriptionL,
-            short stock, short disponibilite,short rabais,short preparation,string seo,string metaKw,string metaTitre,bool publier)
+            short stock, short disponibilite,short rabais,short preparation,bool publier, int? poids)
         {
             Produit newproduit = new Produit();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
@@ -30,10 +30,8 @@ namespace E_Shop.Data.Functions
                     Disponibilite = disponibilite,
                     Rabais = rabais,
                     Preparation = preparation,
-                    PSeo = seo,
-                    PMetaKeywords = metaKw,
-                    PMetaTitre = metaTitre,
-                    Publier = publier
+                    Publier = publier,
+                    Poids = poids
                 };
                 context.Produits.Add(newproduit);
                 await context.SaveChangesAsync();
@@ -42,8 +40,8 @@ namespace E_Shop.Data.Functions
         }
 
         //Modifier Produit
-        public async Task<Produit> UpdateProduit(int prodId, int categorieId, decimal prix, string nom, string descriptionC, string descriptionL,
-            short stock, short disponibilite, short rabais, short preparation, string seo, string metaKw, string metaTitre, bool publier)
+        public async Task<Produit> UpdateProduit(int prodId, int categorieId, decimal? prix, string nom, string descriptionC, string descriptionL,
+            short? stock, short? disponibilite, short? rabais, short? preparation, bool? publier,int? poids)
         {
             Produit produit = new Produit();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
@@ -60,10 +58,8 @@ namespace E_Shop.Data.Functions
                     Disponibilite = disponibilite,
                     Rabais = rabais,
                     Preparation = preparation,
-                    PSeo = seo,
-                    PMetaKeywords = metaKw,
-                    PMetaTitre = metaTitre,
-                    Publier = publier
+                    Publier = publier,
+                    Poids = poids
                 };
                 context.Produits.Update(produit);
                 await context.SaveChangesAsync();

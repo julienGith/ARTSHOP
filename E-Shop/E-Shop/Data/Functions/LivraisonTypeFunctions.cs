@@ -30,18 +30,6 @@ namespace E_Shop.Data.Functions
             }
             return livraisontype;
         }
-        //Add livraisonType à un Produit
-        public async Task<Livraisontype> AddLivraisonTypeProduit(int lvrTypeId, int prodId)
-        {
-            Livraisontype livraisontype = new Livraisontype();
-            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
-            {
-                livraisontype = await context.Livraisontypes.FirstOrDefaultAsync(l => l.Lvrtypid == lvrTypeId);
-                livraisontype.Prodid = prodId;
-                await context.SaveChangesAsync();
-            }
-            return livraisontype;
-        }
         //Update LivraisonType
         public async Task<Livraisontype> UpdateLivraisonType(int lvrTypeId,string lvrDésignation, short? lvrDelai, decimal? lvrCout, decimal? lvrCoutPsup)
         {
@@ -69,6 +57,30 @@ namespace E_Shop.Data.Functions
                 await context.SaveChangesAsync();
             }
             return true;
+        }
+        //Add livraisonType à un Produit
+        public async Task<Livraisontype> AddLivraisonTypeProduit(int lvrTypeId, int prodId)
+        {
+            Livraisontype livraisontype = new Livraisontype();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                livraisontype = await context.Livraisontypes.FirstOrDefaultAsync(l => l.Lvrtypid == lvrTypeId);
+                livraisontype.Prodid = prodId;
+                await context.SaveChangesAsync();
+            }
+            return livraisontype;
+        }
+        //Remove livraisonType à un Produit
+        public async Task<Livraisontype> RemoveLivraisonTypeProduit(int lvrTypeId)
+        {
+            Livraisontype livraisontype = new Livraisontype();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                livraisontype = await context.Livraisontypes.FirstOrDefaultAsync(l => l.Lvrtypid == lvrTypeId);
+                livraisontype.Prodid = null;
+                await context.SaveChangesAsync();
+            }
+            return livraisontype;
         }
 
         //Recherche LivraisonType

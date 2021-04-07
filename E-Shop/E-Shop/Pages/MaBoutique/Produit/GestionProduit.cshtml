@@ -3,7 +3,7 @@
 @{
 }
 <form method="post">
-    <button type="submit" asp-page-handler="CrLivraisonType" class="btn btn-primary">Ajouter un nouveau Produit</button>
+    <button type="submit" asp-page-handler="CrProduit" class="btn btn-primary">Ajouter un nouveau Produit</button>
 </form>
 <div class="row">
     @if (Model.produits.Count == 0)
@@ -11,7 +11,7 @@
         <div>
             Liste vide
             <form method="post">
-                <input method="post" type="submit" asp-page-handler="CrLivraisonType" value="Ajouter un nouveau Produit" />
+                <input method="post" type="submit" asp-page-handler="CrProduit" value="Ajouter un nouveau Produit" />
             </form>
         </div>
     }
@@ -22,7 +22,7 @@
                 <div class="card-header">
                     <div class="d-inline">Liste de vos Produits</div>
                     <form class="d-inline" method="post">
-                        <input method="post" type="submit" asp-page-handler="CrLivraisonType" value="Ajouter un nouveau Produit" />
+                        <input method="post" type="submit" asp-page-handler="CrProduit" value="Ajouter un nouveau Produit" />
                     </form>
                 </div>
                 <div class="card-body">

@@ -1,0 +1,49 @@
+﻿@page
+@model E_Shop.Pages.MaBoutique.Produit.CaracteristiquesProduitModel
+@{
+}
+<div class="row justify-content-center">
+    <div>
+        <form method="post">
+            <h4> Caractéristiques de votre Produit </h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="input.Stock"></label>
+                <input asp-for="input.Stock" class="form-control" />
+                <span asp-validation-for="input.Stock" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="input.Disponibilite"></label>
+                <input asp-for="input.Disponibilite" class="form-control" />
+                <span asp-validation-for="input.Disponibilite" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="input.Preparation"></label>
+                <input asp-for="input.Preparation" class="form-control" />
+                <span asp-validation-for="input.Preparation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="input.Prix"></label>
+                <input asp-for="input.Prix" class="form-control" />
+                <span asp-validation-for="input.Prix" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="input.Rabais"></label>
+                <input asp-for="input.Rabais" class="form-control" />
+                <span asp-validation-for="input.Rabais" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="input.Poids"></label>
+                <input asp-for="input.Poids" class="form-control" />
+                <span asp-validation-for="input.Poids" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="input.Publier"></label>
+                <input asp-for="input.Publier" class="form-control" />
+                <span asp-validation-for="input.Publier" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Suivant</button>
+        </form>
+    </div>
+</div>

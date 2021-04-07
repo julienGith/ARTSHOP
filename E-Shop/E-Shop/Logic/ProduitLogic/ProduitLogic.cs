@@ -13,16 +13,16 @@ namespace E_Shop.Logic.ProduitLogic
         IProduit produit = new ProduitFunctions();
         //CRUD Produit
         //Add New Produit
-        public async Task<Produit> AddProduit(int boutiqueId, int categorieId, decimal prix, string nom, string descriptionC, string descriptionL,
-            short stock, short disponibilite, short rabais, short preparation, string seo, string metaKw, string metaTitre, bool publier)
+        public async Task<Produit> AddProduit(int boutiqueId, int categorieId, decimal? prix, string nom, string descriptionC, string descriptionL,
+            short? stock, short? disponibilite, short? rabais, short? preparation, bool? publier, int? poids)
         {
-            return await produit.AddProduit(boutiqueId, categorieId, prix, nom, descriptionC, descriptionL, stock, disponibilite, rabais, preparation, seo, metaKw, metaTitre, publier);
+            return await produit.AddProduit(boutiqueId, categorieId, prix, nom, descriptionC, descriptionL, stock, disponibilite, rabais, preparation, publier, poids);
         }
         //Modifier Produit
-        public async Task<Produit> UpdateProduit(int prodId, int categorieId, int livraisonTypeId, decimal prix, string nom, string descriptionC, string descriptionL,
-            short stock, short disponibilite, short rabais, short preparation, string seo, string metaKw, string metaTitre, bool publier)
+        public async Task<Produit> UpdateProduit(int prodId, int categorieId, decimal? prix, string nom, string descriptionC, string descriptionL,
+            short? stock, short? disponibilite, short? rabais, short? preparation, bool? publier, int? poids)
         {
-            return await produit.UpdateProduit(prodId, categorieId, prix, nom, descriptionC, descriptionL, stock, disponibilite, rabais, preparation, seo, metaKw, metaTitre, publier);
+            return await produit.UpdateProduit(prodId, categorieId, prix, nom, descriptionC, descriptionL, stock, disponibilite, rabais, preparation, publier, poids);
         }
         //Delete Produit
         public async Task<Boolean> DeleteProduit(int prodId)

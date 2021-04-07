@@ -10,11 +10,11 @@ namespace E_Shop.Data.Interfaces
     {       
         //CRUD Produit
         //Add New Produit
-        Task<Produit> AddProduit(int boutiqueId, int categorieId, decimal prix, string nom, string descriptionC, string descriptionL,
-            short stock, short disponibilite, short rabais, short preparation, string seo, string metaKw, string metaTitre, bool publier);
+        Task<Produit> AddProduit(int boutiqueId, int categorieId, decimal? prix, string nom, string descriptionC, string descriptionL,
+            short? stock, short? disponibilite, short? rabais, short? preparation, bool? publier, int? poids);
         //Modifier Produit
-        Task<Produit> UpdateProduit(int prodId, int categorieId, decimal prix, string nom, string descriptionC, string descriptionL,
-            short stock, short disponibilite, short rabais, short preparation, string seo, string metaKw, string metaTitre, bool publier);
+        Task<Produit> UpdateProduit(int prodId, int categorieId, decimal? prix, string nom, string descriptionC, string descriptionL,
+            short? stock, short? disponibilite, short? rabais, short? preparation, bool? publier, int? poids);
         //Delete Produit
         Task<Boolean> DeleteProduit(int prodId);
 
