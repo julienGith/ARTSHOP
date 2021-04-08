@@ -7,3 +7,72 @@
     <button type="submit" asp-page-handler="ImgSecondaire" class="btn btn-primary">Modifier l'image secondaire de votre Boutique</button>
     <button type="submit" asp-page-handler="Video" class="btn btn-primary">Modifier la vidéo de votre Boutique</button>
 </form>
+@if (Model.medias.Count > 0)
+{
+    foreach (var item in Model.medias)
+    {
+        if (item.Description == "vignette")
+        {
+            <form method="post" enctype="multipart/form-data">
+                <h4> Changer la vignette de votre boutique </h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="FileNameImg"></label>
+                    <input type="file" name="photo" accept="image/*" asp-for="FileNameImg" class="form-control" />
+                    <span asp-validation-for="FileNameImg" class="text-danger"></span>
+                </div>
+                <input name="mediaId" value="@item.Mediaid" hidden />
+
+                <button type="submit" asp-page-handler="ImgV" class="btn btn-primary">Envoyer</button>
+            </form>
+            <div class="imageborder">
+                <span>
+                    <img src="@item.Lien" />
+                </span>
+            </div>
+        }
+        if (item.Description == "pano")
+        {
+            <form method="post" enctype="multipart/form-data">
+                <h4> Changer l'image de votre boutique </h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="FileNameImg"></label>
+                    <input type="file" name="photo" accept="image/*" asp-for="FileNameImg" class="form-control" />
+                    <span asp-validation-for="FileNameImg" class="text-danger"></span>
+                </div>
+                <input name="mediaId" value="@item.Mediaid" hidden />
+
+                <button type="submit" asp-page-handler="ImgP" class="btn btn-primary">Envoyer</button>
+            </form>
+                <span>
+                    <img src="@item.Lien" />
+                </span>
+        }
+        else
+        {
+            <form method="post" enctype="multipart/form-data">
+                <h4> Changer la vidéo de votre boutique </h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="FileNameImg"></label>
+                    <input type="file" name="photo" accept="image/*" asp-for="FileNameImg" class="form-control" />
+                    <span asp-validation-for="FileNameImg" class="text-danger"></span>
+                </div>
+                <input name="mediaId" value="@item.Mediaid" hidden />
+
+                <button type="submit" asp-page-handler="Vid" class="btn btn-primary">Envoyer</button>
+            </form>
+            <span>
+                <iframe width="690" height="330" src="@item.Lien" frameborder='0' allowfullscreen='0'>
+                </iframe>
+            </span>
+        }
+    }
+}
