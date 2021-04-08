@@ -16,12 +16,7 @@ namespace E_Shop.Data.Interfaces
             string domiciliation, string iban, string bic, string titulaire, string mail,
             string message, int ca, int nbsalarie, string siteweb, string statutjuridique, string btqseo, string dateCreation);
         //Update Boutique
-        Task<Boolean> UpdateBoutique(int Btqid, int politiqueid,
-            string descriptionC, string descriptionL, string raisonsociale, string Nom, string siret,
-            string siren, string tel, string codenaf, string codebanque, string codeguichet,
-            string numcompte, string clerib, string domiciliation, string iban, string bic,
-            string titulaire, string mail, string message, int ca, int nbsalarie, string siteweb,
-            string statutjuridique, string btqseo);
+        Task<Boolean> UpdateBoutique(Boutique boutique);
         //Supprimer Boutique
         Task<Boolean> DeleteBoutique(int btqid);
 
@@ -30,5 +25,7 @@ namespace E_Shop.Data.Interfaces
         Task<List<Boutique>> GetPartenaireBoutiques(int partenaireID);
         //GET All Boutiques
         Task<List<Boutique>> GetAllBoutiques();
+        //Get Boutique par Id boutique
+        Task<Boutique> GetBoutiqueById(int boutiqueId);
     }
 }

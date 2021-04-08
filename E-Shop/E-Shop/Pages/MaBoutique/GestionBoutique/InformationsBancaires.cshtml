@@ -1,0 +1,55 @@
+﻿@page
+@model E_Shop.Pages.MaBoutique.GestionBoutique.InformationsBancairesModel
+@{
+}
+<div class="row justify-content-center">
+    <div>
+        <form method="post">
+            <h4> Etape 3 </h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="input.Numcompte"></label>
+                <input asp-for="input.Numcompte" class="form-control" />
+                <span asp-validation-for="input.Numcompte" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="input.Titulaire"></label>
+                <input asp-for="input.Titulaire" class="form-control" />
+                <span asp-validation-for="input.Titulaire" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="input.Codebanque"></label>
+                <input asp-for="input.Codebanque" class="form-control" />
+                <span asp-validation-for="input.Codebanque" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="input.Codeguichet"></label>
+                <input asp-for="input.Codeguichet" class="form-control" />
+                <span asp-validation-for="input.Codeguichet" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="input.Domiciliation"></label>
+                <input asp-for="input.Domiciliation" class="form-control" />
+                <span asp-validation-for="input.Domiciliation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="input.Iban"></label>
+                <input asp-for="input.Iban" class="form-control" />
+                <span asp-validation-for="input.Iban" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="input.Bic"></label>
+                <input asp-for="input.Bic" class="form-control" />
+                <span asp-validation-for="input.Bic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="input.Clerib"></label>
+                <input asp-for="input.Clerib" class="form-control" />
+                <span asp-validation-for="input.Clerib" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Valider</button>
+        </form>
+    </div>
+</div>

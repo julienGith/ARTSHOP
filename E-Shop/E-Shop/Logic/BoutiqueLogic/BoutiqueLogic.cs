@@ -27,19 +27,9 @@ namespace E_Shop.Logic.BoutiqueLogic
             statutjuridique, btqseo, dateCreation);
         }
         //Update Boutique
-        public async Task<Boolean> UpdateBoutique(int Btqid, int politiqueid,
-    string descriptionC, string descriptionL, string raisonsociale, string Nom, string siret,
-    string siren, string tel, string codenaf, string codebanque, string codeguichet,
-    string numcompte, string clerib, string domiciliation, string iban, string bic,
-    string titulaire, string mail, string message, int ca, int nbsalarie, string siteweb,
-    string statutjuridique, string btqseo)
+        public async Task<Boolean> UpdateBoutique(Boutique boutique)
         {
-            var result = await _boutique.UpdateBoutique(Btqid, politiqueid,
-     descriptionC, descriptionL, raisonsociale,Nom, siret,
-     siren, tel, codenaf, codebanque, codeguichet,
-     numcompte, clerib, domiciliation, iban, bic,
-     titulaire, mail, message, ca, nbsalarie, siteweb,
-     statutjuridique, btqseo);
+            var result = await _boutique.UpdateBoutique(boutique);
 
             return true;
         }
@@ -60,6 +50,10 @@ namespace E_Shop.Logic.BoutiqueLogic
         {
             return await _boutique.DeleteBoutique(btqid);
         }
-
+        //Get Boutique par Id boutique
+        public async Task<Boutique> GetBoutiqueById(int boutiqueId)
+        {
+            return await _boutique.GetBoutiqueById(boutiqueId);
+        }
     }
 }

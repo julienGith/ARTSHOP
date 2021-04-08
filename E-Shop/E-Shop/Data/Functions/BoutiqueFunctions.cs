@@ -58,48 +58,17 @@ namespace E_Shop.Data.Functions
             return newboutique;
         }
         //Update Boutique
-        public async Task<Boolean> UpdateBoutique(int Btqid, int politiqueid,
-    string descriptionC, string descriptionL, string raisonsociale, string Nom, string siret,
-    string siren, string tel, string codenaf, string codebanque, string codeguichet,
-    string numcompte, string clerib, string domiciliation, string iban, string bic,
-    string titulaire, string mail, string message, int ca, int nbsalarie, string siteweb,
-    string statutjuridique, string btqseo)
+        public async Task<Boolean> UpdateBoutique(Boutique boutique)
         {
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                Boutique boutique = new Boutique();
-                boutique = await context.Boutiques.FirstOrDefaultAsync(b => b.Btqid == Btqid);
-                boutique.Politiqueid = politiqueid;
-                boutique.BDescriptionC = descriptionC;
-                boutique.BDescriptionC = descriptionL;
-                boutique.Raisonsociale = raisonsociale;
-                boutique.BtqNom = Nom;
-                boutique.Siret = siret;
-                boutique.Siren = siren;
-                boutique.Btqtel = tel;
-                boutique.Codenaf = codenaf;
-                boutique.Codebanque = codebanque;
-                boutique.Codeguichet = codeguichet;
-                boutique.Numcompte = numcompte;
-                boutique.Clerib = clerib;
-                boutique.Domiciliation = domiciliation;
-                boutique.Iban = iban;
-                boutique.Bic = bic;
-                boutique.Titulaire = titulaire;
-                boutique.Btqtmail = mail;
-                boutique.Btqmessage = message;
-                boutique.Ca = ca;
-                boutique.Nbsalarie = nbsalarie;
-                boutique.Siteweb = siteweb;
-                boutique.Statutjuridique = statutjuridique;
-                boutique.Btqseo = btqseo;
-
                 context.Boutiques.Update(boutique);
                 await context.SaveChangesAsync();
             }
 
             return true;
         }
+
         //Supprimer Boutique
         public async Task<Boolean> DeleteBoutique(int btqid)
         {
@@ -124,6 +93,16 @@ namespace E_Shop.Data.Functions
                 mesboutiques = await context.Boutiques.Where(b => b.Id == UserID).ToListAsync();
             }
             return mesboutiques;
+        }
+        //Get Boutique par Id boutique
+        public async Task<Boutique> GetBoutiqueById(int boutiqueId)
+        {
+            Boutique boutique = new Boutique();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                boutique = await context.Boutiques.FirstOrDefaultAsync(b => b.Btqid == boutiqueId);
+            }
+            return boutique;
         }
         //GET All Boutiques
         public async Task<List<Boutique>> GetAllBoutiques()
