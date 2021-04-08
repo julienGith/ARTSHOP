@@ -3,7 +3,7 @@
 @{
 }
 <form method="post" enctype="multipart/form-data">
-    <h4> Changer la vignette de votre boutique </h4>
+    <h4> Téléchargez l'image de votre Produit </h4>
     <hr />
     <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -12,12 +12,12 @@
         <input type="file" name="photo" accept="image/*" asp-for="FileNameImg" class="form-control" />
         <span asp-validation-for="FileNameImg" class="text-danger"></span>
     </div>
-    <input name="mediaId" value="@item.Mediaid" hidden />
+    @*<input name="mediaId" value="@Model.mediaId" hidden />*@
 
     <button type="submit" asp-page-handler="Img" class="btn btn-primary">Envoyer</button>
 </form>
 <div class="imageborder">
     <span>
-        <img src="@item.Lien" />
+        <img src="@Model.Lien" />
     </span>
 </div>

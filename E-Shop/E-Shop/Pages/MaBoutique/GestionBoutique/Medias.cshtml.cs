@@ -32,6 +32,8 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
         public int mediaId { get; set; }
         [BindProperty]
         public string FileNameImg { get; set; }
+        public string Lien { get; set; }
+
 
         public async Task<IActionResult> OnPostImgV(IFormFile photo, int mediaId)
         {
@@ -50,7 +52,7 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
                     var newname = Guid.NewGuid().ToString() + ".jpeg";
                     var path = Path.Combine(_webHostEnvironment.WebRootPath, "images", newname);
                     Imager.SaveJpeg(path, newimg);
-                    string Lien = "/images/" + newname;
+                    Lien = "/images/" + newname;
                     await mediaLogic.AddBoutiqueMedias(boutiqueId, Lien, true, false, "vignette");
                     medias = await mediaLogic.GetMediasBoutique(boutiqueId);
 
@@ -75,7 +77,7 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
                     var newname = Guid.NewGuid().ToString() + ".jpeg";
                     var path = Path.Combine(_webHostEnvironment.WebRootPath, "images", newname);
                     Imager.SaveJpeg(path, newimg);
-                    string Lien = "/images/" + newname;
+                    Lien = "/images/" + newname;
                     await mediaLogic.AddBoutiqueMedias(boutiqueId, Lien, true, false, "pano");
                     medias = await mediaLogic.GetMediasBoutique(boutiqueId);
 
@@ -86,7 +88,7 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
         public async Task<IActionResult> OnPostVid(int mediaId)
         {
             await mediaLogic.DeleteMedia(mediaId);
-            string Lien = GetYoutubeId(FileNameImg);
+            Lien = GetYoutubeId(FileNameImg);
             await mediaLogic.AddBoutiqueMedias(boutiqueId, Lien, false, true, "");
             medias = await mediaLogic.GetMediasBoutique(boutiqueId);
 

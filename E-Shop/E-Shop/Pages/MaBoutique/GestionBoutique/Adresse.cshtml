@@ -5,38 +5,36 @@
 <div class="row justify-content-center">
     <div>
         <form method="post">
-            <h4> Etape 6 </h4>
+            <h4> Adresse de votre Boutique </h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
 
             <div class="form-group">
-                <label asp-for="step6.Rue"></label>
-                <input asp-for="step6.Rue" class="form-control" />
-                <span asp-validation-for="step6.Rue" class="text-danger"></span>
+                <label asp-for="input.Rue"></label>
+                <input asp-for="input.Rue" class="form-control" />
+                <span asp-validation-for="input.Rue" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="step6.Num"></label>
-                <input asp-for="step6.Num" class="form-control" />
-                <span asp-validation-for="step6.Num" class="text-danger"></span>
+                <label asp-for="input.Num"></label>
+                <input asp-for="input.Num" class="form-control" />
+                <span asp-validation-for="input.Num" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="step6.Codepostal"></label>
-                <input id="tbCp" asp-for="step6.Codepostal" class="form-control" />
-                <span asp-validation-for="step6.Codepostal" class="text-danger"></span>
+                <label asp-for="input.Codepostal"></label>
+                <input id="tbCp" asp-for="input.Codepostal" class="form-control" />
+                <span asp-validation-for="input.Codepostal" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="step6.Ville"></label>
-                <input asp-for="step6.Ville" class="form-control" />
-                <span asp-validation-for="step6.Ville" class="text-danger"></span>
+                <label asp-for="input.Ville"></label>
+                <input asp-for="input.Ville" class="form-control" />
+                <span asp-validation-for="input.Ville" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input id="tbDept" asp-for="step6.Departement" class="form-control" hidden />
+                <input id="tbDept" asp-for="input.Departement" class="form-control" hidden />
             </div>
 
 
             <button id="btnNext" type="submit" class="btn btn-primary">Suivant</button>
-            <button type="submit" asp-page-handler="Back" class="btn btn-primary">Précédent</button>
-
         </form>
     </div>
 </div>

@@ -12,8 +12,8 @@ namespace E_Shop.Data.Functions
     {
         //CRUD Produit
         //Add New Produit
-        public async Task<Produit> AddProduit(int boutiqueId, int categorieId, decimal prix, string nom, string descriptionC,string descriptionL,
-            short stock, short disponibilite,short rabais,short preparation,bool publier, int? poids)
+        public async Task<Produit> AddProduit(int boutiqueId, int categorieId, decimal? prix, string nom, string descriptionC,string descriptionL,
+            short? stock, short? disponibilite,short? rabais,short? preparation,bool? publier, int? poids)
         {
             Produit newproduit = new Produit();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
