@@ -2,11 +2,29 @@
 @model E_Shop.Pages.MaBoutique.GestionBoutique.MediasModel
 @{
 }
-<form method="post">
-    <button type="submit" asp-page-handler="ImgPrincipale" class="btn btn-primary">Modifier l'image principale de votre Boutique</button>
-    <button type="submit" asp-page-handler="ImgSecondaire" class="btn btn-primary">Modifier l'image secondaire de votre Boutique</button>
-    <button type="submit" asp-page-handler="Video" class="btn btn-primary">Modifier la vidéo de votre Boutique</button>
-</form>
+<style>
+    div.imageborder {
+        border-radius: 999em;
+        width: 125px;
+        height: 125px;
+        padding: 1px;
+        line-height: 0;
+        border: 5px solid #808080;
+        background-color: #eee;
+    }
+
+    .imgMiniBout {
+        display: block;
+        background: transparent;
+        padding: 8px;
+        border: 1px solid #ccc;
+        box-shadow: 10px 10px 10px #999;
+        border-radius: 999em;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+    }
+</style>
 @if (Model.medias.Count > 0)
 {
     foreach (var item in Model.medias)
@@ -29,7 +47,7 @@
             </form>
             <div class="imageborder">
                 <span>
-                    <img src="@item.Lien" />
+                    <img class="imgMiniBout" src="@item.Lien" />
                 </span>
             </div>
         }

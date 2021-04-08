@@ -36,5 +36,10 @@ namespace E_Shop.Logic.ProduitLogic
         {
             return await produit.GetBoutiqueProduits(btqId);
         }
+        //Nom du produit par id produit
+        public string GetNomProduitById(int prodId)
+        {
+            return produit.GetNomProduitById(prodId);
+        }
     }
 }

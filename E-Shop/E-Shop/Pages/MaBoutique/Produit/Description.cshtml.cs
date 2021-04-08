@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using E_Shop.Extensions;
-
+using E_Shop.Logic.ProduitLogic;
 
 namespace E_Shop.Pages.MaBoutique.Produit
 {
@@ -32,8 +32,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
         public IActionResult OnPost()
         {
             HttpContext.Session.Set<Input>("Description", input);
-            return RedirectToPage("/MaBoutique/Produit/Description");
-
+            return RedirectToPage("/MaBoutique/Produit/Media");
         }
         public void OnGet()
         {

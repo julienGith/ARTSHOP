@@ -97,5 +97,15 @@ namespace E_Shop.Data.Functions
             }
             return produits;
         }
+        //Nom du produit par id produit
+        public string GetNomProduitById(int prodId)
+        {
+            string nom;
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+               nom =  context.Produits.Where(p => p.Prodid == prodId).Select(p => p.PNom).ToString();
+            }
+            return nom;
+        }
     }
 }

@@ -67,9 +67,16 @@ namespace E_Shop.Pages.MaBoutique.Produit
             {
                 btqId = HttpContext.Session.Get<int>("btqId");
             }
-            if (HttpContext.Session.Get<int>("Cat")>0)
+            if (HttpContext.Session.Get<int>("Cat") > 0)
             {
                 catId = HttpContext.Session.Get<int>("Cat");
+            }
+            else
+            {
+                if (HttpContext.Session.Get<int>("catEnfantId1") > 0)
+                {
+                    catId = HttpContext.Session.Get<int>("catEnfantId1");
+                }
             }
 
         }
