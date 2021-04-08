@@ -32,7 +32,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
         public IActionResult OnPost()
         {
             HttpContext.Session.Set<Input>("Description", input);
-            return RedirectToPage("/MaBoutique/Produit/Media");
+            return RedirectToPage("/MaBoutique/Produit/CaracteristiquesProduit");
         }
         public void OnGet()
         {

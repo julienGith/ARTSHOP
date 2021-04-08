@@ -43,9 +43,9 @@ namespace E_Shop.Pages.MaBoutique.Produit
             }
             return Page();
         }
-        public IActionResult OnPostGestProd()
+        public IActionResult OnPostNext()
         {
-            return Redirect("/MaBoutique/Produit/GestionProduit");
+            return Redirect("/MaBoutique/Produit/Media");
         }
         public async Task<IActionResult> OnGet()
         {

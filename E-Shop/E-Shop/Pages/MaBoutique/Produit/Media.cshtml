@@ -12,12 +12,13 @@
         <input type="file" name="photo" accept="image/*" asp-for="FileNameImg" class="form-control" />
         <span asp-validation-for="FileNameImg" class="text-danger"></span>
     </div>
-    @*<input name="mediaId" value="@Model.mediaId" hidden />*@
-
     <button type="submit" asp-page-handler="Img" class="btn btn-primary">Envoyer</button>
 </form>
-<div class="imageborder">
+@if (Model.Lien != null)
+{
     <span>
         <img src="@Model.Lien" />
     </span>
-</div>
+    <a href="/boutique/Produit/GestionProduit" class="btn btn-primary">Valider</a>
+}
+

@@ -30,11 +30,15 @@ namespace E_Shop.Pages.MaBoutique.Produit
         public string FileNameImg { get; set; }
         public string Lien { get; set; }
         public string nomProd { get; set; }
+        public int mediaId { get; set; }
 
-
-        public async Task<IActionResult> OnPostImg(IFormFile photo, int mediaId)
+        public async Task<IActionResult> OnPostImg(IFormFile photo)
         {
-            await mediaLogic.DeleteMedia(mediaId);
+            if (mediaId>0)
+            {
+                await mediaLogic.DeleteMedia(mediaId);
+
+            }
             if (photo == null || photo.Length == 0)
             {
                 return Page();
@@ -50,8 +54,8 @@ namespace E_Shop.Pages.MaBoutique.Produit
                     var path = Path.Combine(_webHostEnvironment.WebRootPath, "images", newname);
                     Imager.SaveJpeg(path, newimg);
                     Lien = "/images/" + newname;
-                    await mediaLogic.AddProduitMedias(prodId, Lien, true, false, nomProd);
-
+                    var result = await mediaLogic.AddProduitMedias(prodId, Lien, true, false, nomProd);
+                    mediaId = result.Mediaid;
                 }
             }
             return Page();

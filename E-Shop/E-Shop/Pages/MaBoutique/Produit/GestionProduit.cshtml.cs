@@ -13,7 +13,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
     {
         private ProduitLogic produitLogic = new ProduitLogic();
         public List<Entities.Produit> produits = new List<Entities.Produit>();
-        public async Task<IActionResult> OnPostCrProduit()
+        public IActionResult OnPostCrProduit()
         {
             return Redirect("/MaBoutique/Produit/ChoixCategorie");
         }
