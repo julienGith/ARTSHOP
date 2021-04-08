@@ -1,0 +1,73 @@
+﻿@page
+@model E_Shop.Pages.MaBoutique.GestionBoutique.AdresseModel
+@{
+}
+<div class="row justify-content-center">
+    <div>
+        <form method="post">
+            <h4> Etape 6 </h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="step6.Rue"></label>
+                <input asp-for="step6.Rue" class="form-control" />
+                <span asp-validation-for="step6.Rue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="step6.Num"></label>
+                <input asp-for="step6.Num" class="form-control" />
+                <span asp-validation-for="step6.Num" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="step6.Codepostal"></label>
+                <input id="tbCp" asp-for="step6.Codepostal" class="form-control" />
+                <span asp-validation-for="step6.Codepostal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="step6.Ville"></label>
+                <input asp-for="step6.Ville" class="form-control" />
+                <span asp-validation-for="step6.Ville" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input id="tbDept" asp-for="step6.Departement" class="form-control" hidden />
+            </div>
+
+
+            <button id="btnNext" type="submit" class="btn btn-primary">Suivant</button>
+            <button type="submit" asp-page-handler="Back" class="btn btn-primary">Précédent</button>
+
+        </form>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("tbCp").addEventListener("keyup", GetDept);
+
+            function GetDept() {
+                if (document.getElementById("tbCp").value.length == 5) {
+                    console.log(document.getElementById("tbCp").value[0])
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.responseType = 'json';
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            console.log(xhttp.response);
+                            document.getElementById("tbDept").value = xhttp.response.nom;
+                        }
+                        else {
+                            console.log(xhttp.status);
+                        }
+                    };
+                    xhttp.open("GET", "https://geo.api.gouv.fr/departements/" + document.getElementById("tbCp").value[0] + document.getElementById("tbCp").value[1], true);
+                    xhttp.send();
+                }
+
+            }
+
+        });
+    </script>
+}

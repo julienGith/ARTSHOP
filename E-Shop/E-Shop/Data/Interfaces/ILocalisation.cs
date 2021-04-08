@@ -19,13 +19,13 @@ namespace E_Shop.Data.Interfaces
         Task<Localisation> AddRelaisLocalisation(int boutiqueId, string rue, string num, string ville, string codePostal, string pays, string relaisNom);
 
         //Update Localisation
-        Task<Localisation> UpdateLocalisation(int localisationId, string rue, string num, string ville, string codePostal, string pays);
+        Task<Localisation> UpdateLocalisation(Localisation localisation);
 
         //Supprimer Localisation
         Task<Boolean> DeleteLocalisation(int localisationd);
 
-        //GET Mes Localisations de boutique
-        Task<List<Localisation>> GetLocalisationsBoutique(int boutiqueId);
+        //GET Ma Localisation de boutique
+        Task<Localisation> GetLocalisationBoutique(int boutiqueId);
 
         //GET Mes Localisations de Partenaire
         Task<List<Localisation>> GetLocalisationsPartenaire(int Id);

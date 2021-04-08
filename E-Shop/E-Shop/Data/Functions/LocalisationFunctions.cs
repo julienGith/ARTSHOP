@@ -79,17 +79,10 @@ namespace E_Shop.Data.Functions
             return newlocalisation;
         }
         //Update Localisation
-        public async Task<Localisation> UpdateLocalisation(int localisationId, string rue, string num, string ville, string codePostal, string pays)
+        public async Task<Localisation> UpdateLocalisation(Localisation localisation)
         {
-            Localisation localisation = new Localisation();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                localisation = await context.Localisations.FirstOrDefaultAsync(l => l.Localisationid == localisationId);
-                localisation.Rue = rue;
-                localisation.Num = num;
-                localisation.Ville = ville;
-                localisation.Codepostal = codePostal;
-                localisation.Pays = pays;
                 context.Localisations.Update(localisation);
                 await context.SaveChangesAsync();
             }
@@ -107,15 +100,15 @@ namespace E_Shop.Data.Functions
             }
             return true;
         }
-        //GET Mes Localisations de boutique
-        public async Task<List<Localisation>> GetLocalisationsBoutique(int boutiqueId)
+        //GET Ma Localisation de boutique
+        public async Task<Localisation> GetLocalisationBoutique(int boutiqueId)
         {
-            List<Localisation> localisations = new List<Localisation>();
+            Localisation localisation = new Localisation();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                localisations = await context.Localisations.Where(b => b.Btqid == boutiqueId).ToListAsync();
+                localisation = await context.Localisations.FirstOrDefaultAsync(b => b.Btqid == boutiqueId);
             }
-            return localisations;
+            return localisation;
         }
         //GET Mes Localisations de Partenaire
         public async Task<List<Localisation>> GetLocalisationsPartenaire(int Id)

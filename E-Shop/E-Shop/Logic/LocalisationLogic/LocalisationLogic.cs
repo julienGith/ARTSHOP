@@ -28,19 +28,19 @@ namespace E_Shop.Logic.LocalisationLogic
             return await _localisation.AddRelaisLocalisation(boutiqueId, rue, num, ville, codePostal, pays, relaisNom);
         }
         //Update Localisation
-        public async Task<Localisation> UpdateLocalisation(int localisationId, string rue, string num, string ville, string codePostal, string pays)
+        public async Task<Localisation> UpdateLocalisation(Localisation localisation)
         {
-            return await _localisation.UpdateLocalisation(localisationId, rue, num, ville, codePostal, pays);
+            return await _localisation.UpdateLocalisation(localisation);
         }
         //Supprimer Localisation
         public async Task<Boolean> DeleteLocalisation(int localisationId)
         {
             return await _localisation.DeleteLocalisation(localisationId);
         }
-        //GET Mes Localisations de boutique
-        public async Task<List<Localisation>> GetLocalisationsBoutique(int boutiqueId)
+        //GET Ma Localisation de boutique
+        public async Task<Localisation> GetLocalisationBoutique(int boutiqueId)
         {
-            return await _localisation.GetLocalisationsBoutique(boutiqueId);
+            return await _localisation.GetLocalisationBoutique(boutiqueId);
         }
         //GET Mes Localisations de Partenaire
         public async Task<List<Localisation>> GetLocalisationsPartenaire(int Id)
