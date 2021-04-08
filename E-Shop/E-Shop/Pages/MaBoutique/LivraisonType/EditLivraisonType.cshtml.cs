@@ -68,7 +68,8 @@ namespace E_Shop.Pages.MaBoutique.LivraisonType
             new SelectListItem { Value = "3", Text = "Livraison gratuite, ChronoFresh" },
             new SelectListItem { Value = "4", Text = "ChronoFresh" },
             new SelectListItem { Value = "5", Text = "La Poste" },
-            new SelectListItem { Value = "6", Text = "Mondial Relais" }
+            new SelectListItem { Value = "6", Text = "Mondial Relais" },
+            new SelectListItem { Value = "7", Text = "Point Relais" }
 
             };
             if (HttpContext.Session.Get<int>("btqId")>0)
