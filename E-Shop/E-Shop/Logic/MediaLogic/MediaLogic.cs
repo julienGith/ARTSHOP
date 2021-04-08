@@ -27,5 +27,10 @@ namespace E_Shop.Logic.MediaLogic
         {
             return await _media.DeleteMedia(mediaId);
         }
+        //Get Medias d'une boutique
+        public async Task<List<Medium>> GetMediasBoutique(int btqId)
+        {
+            return await _media.GetMediasBoutique(btqId);
+        }
     }
 }

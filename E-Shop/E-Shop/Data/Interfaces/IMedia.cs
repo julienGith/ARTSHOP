@@ -15,5 +15,7 @@ namespace E_Shop.Data.Interfaces
         Task<Boolean> DeleteMedia(int mediaId);
         //Add Produit Médias
         Task<Medium> AddProduitMedias(int prodId, string lien, bool image, bool video, string description);
+        //Get Medias d'une boutique
+        Task<List<Medium>> GetMediasBoutique(int btqId);
     }
 }

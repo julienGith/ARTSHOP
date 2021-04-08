@@ -59,5 +59,15 @@ namespace E_Shop.Data.Functions
             }
             return true;
         }
+        //Get Medias d'une boutique
+        public async Task<List<Medium>> GetMediasBoutique(int btqId)
+        {
+            List<Medium> medias = new List<Medium>();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                medias = await context.Media.Where(m => m.Btqid == btqId).ToListAsync();
+            }
+            return medias;
+        }
     }
 }
