@@ -32,9 +32,11 @@ namespace E_Shop.Pages.MaBoutique.LivraisonType
             public short? LvrDelai { get; set; }
             [Required]
             [Display(Name = "Coût fixe de la livraison")]
+            [UIHint("Currency")]
             public decimal? LvrCout { get; set; }
             [Required]
             [Display(Name = "Coût par kilogramme supplémentaire")]
+            [DisplayFormat(DataFormatString = "{0:€###,##} €")]
             public decimal? LvrCoutPsup { get; set; }
         }
         public async Task<IActionResult> OnPostAdd()

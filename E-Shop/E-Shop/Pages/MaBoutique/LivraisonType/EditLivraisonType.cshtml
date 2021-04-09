@@ -4,7 +4,7 @@
 }
 <div class="row justify-content-center">
     <div>
-        <form method="post">
+        <form method="post" lang="fr-fr">
             <h4> Choix du Type de Livraison </h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
@@ -16,17 +16,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="input.LvrDelai"></label>
-                <input asp-for="input.LvrDelai" class="form-control" />
+                <input min="0" asp-for="input.LvrDelai" class="form-control" />
                 <span asp-validation-for="input.LvrDelai" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="input.LvrCout"></label>
-                <input asp-for="input.LvrCout" class="form-control" />
+                <input id="money1" asp-for="input.LvrCout" class="form-control" />
                 <span asp-validation-for="input.LvrCout" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="input.LvrCoutPsup"></label>
-                <input asp-for="input.LvrCoutPsup" class="form-control" />
+                <input id="money2" asp-for="input.LvrCoutPsup" value="" class="form-control" />
                 <span asp-validation-for="input.LvrCoutPsup" class="text-danger"></span>
             </div>
 
@@ -35,3 +35,28 @@
         </form>
     </div>
 </div>
+@section scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("money1").addEventListener("keyup", format);
+            document.getElementById("money2").addEventListener("change", format);
+
+            function format() {
+                console.log("format");
+                console.log(document.getElementById("money1").value);
+                if (document.getElementById("money1").value!=null) {
+                    var str = document.getElementById("money1").value;
+                    var result = str.replace(".", ",");
+                    console.log(result);
+                    document.getElementById("money1").value = result;
+                }
+                if (document.getElementById("money2").value != null) {
+                    var str = document.getElementById("money2").value;
+                    var result = str.replace(".", ",");
+                    document.getElementById("money2").value = result;
+                }
+            }
+
+        });
+    </script>
+}
