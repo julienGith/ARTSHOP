@@ -20,7 +20,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
         {
             return Redirect("/MaBoutique/Produit/ChoixCategorie");
         }
-        public async Task<IActionResult> OnPostUpProduit()
+        public IActionResult OnPostUpProduit()
         {
             HttpContext.Session.Set<int>("prodId", prodId);
             return Redirect("/MaBoutique/Produit/");

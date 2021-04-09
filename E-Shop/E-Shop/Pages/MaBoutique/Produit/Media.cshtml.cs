@@ -54,7 +54,9 @@ namespace E_Shop.Pages.MaBoutique.Produit
                     var path = Path.Combine(_webHostEnvironment.WebRootPath, "images", newname);
                     Imager.SaveJpeg(path, newimg);
                     Lien = "/images/" + newname;
-                    var result = await mediaLogic.AddProduitMedias(prodId, Lien, true, false, nomProd);
+                    var LienComplet = Path.Combine(Directory.GetCurrentDirectory(),
+                        _webHostEnvironment.WebRootPath, "images\\", newname);
+                    var result = await mediaLogic.AddProduitMedias(prodId, Lien, true, false, nomProd, LienComplet);
                     mediaId = result.Mediaid;
                 }
             }

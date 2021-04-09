@@ -102,7 +102,7 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
                     Lien = "/images/" + newname;
                     var LienComplet = Path.Combine(Directory.GetCurrentDirectory(),
                         _webHostEnvironment.WebRootPath, "images\\", newname);
-                    await mediaLogic.AddBoutiqueMedias(boutiqueId, Lien, true, false, "vignette", LienComplet);
+                    await mediaLogic.AddBoutiqueMedias(boutiqueId, Lien, true, false, "pano", LienComplet);
                     medias = await mediaLogic.GetMediasBoutique(boutiqueId);
 
                 }
