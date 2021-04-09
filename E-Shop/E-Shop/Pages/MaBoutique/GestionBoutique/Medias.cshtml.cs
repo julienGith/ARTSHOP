@@ -32,6 +32,7 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
         [BindProperty]
         public int mediaId { get; set; }
         [BindProperty]
+        [Required]
         public string FileNameImg { get; set; }
         public string Lien { get; set; }
 
@@ -45,6 +46,11 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
             await mediaLogic.DeleteMedia(mediaId);
             if (photo == null || photo.Length == 0)
             {
+                if (HttpContext.Session.Get<int>("btqId") > 0)
+                {
+                    boutiqueId = HttpContext.Session.Get<int>("btqId");
+                    medias = await mediaLogic.GetMediasBoutique(boutiqueId);
+                }
                 return Page();
             }
 
@@ -74,6 +80,11 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
             await mediaLogic.DeleteMedia(mediaId);
             if (photo == null || photo.Length == 0)
             {
+                if (HttpContext.Session.Get<int>("btqId") > 0)
+                {
+                    boutiqueId = HttpContext.Session.Get<int>("btqId");
+                    medias = await mediaLogic.GetMediasBoutique(boutiqueId);
+                }
                 return Page();
             }
 

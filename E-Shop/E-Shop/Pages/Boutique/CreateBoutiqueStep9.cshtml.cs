@@ -44,6 +44,14 @@ namespace E_Shop.Pages.Boutique
         }
         public async Task<IActionResult> OnPostImg(IFormFile photo)
         {
+            if (HttpContext.Session.Get<string>("step9lien") != null)
+            {
+                var lien = HttpContext.Session.Get<string>("step9lien");
+                if (System.IO.File.Exists(lien))
+                {
+                    System.IO.File.Delete(lien);
+                }
+            }
             if (photo == null || photo.Length == 0)
             {
                 return Page();
