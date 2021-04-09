@@ -34,6 +34,7 @@ namespace E_Shop.Pages.Boutique
         {
             public int MediaId { get; set; }
             public string Lien { get; set; }
+            public string LienComplet { get; set; }
             public int Btqid { get; set; }
             public string Description { get; set; }
             public bool Image { get; set; }
@@ -46,9 +47,10 @@ namespace E_Shop.Pages.Boutique
 
         public async Task<IActionResult> OnPostImg(IFormFile photo)
         {
-            if (HttpContext.Session.Get<string>("step8lien") !=null)
+            if (HttpContext.Session.Get<string>("imgName") != null)
             {
-                var lien = HttpContext.Session.Get<string>("step8lien");
+
+                var lien = Path.Combine(Directory.GetCurrentDirectory(),_webHostEnvironment.WebRootPath, "images\\", HttpContext.Session.Get<string>("imgName"));
                 if (System.IO.File.Exists(lien))
                 {
                     System.IO.File.Delete(lien);
@@ -69,6 +71,10 @@ namespace E_Shop.Pages.Boutique
                     var path = Path.Combine(_webHostEnvironment.WebRootPath, "images", newname);
                     Imager.SaveJpeg(path, newimg);
                     step8.Lien = "/images/" + newname;
+                    var LienComplet = Path.Combine(Directory.GetCurrentDirectory(),
+                        _webHostEnvironment.WebRootPath, "images\\", newname);
+
+                    HttpContext.Session.Set<string>("LienComplet", LienComplet);
                     HttpContext.Session.Set<string>("step8lien", step8.Lien.ToString());
                     HttpContext.Session.Set<Step8>("step8", step8);
 
