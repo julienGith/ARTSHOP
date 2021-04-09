@@ -15,20 +15,29 @@ namespace E_Shop.Pages.MaBoutique.LivraisonType
     {
         private LivraisonTypeLogic livraisonTypeLogic = new LivraisonTypeLogic();
         public List<Livraisontype> Livraisontypes = new List<Livraisontype>();
+        [BindProperty]
         public int lvrTypeId { get; set; }
+        public int userId { get; set; }
+
 
         public IActionResult OnPostCrLivraisonType()
         {
-            return Redirect("/MaBoutique/LivraisonType/EditLivraison");
+            return Redirect("/MaBoutique/LivraisonType/EditLivraisonType");
         }
         public IActionResult OnPostUpLivraisonType()
         {
             HttpContext.Session.Set<int>("lvrTypeId", lvrTypeId);
-            return Redirect("/MaBoutique/LivraisonType/EditLivraison");
+            return Redirect("/MaBoutique/LivraisonType/EditLivraisonType");
         }
         public async Task<IActionResult> OnPostDelLivraisonType()
         {
             await livraisonTypeLogic.DeleteLivraisonTypeById(lvrTypeId);
+            if (HttpContext.Session.Get<int>("user") > 0)
+            {
+                userId = HttpContext.Session.Get<int>("user");
+                Livraisontypes = await livraisonTypeLogic.GetLivraisonTypeByUserId(userId);
+            }
+
             return Page();
         }
         public async Task<IActionResult> OnGet()
@@ -36,7 +45,7 @@ namespace E_Shop.Pages.MaBoutique.LivraisonType
 
             if (HttpContext.Session.Get<int>("user") > 0)
             {
-                var userId = HttpContext.Session.Get<int>("user");
+                userId = HttpContext.Session.Get<int>("user");
                 Livraisontypes = await livraisonTypeLogic.GetLivraisonTypeByUserId(userId);
             }
             return Page();

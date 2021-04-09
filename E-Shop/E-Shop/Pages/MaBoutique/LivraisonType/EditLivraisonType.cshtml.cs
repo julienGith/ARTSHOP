@@ -41,21 +41,39 @@ namespace E_Shop.Pages.MaBoutique.LivraisonType
         {
             if (ModelState.IsValid)
             {
-                if (lvrTypeId>0)
+
+                if (HttpContext.Session.Get<int>("lvrTypeId") > 0)
                 {
+                    lvrTypeId = HttpContext.Session.Get<int>("lvrTypeId");
                     await livraisonTypeLogic.UpdateLivraisonType(lvrTypeId, input.Designation, input.LvrDelai, input.LvrCout, input.LvrCoutPsup);
                 }
                 else
                 {
+                    if (HttpContext.Session.Get<int>("btqId") > 0)
+                    {
+                        Btqid = HttpContext.Session.Get<int>("btqId");
+                    }
                     await livraisonTypeLogic.AddLivraisonType(Btqid, input.Designation, input.LvrDelai, input.LvrCout, input.LvrCoutPsup);
                 }
+                return RedirectToPage("/MaBoutique/LivraisonType/GestionLivraisonType");
             }
-            return RedirectToPage("/MaBoutique/Produit/GestionLivraisonType");
+            Options = new List<SelectListItem> {
+
+            new SelectListItem { Value = "Livraison gratuite, La Poste", Text = "Livraison gratuite, La Poste" },
+            new SelectListItem { Value = "Livraison gratuite, Mondial Relais", Text = "Livraison gratuite, Mondial Relais" },
+            new SelectListItem { Value = "Livraison gratuite, ChronoFresh", Text = "Livraison gratuite, ChronoFresh" },
+            new SelectListItem { Value = "ChronoFresh", Text = "ChronoFresh" },
+            new SelectListItem { Value = "La Poste", Text = "La Poste" },
+            new SelectListItem { Value = "Mondial Relais", Text = "Mondial Relais" },
+            new SelectListItem { Value = "Point Relais", Text = "Point Relais" }
+
+            };
+            return Page();
 
         }
         public IActionResult OnPost()
         {
-            return RedirectToPage("/MaBoutique/Produit/TableauDeBord");
+            return RedirectToPage("/MaBoutique/TableauDeBord");
 
         }
 
@@ -63,28 +81,31 @@ namespace E_Shop.Pages.MaBoutique.LivraisonType
         {
             Options = new List<SelectListItem> {
 
-            new SelectListItem { Value = "1", Text = "Livraison gratuite, La Poste" },
-            new SelectListItem { Value = "2", Text = "Livraison gratuite, Mondial Relais" },
-            new SelectListItem { Value = "3", Text = "Livraison gratuite, ChronoFresh" },
-            new SelectListItem { Value = "4", Text = "ChronoFresh" },
-            new SelectListItem { Value = "5", Text = "La Poste" },
-            new SelectListItem { Value = "6", Text = "Mondial Relais" },
-            new SelectListItem { Value = "7", Text = "Point Relais" }
+            new SelectListItem { Value = "Livraison gratuite, La Poste", Text = "Livraison gratuite, La Poste" },
+            new SelectListItem { Value = "Livraison gratuite, Mondial Relais", Text = "Livraison gratuite, Mondial Relais" },
+            new SelectListItem { Value = "Livraison gratuite, ChronoFresh", Text = "Livraison gratuite, ChronoFresh" },
+            new SelectListItem { Value = "ChronoFresh", Text = "ChronoFresh" },
+            new SelectListItem { Value = "La Poste", Text = "La Poste" },
+            new SelectListItem { Value = "Mondial Relais", Text = "Mondial Relais" },
+            new SelectListItem { Value = "Point Relais", Text = "Point Relais" }
 
             };
             if (HttpContext.Session.Get<int>("btqId")>0)
             {
                 Btqid = HttpContext.Session.Get<int>("btqId");
-
             }
             if (HttpContext.Session.Get<int>("lvrTypeId")>0)
             {
                 lvrTypeId = HttpContext.Session.Get<int>("lvrTypeId");
                 livraisonType = await livraisonTypeLogic.GetLivraisonTypeById(lvrTypeId);
-                input.Designation = livraisonType.Lvrdesignation;
-                input.LvrCout = livraisonType.Lvrcout;
-                input.LvrCoutPsup = livraisonType.LvrcoutPsup;
-                input.LvrDelai = livraisonType.Lvrdelai;
+                input = new Input
+                {
+                    Designation = livraisonType.Lvrdesignation,
+                    LvrCout = livraisonType.Lvrcout,
+                    LvrCoutPsup = livraisonType.LvrcoutPsup,
+                    LvrDelai = livraisonType.Lvrdelai
+                };
+
             }
             return Page();
 

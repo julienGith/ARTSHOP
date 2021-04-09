@@ -33,6 +33,11 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
         {
             if (ModelState.IsValid)
             {
+                if (HttpContext.Session.Get<int>("btqId") > 0)
+                {
+                    boutiqueId = HttpContext.Session.Get<int>("btqId");
+                    boutique = await boutiqueLogic.GetBoutiqueById(boutiqueId);
+                }
                 boutique.BDescriptionC = input.BDescriptionC;
                 boutique.BDescriptionL = input.BDescriptionL;
                 await boutiqueLogic.UpdateBoutique(boutique);
@@ -47,8 +52,12 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
             {
                 boutiqueId = HttpContext.Session.Get<int>("btqId");
                 boutique = await boutiqueLogic.GetBoutiqueById(boutiqueId);
-                input.BDescriptionC = boutique.BDescriptionC;
-                input.BDescriptionL = boutique.BDescriptionL;
+                input = new Input
+                {
+                    BDescriptionC = boutique.BDescriptionC,
+                    BDescriptionL = boutique.BDescriptionL
+                };
+
             }
             return Page();
         }

@@ -32,6 +32,10 @@ namespace E_Shop.Pages.MaBoutique
         {
             return Redirect("/MaBoutique/Produit/GestionProduit");
         }
+        public IActionResult OnPostGestionBout()
+        {
+            return Redirect("/MaBoutique/GestionBoutique/GestionBoutique");
+        }
         public async Task OnGetAsync()
         {
             var user = await _userManager.FindByEmailAsync(User.Identity.Name);

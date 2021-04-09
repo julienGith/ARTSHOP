@@ -13,15 +13,17 @@ namespace E_Shop.Pages.MaBoutique.Produit
     {
         private ProduitLogic produitLogic = new ProduitLogic();
         public List<Entities.Produit> produits = new List<Entities.Produit>();
+        public int prodId { get; set; }
+
         public IActionResult OnPostCrProduit()
         {
             return Redirect("/MaBoutique/Produit/ChoixCategorie");
         }
         public async Task<IActionResult> OnPostUpProduit()
         {
+            HttpContext.Session.Set<int>("prodId", prodId);
             return Redirect("/MaBoutique/Produit/");
         }
-        public int prodId { get; set; }
         public async Task<IActionResult> OnGet()
         {
             if (HttpContext.Session.Get<int>("btqId") > 0)
