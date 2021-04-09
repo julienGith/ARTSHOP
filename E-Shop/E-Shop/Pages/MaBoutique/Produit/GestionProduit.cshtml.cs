@@ -13,6 +13,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
     {
         private ProduitLogic produitLogic = new ProduitLogic();
         public List<Entities.Produit> produits = new List<Entities.Produit>();
+        [BindProperty]
         public int prodId { get; set; }
 
         public IActionResult OnPostCrProduit()

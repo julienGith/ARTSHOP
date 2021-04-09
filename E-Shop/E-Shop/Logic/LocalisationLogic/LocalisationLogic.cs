@@ -13,19 +13,19 @@ namespace E_Shop.Logic.LocalisationLogic
         private ILocalisation _localisation = new LocalisationFunctions();
         //CRUD Localisation
         //ADD new BoutiqueLocalisation
-        public async Task<Localisation> AddBoutiqueLocalisation(int boutiqueId, string rue, string num, string ville, string codePostal, string pays)
+        public async Task<Localisation> AddBoutiqueLocalisation(int boutiqueId, string rue, string num, string ville, string codePostal, string pays, string departement)
         {
-            return await _localisation.AddBoutiqueLocalisation( boutiqueId, rue, num, ville, codePostal, pays);
+            return await _localisation.AddBoutiqueLocalisation( boutiqueId, rue, num, ville, codePostal, pays, departement);
         }
         //ADD new PartenaireLocalisation
-        public async Task<Localisation> AddPartenaireLocalisation(int id, string rue, string num, string ville, string codePostal, string pays)
+        public async Task<Localisation> AddPartenaireLocalisation(int id, string rue, string num, string ville, string codePostal, string pays, string departement)
         {
-            return await _localisation.AddPartenaireLocalisation(id, rue, num, ville, codePostal, pays);
+            return await _localisation.AddPartenaireLocalisation(id, rue, num, ville, codePostal, pays,departement);
         }
         //ADD new PointRelaisLocalisation
-        public async Task<Localisation> AddRelaisLocalisation(int boutiqueId, string rue, string num, string ville, string codePostal, string pays, string relaisNom)
+        public async Task<Localisation> AddRelaisLocalisation(int boutiqueId, string rue, string num, string ville, string codePostal, string pays, string relaisNom, string departement)
         {
-            return await _localisation.AddRelaisLocalisation(boutiqueId, rue, num, ville, codePostal, pays, relaisNom);
+            return await _localisation.AddRelaisLocalisation(boutiqueId, rue, num, ville, codePostal, pays, relaisNom,departement);
         }
         //Update Localisation
         public async Task<Localisation> UpdateLocalisation(Localisation localisation)

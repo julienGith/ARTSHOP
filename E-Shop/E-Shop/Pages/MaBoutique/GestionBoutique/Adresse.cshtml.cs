@@ -36,9 +36,7 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
             [StringLength(255)]
             [Display(Name = "CodePostal")]
             public string Codepostal { get; set; }
-            [Required]
-            [StringLength(255)]
-            [Display(Name = "Pays")]
+
             public string Pays { get; set; }
             [Required]
             public string Departement { get; set; }
@@ -55,7 +53,6 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
                 localisation.Codepostal = input.Codepostal;
                 localisation.Departement = input.Departement;
                 localisation.Num = input.Num;
-                localisation.Pays = input.Pays;
                 localisation.Rue = input.Rue;
                 localisation.Ville = input.Ville;
                 await localisationLogic.UpdateLocalisation(localisation);

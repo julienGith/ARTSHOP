@@ -22,6 +22,8 @@ namespace E_Shop.Pages.MaBoutique.LivraisonType
 
         public IActionResult OnPostCrLivraisonType()
         {
+            HttpContext.Session.Set<int>("lvrTypeId", 0);
+
             return Redirect("/MaBoutique/LivraisonType/EditLivraisonType");
         }
         public IActionResult OnPostUpLivraisonType()
@@ -31,6 +33,8 @@ namespace E_Shop.Pages.MaBoutique.LivraisonType
         }
         public async Task<IActionResult> OnPostDelLivraisonType()
         {
+            HttpContext.Session.Set<int>("lvrTypeId",0);
+
             await livraisonTypeLogic.DeleteLivraisonTypeById(lvrTypeId);
             if (HttpContext.Session.Get<int>("user") > 0)
             {

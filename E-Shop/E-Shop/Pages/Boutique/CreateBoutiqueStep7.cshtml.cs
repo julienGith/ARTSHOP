@@ -48,6 +48,8 @@ namespace E_Shop.Pages.Boutique
             [Display(Name = "Nom du point relais")]
             [StringLength(255)]
             public string PrNom { get; set; }
+            [Required]
+            public string Departement { get; set; }
 
         }
         public async Task<IActionResult> OnPost()
@@ -55,7 +57,7 @@ namespace E_Shop.Pages.Boutique
             Step5 step5 = new Step5();
             step5 = HttpContext.Session.Get<Step5>("step5");
 
-            var result = await localisation.AddRelaisLocalisation(step5.boutiqueId, step7.Rue, step7.Num, step7.Ville, step7.Codepostal, "France",step7.PrNom);
+            var result = await localisation.AddRelaisLocalisation(step5.boutiqueId, step7.Rue, step7.Num, step7.Ville, step7.Codepostal, "France",step7.PrNom,step7.Departement);
             step7.locaId = result.Localisationid;
             HttpContext.Session.Set<Step7>("step7", step7);
 

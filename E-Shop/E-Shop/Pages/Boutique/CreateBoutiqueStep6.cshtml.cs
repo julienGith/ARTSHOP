@@ -49,7 +49,7 @@ namespace E_Shop.Pages.Boutique
             Step5 step5 = new Step5();
             step5 = HttpContext.Session.Get<Step5>("step5");
 
-            var result = await localisation.AddBoutiqueLocalisation(step5.boutiqueId,step6.Rue,step6.Num,step6.Ville,step6.Codepostal,"France");
+            var result = await localisation.AddBoutiqueLocalisation(step5.boutiqueId,step6.Rue,step6.Num,step6.Ville,step6.Codepostal,"France",step6.Departement);
             step6.locaId = result.Localisationid;
             HttpContext.Session.Set<Step6>("step6", step6);
 

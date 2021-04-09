@@ -10,13 +10,13 @@ namespace E_Shop.Data.Interfaces
     {
         //CRUD Localisation
         //ADD new BoutiqueLocalisation
-        Task<Localisation> AddBoutiqueLocalisation(int boutiqueId, string rue, string num, string ville, string codePostal, string pays);
+        Task<Localisation> AddBoutiqueLocalisation(int boutiqueId, string rue, string num, string ville, string codePostal, string pays, string departement);
 
         //ADD new PartenaireLocalisation
-        Task<Localisation> AddPartenaireLocalisation(int id, string rue, string num, string ville, string codePostal, string pays);
+        Task<Localisation> AddPartenaireLocalisation(int id, string rue, string num, string ville, string codePostal, string pays, string departement);
 
         //ADD new PointRelaisLocalisation
-        Task<Localisation> AddRelaisLocalisation(int boutiqueId, string rue, string num, string ville, string codePostal, string pays, string relaisNom);
+        Task<Localisation> AddRelaisLocalisation(int boutiqueId, string rue, string num, string ville, string codePostal, string pays, string relaisNom, string departement);
 
         //Update Localisation
         Task<Localisation> UpdateLocalisation(Localisation localisation);

@@ -12,7 +12,7 @@ namespace E_Shop.Data.Functions
     {
         //CRUD Localisation
         //ADD new BoutiqueLocalisation
-        public async Task<Localisation> AddBoutiqueLocalisation(int boutiqueId,string rue,string num,string ville, string codePostal,string pays)
+        public async Task<Localisation> AddBoutiqueLocalisation(int boutiqueId,string rue,string num,string ville, string codePostal,string pays, string departement)
         {
 
             Localisation newlocalisation = new Localisation
@@ -22,7 +22,8 @@ namespace E_Shop.Data.Functions
                 Num = num,
                 Ville= ville,
                 Pays = pays,
-                Codepostal=codePostal
+                Codepostal=codePostal,
+                Departement = departement
 
             };
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
@@ -34,7 +35,7 @@ namespace E_Shop.Data.Functions
             return newlocalisation;
         }
         //ADD new PartenaireLocalisation
-        public async Task<Localisation> AddPartenaireLocalisation(int id, string rue, string num, string ville, string codePostal, string pays)
+        public async Task<Localisation> AddPartenaireLocalisation(int id, string rue, string num, string ville, string codePostal, string pays, string departement)
         {
 
             Localisation newlocalisation = new Localisation
@@ -43,7 +44,8 @@ namespace E_Shop.Data.Functions
                 Rue = rue,
                 Num = num,
                 Ville = ville,
-                Pays = pays
+                Pays = pays,
+                Departement = departement
 
             };
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
@@ -55,7 +57,7 @@ namespace E_Shop.Data.Functions
             return newlocalisation;
         }
         //ADD new PointRelaisLocalisation
-        public async Task<Localisation> AddRelaisLocalisation(int boutiqueId, string rue, string num, string ville, string codePostal, string pays,string relaisNom)
+        public async Task<Localisation> AddRelaisLocalisation(int boutiqueId, string rue, string num, string ville, string codePostal, string pays,string relaisNom, string departement)
         {
 
             Localisation newlocalisation = new Localisation
@@ -66,6 +68,7 @@ namespace E_Shop.Data.Functions
                 Ville = ville,
                 Pays = pays,
                 PrNom = relaisNom,
+                Departement = departement
             };
             RelaisLocB relaisLocB = new RelaisLocB();
             newlocalisation.RelaisLocBs.Add(relaisLocB);
