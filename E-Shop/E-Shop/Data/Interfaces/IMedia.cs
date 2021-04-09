@@ -10,11 +10,11 @@ namespace E_Shop.Data.Interfaces
     {
         //CRUD Médias
         //Add Boutique Médias
-        Task<Medium> AddBoutiqueMedias(int boutiqueId, string lien, bool image, bool video, string description);
+        Task<Medium> AddBoutiqueMedias(int boutiqueId, string lien, bool image, bool video, string description, string LienComplet);
         //Delete Media
         Task<Boolean> DeleteMedia(int mediaId);
         //Add Produit Médias
-        Task<Medium> AddProduitMedias(int prodId, string lien, bool image, bool video, string description);
+        Task<Medium> AddProduitMedias(int prodId, string lien, bool image, bool video, string description, string LienComplet);
         //Get Medias d'une boutique
         Task<List<Medium>> GetMediasBoutique(int btqId);
     }

@@ -12,7 +12,7 @@ namespace E_Shop.Data.Functions
     {
         //CRUD Médias
         //Add Boutique Médias
-        public async Task<Medium> AddBoutiqueMedias(int boutiqueId,string lien, bool image, bool video, string description)
+        public async Task<Medium> AddBoutiqueMedias(int boutiqueId,string lien, bool image, bool video, string description, string LienComplet)
         {
             Medium media = new Medium();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
@@ -22,13 +22,14 @@ namespace E_Shop.Data.Functions
                 media.Image = image;
                 media.Video = video;
                 media.Description = description;
+                media.LienComplet = LienComplet;
                 await context.Media.AddAsync(media);
                 await context.SaveChangesAsync();
             }
             return media;
         }
         //Add Produit Médias
-        public async Task<Medium> AddProduitMedias(int prodId, string lien, bool image, bool video, string description)
+        public async Task<Medium> AddProduitMedias(int prodId, string lien, bool image, bool video, string description, string LienComplet)
         {
             Medium media = new Medium();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
@@ -38,6 +39,7 @@ namespace E_Shop.Data.Functions
                 media.Image = image;
                 media.Video = video;
                 media.Description = description;
+                media.LienComplet = LienComplet;
                 await context.Media.AddAsync(media);
                 await context.SaveChangesAsync();
             }
@@ -50,9 +52,9 @@ namespace E_Shop.Data.Functions
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
                 media = await context.Media.FirstOrDefaultAsync(m => m.Mediaid == mediaId);
-                if (System.IO.File.Exists(media.Lien))
+                if (System.IO.File.Exists(media.LienComplet))
                 {
-                    System.IO.File.Delete(media.Lien);
+                    System.IO.File.Delete(media.LienComplet);
                 }
                 context.Media.Remove(media);
 

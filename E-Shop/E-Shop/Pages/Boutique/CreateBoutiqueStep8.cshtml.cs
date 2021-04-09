@@ -47,10 +47,10 @@ namespace E_Shop.Pages.Boutique
 
         public async Task<IActionResult> OnPostImg(IFormFile photo)
         {
-            if (HttpContext.Session.Get<string>("imgName") != null)
+            if (HttpContext.Session.Get<string>("LienComplet8") != null)
             {
 
-                var lien = Path.Combine(Directory.GetCurrentDirectory(),_webHostEnvironment.WebRootPath, "images\\", HttpContext.Session.Get<string>("imgName"));
+                var lien = HttpContext.Session.Get<string>("LienComplet8");
                 if (System.IO.File.Exists(lien))
                 {
                     System.IO.File.Delete(lien);
@@ -74,9 +74,8 @@ namespace E_Shop.Pages.Boutique
                     var LienComplet = Path.Combine(Directory.GetCurrentDirectory(),
                         _webHostEnvironment.WebRootPath, "images\\", newname);
 
-                    HttpContext.Session.Set<string>("LienComplet", LienComplet);
+                    HttpContext.Session.Set<string>("LienComplet8", LienComplet);
                     HttpContext.Session.Set<string>("step8lien", step8.Lien.ToString());
-                    HttpContext.Session.Set<Step8>("step8", step8);
 
                 }
             }
@@ -89,8 +88,8 @@ namespace E_Shop.Pages.Boutique
             step8.Image = true;
             step8.Description = "vignette";
             step8.Lien= HttpContext.Session.Get<string>("step8lien");
-
-            var result = await media.AddBoutiqueMedias(step5.boutiqueId, step8.Lien, step8.Image, step8.Video, step8.Description);
+            step8.LienComplet = HttpContext.Session.Get<string>("LienComplet");
+            var result = await media.AddBoutiqueMedias(step5.boutiqueId, step8.Lien, step8.Image, step8.Video, step8.Description,step8.LienComplet);
             step8.MediaId = result.Mediaid;
             HttpContext.Session.Set<Step8>("step8", step8);
 

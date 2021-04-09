@@ -13,14 +13,14 @@ namespace E_Shop.Logic.MediaLogic
         private IMedia _media = new MediaFunctions();
         //CRUD Médias
         //Add Boutique Média
-        public async Task<Medium> AddBoutiqueMedias(int boutiqueId, string lien, bool image, bool video, string description)
+        public async Task<Medium> AddBoutiqueMedias(int boutiqueId, string lien, bool image, bool video, string description, string LienComplet)
         {
-            return await _media.AddBoutiqueMedias(boutiqueId, lien, image, video, description);
+            return await _media.AddBoutiqueMedias(boutiqueId, lien, image, video, description, LienComplet);
         }
         //Add Produit Média
-        public async Task<Medium> AddProduitMedias(int prodId, string lien, bool image, bool video, string description)
+        public async Task<Medium> AddProduitMedias(int prodId, string lien, bool image, bool video, string description, string LienComplet)
         {
-            return await _media.AddProduitMedias(prodId, lien, image, video, description);
+            return await _media.AddProduitMedias(prodId, lien, image, video, description, LienComplet);
         }
         //Delete Média
         public async Task<Boolean> DeleteMedia(int mediaId)
