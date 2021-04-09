@@ -29,6 +29,7 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
         public List<Medium> medias = new List<Medium>();
 
         public int boutiqueId { get; set; }
+        [BindProperty]
         public int mediaId { get; set; }
         [BindProperty]
         public string FileNameImg { get; set; }
@@ -37,6 +38,10 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
 
         public async Task<IActionResult> OnPostImgV(IFormFile photo, int mediaId)
         {
+            if (HttpContext.Session.Get<int>("btqId") > 0)
+            {
+                boutiqueId = HttpContext.Session.Get<int>("btqId");
+            }
             await mediaLogic.DeleteMedia(mediaId);
             if (photo == null || photo.Length == 0)
             {
@@ -62,6 +67,10 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
         }
         public async Task<IActionResult> OnPostImgP(IFormFile photo, int mediaId)
         {
+            if (HttpContext.Session.Get<int>("btqId") > 0)
+            {
+                boutiqueId = HttpContext.Session.Get<int>("btqId");
+            }
             await mediaLogic.DeleteMedia(mediaId);
             if (photo == null || photo.Length == 0)
             {
@@ -87,6 +96,10 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
         }
         public async Task<IActionResult> OnPostVid(int mediaId)
         {
+            if (HttpContext.Session.Get<int>("btqId") > 0)
+            {
+                boutiqueId = HttpContext.Session.Get<int>("btqId");
+            }
             await mediaLogic.DeleteMedia(mediaId);
             Lien = GetYoutubeId(FileNameImg);
             await mediaLogic.AddBoutiqueMedias(boutiqueId, Lien, false, true, "");

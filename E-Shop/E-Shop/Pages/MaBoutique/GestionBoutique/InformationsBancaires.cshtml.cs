@@ -57,6 +57,11 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
         {
             if (ModelState.IsValid)
             {
+                if (HttpContext.Session.Get<int>("btqId") > 0)
+                {
+                    boutiqueId = HttpContext.Session.Get<int>("btqId");
+                    boutique = await boutiqueLogic.GetBoutiqueById(boutiqueId);
+                }
                 boutique.Titulaire = input.Titulaire;
                 boutique.Bic = input.Bic;
                 boutique.Clerib = input.Clerib;

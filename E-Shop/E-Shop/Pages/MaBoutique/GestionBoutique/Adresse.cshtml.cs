@@ -47,6 +47,11 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
         {
             if (ModelState.IsValid)
             {
+                if (HttpContext.Session.Get<int>("btqId") > 0)
+                {
+                    boutiqueId = HttpContext.Session.Get<int>("btqId");
+                    localisation = await localisationLogic.GetLocalisationBoutique(boutiqueId);
+                }
                 localisation.Codepostal = input.Codepostal;
                 localisation.Departement = input.Departement;
                 localisation.Num = input.Num;
