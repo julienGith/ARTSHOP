@@ -40,27 +40,10 @@ namespace E_Shop.Data.Functions
         }
 
         //Modifier Produit
-        public async Task<Produit> UpdateProduit(int prodId, int categorieId, decimal? prix, string nom, string descriptionC, string descriptionL,
-            short? stock, short? disponibilite, short? rabais, short? preparation, bool? publier,int? poids)
+        public async Task<Produit> UpdateProduit(Produit produit)
         {
-            Produit produit = new Produit();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                produit = await context.Produits.FirstOrDefaultAsync(p => p.Prodid == prodId);
-                produit = new Produit
-                {
-                    Categorieid = categorieId,
-                    Prix = prix,
-                    PNom = nom,
-                    PDescriptionC = descriptionC,
-                    PDescriptionL = descriptionL,
-                    Stock = stock,
-                    Disponibilite = disponibilite,
-                    Rabais = rabais,
-                    Preparation = preparation,
-                    Publier = publier,
-                    Poids = poids
-                };
                 context.Produits.Update(produit);
                 await context.SaveChangesAsync();
             }
