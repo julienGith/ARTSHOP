@@ -63,8 +63,6 @@ namespace E_Shop.Pages.Boutique
                 step10.Video = true;
                 step10.Description = "boutique";
                 step10.Lien = HttpContext.Session.Get<string>("step10lien");
-
-
                 var result = await media.AddBoutiqueMedias(step5.boutiqueId, step10.Lien, false, step10.Video, step10.Description, null);
                 step10.MediaId = result.Mediaid;
                 HttpContext.Session.Set<Step10>("step10", step10);

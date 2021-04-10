@@ -60,12 +60,20 @@
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"><p>@Model.step11.BtqDescription</p></div>
-                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab"><p>Super Boutique !</p></div>
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <p>@Model.step11.BtqDescription</p>
+                </div>
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <p>Marcel : j'adore cette boutique !</p>
+                </div>
                 <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                    <p>Raison sociale : @Model.step11.RaisonSociale</p>
-                    <p>N° SIRET : @Model.step11.Siret</p>
-                    <p>Inscrit depuis le : @Model.step11.dateCreation</p>
+                    <p>
+                        Raison sociale : @Model.step11.RaisonSociale
+                        <br />
+                        N° SIRET : @Model.step11.Siret
+                        <br />
+                        Inscrit depuis le : @Model.step11.dateCreation
+                    </p>
                 </div>
             </div>
         </div>
