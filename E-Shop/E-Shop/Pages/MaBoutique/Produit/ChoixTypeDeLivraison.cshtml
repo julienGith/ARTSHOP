@@ -2,33 +2,32 @@
 @model E_Shop.Pages.MaBoutique.Produit.ChoixTypeDeLivraisonModel
 @{
 }
-<div class="row">
+<div class="row d-inline-block mr-5">
     @if (Model.LivraisontypesChoisies.Count > 0)
     {
-        <div class="col">
             <div class="card">
                 <div class="card-header">
                     <div class="d-inline">Liste des types de livraison choisis pour votre Produit</div>
                 </div>
                 <div class="card-body">
                     <table class="table">
-                        <thead class="thead-light"><tr><th>Type de livraison</th><th>Délai</th><th>Coût</th><th>Coût par kilo/supp</th><th>Action</th></tr></thead>
+                        <thead class="thead-light"><tr><th scope="col">Type de livraison</th><th scope="col">Délai</th><th scope="col">Coût</th><th scope="col">Coût par kilo/supp</th><th scope="col">Action</th></tr></thead>
 
                         @foreach (var item in Model.LivraisontypesChoisies)
                         {
                             <tbody>
                                 <tr>
-                                    <td width="50%">@item.Lvrdesignation</td>
+                                    <th scope="row" width="50%">@item.Lvrdesignation</th>
                                     <td width="15%">@item.Lvrdelai </td>
                                     <td width="15%">@item.Lvrcout</td>
                                     <td width="15%">@item.LvrcoutPsup</td>
                                     <td>
                                         <nav class="navbar navbar-expand-lg navbar-light bg-light">
                                             <a class="navbar-brand" href="#"></a>
-                                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupported" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarLvrChoix" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                                 <span class="navbar-toggler-icon"></span>
                                             </button>
-                                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between flex-wrap" id="navbarLvrChoix">
                                                 <ul class="navbar-nav mr-auto">
                                                     <li class="nav-item">
                                                         <form method="post">
@@ -46,55 +45,52 @@
                     </table>
                 </div>
             </div>
-        </div>
         <form method="post">
             <input method="post" type="submit" asp-page-handler="Next" value="Valider" />
         </form>
     }
 </div>
-<div class="row">
+<div class="row d-inline-block mr-5">
     @if (Model.Livraisontypes.Count > 0)
     {
-        <div class="col">
-            <div class="card">
-                <div class="card-header">
-                    <div class="d-inline">Liste de vos types de livraison</div>
-                </div>
-                    <div class="card-body">
-                    <table class="table">
-                        <thead class="thead-light"><tr><th>Type de livraison</th><th>Délai</th><th>Coût</th><th>Coût par kilo/supp</th><th>Action</th></tr></thead>
+        <div class="card">
+            <div class="card-header">
+                <div class="d-inline">Liste de vos types de livraison</div>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead class="thead-light"><tr><th scope="col">Type de livraison</th><th scope="col">Délai</th><th scope="col">Coût</th><th scope="col">Coût par kilo/supp</th><th scope="col">Action</th></tr></thead>
 
-                        @foreach (var item in Model.Livraisontypes)
-                        {
-                            <tbody>
-                                <tr>
-                                    <td width="50%">@item.Lvrdesignation</td>
-                                    <td width="15%">@item.Lvrdelai </td>
-                                    <td width="15%">@item.Lvrcout</td>
-                                    <td width="15%">@item.LvrcoutPsup</td>
-                                    <td>
-                                        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                                            <a class="navbar-brand" href="#"></a>
-                                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupported" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                                                <span class="navbar-toggler-icon"></span>
-                                            </button>
-                                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                                <ul class="navbar-nav mr-auto">
-                                                    <li class="nav-item">
-                                                        <form method="post">
-                                                            <input hidden asp-for="@Model.lvrTypeIdChoisie" value="@item.Lvrtypid" />
-                                                            <button type="submit" asp-page-handler="Add" class="btn btn-primary">Ajouter<span class='sr-only'>(current)</span></button>
-                                                        </form>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </nav>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        }
-                    </table>
-                </div>
+                    @foreach (var item in Model.Livraisontypes)
+                    {
+                        <tbody>
+                            <tr>
+                                <th scope="row" width="50%">@item.Lvrdesignation</th>
+                                <td width="15%">@item.Lvrdelai </td>
+                                <td width="15%">@item.Lvrcout</td>
+                                <td width="15%">@item.LvrcoutPsup</td>
+                                <td>
+                                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                                        <a class="navbar-brand" href="#"></a>
+                                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarListLvr" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                            <span class="navbar-toggler-icon"></span>
+                                        </button>
+                                        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between flex-wrap" id="navbarListLvr">
+                                            <ul class="navbar-nav mr-auto">
+                                                <li class="nav-item">
+                                                    <form method="post">
+                                                        <input hidden asp-for="@Model.lvrTypeIdChoisie" value="@item.Lvrtypid" />
+                                                        <button type="submit" asp-page-handler="Add" class="btn btn-primary">Ajouter<span class='sr-only'>(current)</span></button>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </nav>
+                                </td>
+                            </tr>
+                        </tbody>
+                    }
+                </table>
             </div>
         </div>
 
