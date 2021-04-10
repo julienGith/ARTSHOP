@@ -12,6 +12,11 @@ namespace E_Shop.Pages.MaBoutique.Produit
 {
     public class DescriptionModel : PageModel
     {
+        private ProduitLogic ProduitLogic = new ProduitLogic();
+        public Entities.Produit Produit = new Entities.Produit();
+
+        public int prodId { get; set; }
+
         [BindProperty]
         public Input input { get; set; }
         public class Input
@@ -29,13 +34,34 @@ namespace E_Shop.Pages.MaBoutique.Produit
             [Display(Name = "Indiquez une description longue de votre produit")]
             public string PDescriptionL { get; set; }
         }
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
+            if (HttpContext.Session.Get<int>("prodId") > 0)
+            {
+                prodId = HttpContext.Session.Get<int>("prodId");
+                Produit = await ProduitLogic.GetProduitById(prodId);
+                Produit.PDescriptionL = input.PDescriptionL;
+                Produit.PDescriptionC = input.PDescriptionC;
+                Produit.PNom = input.PNom;
+                await ProduitLogic.UpdateProduit(Produit);
+            }
             HttpContext.Session.Set<Input>("Description", input);
             return RedirectToPage("/MaBoutique/Produit/CaracteristiquesProduit");
         }
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
+            if (HttpContext.Session.Get<int>("prodId") > 0)
+            {
+                prodId = HttpContext.Session.Get<int>("prodId");
+                Produit = await ProduitLogic.GetProduitById(prodId);
+                Input input = new Input
+                {
+                    PDescriptionC = Produit.PDescriptionC,
+                    PDescriptionL = Produit.PDescriptionL,
+                    PNom = Produit.PNom
+                };
+            }
+            return Page();
         }
     }
 }
