@@ -88,7 +88,7 @@ namespace E_Shop.Pages.Boutique
             step8.Image = true;
             step8.Description = "vignette";
             step8.Lien= HttpContext.Session.Get<string>("step8lien");
-            step8.LienComplet = HttpContext.Session.Get<string>("LienComplet");
+            step8.LienComplet = HttpContext.Session.Get<string>("LienComplet8");
             var result = await media.AddBoutiqueMedias(step5.boutiqueId, step8.Lien, step8.Image, step8.Video, step8.Description,step8.LienComplet);
             step8.MediaId = result.Mediaid;
             HttpContext.Session.Set<Step8>("step8", step8);
