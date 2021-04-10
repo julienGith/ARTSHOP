@@ -57,10 +57,7 @@ namespace E_Shop.Pages.Boutique
             public int Nbsalarie { get; set; }
             public string Siteweb { get; set; }
             public string Statutjuridique { get; set; }
-            [Required]
-            [StringLength(100)]
-            [Display(Name = "Mots Clé")]
-            public string Btqseo { get; set; }
+
             public int UserId { get; set; }
 
         }
