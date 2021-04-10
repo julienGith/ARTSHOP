@@ -70,14 +70,16 @@ namespace E_Shop.Data.Functions
                 PrNom = relaisNom,
                 Departement = departement
             };
-            RelaisLocB relaisLocB = new RelaisLocB();
-            newlocalisation.RelaisLocBs.Add(relaisLocB);
-
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
                 await context.Localisations.AddAsync(newlocalisation);
                 await context.SaveChangesAsync();
             }
+            RelaisLocB relaisLocB = new RelaisLocB
+            {
+                Localisationid = newlocalisation.Localisationid,
+                Btqid = boutiqueId
+            };
 
             return newlocalisation;
         }

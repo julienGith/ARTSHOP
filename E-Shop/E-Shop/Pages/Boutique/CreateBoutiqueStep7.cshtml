@@ -2,18 +2,12 @@
 @model E_Shop.Pages.Boutique.CreateBoutiqueStep7Model
 @{
 }
-<div>Souhaitez-vous ajouter un point relais ?</div>
-<button id="btnOui" class="btn btn-primary">Oui</button>
-<form method="post">
-    <button id="btnNon" asp-page-handler="Next" type="submit" class="btn btn-primary">Non</button>
-</form>
-<form method="post">
-    <button id="btnNon" asp-page-handler="Back" type="submit" class="btn btn-primary">Précédent</button>
-</form>
-<div id="formPdr" class="row justify-content-center" hidden>
+<div>(facultatif) Ajouter un point relais ou passez à l'étape suivante</div>
+
+<div  class="row justify-content-center">
     <div>
         <form method="post">
-            <h4> Etape 7 </h4>
+            <h4> Point relais </h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -46,7 +40,7 @@
                 <input id="tbDept" asp-for="step7.Departement" class="form-control" hidden />
             </div>
 
-            <button id="btnNext" type="submit" class="btn btn-primary">Suivant</button>
+            <button type="submit" asp-page-handler="Next" class="btn btn-primary">Suivant</button>
             <button type="submit" asp-page-handler="Back" class="btn btn-primary">Précédent</button>
 
         </form>
@@ -55,12 +49,7 @@
 @section scripts{
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            document.getElementById("btnOui").addEventListener("click", function () {
-                document.getElementById("formPdr").removeAttribute("hidden");
-            })
-            document.getElementById("btnNon").addEventListener("click", function () {
-                document.getElementById("formPdr").hidden = true;;
-            })
+
             document.getElementById("tbCp").addEventListener("keyup", GetDept);
 
             function GetDept() {

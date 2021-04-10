@@ -24,55 +24,48 @@ namespace E_Shop.Pages.Boutique
 
             public int locaId { get; set; }
             public int Btqid { get; set; }
-            [Required]
             [StringLength(255)]
             [Display(Name = "Rue")]
             public string Rue { get; set; }
-            [Required]
             [StringLength(255)]
             [Display(Name = "Numéro")]
             public string Num { get; set; }
-            [Required]
             [StringLength(255)]
             [Display(Name = "ville")]
             public string Ville { get; set; }
-            [Required]
             [StringLength(255)]
             [Display(Name = "CodePostal")]
             public string Codepostal { get; set; }
-            [Required]
             [StringLength(255)]
             [Display(Name = "Pays")]
             public string Pays { get; set; }
-            [Required]
             [Display(Name = "Nom du point relais")]
             [StringLength(255)]
             public string PrNom { get; set; }
-            [Required]
             public string Departement { get; set; }
 
         }
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPostNext()
         {
-            Step5 step5 = new Step5();
-            step5 = HttpContext.Session.Get<Step5>("step5");
+            if (ModelState.IsValid)
+            {
+                Step5 step5 = new Step5();
+                step5 = HttpContext.Session.Get<Step5>("step5");
 
-            var result = await localisation.AddRelaisLocalisation(step5.boutiqueId, step7.Rue, step7.Num, step7.Ville, step7.Codepostal, "France",step7.PrNom,step7.Departement);
-            step7.locaId = result.Localisationid;
-            HttpContext.Session.Set<Step7>("step7", step7);
+                var result = await localisation.AddRelaisLocalisation(step5.boutiqueId, step7.Rue, step7.Num, step7.Ville,
+                    step7.Codepostal, "France", step7.PrNom, step7.Departement);
+                step7.locaId = result.Localisationid;
+                HttpContext.Session.Set<Step7>("step7", step7);
 
-            return RedirectToPage("/boutique/CreateBoutiqueStep8");
+                return RedirectToPage("/boutique/CreateBoutiqueStep8");
+            }
+            return Page();
         }
 
         public IActionResult OnPostBack()
         {
             HttpContext.Session.Set<Step7>("step7", step7);
             return Redirect("/boutique/CreateBoutiqueStep6");
-        }
-        public IActionResult OnPostNext()
-        {
-            HttpContext.Session.Set<Step7>("step7", step7);
-            return Redirect("/boutique/CreateBoutiqueStep8");
         }
         public async Task<IActionResult> OnGet()
         {
