@@ -16,6 +16,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
         public int btqId { get; set; }
         public int catId { get; set; }
         public int prodId { get; set; }
+        public Entities.Produit Produit = new Entities.Produit();
 
         [BindProperty]
         public Input input { get; set; }
@@ -52,6 +53,19 @@ namespace E_Shop.Pages.MaBoutique.Produit
         {
             if (ModelState.IsValid)
             {
+                if (HttpContext.Session.Get<int>("prodIdUp") > 0)
+                {
+                    prodId = HttpContext.Session.Get<int>("prodIdUp");
+                    Produit = await ProduitLogic.GetProduitById(prodId);
+                    Produit.Poids = input.Poids;
+                    Produit.Preparation = input.Preparation;
+                    Produit.Prix = input.Prix;
+                    Produit.Publier = input.Publier;
+                    Produit.Rabais = input.Rabais;
+                    Produit.Stock = input.Stock;
+                    Produit.Disponibilite = input.Disponibilite;
+                    await ProduitLogic.UpdateProduit(Produit);
+                }
                 if (HttpContext.Session.Get<Input>("Description") != null)
                 {
                     var description = HttpContext.Session.Get<Input>("Description");
@@ -65,9 +79,9 @@ namespace E_Shop.Pages.MaBoutique.Produit
         }
         public async Task<IActionResult> OnGet()
         {
-            if (HttpContext.Session.Get<int>("prodId")>0)
+            if (HttpContext.Session.Get<int>("prodIdUp") >0)
             {
-                prodId = HttpContext.Session.Get<int>("prodId");
+                prodId = HttpContext.Session.Get<int>("prodIdUp");
                 var result = await ProduitLogic.GetProduitById(prodId);
                 Input input = new Input
                 {

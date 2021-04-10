@@ -36,23 +36,27 @@ namespace E_Shop.Pages.MaBoutique.Produit
         }
         public async Task<IActionResult> OnPost()
         {
-            if (HttpContext.Session.Get<int>("prodId") > 0)
+            if (ModelState.IsValid)
             {
-                prodId = HttpContext.Session.Get<int>("prodId");
-                Produit = await ProduitLogic.GetProduitById(prodId);
-                Produit.PDescriptionL = input.PDescriptionL;
-                Produit.PDescriptionC = input.PDescriptionC;
-                Produit.PNom = input.PNom;
-                await ProduitLogic.UpdateProduit(Produit);
+                if (HttpContext.Session.Get<int>("prodIdUp") > 0)
+                {
+                    prodId = HttpContext.Session.Get<int>("prodIdUp");
+                    Produit = await ProduitLogic.GetProduitById(prodId);
+                    Produit.PDescriptionL = input.PDescriptionL;
+                    Produit.PDescriptionC = input.PDescriptionC;
+                    Produit.PNom = input.PNom;
+                    await ProduitLogic.UpdateProduit(Produit);
+                }
+                HttpContext.Session.Set<Input>("Description", input);
+                return RedirectToPage("/MaBoutique/Produit/CaracteristiquesProduit");
             }
-            HttpContext.Session.Set<Input>("Description", input);
-            return RedirectToPage("/MaBoutique/Produit/CaracteristiquesProduit");
+            return Page();
         }
         public async Task<IActionResult> OnGet()
         {
-            if (HttpContext.Session.Get<int>("prodId") > 0)
+            if (HttpContext.Session.Get<int>("prodIdUp") > 0)
             {
-                prodId = HttpContext.Session.Get<int>("prodId");
+                prodId = HttpContext.Session.Get<int>("prodIdUp");
                 Produit = await ProduitLogic.GetProduitById(prodId);
                 Input input = new Input
                 {
