@@ -15,6 +15,8 @@ namespace E_Shop.Pages.MaBoutique.Produit
         private ProduitLogic ProduitLogic = new ProduitLogic();
         public int btqId { get; set; }
         public int catId { get; set; }
+        public int prodId { get; set; }
+
         [BindProperty]
         public Input input { get; set; }
         public class Input
@@ -61,8 +63,23 @@ namespace E_Shop.Pages.MaBoutique.Produit
             }
             return Page();
         }
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
+            if (HttpContext.Session.Get<int>("prodId")>0)
+            {
+                prodId = HttpContext.Session.Get<int>("prodId");
+                var result = await ProduitLogic.GetProduitById(prodId);
+                Input input = new Input
+                {
+                    Disponibilite = result.Disponibilite,
+                    Poids = result.Poids,
+                    Preparation = result.Preparation,
+                    Prix = result.Prix,
+                    Publier = result.Publier,
+                    Rabais = result.Rabais,
+                    Stock = result.Stock
+                };
+            }
             if (HttpContext.Session.Get<int>("btqId") > 0)
             {
                 btqId = HttpContext.Session.Get<int>("btqId");
@@ -78,7 +95,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
                     catId = HttpContext.Session.Get<int>("catEnfantId1");
                 }
             }
-
+            return Page();
         }
     }
 }

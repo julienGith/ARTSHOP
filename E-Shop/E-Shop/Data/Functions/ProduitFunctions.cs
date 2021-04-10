@@ -97,6 +97,16 @@ namespace E_Shop.Data.Functions
             }
             return produits;
         }
+        //Get produit par id produit
+        public async Task<Produit> GetProduitById(int prodId)
+        {
+            Produit produit = new Produit();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                produit = await context.Produits.FirstOrDefaultAsync(p => p.Prodid == prodId);
+            }
+            return produit;
+        }
         //Nom du produit par id produit
         public string GetNomProduitById(int prodId)
         {

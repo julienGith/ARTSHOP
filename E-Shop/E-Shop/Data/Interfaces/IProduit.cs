@@ -21,6 +21,8 @@ namespace E_Shop.Data.Interfaces
         //Recherche Produit
         //Produits par boutique
         Task<List<Produit>> GetBoutiqueProduits(int btqId);
+        //Get produit par id produit
+        Task<Produit> GetProduitById(int prodId);
         //Nom du produit par id produit
         string GetNomProduitById(int prodId);
     }

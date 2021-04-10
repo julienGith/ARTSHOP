@@ -36,6 +36,11 @@ namespace E_Shop.Logic.ProduitLogic
         {
             return await produit.GetBoutiqueProduits(btqId);
         }
+        //Get produit par id produit
+        public async Task<Produit> GetProduitById(int prodId)
+        {
+            return await produit.GetProduitById(prodId);
+        }
         //Nom du produit par id produit
         public string GetNomProduitById(int prodId)
         {
