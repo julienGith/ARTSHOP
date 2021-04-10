@@ -39,10 +39,6 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
 
         public async Task<IActionResult> OnPostImgV(IFormFile photo, int mediaId)
         {
-            if (HttpContext.Session.Get<int>("btqId") > 0)
-            {
-                boutiqueId = HttpContext.Session.Get<int>("btqId");
-            }
             await mediaLogic.DeleteMedia(mediaId);
             if (photo == null || photo.Length == 0)
             {
@@ -66,19 +62,18 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
                     Lien = "/images/" + newname;
                     var LienComplet = Path.Combine(Directory.GetCurrentDirectory(),
                         _webHostEnvironment.WebRootPath, "images\\", newname);
-                    await mediaLogic.AddBoutiqueMedias(boutiqueId, Lien, true, false, "vignette", LienComplet);
-                    medias = await mediaLogic.GetMediasBoutique(boutiqueId);
-
+                    if (HttpContext.Session.Get<int>("btqId") > 0)
+                    {
+                        boutiqueId = HttpContext.Session.Get<int>("btqId");
+                        await mediaLogic.AddBoutiqueMedias(boutiqueId, Lien, true, false, "vignette", LienComplet);
+                        medias = await mediaLogic.GetMediasBoutique(boutiqueId);
+                    }
                 }
             }
             return Page();
         }
         public async Task<IActionResult> OnPostImgP(IFormFile photo, int mediaId)
         {
-            if (HttpContext.Session.Get<int>("btqId") > 0)
-            {
-                boutiqueId = HttpContext.Session.Get<int>("btqId");
-            }
             await mediaLogic.DeleteMedia(mediaId);
             if (photo == null || photo.Length == 0)
             {
@@ -102,24 +97,27 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
                     Lien = "/images/" + newname;
                     var LienComplet = Path.Combine(Directory.GetCurrentDirectory(),
                         _webHostEnvironment.WebRootPath, "images\\", newname);
-                    await mediaLogic.AddBoutiqueMedias(boutiqueId, Lien, true, false, "pano", LienComplet);
-                    medias = await mediaLogic.GetMediasBoutique(boutiqueId);
-
+                    if (HttpContext.Session.Get<int>("btqId") > 0)
+                    {
+                        boutiqueId = HttpContext.Session.Get<int>("btqId");
+                        await mediaLogic.AddBoutiqueMedias(boutiqueId, Lien, true, false, "pano", LienComplet);
+                        medias = await mediaLogic.GetMediasBoutique(boutiqueId);
+                    }
                 }
             }
             return Page();
         }
         public async Task<IActionResult> OnPostVid(int mediaId)
         {
+
+            await mediaLogic.DeleteMedia(mediaId);
+            Lien = GetYoutubeId(FileNameImg);
             if (HttpContext.Session.Get<int>("btqId") > 0)
             {
                 boutiqueId = HttpContext.Session.Get<int>("btqId");
+                await mediaLogic.AddBoutiqueMedias(boutiqueId, Lien, false, true, "", null);
+                medias = await mediaLogic.GetMediasBoutique(boutiqueId);
             }
-            await mediaLogic.DeleteMedia(mediaId);
-            Lien = GetYoutubeId(FileNameImg);
-            await mediaLogic.AddBoutiqueMedias(boutiqueId, Lien, false, true, "",null);
-            medias = await mediaLogic.GetMediasBoutique(boutiqueId);
-
             return Page();
         }
         private string GetYoutubeId(string lien)

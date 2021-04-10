@@ -4,6 +4,7 @@
 }
 <form method="post">
     <button type="submit" asp-page-handler="CrProduit" class="btn btn-primary">Ajouter un nouveau Produit</button>
+    <a href="/MaBoutique/TableauDeBord" class="btn btn-primary">Retour au tableau de bord</a>
 </form>
 <div class="row">
     @if (Model.produits.Count == 0)
