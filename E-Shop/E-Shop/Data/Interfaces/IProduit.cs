@@ -11,7 +11,7 @@ namespace E_Shop.Data.Interfaces
         //CRUD Produit
         //Add New Produit
         Task<Produit> AddProduit(int boutiqueId, int categorieId, decimal? prix, string nom, string descriptionC, string descriptionL,
-            short? stock, short? disponibilite, short? rabais, short? preparation, bool? publier, int? poids);
+            short? stock, short? disponibilite, short? rabais, short? preparation, bool? publier, int? poids1, int poids2, int poids3);
         //Modifier Produit
         Task<Produit> UpdateProduit(Produit produit);
         //Delete Produit

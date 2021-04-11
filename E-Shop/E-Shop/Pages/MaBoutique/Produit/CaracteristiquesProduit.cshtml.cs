@@ -57,7 +57,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
                 {
                     prodId = HttpContext.Session.Get<int>("prodIdUp");
                     Produit = await ProduitLogic.GetProduitById(prodId);
-                    Produit.Poids = input.Poids;
+                    Produit.Poids1 = input.Poids;
                     Produit.Preparation = input.Preparation;
                     Produit.Prix = input.Prix;
                     Produit.Publier = input.Publier;
@@ -86,7 +86,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
                 Input input = new Input
                 {
                     Disponibilite = result.Disponibilite,
-                    Poids = result.Poids,
+                    Poids = result.Poids1,
                     Preparation = result.Preparation,
                     Prix = result.Prix,
                     Publier = result.Publier,

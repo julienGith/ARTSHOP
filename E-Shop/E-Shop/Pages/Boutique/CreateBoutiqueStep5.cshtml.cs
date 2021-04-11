@@ -52,7 +52,7 @@ namespace E_Shop.Pages.Boutique
                     step5.BDescriptionL, step2.Raisonsociale,step2.Nom, step2.Siret, step2.Siren, step2.Btqtel,
                     step2.Codenaf, step3.Codebanque, step3.Codeguichet, step3.Numcompte, step3.Clerib, step3.Domiciliation,
                     step3.Iban, step3.Bic, step3.Titulaire, step2.Btqtmail,
-                    null, 0, step2.Nbsalarie, step2.Siteweb, step2.Statutjuridique, step2.Btqseo, step5.dateCreation);
+                    null, 0, step2.Nbsalarie, step2.Siteweb, step2.Statutjuridique, null, step5.dateCreation);
                 step5.boutiqueId = result.Btqid;
                 HttpContext.Session.Set<Step5>("step5", step5);
 

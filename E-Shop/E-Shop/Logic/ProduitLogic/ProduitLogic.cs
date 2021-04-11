@@ -14,9 +14,9 @@ namespace E_Shop.Logic.ProduitLogic
         //CRUD Produit
         //Add New Produit
         public async Task<Produit> AddProduit(int boutiqueId, int categorieId, decimal? prix, string nom, string descriptionC, string descriptionL,
-            short? stock, short? disponibilite, short? rabais, short? preparation, bool? publier, int? poids)
+            short? stock, short? disponibilite, short? rabais, short? preparation, bool? publier, int? poids1, int poids2, int poids3)
         {
-            return await _produit.AddProduit(boutiqueId, categorieId, prix, nom, descriptionC, descriptionL, stock, disponibilite, rabais, preparation, publier, poids);
+            return await _produit.AddProduit(boutiqueId, categorieId, prix, nom, descriptionC, descriptionL, stock, disponibilite, rabais, preparation, publier, poids1, poids2, poids3);
         }
         //Modifier Produit
         public async Task<Produit> UpdateProduit(Produit produit)
