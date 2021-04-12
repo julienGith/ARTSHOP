@@ -55,7 +55,6 @@ namespace E_Shop.Pages.Boutique
             public string Btqtmail { get; set; }
             public string Btqmessage { get; set; }
             public int Nbsalarie { get; set; }
-            public string Siteweb { get; set; }
             public string Statutjuridique { get; set; }
 
             public int UserId { get; set; }

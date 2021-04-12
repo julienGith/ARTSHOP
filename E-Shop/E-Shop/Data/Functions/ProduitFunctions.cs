@@ -12,8 +12,8 @@ namespace E_Shop.Data.Functions
     {
         //CRUD Produit
         //Add New Produit
-        public async Task<Produit> AddProduit(int boutiqueId, int categorieId, decimal? prix, string nom, string descriptionC,string descriptionL,
-            short? stock, short? disponibilite,short? rabais,short? preparation,bool? publier, int? poids1, int poids2, int poids3)
+        public async Task<Produit> AddProduit(int boutiqueId, int categorieId, string nom, string descriptionC,string descriptionL,
+            short? stock, short? disponibilite,short? rabais,short? preparation,bool? publier)
         {
             Produit newproduit = new Produit();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
@@ -22,7 +22,6 @@ namespace E_Shop.Data.Functions
                 {
                     Btqid = boutiqueId,
                     Categorieid = categorieId,
-                    Prix = prix,
                     PNom = nom,
                     PDescriptionC = descriptionC,
                     PDescriptionL = descriptionL,
@@ -31,9 +30,6 @@ namespace E_Shop.Data.Functions
                     Rabais = rabais,
                     Preparation = preparation,
                     Publier = publier,
-                    Poids1 = poids1,
-                    Poids2 = poids2,
-                    Poids3 = poids3
                 };
                 context.Produits.Add(newproduit);
                 await context.SaveChangesAsync();

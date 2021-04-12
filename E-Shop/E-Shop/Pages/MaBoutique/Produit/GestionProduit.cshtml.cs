@@ -18,7 +18,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
 
         public IActionResult OnPostCrProduit()
         {
-            return Redirect("/MaBoutique/Produit/ChoixCategorie");
+            return Redirect("/MaBoutique/Produit/ChoixCategorieStep1");
         }
         public IActionResult OnPostUpProduit()
         {

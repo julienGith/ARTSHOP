@@ -22,6 +22,7 @@ namespace E_Shop.Entities
             Media = new HashSet<Medium>();
             PDetails = new HashSet<PDetail>();
             LivraisonTypes = new HashSet<Livraisontype>();
+            Formats = new HashSet<Format>();
         }
 
         [Key]
@@ -32,8 +33,7 @@ namespace E_Shop.Entities
         [Column("CATEGORIEID")]
         public int Categorieid { get; set; }
 
-        [Column("PRIX", TypeName = "decimal(9, 2)")]
-        public decimal? Prix { get; set; }
+
         [Column("P_NOM")]
         [StringLength(30)]
         public string PNom { get; set; }
@@ -61,13 +61,6 @@ namespace E_Shop.Entities
         public string PMetaTitre { get; set; }
         [Column("PUBLIER")]
         public bool? Publier { get; set; }
-        [Column("POIDS1")]
-        public int? Poids1 { get; set; }
-        [Column("POIDS2")]
-        public int? Poids2 { get; set; }
-        [Column("POIDS3")]
-        public int? Poids3 { get; set; }
-
 
 
         [ForeignKey(nameof(Btqid))]
@@ -92,5 +85,7 @@ namespace E_Shop.Entities
 
         [InverseProperty(nameof(Livraisontype.Prod))]
         public virtual ICollection<Livraisontype> LivraisonTypes { get; set; }
+        [InverseProperty(nameof(Format.Prod))]
+        public virtual ICollection<Format> Formats { get; set; }
     }
 }

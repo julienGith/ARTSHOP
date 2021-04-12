@@ -24,23 +24,13 @@
                 <span asp-validation-for="input.Preparation" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="input.Prix"></label>
-                <input id="money1" asp-for="input.Prix" class="form-control" />
-                <span asp-validation-for="input.Prix" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="input.Rabais"></label>
                 <input asp-for="input.Rabais" class="form-control" />
                 <span asp-validation-for="input.Rabais" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="input.Poids"></label>
-                <input asp-for="input.Poids" class="form-control" />
-                <span asp-validation-for="input.Poids" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="input.Publier"></label>
-                <input asp-for="input.Publier" class="form-control" />
+                <input type="checkbox" asp-for="input.Publier" class="form-control" />
                 <span asp-validation-for="input.Publier" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-primary">Suivant</button>

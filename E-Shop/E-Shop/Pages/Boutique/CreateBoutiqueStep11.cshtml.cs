@@ -45,7 +45,6 @@ namespace E_Shop.Pages.Boutique
             step6 = HttpContext.Session.Get<Step6>("step6");
             step8 = HttpContext.Session.Get<Step8>("step8");
             step9 = HttpContext.Session.Get<Step9>("step9");
-            step10 = HttpContext.Session.Get<Step10>("step10");
 
             step11 = new Step11
             {
@@ -53,12 +52,16 @@ namespace E_Shop.Pages.Boutique
                 BtqNom = step2.Nom,
                 lienImg1 = step8.Lien,
                 lienImg2 = step9.Lien,
-                lienVideo = step10.Lien,
                 Dept = step6.Departement,
                 RaisonSociale = step2.Raisonsociale,
                 Siret = step2.Siret,
                 dateCreation = step5.dateCreation
             };
+            if (HttpContext.Session.Get<Step10>("step10") != null)
+            {
+                step10 = HttpContext.Session.Get<Step10>("step10");
+                step11.lienVideo = step10.Lien;
+            }
         }
     }
 }

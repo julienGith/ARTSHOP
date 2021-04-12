@@ -41,6 +41,7 @@ namespace E_Shop.Data
         public virtual DbSet<Cmdetat> Cmdetats { get; set; }
         public virtual DbSet<Echange> Echanges { get; set; }
         public virtual DbSet<Facture> Factures { get; set; }
+        public virtual DbSet<Format> Formats { get; set; }
         public virtual DbSet<Identification> Identifications { get; set; }
         public virtual DbSet<Litige> Litiges { get; set; }
         public virtual DbSet<Livraison> Livraisons { get; set; }

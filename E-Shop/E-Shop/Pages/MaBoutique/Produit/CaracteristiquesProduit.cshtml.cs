@@ -23,23 +23,17 @@ namespace E_Shop.Pages.MaBoutique.Produit
         public class Input
         {
             [Required]
-            [Display(Name = "Indiquez la quantité disponible pour votre produit")]
+            [Display(Name = "Quantité disponible pour votre produit")]
             public short? Stock { get; set; }
             [Required]
-            [Display(Name = "Indiquez le nombre de jours nécessaire pour que le votre produit soit de nouveau disponible si le stock tombe à 0")]
+            [Display(Name = "Nombre de jours nécessaires pour que le votre produit soit de nouveau disponible si le stock tombe à 0")]
             public short? Disponibilite { get; set; }
             [Required]
-            [Display(Name = "Indiquez un pourcentage de réduction du prix si vous souhaitez effectuer un rabais sur vorte produit")]
+            [Display(Name = "Pourcentage de réduction du prix si vous souhaitez effectuer un rabais sur vorte produit")]
             public short? Rabais { get; set; }
             [Required]
-            [Display(Name = "Indiquez le nombre de jours nécessaire à la préparation de votre produit")]
+            [Display(Name = "Nombre de jours nécessaire à la préparation de votre produit")]
             public short? Preparation { get; set; }
-            [Required]
-            [Display(Name = "Indiquez le prix de votre produit")]
-            public decimal? Prix { get; set; }
-            [Required]
-            [Display(Name = "Indiquez le Poids de votre produit")]
-            public int? Poids { get; set; }
             [Required]
             [Display(Name = "Indiquez si vous souhaitez que votre produit soit visible sur le site")]
             public bool? Publier { get; set; }
@@ -57,9 +51,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
                 {
                     prodId = HttpContext.Session.Get<int>("prodIdUp");
                     Produit = await ProduitLogic.GetProduitById(prodId);
-                    Produit.Poids1 = input.Poids;
                     Produit.Preparation = input.Preparation;
-                    Produit.Prix = input.Prix;
                     Produit.Publier = input.Publier;
                     Produit.Rabais = input.Rabais;
                     Produit.Stock = input.Stock;
@@ -69,8 +61,8 @@ namespace E_Shop.Pages.MaBoutique.Produit
                 if (HttpContext.Session.Get<Input>("Description") != null)
                 {
                     var description = HttpContext.Session.Get<Input>("Description");
-                    var result = await ProduitLogic.AddProduit(btqId, catId, input.Prix, description.PNom, description.PDescriptionC, description.PDescriptionL, input.Stock, input.Disponibilite,
-                        input.Rabais, input.Preparation, input.Publier, input.Poids);
+                    var result = await ProduitLogic.AddProduit(btqId, catId, description.PNom, description.PDescriptionC, description.PDescriptionL, input.Stock, input.Disponibilite,
+                        input.Rabais, input.Preparation, input.Publier);
                     HttpContext.Session.Set<int>("prodId", result.Prodid);
                 }
                 return Redirect("/MaBoutique/Produit/ChoixTypeDeLivraison");
@@ -86,9 +78,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
                 Input input = new Input
                 {
                     Disponibilite = result.Disponibilite,
-                    Poids = result.Poids1,
                     Preparation = result.Preparation,
-                    Prix = result.Prix,
                     Publier = result.Publier,
                     Rabais = result.Rabais,
                     Stock = result.Stock
