@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using E_Shop.Entities;
@@ -14,16 +15,53 @@ namespace E_Shop.Pages.MaBoutique.Produit
     {
         private FormatLogic FormatLogic = new FormatLogic();
         public int formatId { get; set; }
-        [BindProperty]
-        public Format format { get; set; }
+        public int prodId { get; set; }
 
-        private FormatLogic formatLogic = new FormatLogic();
+        [BindProperty]
+        public Input input { get; set; }
+        public class Input
+        {
+            [Display(Name = "Poids du format en grammes")]
+            public decimal? poids { get; set; }
+            [Display(Name = "Volume du format en litres")]
+            public decimal? litre { get; set; }
+            [Required]
+            [Display(Name = "Prix du format")]
+            public decimal? prix { get; set; }
+
+        }
+        public async Task<IActionResult> OnPost()
+        {
+            if (ModelState.IsValid)
+            {
+                if (HttpContext.Session.Get<int>("formatId")>0)
+                {
+                    Format format = new Format
+                    {
+                        Prix = input.prix,
+                        Poids = input.poids,
+                        Litre = input.litre
+                    };
+                    await FormatLogic.UpdateFormat(format);
+                }
+                prodId = HttpContext.Session.Get<int>("prodId");
+                await FormatLogic.AddFormat(prodId, input.poids, input.litre, input.prix);
+                return Redirect("/MaBoutique/Produit/GestionFormatProduit");
+            }
+            return Page();
+        }
         public async Task<IActionResult> OnGet()
         {
             if (HttpContext.Session.Get<int>("formatId")>0)
             {
                 formatId = HttpContext.Session.Get<int>("formatId");
-                format = await FormatLogic.GetFormatById(formatId);
+                var result = await FormatLogic.GetFormatById(formatId);
+                Input input = new Input
+                {
+                    litre = result.Litre,
+                    poids = result.Poids,
+                    prix = result.Prix
+                };
             }
             return Page();
         }

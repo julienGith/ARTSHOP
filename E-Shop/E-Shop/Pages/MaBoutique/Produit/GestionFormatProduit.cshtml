@@ -2,3 +2,60 @@
 @model E_Shop.Pages.MaBoutique.Produit.GestionFormatProduitModel
 @{
 }
+<form method="post">
+    <button type="submit" asp-page-handler="Cr" class="btn btn-primary">Ajouter un nouveau format</button>
+</form>
+<div class="d-inline-block mr-5">
+    @if (Model.formats.Count == 0)
+    {
+        <div>
+            Liste vide
+
+        </div>
+    }
+    else
+    {
+
+        <div class="card">
+            <div class="card-header">
+                <div class="d-inline">Liste des Types de Livraison</div>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead class="thead-light"><tr><th scope="col">Poids</th><th scope="col">Litre</th><th>Prix</th><th scope="col">Action</th></tr></thead>
+
+                    @foreach (var item in Model.formats)
+                    {
+                        <tbody>
+                            <tr>
+                                <th scope="row" width="25%">@item.Poids</th>
+                                <td width="25%">@item.Litre</td>
+                                <td width="25%">@item.Prix</td>
+                                <td>
+                                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                                        <a class="navbar-brand" href="#"></a>
+                                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navFmtAct" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                            <span class="navbar-toggler-icon"></span>
+                                        </button>
+                                        <div id="navFmtAct" class="navbar-collapse collapse d-sm-inline-flex justify-content-between flex-wrap">
+                                            <ul class="navbar-nav flex-grow-1">
+                                                <li class="nav-item">
+                                                    <form method="post">
+                                                        <input hidden asp-for="@Model.formatId" value="@item.Formatid" />
+                                                        <button type="submit" asp-page-handler="Up" class="btn btn-primary">Modifier<span class='sr-only'>(current)</span></button>
+                                                        <button type="submit" asp-page-handler="Del" class="btn btn-primary">Supprimer<span class='sr-only'>(current)</span></button>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </nav>
+                                </td>
+                            </tr>
+                        </tbody>
+                    }
+                </table>
+            </div>
+        </div>
+
+    }
+</div>
