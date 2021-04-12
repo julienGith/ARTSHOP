@@ -109,7 +109,7 @@ namespace E_Shop.Pages.Boutique
                 step8 = HttpContext.Session.Get<Step8>("step8");
                 if (step8.MediaId>0)
                 {
-                    await media.DeleteMedia(step8.MediaId);
+                    await media.DeleteMedia(step8.MediaId, _webHostEnvironment);
                 }
             }
             return Page();

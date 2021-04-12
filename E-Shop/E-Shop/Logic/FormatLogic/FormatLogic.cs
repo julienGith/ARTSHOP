@@ -33,5 +33,10 @@ namespace E_Shop.Logic.FormatLogic
         {
             return await _Format.GetFormatsByProductId(prodId);
         }
+        //Format par id format
+        public async Task<Format> GetFormatById(int formatId)
+        {
+            return await _Format.GetFormatById(formatId);
+        }
     }
 }

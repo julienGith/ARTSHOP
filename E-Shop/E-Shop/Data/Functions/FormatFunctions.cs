@@ -70,5 +70,15 @@ namespace E_Shop.Data.Functions
             }
             return formats;
         }
+        //Format par id format
+        public async Task<Format> GetFormatById(int formatId)
+        {
+            Format format = new Format();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                format = await context.Formats.FirstOrDefaultAsync(f => f.Formatid == formatId);
+            }
+            return format;
+        }
     }
 }

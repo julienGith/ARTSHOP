@@ -2,6 +2,7 @@
 using E_Shop.Data.Interfaces;
 using E_Shop.Entities;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,7 @@ namespace E_Shop.Logic.MediaLogic
 {
     public class MediaLogic
     {
-        private static IWebHostEnvironment _webHostEnvironment;
-
-        private IMedia _media = new MediaFunctions(_webHostEnvironment);
+        private IMedia _media = new MediaFunctions();
         //CRUD Médias
         //Add Boutique Média
         public async Task<Medium> AddBoutiqueMedias(int boutiqueId, string lien, bool image, bool video, string description, string fileName)
@@ -26,9 +25,9 @@ namespace E_Shop.Logic.MediaLogic
             return await _media.AddProduitMedias(prodId, lien, image, video, description, fileName);
         }
         //Delete Média
-        public async Task<Boolean> DeleteMedia(int mediaId)
+        public async Task<Boolean> DeleteMedia(int mediaId, [FromServices] IWebHostEnvironment env)
         {
-            return await _media.DeleteMedia(mediaId);
+            return await _media.DeleteMedia(mediaId, env);
         }
         //Get Medias d'une boutique
         public async Task<List<Medium>> GetMediasBoutique(int btqId)

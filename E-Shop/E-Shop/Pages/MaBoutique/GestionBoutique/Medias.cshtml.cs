@@ -39,7 +39,7 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
 
         public async Task<IActionResult> OnPostImgV(IFormFile photo, int mediaId)
         {
-            await mediaLogic.DeleteMedia(mediaId);
+            await mediaLogic.DeleteMedia(mediaId, _webHostEnvironment);
             if (photo == null || photo.Length == 0)
             {
                 if (HttpContext.Session.Get<int>("btqId") > 0)
@@ -74,7 +74,7 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
         }
         public async Task<IActionResult> OnPostImgP(IFormFile photo, int mediaId)
         {
-            await mediaLogic.DeleteMedia(mediaId);
+            await mediaLogic.DeleteMedia(mediaId, _webHostEnvironment);
             if (photo == null || photo.Length == 0)
             {
                 if (HttpContext.Session.Get<int>("btqId") > 0)
@@ -110,7 +110,7 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
         public async Task<IActionResult> OnPostVid(int mediaId)
         {
 
-            await mediaLogic.DeleteMedia(mediaId);
+            await mediaLogic.DeleteMedia(mediaId, _webHostEnvironment);
             Lien = GetYoutubeId(FileNameImg);
             if (HttpContext.Session.Get<int>("btqId") > 0)
             {

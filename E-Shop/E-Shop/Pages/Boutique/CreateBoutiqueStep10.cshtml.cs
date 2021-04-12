@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using E_Shop.Extensions;
 using E_Shop.Logic.MediaLogic;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using static E_Shop.Pages.Boutique.CreateBoutiqueStep5Model;
@@ -14,6 +15,12 @@ namespace E_Shop.Pages.Boutique
 {
     public class CreateBoutiqueStep10Model : PageModel
     {
+        private IWebHostEnvironment _webHostEnvironment;
+
+        public CreateBoutiqueStep10Model(IWebHostEnvironment webHostEnvironment)
+        {
+            _webHostEnvironment = webHostEnvironment;
+        }
         MediaLogic media = new MediaLogic();
 
         [BindProperty]
@@ -77,7 +84,7 @@ namespace E_Shop.Pages.Boutique
                 step10 = HttpContext.Session.Get<Step10>("step10");
                 if (step10.MediaId>0)
                 {
-                    await media.DeleteMedia(step10.MediaId);
+                    await media.DeleteMedia(step10.MediaId, _webHostEnvironment);
                 }
             }
             return Page();

@@ -47,7 +47,7 @@ namespace E_Shop.Pages.Boutique
         }
         public async Task<IActionResult> OnPostNext()
         {
-            if (ModelState.IsValid)
+            if (step7.Codepostal !=null && step7.PrNom != null && step7.Num != null)
             {
                 Step5 step5 = new Step5();
                 step5 = HttpContext.Session.Get<Step5>("step5");
@@ -59,7 +59,7 @@ namespace E_Shop.Pages.Boutique
 
                 return RedirectToPage("/boutique/CreateBoutiqueStep8");
             }
-            return Page();
+            return RedirectToPage("/boutique/CreateBoutiqueStep8");
         }
 
         public IActionResult OnPostBack()

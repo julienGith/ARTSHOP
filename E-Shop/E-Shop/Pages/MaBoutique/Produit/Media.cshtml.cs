@@ -36,7 +36,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
         {
             if (mediaId>0)
             {
-                await mediaLogic.DeleteMedia(mediaId);
+                await mediaLogic.DeleteMedia(mediaId, _webHostEnvironment);
 
             }
             if (photo == null || photo.Length == 0)

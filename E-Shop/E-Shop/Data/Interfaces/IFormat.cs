@@ -19,5 +19,7 @@ namespace E_Shop.Data.Interfaces
         //Recherche Format
         //Liste des formats d'un produit
         Task<List<Format>> GetFormatsByProductId(int prodId);
+        //Format par id format
+        Task<Format> GetFormatById(int formatId);
     }
 }
