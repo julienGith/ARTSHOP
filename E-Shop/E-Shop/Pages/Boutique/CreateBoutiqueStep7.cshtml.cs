@@ -47,7 +47,7 @@ namespace E_Shop.Pages.Boutique
         }
         public async Task<IActionResult> OnPostNext()
         {
-            if (step7.Codepostal !=null && step7.PrNom != null && step7.Num != null)
+            if (step7.Codepostal !=null || step7.PrNom != null || step7.Num != null)
             {
                 Step5 step5 = new Step5();
                 step5 = HttpContext.Session.Get<Step5>("step5");
