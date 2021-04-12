@@ -36,8 +36,8 @@ namespace E_Shop.Entities
         public bool? Image { get; set; }
         [Column("VIDEO")]
         public bool? Video { get; set; }
-        [Column("LIENCOMPLET")]
-        public string LienComplet { get; set; }
+        [Column("FILENAME")]
+        public string FileName { get; set; }
 
         [ForeignKey(nameof(Btqid))]
         [InverseProperty(nameof(Boutique.Media))]

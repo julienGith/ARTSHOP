@@ -1,8 +1,10 @@
 ﻿using E_Shop.Data.Interfaces;
 using E_Shop.Entities;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,9 +12,14 @@ namespace E_Shop.Data.Functions
 {
     public class MediaFunctions : IMedia
     {
+        private IWebHostEnvironment _webHostEnvironment;
+        public MediaFunctions(IWebHostEnvironment webHostEnvironment)
+        {
+            _webHostEnvironment = webHostEnvironment;
+        }
         //CRUD Médias
         //Add Boutique Médias
-        public async Task<Medium> AddBoutiqueMedias(int boutiqueId,string lien, bool image, bool video, string description, string LienComplet)
+        public async Task<Medium> AddBoutiqueMedias(int boutiqueId,string lien, bool image, bool video, string description, string fileName)
         {
             Medium media = new Medium();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
@@ -22,14 +29,14 @@ namespace E_Shop.Data.Functions
                 media.Image = image;
                 media.Video = video;
                 media.Description = description;
-                media.LienComplet = LienComplet;
+                media.FileName = fileName;
                 await context.Media.AddAsync(media);
                 await context.SaveChangesAsync();
             }
             return media;
         }
         //Add Produit Médias
-        public async Task<Medium> AddProduitMedias(int prodId, string lien, bool image, bool video, string description, string LienComplet)
+        public async Task<Medium> AddProduitMedias(int prodId, string lien, bool image, bool video, string description, string fileName)
         {
             Medium media = new Medium();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
@@ -39,7 +46,7 @@ namespace E_Shop.Data.Functions
                 media.Image = image;
                 media.Video = video;
                 media.Description = description;
-                media.LienComplet = LienComplet;
+                media.FileName = fileName;
                 await context.Media.AddAsync(media);
                 await context.SaveChangesAsync();
             }
@@ -52,9 +59,11 @@ namespace E_Shop.Data.Functions
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
                 media = await context.Media.FirstOrDefaultAsync(m => m.Mediaid == mediaId);
-                if (System.IO.File.Exists(media.LienComplet))
+                var LienComplet = Path.Combine(Directory.GetCurrentDirectory(),
+                        _webHostEnvironment.WebRootPath, "images\\", media.FileName);
+                if (System.IO.File.Exists(LienComplet))
                 {
-                    System.IO.File.Delete(media.LienComplet);
+                    System.IO.File.Delete(LienComplet);
                 }
                 context.Media.Remove(media);
 

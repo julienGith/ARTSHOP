@@ -34,7 +34,7 @@ namespace E_Shop.Pages.Boutique
         {
             public int MediaId { get; set; }
             public string Lien { get; set; }
-            public string LienComplet { get; set; }
+            public string FileName { get; set; }
             public int Btqid { get; set; }
             public string Description { get; set; }
             public bool Image { get; set; }
@@ -76,6 +76,8 @@ namespace E_Shop.Pages.Boutique
 
                     HttpContext.Session.Set<string>("LienComplet8", LienComplet);
                     HttpContext.Session.Set<string>("step8lien", step8.Lien.ToString());
+                    HttpContext.Session.Set<string>("fileName8", newname);
+
 
                 }
             }
@@ -88,8 +90,8 @@ namespace E_Shop.Pages.Boutique
             step8.Image = true;
             step8.Description = "vignette";
             step8.Lien= HttpContext.Session.Get<string>("step8lien");
-            step8.LienComplet = HttpContext.Session.Get<string>("LienComplet8");
-            var result = await media.AddBoutiqueMedias(step5.boutiqueId, step8.Lien, step8.Image, step8.Video, step8.Description,step8.LienComplet);
+            step8.FileName = HttpContext.Session.Get<string>("fileName8");
+            var result = await media.AddBoutiqueMedias(step5.boutiqueId, step8.Lien, step8.Image, step8.Video, step8.Description,step8.FileName);
             step8.MediaId = result.Mediaid;
             HttpContext.Session.Set<Step8>("step8", step8);
 
