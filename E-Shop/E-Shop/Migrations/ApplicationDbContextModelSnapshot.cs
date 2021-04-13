@@ -518,11 +518,11 @@ namespace E_Shop.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal?>("Litre")
-                        .HasColumnType("decimal(18,2)")
+                        .HasColumnType("decimal(9,3)")
                         .HasColumnName("LITRE");
 
                     b.Property<decimal?>("Poids")
-                        .HasColumnType("decimal(18,2)")
+                        .HasColumnType("decimal(9,3)")
                         .HasColumnName("POIDS");
 
                     b.Property<decimal?>("Prix")
@@ -1070,8 +1070,6 @@ namespace E_Shop.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("PRODID")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Btqid")

@@ -11,17 +11,17 @@
 
             <div class="form-group">
                 <label asp-for="input.litre"></label>
-                <input asp-for="input.litre" class="form-control" />
+                <input id="money3" asp-for="input.litre" class="form-control" />
                 <span asp-validation-for="input.litre" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="input.poids"></label>
-                <input asp-for="input.poids" class="form-control" />
+                <input id="money2" asp-for="input.poids" class="form-control" />
                 <span asp-validation-for="input.poids" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="input.prix"></label>
-                <input asp-for="input.prix" class="form-control" />
+                <input id="money1" asp-for="input.prix" class="form-control" />
                 <span asp-validation-for="input.prix" class="text-danger"></span>
             </div>
 
@@ -30,3 +30,29 @@
         </form>
     </div>
 </div>
+@section scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("money1").addEventListener("keyup", format);
+
+            function format() {
+                if (document.getElementById("money1").value!=null) {
+                    var str = document.getElementById("money1").value;
+                    var result = str.replace(".", ",");
+                    document.getElementById("money1").value = result;
+                }
+                if (document.getElementById("money2").value != null) {
+                    var str = document.getElementById("money2").value;
+                    var result = str.replace(".", ",");
+                    document.getElementById("money2").value = result;
+                }
+                if (document.getElementById("money3").value != null) {
+                    var str = document.getElementById("money3").value;
+                    var result = str.replace(".", ",");
+                    document.getElementById("money3").value = result;
+                }
+            }
+
+        });
+    </script>
+}

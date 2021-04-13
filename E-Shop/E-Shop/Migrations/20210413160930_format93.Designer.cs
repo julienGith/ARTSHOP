@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Shop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210413132723_prodKeyIdentity2")]
-    partial class prodKeyIdentity2
+    [Migration("20210413160930_format93")]
+    partial class format93
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -520,11 +520,11 @@ namespace E_Shop.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal?>("Litre")
-                        .HasColumnType("decimal(18,2)")
+                        .HasColumnType("decimal(9,3)")
                         .HasColumnName("LITRE");
 
                     b.Property<decimal?>("Poids")
-                        .HasColumnType("decimal(18,2)")
+                        .HasColumnType("decimal(9,3)")
                         .HasColumnName("POIDS");
 
                     b.Property<decimal?>("Prix")
@@ -1072,8 +1072,6 @@ namespace E_Shop.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("PRODID")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Btqid")
