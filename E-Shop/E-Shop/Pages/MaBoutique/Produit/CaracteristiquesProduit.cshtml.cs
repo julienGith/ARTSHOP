@@ -13,9 +13,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
     public class CaracteristiquesProduitModel : PageModel
     {
         private ProduitLogic ProduitLogic = new ProduitLogic();
-        public int btqId { get; set; }
-        public int catId { get; set; }
-        public int prodId { get; set; }
+
         public Entities.Produit Produit = new Entities.Produit();
 
         [BindProperty]
@@ -36,11 +34,14 @@ namespace E_Shop.Pages.MaBoutique.Produit
             public short? Preparation { get; set; }
             [Required]
             [Display(Name = "Indiquez si vous souhaitez que votre produit soit visible sur le site")]
-            public bool? Publier { get; set; }
+            public bool Publier { get; set; }
 
             public string PNom { get; set; }
             public string PDescriptionC { get; set; }
             public string PDescriptionL { get; set; }
+            public int btqId { get; set; }
+            public int catId { get; set; }
+            public int prodId { get; set; }
 
         }
         public async Task<IActionResult> OnPost()
@@ -49,8 +50,8 @@ namespace E_Shop.Pages.MaBoutique.Produit
             {
                 if (HttpContext.Session.Get<int>("prodIdUp") > 0)
                 {
-                    prodId = HttpContext.Session.Get<int>("prodIdUp");
-                    Produit = await ProduitLogic.GetProduitById(prodId);
+                    input.prodId = HttpContext.Session.Get<int>("prodIdUp");
+                    Produit = await ProduitLogic.GetProduitById(input.prodId);
                     Produit.Preparation = input.Preparation;
                     Produit.Publier = input.Publier;
                     Produit.Rabais = input.Rabais;
@@ -60,12 +61,14 @@ namespace E_Shop.Pages.MaBoutique.Produit
                 }
                 if (HttpContext.Session.Get<Input>("Description") != null)
                 {
+                    input.btqId = HttpContext.Session.Get<int>("btqId");
+                    input.catId = HttpContext.Session.Get<int>("catEnfantId1");
                     var description = HttpContext.Session.Get<Input>("Description");
-                    var result = await ProduitLogic.AddProduit(btqId, catId, description.PNom, description.PDescriptionC, description.PDescriptionL, input.Stock, input.Disponibilite,
-                        input.Rabais, input.Preparation, input.Publier);
+                    var result = await ProduitLogic.AddProduit(input.btqId, input.catId, description.PNom, description.PDescriptionC, description.PDescriptionL, input.Stock, input.Disponibilite,
+                            input.Rabais, input.Preparation, input.Publier);
                     HttpContext.Session.Set<int>("prodId", result.Prodid);
                 }
-                return Redirect("/MaBoutique/Produit/ChoixTypeDeLivraison");
+                return Redirect("/MaBoutique/Produit/GestionFormatProduit");
             }
             return Page();
         }
@@ -73,7 +76,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
         {
             if (HttpContext.Session.Get<int>("prodIdUp") >0)
             {
-                prodId = HttpContext.Session.Get<int>("prodIdUp");
+                var prodId = HttpContext.Session.Get<int>("prodIdUp");
                 var result = await ProduitLogic.GetProduitById(prodId);
                 Input input = new Input
                 {
@@ -81,24 +84,23 @@ namespace E_Shop.Pages.MaBoutique.Produit
                     Preparation = result.Preparation,
                     Publier = result.Publier,
                     Rabais = result.Rabais,
-                    Stock = result.Stock
+                    Stock = result.Stock,
+                    prodId = result.Prodid
                 };
             }
             if (HttpContext.Session.Get<int>("btqId") > 0)
             {
-                btqId = HttpContext.Session.Get<int>("btqId");
-            }
-            if (HttpContext.Session.Get<int>("Cat") > 0)
-            {
-                catId = HttpContext.Session.Get<int>("Cat");
-            }
-            else
-            {
                 if (HttpContext.Session.Get<int>("catEnfantId1") > 0)
                 {
-                    catId = HttpContext.Session.Get<int>("catEnfantId1");
+                    Input input = new Input
+                    {
+                        btqId = HttpContext.Session.Get<int>("btqId"),
+                        catId = HttpContext.Session.Get<int>("catEnfantId1")
+                    };
                 }
+
             }
+
             return Page();
         }
     }

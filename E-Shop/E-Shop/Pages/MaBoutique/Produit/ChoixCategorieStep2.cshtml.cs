@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Http;
 using E_Shop.Extensions;
+using System.ComponentModel.DataAnnotations;
 
 namespace E_Shop.Pages.MaBoutique.Produit
 {
@@ -16,6 +17,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
         private CategorieLogic categorieLogic = new CategorieLogic();
         public List<SelectListItem> CatEnfants { get; set; }
         [BindProperty]
+        [Required]
         public int Categorieid { get; set; }
 
         public IActionResult OnPost()

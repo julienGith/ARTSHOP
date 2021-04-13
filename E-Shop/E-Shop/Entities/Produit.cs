@@ -60,7 +60,7 @@ namespace E_Shop.Entities
         [StringLength(100)]
         public string PMetaTitre { get; set; }
         [Column("PUBLIER")]
-        public bool? Publier { get; set; }
+        public bool Publier { get; set; }
 
 
         [ForeignKey(nameof(Btqid))]

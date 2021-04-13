@@ -68,6 +68,7 @@ namespace E_Shop.Data.Functions
                 Ville = ville,
                 Pays = pays,
                 PrNom = relaisNom,
+                Codepostal = codePostal,
                 Departement = departement
             };
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))

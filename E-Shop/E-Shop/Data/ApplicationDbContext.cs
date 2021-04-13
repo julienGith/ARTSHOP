@@ -464,7 +464,7 @@ namespace E_Shop.Data
 
             modelBuilder.Entity<Produit>(entity =>
             {
-                entity.Property(e => e.Prodid).ValueGeneratedNever();
+                //entity.Property(e => e.Prodid).ValueGeneratedNever();
 
                 entity.HasOne(d => d.Btq)
                     .WithMany(p => p.Produits)
