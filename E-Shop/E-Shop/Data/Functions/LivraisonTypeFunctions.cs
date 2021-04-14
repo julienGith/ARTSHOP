@@ -116,5 +116,15 @@ namespace E_Shop.Data.Functions
             }
             return livraisontype;
         }
+        //Get LivraisonType by prodId
+        public async Task<List<Livraisontype>> GetLivraisontypeByProdId(int prodId)
+        {
+            List<Livraisontype> livraisontypes = new List<Livraisontype>();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                livraisontypes = await context.Livraisontypes.Where(l => l.Prodid == prodId).ToListAsync();
+            }
+            return livraisontypes;
+        }
     }
 }

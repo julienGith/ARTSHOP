@@ -77,5 +77,15 @@ namespace E_Shop.Data.Functions
             }
             return medias;
         }
+        //Get Media d'un produit
+        public async Task<Medium> GetMediaByProdId(int prodId)
+        {
+            Medium media = new Medium();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                media = await context.Media.FirstOrDefaultAsync(m => m.Prodid == prodId);
+            }
+            return media;
+        }
     }
 }

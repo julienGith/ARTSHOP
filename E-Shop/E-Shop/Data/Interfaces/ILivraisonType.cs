@@ -27,5 +27,7 @@ namespace E_Shop.Data.Interfaces
         Task<Livraisontype> GetLivraisonTypeById(int lvrTypId);
         //Get LivraisonType par userId
         Task<List<Livraisontype>> GetLivraisonTypeByUserId(int userId);
+        //Get LivraisonType by prodId
+        Task<List<Livraisontype>> GetLivraisontypeByProdId(int prodId);
     }
 }

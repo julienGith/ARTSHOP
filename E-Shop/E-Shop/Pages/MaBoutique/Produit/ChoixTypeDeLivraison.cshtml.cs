@@ -19,6 +19,9 @@ namespace E_Shop.Pages.MaBoutique.Produit
         public Livraisontype Livraisontype = new Livraisontype();
         [BindProperty]
         public int lvrTypeIdChoisie { get; set; }
+        [BindProperty]
+        public int lvrTypeIdSelect { get; set; }
+
 
         public int lvrTypeId { get; set; }
         public int btqId { get; set; }
@@ -29,7 +32,12 @@ namespace E_Shop.Pages.MaBoutique.Produit
                 var prodId = HttpContext.Session.Get<int>("prodIdUp");
                 Livraisontype = await livraisonTypeLogic.GetLivraisonTypeById(lvrTypeIdChoisie);
                 await livraisonTypeLogic.AddLivraisonTypeProduit(Livraisontype.Lvrtypid, prodId);
-                LivraisontypesChoisies.Add(Livraisontype);
+                LivraisontypesChoisies = await livraisonTypeLogic.GetLivraisontypeByProdId(prodId);
+                if (HttpContext.Session.Get<int>("btqId") > 0)
+                {
+                    btqId = HttpContext.Session.Get<int>("btqId");
+                    Livraisontypes = await livraisonTypeLogic.GetLivraisonTypeByBoutique(btqId);
+                }
                 return Page();
             }
             if (HttpContext.Session.Get<int>("prodId")>0)
@@ -37,19 +45,41 @@ namespace E_Shop.Pages.MaBoutique.Produit
                 var prodId = HttpContext.Session.Get<int>("prodId");
                 Livraisontype = await livraisonTypeLogic.GetLivraisonTypeById(lvrTypeIdChoisie);
                 await livraisonTypeLogic.AddLivraisonTypeProduit(Livraisontype.Lvrtypid, prodId);
-                LivraisontypesChoisies.Add(Livraisontype);
+                LivraisontypesChoisies = await livraisonTypeLogic.GetLivraisontypeByProdId(prodId);
+                if (HttpContext.Session.Get<int>("btqId") > 0)
+                {
+                    btqId = HttpContext.Session.Get<int>("btqId");
+                    Livraisontypes = await livraisonTypeLogic.GetLivraisonTypeByBoutique(btqId);
+                }
             }
             return Page();
         }
         public async Task<IActionResult> OnPostDel()
         {
+            if (HttpContext.Session.Get<int>("prodIdUp") > 0)
+            {
+                await livraisonTypeLogic.RemoveLivraisonTypeProduit(lvrTypeIdSelect);
+                Livraisontype = await livraisonTypeLogic.GetLivraisonTypeById(lvrTypeIdSelect);
+                LivraisontypesChoisies.Remove(Livraisontype);
+                if (HttpContext.Session.Get<int>("btqId") > 0)
+                {
+                    btqId = HttpContext.Session.Get<int>("btqId");
+                    Livraisontypes = await livraisonTypeLogic.GetLivraisonTypeByBoutique(btqId);
+                }
+            }
             if (HttpContext.Session.Get<int>("prodId") > 0)
             {
                 var prodId = HttpContext.Session.Get<int>("prodId");
-                await livraisonTypeLogic.RemoveLivraisonTypeProduit(lvrTypeIdChoisie);
-                Livraisontype = await livraisonTypeLogic.GetLivraisonTypeById(lvrTypeIdChoisie);
+                await livraisonTypeLogic.RemoveLivraisonTypeProduit(lvrTypeIdSelect);
+                Livraisontype = await livraisonTypeLogic.GetLivraisonTypeById(lvrTypeIdSelect);
                 LivraisontypesChoisies.Remove(Livraisontype);
+                if (HttpContext.Session.Get<int>("btqId") > 0)
+                {
+                    btqId = HttpContext.Session.Get<int>("btqId");
+                    Livraisontypes = await livraisonTypeLogic.GetLivraisonTypeByBoutique(btqId);
+                }
             }
+
             return Page();
         }
         public IActionResult OnPostNext()

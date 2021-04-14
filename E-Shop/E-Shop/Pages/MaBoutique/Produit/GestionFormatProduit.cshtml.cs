@@ -21,6 +21,12 @@ namespace E_Shop.Pages.MaBoutique.Produit
         public async Task<IActionResult> OnPostDel()
         {
             await formatLogic.DeleteFormat(formatId);
+            if (HttpContext.Session.Get<int>("prodIdUp") > 0)
+            {
+                prodId = HttpContext.Session.Get<int>("prodIdUp");
+                formats = await formatLogic.GetFormatsByProductId(prodId);
+                return Page();
+            }
             if (HttpContext.Session.Get<int>("prodId") > 0)
             {
                 prodId = HttpContext.Session.Get<int>("prodId");
