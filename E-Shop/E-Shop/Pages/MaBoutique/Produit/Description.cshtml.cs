@@ -58,7 +58,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
             {
                 prodId = HttpContext.Session.Get<int>("prodIdUp");
                 Produit = await ProduitLogic.GetProduitById(prodId);
-                Input input = new Input
+                input = new Input
                 {
                     PDescriptionC = Produit.PDescriptionC,
                     PDescriptionL = Produit.PDescriptionL,

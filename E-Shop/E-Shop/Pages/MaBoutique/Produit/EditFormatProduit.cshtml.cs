@@ -36,13 +36,13 @@ namespace E_Shop.Pages.MaBoutique.Produit
             {
                 if (HttpContext.Session.Get<int>("formatId")>0)
                 {
-                    Format format = new Format
-                    {
-                        Prix = input.prix,
-                        Poids = input.poids,
-                        Litre = input.litre
-                    };
+                    Format format = new Format();
+                    format = await FormatLogic.GetFormatById(HttpContext.Session.Get<int>("formatId"));
+                    format.Litre = input.litre;
+                    format.Poids = input.poids;
+                    format.Prix = input.prix;
                     await FormatLogic.UpdateFormat(format);
+                    return Redirect("/MaBoutique/Produit/GestionFormatProduit");
                 }
                 prodId = HttpContext.Session.Get<int>("prodId");
                 await FormatLogic.AddFormat(prodId, input.poids, input.litre, input.prix);
@@ -56,7 +56,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
             {
                 formatId = HttpContext.Session.Get<int>("formatId");
                 var result = await FormatLogic.GetFormatById(formatId);
-                Input input = new Input
+                input = new Input
                 {
                     litre = result.Litre,
                     poids = result.Poids,

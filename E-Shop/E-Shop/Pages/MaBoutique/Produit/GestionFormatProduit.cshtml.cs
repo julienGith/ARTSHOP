@@ -41,6 +41,11 @@ namespace E_Shop.Pages.MaBoutique.Produit
 
         public async Task<IActionResult> OnGet()
         {
+            if (HttpContext.Session.Get<int>("prodIdUp") > 0)
+            {
+                prodId = HttpContext.Session.Get<int>("prodIdUp");
+                formats = await formatLogic.GetFormatsByProductId(prodId);
+            }
             if (HttpContext.Session.Get<int>("prodId")>0)
             {
                 prodId = HttpContext.Session.Get<int>("prodId");

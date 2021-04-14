@@ -59,7 +59,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
                     Produit.Disponibilite = input.Disponibilite;
                     await ProduitLogic.UpdateProduit(Produit);
                 }
-                if (HttpContext.Session.Get<Input>("Description") != null)
+                else if (HttpContext.Session.Get<Input>("Description") != null)
                 {
                     input.btqId = HttpContext.Session.Get<int>("btqId");
                     input.catId = HttpContext.Session.Get<int>("catEnfantId1");
@@ -78,7 +78,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
             {
                 var prodId = HttpContext.Session.Get<int>("prodIdUp");
                 var result = await ProduitLogic.GetProduitById(prodId);
-                Input input = new Input
+                input = new Input
                 {
                     Disponibilite = result.Disponibilite,
                     Preparation = result.Preparation,

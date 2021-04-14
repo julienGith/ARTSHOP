@@ -26,8 +26,8 @@ namespace E_Shop.Pages.MaBoutique.Produit
             if (HttpContext.Session.Get<int>("prodId")>0)
             {
                 var prodId = HttpContext.Session.Get<int>("prodId");
-                await livraisonTypeLogic.AddLivraisonTypeProduit(lvrTypeIdChoisie, prodId);
                 Livraisontype = await livraisonTypeLogic.GetLivraisonTypeById(lvrTypeIdChoisie);
+                await livraisonTypeLogic.AddLivraisonTypeProduit(Livraisontype.Lvrtypid, prodId);
                 LivraisontypesChoisies.Add(Livraisontype);
             }
             return Page();
