@@ -30,8 +30,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
             if (HttpContext.Session.Get<int>("prodIdUp") > 0)
             {
                 var prodId = HttpContext.Session.Get<int>("prodIdUp");
-                Livraisontype = await livraisonTypeLogic.GetLivraisonTypeById(lvrTypeIdChoisie);
-                await livraisonTypeLogic.AddLivraisonTypeProduit(Livraisontype.Lvrtypid, prodId);
+                await livraisonTypeLogic.AddLivraisonTypeProduit(lvrTypeIdChoisie, prodId);
                 LivraisontypesChoisies = await livraisonTypeLogic.GetLivraisontypeByProdId(prodId);
                 if (HttpContext.Session.Get<int>("btqId") > 0)
                 {
@@ -43,8 +42,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
             if (HttpContext.Session.Get<int>("prodId")>0)
             {
                 var prodId = HttpContext.Session.Get<int>("prodId");
-                Livraisontype = await livraisonTypeLogic.GetLivraisonTypeById(lvrTypeIdChoisie);
-                await livraisonTypeLogic.AddLivraisonTypeProduit(Livraisontype.Lvrtypid, prodId);
+                await livraisonTypeLogic.AddLivraisonTypeProduit(lvrTypeIdChoisie, prodId);
                 LivraisontypesChoisies = await livraisonTypeLogic.GetLivraisontypeByProdId(prodId);
                 if (HttpContext.Session.Get<int>("btqId") > 0)
                 {
@@ -69,7 +67,6 @@ namespace E_Shop.Pages.MaBoutique.Produit
             }
             if (HttpContext.Session.Get<int>("prodId") > 0)
             {
-                var prodId = HttpContext.Session.Get<int>("prodId");
                 await livraisonTypeLogic.RemoveLivraisonTypeProduit(lvrTypeIdSelect);
                 Livraisontype = await livraisonTypeLogic.GetLivraisonTypeById(lvrTypeIdSelect);
                 LivraisontypesChoisies.Remove(Livraisontype);
@@ -88,6 +85,11 @@ namespace E_Shop.Pages.MaBoutique.Produit
         }
         public async Task<IActionResult> OnGet()
         {
+            if (HttpContext.Session.Get<int>("prodIdUp") > 0)
+            {
+                var prodId = HttpContext.Session.Get<int>("prodId");
+                LivraisontypesChoisies = await livraisonTypeLogic.GetLivraisontypeByProdId(prodId);
+            }
             if (HttpContext.Session.Get<int>("btqId") > 0)
             {
                 btqId = HttpContext.Session.Get<int>("btqId");
