@@ -25,6 +25,16 @@ namespace E_Shop.Pages.MaBoutique.Produit
             HttpContext.Session.Set<int>("prodIdUp", prodId);
             return Redirect("/MaBoutique/Produit/Description");
         }
+        public async Task<IActionResult> OnPostDelProduit()
+        {
+            await produitLogic.DeleteProduit(prodId);
+            if (HttpContext.Session.Get<int>("btqId") > 0)
+            {
+                var btqId = HttpContext.Session.Get<int>("btqId");
+                produits = await produitLogic.GetBoutiqueProduits(btqId);
+            }
+            return Page();
+        }
         public async Task<IActionResult> OnGet()
         {
             if (HttpContext.Session.Get<int>("btqId") > 0)
