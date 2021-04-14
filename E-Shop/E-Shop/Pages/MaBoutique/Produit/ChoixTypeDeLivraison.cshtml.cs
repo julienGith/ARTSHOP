@@ -17,12 +17,21 @@ namespace E_Shop.Pages.MaBoutique.Produit
         public List<Livraisontype> Livraisontypes = new List<Livraisontype>();
         public List<Livraisontype> LivraisontypesChoisies = new List<Livraisontype>();
         public Livraisontype Livraisontype = new Livraisontype();
+        [BindProperty]
         public int lvrTypeIdChoisie { get; set; }
 
         public int lvrTypeId { get; set; }
         public int btqId { get; set; }
         public async Task<IActionResult> OnPostAdd()
         {
+            if (HttpContext.Session.Get<int>("prodIdUp") > 0)
+            {
+                var prodId = HttpContext.Session.Get<int>("prodIdUp");
+                Livraisontype = await livraisonTypeLogic.GetLivraisonTypeById(lvrTypeIdChoisie);
+                await livraisonTypeLogic.AddLivraisonTypeProduit(Livraisontype.Lvrtypid, prodId);
+                LivraisontypesChoisies.Add(Livraisontype);
+                return Page();
+            }
             if (HttpContext.Session.Get<int>("prodId")>0)
             {
                 var prodId = HttpContext.Session.Get<int>("prodId");
