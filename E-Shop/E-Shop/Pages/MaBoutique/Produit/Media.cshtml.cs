@@ -28,6 +28,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
         public int prodId { get; set; }
         [BindProperty]
         public string FileNameImg { get; set; }
+        [BindProperty]
         public string Lien { get; set; }
         public string nomProd { get; set; }
         public int mediaId { get; set; }
@@ -60,13 +61,20 @@ namespace E_Shop.Pages.MaBoutique.Produit
             }
             return Page();
         }
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
+            if (HttpContext.Session.Get<int>("prodIdUp")>0)
+            {
+                prodId = HttpContext.Session.Get<int>("prodIdUp");
+                var result = await mediaLogic.GetMediaByProdId(prodId);
+                Lien = result.Lien;
+            }
             if (HttpContext.Session.Get<int>("prodId") > 0)
             {
                 prodId = HttpContext.Session.Get<int>("prodId");
                 nomProd = ProduitLogic.GetNomProduitById(prodId);
             }
+            return Page();
         }
     }
 }
