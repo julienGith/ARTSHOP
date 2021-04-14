@@ -35,11 +35,21 @@ namespace E_Shop.Pages.MaBoutique.Produit
 
         public async Task<IActionResult> OnPostImg(IFormFile photo)
         {
-            if (mediaId>0)
+            if (HttpContext.Session.Get<int>("prodIdUp") > 0)
             {
-                await mediaLogic.DeleteMedia(mediaId, _webHostEnvironment);
-
+                prodId = HttpContext.Session.Get<int>("prodIdUp");
+                nomProd = ProduitLogic.GetNomProduitById(prodId);
+                var result = await mediaLogic.GetMediaByProdId(prodId);
+                await mediaLogic.DeleteMedia(result.Mediaid, _webHostEnvironment);
             }
+            else if (HttpContext.Session.Get<int>("prodId") > 0)
+            {
+                prodId = HttpContext.Session.Get<int>("prodId");
+                nomProd = ProduitLogic.GetNomProduitById(prodId);
+                var result = await mediaLogic.GetMediaByProdId(prodId);
+                await mediaLogic.DeleteMedia(result.Mediaid, _webHostEnvironment);
+            }
+
             if (photo == null || photo.Length == 0)
             {
                 return Page();
@@ -69,7 +79,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
                 var result = await mediaLogic.GetMediaByProdId(prodId);
                 Lien = result.Lien;
             }
-            if (HttpContext.Session.Get<int>("prodId") > 0)
+            else if (HttpContext.Session.Get<int>("prodId") > 0)
             {
                 prodId = HttpContext.Session.Get<int>("prodId");
                 nomProd = ProduitLogic.GetNomProduitById(prodId);
