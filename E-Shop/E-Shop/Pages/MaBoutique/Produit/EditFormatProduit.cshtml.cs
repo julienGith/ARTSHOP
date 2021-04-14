@@ -44,6 +44,12 @@ namespace E_Shop.Pages.MaBoutique.Produit
                     await FormatLogic.UpdateFormat(format);
                     return Redirect("/MaBoutique/Produit/GestionFormatProduit");
                 }
+                if (HttpContext.Session.Get<int>("prodIdUp")>0)
+                {
+                    prodId = HttpContext.Session.Get<int>("prodIdUp");
+                    await FormatLogic.AddFormat(prodId, input.poids, input.litre, input.prix);
+                    return Redirect("/MaBoutique/Produit/GestionFormatProduit");
+                }
                 prodId = HttpContext.Session.Get<int>("prodId");
                 await FormatLogic.AddFormat(prodId, input.poids, input.litre, input.prix);
                 return Redirect("/MaBoutique/Produit/GestionFormatProduit");
