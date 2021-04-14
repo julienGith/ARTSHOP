@@ -19,9 +19,9 @@ namespace E_Shop.Entities
         public int Prodid { get; set; }
         [Column("PRIX", TypeName = "decimal(9, 2)")]
         public decimal? Prix { get; set; }
-        [Column("POIDS")]
+        [Column("POIDS", TypeName = "decimal(9, 3)")]
         public decimal? Poids { get; set; }
-        [Column("LITRE")]
+        [Column("LITRE", TypeName = "decimal(9, 3)")]
         public decimal? Litre { get; set; }
 
         [ForeignKey(nameof(Prodid))]

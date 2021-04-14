@@ -4,14 +4,16 @@ using E_Shop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace E_Shop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210414172350_CrProdLvrType")]
+    partial class CrProdLvrType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -518,11 +520,11 @@ namespace E_Shop.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal?>("Litre")
-                        .HasColumnType("decimal(9,3)")
+                        .HasColumnType("decimal(18,2)")
                         .HasColumnName("LITRE");
 
                     b.Property<decimal?>("Poids")
-                        .HasColumnType("decimal(9,3)")
+                        .HasColumnType("decimal(18,2)")
                         .HasColumnName("POIDS");
 
                     b.Property<decimal?>("Prix")

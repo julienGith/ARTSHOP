@@ -21,7 +21,7 @@ namespace E_Shop.Entities
             Echanges = new HashSet<Echange>();
             Media = new HashSet<Medium>();
             PDetails = new HashSet<PDetail>();
-            LivraisonTypes = new HashSet<Livraisontype>();
+            ProdLivraisonTypes = new HashSet<ProdLvrType>();
             Formats = new HashSet<Format>();
         }
 
@@ -83,8 +83,8 @@ namespace E_Shop.Entities
         [InverseProperty(nameof(PDetail.Prod))]
         public virtual ICollection<PDetail> PDetails { get; set; }
 
-        [InverseProperty(nameof(Livraisontype.Prod))]
-        public virtual ICollection<Livraisontype> LivraisonTypes { get; set; }
+        [InverseProperty(nameof(ProdLvrType.Prod))]
+        public virtual ICollection<ProdLvrType> ProdLivraisonTypes { get; set; }
         [InverseProperty(nameof(Format.Prod))]
         public virtual ICollection<Format> Formats { get; set; }
     }

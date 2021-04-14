@@ -59,28 +59,32 @@ namespace E_Shop.Data.Functions
             return true;
         }
         //Add livraisonType à un Produit
-        public async Task<Livraisontype> AddLivraisonTypeProduit(int lvrTypeId, int prodId)
+        public async Task<ProdLvrType> AddLivraisonTypeProduit(int lvrTypeId, int prodId)
         {
-            Livraisontype livraisontype = new Livraisontype();
+            ProdLvrType prodLvrType = new ProdLvrType();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                livraisontype = await context.Livraisontypes.FirstOrDefaultAsync(l => l.Lvrtypid == lvrTypeId);
-                livraisontype.Prodid = prodId;
+                prodLvrType = new ProdLvrType
+                {
+                    LvrTypeId = lvrTypeId,
+                    ProdId = prodId
+                };
+                await context.ProdLvrTypes.AddAsync(prodLvrType);
                 await context.SaveChangesAsync();
             }
-            return livraisontype;
+            return prodLvrType;
         }
         //Remove livraisonType à un Produit
-        public async Task<Livraisontype> RemoveLivraisonTypeProduit(int lvrTypeId)
+        public async Task<Boolean> RemoveLivraisonTypeProduit(int lvrTypeId)
         {
-            Livraisontype livraisontype = new Livraisontype();
+            ProdLvrType prodLvrType = new ProdLvrType();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                livraisontype = await context.Livraisontypes.FirstOrDefaultAsync(l => l.Lvrtypid == lvrTypeId);
-                livraisontype.Prodid = null;
+                prodLvrType = await context.ProdLvrTypes.FirstOrDefaultAsync(l => l.LvrTypeId == lvrTypeId);
+                context.ProdLvrTypes.Remove(prodLvrType);
                 await context.SaveChangesAsync();
             }
-            return livraisontype;
+            return true;
         }
 
         //Recherche LivraisonType
@@ -119,10 +123,17 @@ namespace E_Shop.Data.Functions
         //Get LivraisonType by prodId
         public async Task<List<Livraisontype>> GetLivraisontypeByProdId(int prodId)
         {
+            List<ProdLvrType> prodLvrTypes = new List<ProdLvrType>();
+            Livraisontype livraisontype = new Livraisontype();
             List<Livraisontype> livraisontypes = new List<Livraisontype>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                livraisontypes = await context.Livraisontypes.Where(l => l.Prodid == prodId).ToListAsync();
+                prodLvrTypes = await context.ProdLvrTypes.Where(l => l.ProdId == prodId).ToListAsync();
+                foreach (var item in prodLvrTypes)
+                {
+                    livraisontype = await context.Livraisontypes.FirstOrDefaultAsync(l => l.Lvrtypid == item.LvrTypeId);
+                    livraisontypes.Add(livraisontype);
+                }
             }
             return livraisontypes;
         }

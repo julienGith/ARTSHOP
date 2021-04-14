@@ -57,6 +57,7 @@ namespace E_Shop.Data
         public virtual DbSet<Partenaire> Partenaires { get; set; }
         public virtual DbSet<Politique> Politiques { get; set; }
         public virtual DbSet<Produit> Produits { get; set; }
+        public virtual DbSet<ProdLvrType> ProdLvrTypes { get; set; }
         public virtual DbSet<RelaisLocB> RelaisLocBs { get; set; }
         public virtual DbSet<RembTransact> RembTransacts { get; set; }
         public virtual DbSet<Remboursement> Remboursements { get; set; }
@@ -464,8 +465,6 @@ namespace E_Shop.Data
 
             modelBuilder.Entity<Produit>(entity =>
             {
-                //entity.Property(e => e.Prodid).ValueGeneratedNever();
-
                 entity.HasOne(d => d.Btq)
                     .WithMany(p => p.Produits)
                     .HasForeignKey(d => d.Btqid)
@@ -480,7 +479,10 @@ namespace E_Shop.Data
 
 
             });
-
+            modelBuilder.Entity<ProdLvrType>(entity =>
+            { 
+                entity.HasKey(e => new { e.LvrTypeId, e.ProdId });
+            });
             modelBuilder.Entity<RelaisLocB>(entity =>
             {
                 entity.HasKey(e => new { e.Btqid, e.Localisationid });

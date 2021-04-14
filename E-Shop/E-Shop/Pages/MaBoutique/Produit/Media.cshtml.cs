@@ -47,7 +47,10 @@ namespace E_Shop.Pages.MaBoutique.Produit
                 prodId = HttpContext.Session.Get<int>("prodId");
                 nomProd = ProduitLogic.GetNomProduitById(prodId);
                 var result = await mediaLogic.GetMediaByProdId(prodId);
-                await mediaLogic.DeleteMedia(result.Mediaid, _webHostEnvironment);
+                if (result!=null)
+                {
+                    await mediaLogic.DeleteMedia(result.Mediaid, _webHostEnvironment);
+                }
             }
 
             if (photo == null || photo.Length == 0)

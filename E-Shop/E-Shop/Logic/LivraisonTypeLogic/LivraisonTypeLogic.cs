@@ -18,12 +18,12 @@ namespace E_Shop.Logic.LivraisonTypeLogic
             return await livraisonType.AddLivraisonType(btqId, lvrDésignation, lvrDelai, lvrCout, lvrCoutPsup);
         }
         //Add livraisonType à un Produit
-        public async Task<Livraisontype> AddLivraisonTypeProduit(int lvrTypeId, int prodId)
+        public async Task<ProdLvrType> AddLivraisonTypeProduit(int lvrTypeId, int prodId)
         {
             return await livraisonType.AddLivraisonTypeProduit(lvrTypeId, prodId);
         }
         //Remove livraisonType à un Produit
-        public async Task<Livraisontype> RemoveLivraisonTypeProduit(int lvrTypeId)
+        public async Task<Boolean> RemoveLivraisonTypeProduit(int lvrTypeId)
         {
             return await livraisonType.RemoveLivraisonTypeProduit(lvrTypeId);
         }
