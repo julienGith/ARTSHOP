@@ -46,7 +46,7 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
                     {
                         imgPano = item.Lien;
                     }
-                    if (item.Description== "boutique")
+                    if (item.Video == true)
                     {
                         vid = item.Lien;
                     }
