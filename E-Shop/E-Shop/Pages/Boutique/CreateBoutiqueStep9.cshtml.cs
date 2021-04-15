@@ -105,6 +105,7 @@ namespace E_Shop.Pages.Boutique
                 {
                     await media.DeleteMedia(step9.MediaId, _webHostEnvironment);
                 }
+                HttpContext.Session.Set<Step9>("step9", null);
             }
             return Page();
         }

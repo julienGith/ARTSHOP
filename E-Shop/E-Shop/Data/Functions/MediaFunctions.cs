@@ -55,15 +55,17 @@ namespace E_Shop.Data.Functions
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
                 media = await context.Media.FirstOrDefaultAsync(m => m.Mediaid == mediaId);
-                var LienComplet = Path.Combine(Directory.GetCurrentDirectory(),
-                        env.WebRootPath, "images\\", media.FileName);
-                if (System.IO.File.Exists(LienComplet))
+                if (media.Video==false)
                 {
-                    System.IO.File.Delete(LienComplet);
+                    var LienComplet = Path.Combine(Directory.GetCurrentDirectory(),
+                    env.WebRootPath, "images\\", media.FileName);
+                    if (System.IO.File.Exists(LienComplet))
+                    {
+                        System.IO.File.Delete(LienComplet);
+                    }
                 }
                 context.Media.Remove(media);
                 await context.SaveChangesAsync();
-
             }
             return true;
         }

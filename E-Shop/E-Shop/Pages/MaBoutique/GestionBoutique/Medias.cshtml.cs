@@ -33,89 +33,138 @@ namespace E_Shop.Pages.MaBoutique.GestionBoutique
         public int mediaId { get; set; }
         [BindProperty]
         [Required]
-        public string FileNameImg { get; set; }
+        public string FileName { get; set; }
         public string Lien { get; set; }
 
 
         public async Task<IActionResult> OnPostImgV(IFormFile photo, int mediaId)
         {
-            await mediaLogic.DeleteMedia(mediaId, _webHostEnvironment);
-            if (photo == null || photo.Length == 0)
+            if (ModelState.IsValid)
             {
-                if (HttpContext.Session.Get<int>("btqId") > 0)
+                await mediaLogic.DeleteMedia(mediaId, _webHostEnvironment);
+                if (photo == null || photo.Length == 0)
                 {
-                    boutiqueId = HttpContext.Session.Get<int>("btqId");
-                    medias = await mediaLogic.GetMediasBoutique(boutiqueId);
-                }
-                return Page();
-            }
-
-            using (var memoryStream = new MemoryStream())
-            {
-                await photo.CopyToAsync(memoryStream);
-                using (var img = Image.FromStream(memoryStream))
-                {
-                    var newimg = Imager.Resize(img, 125, 125, false);
-                    var newname = Guid.NewGuid().ToString() + ".jpeg";
-                    var path = Path.Combine(_webHostEnvironment.WebRootPath, "images", newname);
-                    Imager.SaveJpeg(path, newimg);
-                    Lien = "/images/" + newname;
-                    var LienComplet = Path.Combine(Directory.GetCurrentDirectory(),
-                        _webHostEnvironment.WebRootPath, "images\\", newname);
                     if (HttpContext.Session.Get<int>("btqId") > 0)
                     {
                         boutiqueId = HttpContext.Session.Get<int>("btqId");
-                        await mediaLogic.AddBoutiqueMedias(boutiqueId, Lien, true, false, "vignette", LienComplet);
                         medias = await mediaLogic.GetMediasBoutique(boutiqueId);
                     }
+                    return Page();
                 }
+                using (var memoryStream = new MemoryStream())
+                {
+                    await photo.CopyToAsync(memoryStream);
+                    using (var img = Image.FromStream(memoryStream))
+                    {
+                        var newimg = Imager.Resize(img, 125, 125, false);
+                        var newname = Guid.NewGuid().ToString() + ".jpeg";
+                        var path = Path.Combine(_webHostEnvironment.WebRootPath, "images", newname);
+                        Imager.SaveJpeg(path, newimg);
+                        Lien = "/images/" + newname;
+                        var LienComplet = Path.Combine(Directory.GetCurrentDirectory(),
+                            _webHostEnvironment.WebRootPath, "images\\", newname);
+                        if (HttpContext.Session.Get<int>("btqId") > 0)
+                        {
+                            boutiqueId = HttpContext.Session.Get<int>("btqId");
+                            await mediaLogic.AddBoutiqueMedias(boutiqueId, Lien, true, false, "vignette", LienComplet);
+                        }
+                    }
+                }
+            }
+            if (HttpContext.Session.Get<int>("btqId") > 0)
+            {
+                boutiqueId = HttpContext.Session.Get<int>("btqId");
+                medias = await mediaLogic.GetMediasBoutique(boutiqueId);
             }
             return Page();
         }
         public async Task<IActionResult> OnPostImgP(IFormFile photo, int mediaId)
         {
-            await mediaLogic.DeleteMedia(mediaId, _webHostEnvironment);
-            if (photo == null || photo.Length == 0)
+            if (ModelState.IsValid)
             {
-                if (HttpContext.Session.Get<int>("btqId") > 0)
+                await mediaLogic.DeleteMedia(mediaId, _webHostEnvironment);
+                if (photo == null || photo.Length == 0)
                 {
-                    boutiqueId = HttpContext.Session.Get<int>("btqId");
-                    medias = await mediaLogic.GetMediasBoutique(boutiqueId);
-                }
-                return Page();
-            }
-
-            using (var memoryStream = new MemoryStream())
-            {
-                await photo.CopyToAsync(memoryStream);
-                using (var img = Image.FromStream(memoryStream))
-                {
-                    var newimg = Imager.Resize(img, 125, 125, false);
-                    var newname = Guid.NewGuid().ToString() + ".jpeg";
-                    var path = Path.Combine(_webHostEnvironment.WebRootPath, "images", newname);
-                    Imager.SaveJpeg(path, newimg);
-                    Lien = "/images/" + newname;
-                    var LienComplet = Path.Combine(Directory.GetCurrentDirectory(),
-                        _webHostEnvironment.WebRootPath, "images\\", newname);
                     if (HttpContext.Session.Get<int>("btqId") > 0)
                     {
                         boutiqueId = HttpContext.Session.Get<int>("btqId");
-                        await mediaLogic.AddBoutiqueMedias(boutiqueId, Lien, true, false, "pano", LienComplet);
                         medias = await mediaLogic.GetMediasBoutique(boutiqueId);
                     }
+                    return Page();
                 }
+                using (var memoryStream = new MemoryStream())
+                {
+                    await photo.CopyToAsync(memoryStream);
+                    using (var img = Image.FromStream(memoryStream))
+                    {
+                        var newimg = Imager.Resize(img, 125, 125, false);
+                        var newname = Guid.NewGuid().ToString() + ".jpeg";
+                        var path = Path.Combine(_webHostEnvironment.WebRootPath, "images", newname);
+                        Imager.SaveJpeg(path, newimg);
+                        Lien = "/images/" + newname;
+                        var LienComplet = Path.Combine(Directory.GetCurrentDirectory(),
+                            _webHostEnvironment.WebRootPath, "images\\", newname);
+                        if (HttpContext.Session.Get<int>("btqId") > 0)
+                        {
+                            boutiqueId = HttpContext.Session.Get<int>("btqId");
+                            await mediaLogic.AddBoutiqueMedias(boutiqueId, Lien, true, false, "pano", LienComplet);
+                        }
+                    }
+                }
+            }
+            if (HttpContext.Session.Get<int>("btqId") > 0)
+            {
+                boutiqueId = HttpContext.Session.Get<int>("btqId");
+                medias = await mediaLogic.GetMediasBoutique(boutiqueId);
             }
             return Page();
         }
         public async Task<IActionResult> OnPostVid(int mediaId)
         {
-
-            await mediaLogic.DeleteMedia(mediaId, _webHostEnvironment);
-            Lien = GetYoutubeId(FileNameImg);
+            if (ModelState.IsValid)
+            {
+                await mediaLogic.DeleteMedia(mediaId, _webHostEnvironment);
+                Lien = GetYoutubeId(FileName);
+                if (HttpContext.Session.Get<int>("btqId") > 0)
+                {
+                    boutiqueId = HttpContext.Session.Get<int>("btqId");
+                    await mediaLogic.AddBoutiqueMedias(boutiqueId, Lien, false, true, "", null);
+                }
+            }
             if (HttpContext.Session.Get<int>("btqId") > 0)
             {
                 boutiqueId = HttpContext.Session.Get<int>("btqId");
-                await mediaLogic.AddBoutiqueMedias(boutiqueId, Lien, false, true, "", null);
+                medias = await mediaLogic.GetMediasBoutique(boutiqueId);
+            }
+            return Page();
+        }
+        public async Task<IActionResult> OnPostDelVid()
+        {
+            await mediaLogic.DeleteMedia(mediaId, _webHostEnvironment);
+            if (HttpContext.Session.Get<int>("btqId") > 0)
+            {
+                boutiqueId = HttpContext.Session.Get<int>("btqId");
+                medias = await mediaLogic.GetMediasBoutique(boutiqueId);
+            }
+            ModelState.Clear();
+            return Page();
+        }
+        public async Task<IActionResult> OnPostNewVid()
+        {
+            if (ModelState.IsValid)
+            {
+                Lien = GetYoutubeId(FileName);
+                if (HttpContext.Session.Get<int>("btqId") > 0)
+                {
+                    boutiqueId = HttpContext.Session.Get<int>("btqId");
+                    await mediaLogic.AddBoutiqueMedias(boutiqueId, Lien, false, true, "", null);
+                    medias = await mediaLogic.GetMediasBoutique(boutiqueId);
+                }
+                return Page();
+            }
+            if (HttpContext.Session.Get<int>("btqId") > 0)
+            {
+                boutiqueId = HttpContext.Session.Get<int>("btqId");
                 medias = await mediaLogic.GetMediasBoutique(boutiqueId);
             }
             return Page();

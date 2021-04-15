@@ -39,9 +39,9 @@
                 <div asp-validation-summary="All" class="text-danger"></div>
 
                 <div class="form-group">
-                    <label asp-for="FileNameImg"></label>
-                    <input type="file" name="photo" accept="image/*" asp-for="FileNameImg" class="form-control" />
-                    <span asp-validation-for="FileNameImg" class="text-danger"></span>
+                    <label asp-for="FileName"></label>
+                    <input type="file" name="photo" accept="image/*" asp-for="FileName" class="form-control" />
+                    <span asp-validation-for="FileName" class="text-danger"></span>
                 </div>
                 <input name="mediaId" value="@item.Mediaid" hidden />
 
@@ -61,9 +61,9 @@
                 <div asp-validation-summary="All" class="text-danger"></div>
 
                 <div class="form-group">
-                    <label asp-for="FileNameImg"></label>
-                    <input type="file" name="photo" accept="image/*" asp-for="FileNameImg" class="form-control" />
-                    <span asp-validation-for="FileNameImg" class="text-danger"></span>
+                    <label asp-for="FileName"></label>
+                    <input type="file" name="photo" accept="image/*" asp-for="FileName" class="form-control" />
+                    <span asp-validation-for="FileName" class="text-danger"></span>
                 </div>
                 <input name="mediaId" value="@item.Mediaid" hidden />
 
@@ -81,18 +81,35 @@
                 <div asp-validation-summary="All" class="text-danger"></div>
 
                 <div class="form-group">
-                    <label asp-for="FileNameImg"></label>
-                    <input type="file" name="photo" accept="image/*" asp-for="FileNameImg" class="form-control" />
-                    <span asp-validation-for="FileNameImg" class="text-danger"></span>
+                    <label asp-for="FileName"></label>
+                    <input asp-for="FileName" class="form-control" />
+                    <span asp-validation-for="FileName" class="text-danger"></span>
                 </div>
                 <input name="mediaId" value="@item.Mediaid" hidden />
 
                 <button type="submit" asp-page-handler="Vid" class="btn btn-primary">Envoyer</button>
+                <button type="submit" asp-page-handler="DelVid" class="btn btn-primary">Supprimer</button>
+
             </form>
             <span>
                 <iframe width="690" height="330" src="@item.Lien" frameborder='0' allowfullscreen='0'>
                 </iframe>
             </span>
         }
+    }
+    if (Model.medias.Count == 2)
+    {
+        <form method="post" enctype="multipart/form-data">
+            <h4> Remplacer l'image de votre boutique par une vidéo de présentation </h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="FileName"></label>
+                <input asp-for="FileName" class="form-control" />
+                <span asp-validation-for="FileName" class="text-danger"></span>
+            </div>
+            <button type="submit" asp-page-handler="NewVid" class="btn btn-primary">Envoyer</button>
+        </form>
     }
 }
