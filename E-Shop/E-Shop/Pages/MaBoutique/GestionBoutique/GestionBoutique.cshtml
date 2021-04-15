@@ -2,8 +2,89 @@
 @model E_Shop.Pages.MaBoutique.GestionBoutique.GestionBoutiqueModel
 @{
 }
-    <a href="/MaBoutique/GestionBoutique/Description" class="btn btn-primary">Modifier la description de votre Boutique</a>
-    <a href="/MaBoutique/GestionBoutique/InformationsBancaires" class="btn btn-primary">Modifier les informations bancaires de votre Boutique</a>
-    <a href="/MaBoutique/GestionBoutique/Medias" class="btn btn-primary">Modifier les images de votre Boutique</a>
-    <a href="/MaBoutique/GestionBoutique/Adresse" class="btn btn-primary">Modifier l'adresse de votre Boutique</a>
-    <a href="/MaBoutique/TableauDeBord" class="btn btn-primary">Retour au tableau de bord</a>
+<a href="/MaBoutique/GestionBoutique/Description" class="btn btn-primary">Modifier la description de votre Boutique</a>
+<a href="/MaBoutique/GestionBoutique/InformationsBancaires" class="btn btn-primary">Modifier les informations bancaires de votre Boutique</a>
+<a href="/MaBoutique/GestionBoutique/Medias" class="btn btn-primary">Modifier les images de votre Boutique</a>
+<a href="/MaBoutique/GestionBoutique/Adresse" class="btn btn-primary">Modifier l'adresse de votre Boutique</a>
+<a href="/MaBoutique/TableauDeBord" class="btn btn-primary">Retour au tableau de bord</a>
+
+<style>
+    div.imageborder {
+        border-radius: 999em;
+        width: 125px;
+        height: 125px;
+        padding: 1px;
+        line-height: 0;
+        border: 5px solid #808080;
+        background-color: #eee;
+    }
+
+    .imgMiniBout {
+        display: block;
+        background: transparent;
+        padding: 8px;
+        border: 1px solid #ccc;
+        box-shadow: 10px 10px 10px #999;
+        border-radius: 999em;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+    }
+</style>
+<div class="row align-items-center">
+    <div class="col-sm-4">
+        <div class="card">
+            <div class="imageborder">
+                <img class="imgMiniBout img-fluid" src="@Model.imgVignette" />
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@Model.Boutique.BtqNom</h5>
+                <p class="card-text">@Model.localisation.Departement</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="card">
+            @if (Model.vid != null)
+            {
+                <iframe width="690" height="330" src="@Model.vid" frameborder='0' allowfullscreen='0'></iframe>
+
+            }
+            @if (Model.vid == null)
+            {
+                <div>
+
+                    <img class="img-fluid" src="@Model.imgPano" />
+
+                </div>
+
+            }
+            <div class="card-body">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Description</a>
+                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Avis client</a>
+                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Informations administratives</a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <p>@Model.Boutique.BDescriptionL</p>
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <p>Marcel : j'adore cette boutique !</p>
+                    </div>
+                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        <p>
+                            Raison sociale : @Model.Boutique.Raisonsociale
+                            <br />
+                            N° SIRET : @Model.Boutique.Siret
+                            <br />
+                            Inscrit depuis le : @Model.Boutique.DateCreation
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
