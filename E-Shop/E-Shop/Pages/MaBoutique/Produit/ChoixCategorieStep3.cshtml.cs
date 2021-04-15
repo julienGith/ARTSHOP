@@ -20,9 +20,12 @@ namespace E_Shop.Pages.MaBoutique.Produit
 
         public IActionResult OnPost()
         {
-            HttpContext.Session.Set<int>("Cat", Categorieid);
-            return RedirectToPage("/MaBoutique/Produit/Description");
-
+            if (ModelState.IsValid)
+            {
+                HttpContext.Session.Set<int>("Cat", Categorieid);
+                return RedirectToPage("/MaBoutique/Produit/Description");
+            }
+            return Page();
         }
         public async Task<IActionResult> OnGet()
         {

@@ -22,9 +22,12 @@ namespace E_Shop.Pages.MaBoutique.Produit
 
         public IActionResult OnPost()
         {
-            HttpContext.Session.Set<int>("catParentId", Categorieid);
-            return RedirectToPage("/MaBoutique/Produit/ChoixCategorieStep2");
-
+            if (ModelState.IsValid)
+            {
+                HttpContext.Session.Set<int>("catParentId", Categorieid);
+                return RedirectToPage("/MaBoutique/Produit/ChoixCategorieStep2");
+            }
+            return Page();
         }
         public async Task  OnGet()
         {

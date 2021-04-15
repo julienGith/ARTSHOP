@@ -15,6 +15,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
     public class ChoixCategorieStep2Model : PageModel
     {
         private CategorieLogic categorieLogic = new CategorieLogic();
+
         public List<SelectListItem> CatEnfants { get; set; }
         [BindProperty]
         [Required]
@@ -22,9 +23,13 @@ namespace E_Shop.Pages.MaBoutique.Produit
 
         public IActionResult OnPost()
         {
-            HttpContext.Session.Set<int>("catEnfantId1", Categorieid);
-            return RedirectToPage("/MaBoutique/Produit/ChoixCategorieStep3");
+            if (ModelState.IsValid)
+            {
+                HttpContext.Session.Set<int>("catEnfantId1", Categorieid);
+                return RedirectToPage("/MaBoutique/Produit/ChoixCategorieStep3");
 
+            }
+            return Page();
         }
         public async Task OnGet()
         {
