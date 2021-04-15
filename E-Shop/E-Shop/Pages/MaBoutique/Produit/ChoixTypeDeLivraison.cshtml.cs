@@ -87,7 +87,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
         {
             if (HttpContext.Session.Get<int>("prodIdUp") > 0)
             {
-                var prodId = HttpContext.Session.Get<int>("prodId");
+                var prodId = HttpContext.Session.Get<int>("prodIdUp");
                 LivraisontypesChoisies = await livraisonTypeLogic.GetLivraisontypeByProdId(prodId);
             }
             if (HttpContext.Session.Get<int>("btqId") > 0)
