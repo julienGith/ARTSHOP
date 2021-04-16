@@ -20,18 +20,18 @@ namespace E_Shop.Pages.MaBoutique.GestionPointRelais
 
         public IActionResult OnPostCr()
         {
-            HttpContext.Session.Set<int>("Pr", 0);
+            HttpContext.Session.Set<int>("PrId", 0);
 
             return Redirect("/MaBoutique/GestionPointRelais/EditPointRelais");
         }
         public IActionResult OnPostUp()
         {
-            HttpContext.Session.Set<int>("Pr", localisationId);
+            HttpContext.Session.Set<int>("PrId", localisationId);
             return Redirect("/MaBoutique/GestionPointRelais/EditPointRelais");
         }
         public async Task<IActionResult> OnPostDel()
         {
-            HttpContext.Session.Set<int>("Pr", 0);
+            HttpContext.Session.Set<int>("PrId", 0);
             if (HttpContext.Session.Get<int>("btqId") > 0)
             {
                 btqId = HttpContext.Session.Get<int>("btqId"); 

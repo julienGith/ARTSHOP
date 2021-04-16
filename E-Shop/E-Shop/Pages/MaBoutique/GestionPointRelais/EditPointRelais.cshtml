@@ -2,3 +2,74 @@
 @model E_Shop.Pages.MaBoutique.GestionPointRelais.EditPointRelaisModel
 @{
 }
+<div class="row justify-content-center">
+    <div>(facultatif) Ajouter un point relais ou passez à l'étape suivante</div>
+    <div>
+        <form method="post">
+            <h4> Point relais </h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="input.PrNom"></label>
+                <input asp-for="input.PrNom" class="form-control" />
+                <span asp-validation-for="input.PrNom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="input.Rue"></label>
+                <input asp-for="input.Rue" class="form-control" />
+                <span asp-validation-for="input.Rue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="input.Num"></label>
+                <input asp-for="input.Num" class="form-control" />
+                <span asp-validation-for="input.Num" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="input.Codepostal"></label>
+                <input id="tbCp" asp-for="input.Codepostal" class="form-control" />
+                <span asp-validation-for="input.Codepostal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="input.Ville"></label>
+                <input asp-for="input.Ville" class="form-control" />
+                <span asp-validation-for="input.Ville" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input id="tbDept" asp-for="input.Departement" class="form-control" hidden />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Valider</button>
+        </form>
+    </div>
+</div>
+@section scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            document.getElementById("tbCp").addEventListener("keyup", GetDept);
+
+            function GetDept() {
+                if (document.getElementById("tbCp").value.length == 5) {
+                    console.log(document.getElementById("tbCp").value[0])
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.responseType = 'json';
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            console.log(xhttp.response);
+                            document.getElementById("tbDept").value = xhttp.response.nom;
+                        }
+                        else {
+                            console.log(xhttp.status);
+                        }
+                    };
+                    xhttp.open("GET", "https://geo.api.gouv.fr/departements/" + document.getElementById("tbCp").value[0] + document.getElementById("tbCp").value[1], true);
+                    xhttp.send();
+                }
+
+            }
+
+        });
+
+    </script>
+}

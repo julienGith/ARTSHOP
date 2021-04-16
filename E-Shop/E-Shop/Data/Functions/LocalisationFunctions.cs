@@ -149,6 +149,16 @@ namespace E_Shop.Data.Functions
             }
             return pointRelais;
         }
+        //Get Localisation par Id 
+        public async Task<Localisation> GetLocalisationById(int localisationId)
+        {
+            Localisation localisation = new Localisation();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                localisation = await context.Localisations.FirstOrDefaultAsync(l => l.Localisationid == localisationId);
+            }
+            return localisation;
+        }
     }
 }
 
