@@ -29,6 +29,8 @@ namespace E_Shop.Data.Interfaces
 
         //GET Mes Localisations de Partenaire
         Task<List<Localisation>> GetLocalisationsPartenaire(int Id);
+        //Get Point Relais d'une Boutique
+        Task<List<Localisation>> GetPointRelaisByBoutiqueId(int btqId);
 
     }
 }

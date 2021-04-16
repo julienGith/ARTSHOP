@@ -47,6 +47,11 @@ namespace E_Shop.Logic.LocalisationLogic
         {
             return await _localisation.GetLocalisationsPartenaire(Id);
         }
+        //Get Point Relais d'une Boutique
+        public async Task<List<Localisation>> GetPointRelaisByBoutiqueId(int btqId)
+        {
+            return await _localisation.GetPointRelaisByBoutiqueId(btqId);
+        }
     }
 }
 

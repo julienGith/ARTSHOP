@@ -126,6 +126,16 @@ namespace E_Shop.Data.Functions
             }
             return localisations;
         }
+        //Get Point Relais d'une Boutique
+        public async Task<List<Localisation>> GetPointRelaisByBoutiqueId(int btqId)
+        {
+            List<Localisation> pointRelais = new List<Localisation>();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                pointRelais = await context.RelaisLocBs.Include(p => p.Localisation).Where(r => r.Btqid == btqId).Select(l=>l.Localisation).ToListAsync();
+            }
+            return pointRelais;
+        }
     }
 }
 
