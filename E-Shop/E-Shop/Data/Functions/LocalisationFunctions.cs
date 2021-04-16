@@ -106,6 +106,19 @@ namespace E_Shop.Data.Functions
             }
             return true;
         }
+        //Supprimer un point relais d'une boutique
+        public async Task<Boolean> DeletePointRelaisBtq(int localisationId, int btqId)
+        {
+            RelaisLocB relaisLocB = new RelaisLocB();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                relaisLocB = await context.RelaisLocBs.FirstOrDefaultAsync(r => r.Localisationid == localisationId && r.Btqid == btqId);
+                context.RelaisLocBs.Remove(relaisLocB);
+                await context.SaveChangesAsync();
+            }
+            return true;
+        }
+
         //GET Ma Localisation de boutique
         public async Task<Localisation> GetLocalisationBoutique(int boutiqueId)
         {

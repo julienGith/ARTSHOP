@@ -17,17 +17,37 @@ namespace E_Shop.Pages.MaBoutique.GestionPointRelais
         [BindProperty]
         public int localisationId { get; set; }
         public int btqId { get; set; }
-        //public async Task<IActionResult> OnPostCr()
-        //{
 
-        //}
+        public IActionResult OnPostCr()
+        {
+            HttpContext.Session.Set<int>("Pr", 0);
+
+            return Redirect("/MaBoutique/GestionPointRelais/EditPointRelais");
+        }
+        public IActionResult OnPostUp()
+        {
+            HttpContext.Session.Set<int>("Pr", localisationId);
+            return Redirect("/MaBoutique/GestionPointRelais/EditPointRelais");
+        }
+        public async Task<IActionResult> OnPostDel()
+        {
+            HttpContext.Session.Set<int>("Pr", 0);
+            if (HttpContext.Session.Get<int>("btqId") > 0)
+            {
+                btqId = HttpContext.Session.Get<int>("btqId"); 
+            }
+            await LocalisationLogic.DeletePointRelaisBtq(localisationId,btqId);
+            await GetPointRelais();
+
+            return Page();
+        }
         public async Task<IActionResult> OnGet()
         {
-            GetPointRelais();
+            await GetPointRelais();
             return Page();
         }
 
-        private async void GetPointRelais()
+        private async Task GetPointRelais()
         {
             if (HttpContext.Session.Get<int>("btqId") > 0)
             {

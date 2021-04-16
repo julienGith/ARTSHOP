@@ -37,6 +37,11 @@ namespace E_Shop.Logic.LocalisationLogic
         {
             return await _localisation.DeleteLocalisation(localisationId);
         }
+        //Supprimer un point relais d'une boutique
+        public async Task<Boolean> DeletePointRelaisBtq(int localisationId, int btqId)
+        {
+            return await _localisation.DeletePointRelaisBtq(localisationId, btqId);
+        }
         //GET Ma Localisation de boutique
         public async Task<Localisation> GetLocalisationBoutique(int boutiqueId)
         {

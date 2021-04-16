@@ -23,6 +23,8 @@ namespace E_Shop.Data.Interfaces
 
         //Supprimer Localisation
         Task<Boolean> DeleteLocalisation(int localisationd);
+        //Supprimer un point relais d'une boutique
+        Task<Boolean> DeletePointRelaisBtq(int localisationId, int btqId);
 
         //GET Ma Localisation de boutique
         Task<Localisation> GetLocalisationBoutique(int boutiqueId);
