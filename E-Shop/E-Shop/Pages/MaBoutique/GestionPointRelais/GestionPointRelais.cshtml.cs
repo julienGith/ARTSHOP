@@ -17,14 +17,23 @@ namespace E_Shop.Pages.MaBoutique.GestionPointRelais
         [BindProperty]
         public int localisationId { get; set; }
         public int btqId { get; set; }
+        //public async Task<IActionResult> OnPostCr()
+        //{
+
+        //}
         public async Task<IActionResult> OnGet()
         {
-            if (HttpContext.Session.Get<int>("btqId")>0)
+            GetPointRelais();
+            return Page();
+        }
+
+        private async void GetPointRelais()
+        {
+            if (HttpContext.Session.Get<int>("btqId") > 0)
             {
                 btqId = HttpContext.Session.Get<int>("btqId");
                 pointRelais = await LocalisationLogic.GetPointRelaisByBoutiqueId(btqId);
             }
-            return Page();
         }
     }
 }

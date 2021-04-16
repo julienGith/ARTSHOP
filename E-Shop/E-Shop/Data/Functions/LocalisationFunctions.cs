@@ -59,7 +59,6 @@ namespace E_Shop.Data.Functions
         //ADD new PointRelaisLocalisation
         public async Task<Localisation> AddRelaisLocalisation(int boutiqueId, string rue, string num, string ville, string codePostal, string pays,string relaisNom, string departement)
         {
-
             Localisation newlocalisation = new Localisation
             {
                 Btqid = boutiqueId,
@@ -75,13 +74,14 @@ namespace E_Shop.Data.Functions
             {
                 await context.Localisations.AddAsync(newlocalisation);
                 await context.SaveChangesAsync();
+                RelaisLocB relaisLocB = new RelaisLocB
+                {
+                    Localisationid = newlocalisation.Localisationid,
+                    Btqid = boutiqueId
+                };
+                await context.RelaisLocBs.AddAsync(relaisLocB);
+                await context.SaveChangesAsync();
             }
-            RelaisLocB relaisLocB = new RelaisLocB
-            {
-                Localisationid = newlocalisation.Localisationid,
-                Btqid = boutiqueId
-            };
-
             return newlocalisation;
         }
         //Update Localisation

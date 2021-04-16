@@ -23,7 +23,10 @@ namespace E_Shop.Pages.MaBoutique
             _userManager = userManager;
         }
         public List<Entities.Boutique> Boutiques = new List<Entities.Boutique>();
-
+        public IActionResult OnPostPdr()
+        {
+            return Redirect("/MaBoutique/GestionPointRelais/GestionPointRelais");
+        }
         public IActionResult OnPostLivraisonType()
         {
             return Redirect("/MaBoutique/LivraisonType/GestionLivraisonType");
