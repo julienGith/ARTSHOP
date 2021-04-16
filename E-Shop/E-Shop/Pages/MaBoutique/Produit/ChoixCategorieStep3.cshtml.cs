@@ -18,13 +18,15 @@ namespace E_Shop.Pages.MaBoutique.Produit
         [BindProperty]
         public int Categorieid { get; set; }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (ModelState.IsValid)
             {
                 HttpContext.Session.Set<int>("Cat", Categorieid);
                 return RedirectToPage("/MaBoutique/Produit/Description");
             }
+            var parentId = HttpContext.Session.Get<int>("catEnfantId1");
+            CatEnfants2 = await categorieLogic.GetSelectListItemCategoriesEnfants(parentId);
             return Page();
         }
         public async Task<IActionResult> OnGet()

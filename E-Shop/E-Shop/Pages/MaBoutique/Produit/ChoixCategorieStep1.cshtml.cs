@@ -20,13 +20,14 @@ namespace E_Shop.Pages.MaBoutique.Produit
         [Required]
         public int Categorieid { get; set; }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (ModelState.IsValid)
             {
                 HttpContext.Session.Set<int>("catParentId", Categorieid);
                 return RedirectToPage("/MaBoutique/Produit/ChoixCategorieStep2");
             }
+            CatParents = await categorieLogic.GetSelectListItemCategoriesParents();
             return Page();
         }
         public async Task  OnGet()
