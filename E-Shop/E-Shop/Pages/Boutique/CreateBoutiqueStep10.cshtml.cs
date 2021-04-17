@@ -41,10 +41,13 @@ namespace E_Shop.Pages.Boutique
         }
         public IActionResult OnPostVid()
         {
-            step10.Lien = GetYoutubeId(step10.Lien);
-            
-            HttpContext.Session.Set<string>("step10lien", step10.Lien);
+            if (step10.Lien!=string.Empty)
+            {
+                step10.Lien = GetYoutubeId(step10.Lien);
+                HttpContext.Session.Set<string>("step10lien", step10.Lien);
+            }
             return Page();
+
         }
 
         private string GetYoutubeId(string lien)

@@ -39,41 +39,45 @@ namespace E_Shop.Pages.Boutique
             public bool Video { get; set; }
             public string Html { get; set; }
             [Display(Name = "Télécharger une image inspirant l'esprit de votre boutique")]
+            [Required]
             public string FileNameImg { get; set; }
             [Display(Name = "Indiquer le lien vers votre vidéo de présentation de votre boutique")]
             public string VideoLink { get; set; }
         }
         public async Task<IActionResult> OnPostImg(IFormFile photo)
         {
-            if (HttpContext.Session.Get<string>("LienComplet9") != null)
+            if (ModelState.IsValid)
             {
-                var lien = HttpContext.Session.Get<string>("LienComplet9");
-                if (System.IO.File.Exists(lien))
+                if (HttpContext.Session.Get<string>("LienComplet9") != null)
                 {
-                    System.IO.File.Delete(lien);
+                    var lien = HttpContext.Session.Get<string>("LienComplet9");
+                    if (System.IO.File.Exists(lien))
+                    {
+                        System.IO.File.Delete(lien);
+                    }
                 }
-            }
-            if (photo == null || photo.Length == 0)
-            {
+                if (photo == null || photo.Length == 0)
+                {
+                    return Page();
+                }
+                using (var memoryStream = new MemoryStream())
+                {
+                    await photo.CopyToAsync(memoryStream);
+                    using (var img = Image.FromStream(memoryStream))
+                    {
+                        var newimg = Imager.Resize(img, 835, 300, false);
+                        var newname = Guid.NewGuid().ToString() + ".jpeg";
+                        var path = Path.Combine(_webHostEnvironment.WebRootPath, "images", newname);
+                        Imager.SaveJpeg(path, newimg);
+                        step9.Lien = "/images/" + newname;
+                        var LienComplet = Path.Combine(Directory.GetCurrentDirectory(),
+                            _webHostEnvironment.WebRootPath, "images\\", newname);
+                        HttpContext.Session.Set<string>("LienComplet9", LienComplet);
+                        HttpContext.Session.Set<string>("step9lien", step9.Lien.ToString());
+                        HttpContext.Session.Set<string>("FileName9", newname);
+                    }
+                }
                 return Page();
-            }
-
-            using (var memoryStream = new MemoryStream())
-            {
-                await photo.CopyToAsync(memoryStream);
-                using (var img = Image.FromStream(memoryStream))
-                {
-                    var newimg = Imager.Resize(img, 835, 300, false);
-                    var newname = Guid.NewGuid().ToString() + ".jpeg";
-                    var path = Path.Combine(_webHostEnvironment.WebRootPath, "images", newname);
-                    Imager.SaveJpeg(path, newimg);
-                    step9.Lien = "/images/" + newname;
-                    var LienComplet = Path.Combine(Directory.GetCurrentDirectory(),
-                        _webHostEnvironment.WebRootPath, "images\\", newname);
-                    HttpContext.Session.Set<string>("LienComplet9", LienComplet);
-                    HttpContext.Session.Set<string>("step9lien", step9.Lien.ToString());
-                    HttpContext.Session.Set<string>("FileName9", newname);
-                }
             }
             return Page();
         }
