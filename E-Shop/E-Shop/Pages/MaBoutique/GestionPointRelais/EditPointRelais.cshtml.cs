@@ -16,29 +16,34 @@ namespace E_Shop.Pages.MaBoutique.GestionPointRelais
         private LocalisationLogic LocalisationLogic = new LocalisationLogic();
         public Localisation localisation = new Localisation();
         public int localisationId { get; set; }
+        public int btqId { get; set; }
+
         [BindProperty]
         public Input input { get; set; }
         public class Input
         {
             [StringLength(255)]
             [Display(Name = "Rue")]
+            [Required]
             public string Rue { get; set; }
             [StringLength(255)]
             [Display(Name = "Numéro")]
+            [Required]
             public string Num { get; set; }
             [StringLength(255)]
             [Display(Name = "ville")]
+            [Required]
             public string Ville { get; set; }
-            [StringLength(255)]
+            [StringLength(5, MinimumLength = 5)]
             [Display(Name = "CodePostal")]
+            [Required]
             public string Codepostal { get; set; }
-            [StringLength(255)]
-            [Display(Name = "Pays")]
-            public string Pays { get; set; }
             [Display(Name = "Nom du point relais")]
             [StringLength(255)]
+            [Required]
             public string PrNom { get; set; }
             public string Departement { get; set; }
+            public string Pays { get; set; }
         }
         public async Task<IActionResult> OnPost()
         {
@@ -55,6 +60,15 @@ namespace E_Shop.Pages.MaBoutique.GestionPointRelais
                     localisation.Ville = input.Ville;
                     localisation.PrNom = input.PrNom;
                     await LocalisationLogic.UpdateLocalisation(localisation);
+                    return Redirect("/MaBoutique/GestionPointRelais/GestionPointRelais");
+                }
+                else
+                {
+                    if (HttpContext.Session.Get<int>("btqId") > 0)
+                    {
+                        btqId = HttpContext.Session.Get<int>("btqId");
+                    }
+                    await LocalisationLogic.AddRelaisLocalisation(btqId,input.Rue,input.Num,input.Ville,input.Codepostal,"France",input.PrNom,input.Departement);
                     return Redirect("/MaBoutique/GestionPointRelais/GestionPointRelais");
                 }
             }

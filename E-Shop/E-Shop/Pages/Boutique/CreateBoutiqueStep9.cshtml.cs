@@ -39,15 +39,13 @@ namespace E_Shop.Pages.Boutique
             public bool Video { get; set; }
             public string Html { get; set; }
             [Display(Name = "Télécharger une image inspirant l'esprit de votre boutique")]
-            [Required]
             public string FileNameImg { get; set; }
             [Display(Name = "Indiquer le lien vers votre vidéo de présentation de votre boutique")]
             public string VideoLink { get; set; }
         }
         public async Task<IActionResult> OnPostImg(IFormFile photo)
         {
-            if (ModelState.IsValid)
-            {
+
                 if (HttpContext.Session.Get<string>("LienComplet9") != null)
                 {
                     var lien = HttpContext.Session.Get<string>("LienComplet9");
@@ -78,8 +76,6 @@ namespace E_Shop.Pages.Boutique
                     }
                 }
                 return Page();
-            }
-            return Page();
         }
         public async Task<IActionResult> OnPostNext()
         {

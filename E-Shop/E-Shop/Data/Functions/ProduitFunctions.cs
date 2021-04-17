@@ -89,14 +89,14 @@ namespace E_Shop.Data.Functions
             return produit;
         }
         //Nom du produit par id produit
-        public string GetNomProduitById(int prodId)
+        public async Task<string> GetNomProduitById(int prodId)
         {
-            string nom;
+            Produit produit = new Produit();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-               nom =  context.Produits.Where(p => p.Prodid == prodId).Select(p => p.PNom).ToString();
+                produit = await context.Produits.FirstOrDefaultAsync(p => p.Prodid == prodId);
             }
-            return nom;
+            return produit.PNom;
         }
     }
 }

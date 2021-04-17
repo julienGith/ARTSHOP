@@ -33,7 +33,7 @@ namespace E_Shop.Pages.Boutique
             [StringLength(255)]
             [Display(Name = "ville")]
             public string Ville { get; set; }
-            [StringLength(255)]
+            [StringLength(5, MinimumLength = 5)]
             [Display(Name = "CodePostal")]
             public string Codepostal { get; set; }
             [StringLength(255)]

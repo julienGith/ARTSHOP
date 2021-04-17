@@ -37,23 +37,21 @@ namespace E_Shop.Pages.MaBoutique.GestionPointRelais
                 btqId = HttpContext.Session.Get<int>("btqId"); 
             }
             await LocalisationLogic.DeletePointRelaisBtq(localisationId,btqId);
-            await GetPointRelais();
-
+            if (HttpContext.Session.Get<int>("btqId") > 0)
+            {
+                btqId = HttpContext.Session.Get<int>("btqId");
+                pointRelais = await LocalisationLogic.GetPointRelaisByBoutiqueId(btqId);
+            }
             return Page();
         }
         public async Task<IActionResult> OnGet()
-        {
-            await GetPointRelais();
-            return Page();
-        }
-
-        private async Task GetPointRelais()
         {
             if (HttpContext.Session.Get<int>("btqId") > 0)
             {
                 btqId = HttpContext.Session.Get<int>("btqId");
                 pointRelais = await LocalisationLogic.GetPointRelaisByBoutiqueId(btqId);
             }
+            return Page();
         }
     }
 }

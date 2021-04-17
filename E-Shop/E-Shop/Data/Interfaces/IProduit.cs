@@ -23,6 +23,6 @@ namespace E_Shop.Data.Interfaces
         //Get produit par id produit
         Task<Produit> GetProduitById(int prodId);
         //Nom du produit par id produit
-        string GetNomProduitById(int prodId);
+        Task<string> GetNomProduitById(int prodId);
     }
 }

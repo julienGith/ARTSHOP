@@ -41,15 +41,10 @@ namespace E_Shop.Pages.Boutique
             public bool Video { get; set; }
             public string Html { get; set; }
             [Display(Name = "Télécharger une image de vous")]
-            [Required]
             public string FileNameImg { get; set; }
-
         }
-
         public async Task<IActionResult> OnPostImg(IFormFile photo)
         {
-            if (ModelState.IsValid)
-            {
                 if (HttpContext.Session.Get<string>("LienComplet8") != null)
                 {
 
@@ -83,8 +78,8 @@ namespace E_Shop.Pages.Boutique
                     }
                 }
                 return Page();
-            }
-            return Page();
+            
+            
         }
         public async Task<IActionResult> OnPostNext()
         {

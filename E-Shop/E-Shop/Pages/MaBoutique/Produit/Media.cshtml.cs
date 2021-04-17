@@ -27,7 +27,6 @@ namespace E_Shop.Pages.MaBoutique.Produit
         }
         public int prodId { get; set; }
         [BindProperty]
-        [Required]
         public string FileNameImg { get; set; }
         [BindProperty]
         public string Lien { get; set; }
@@ -36,12 +35,11 @@ namespace E_Shop.Pages.MaBoutique.Produit
 
         public async Task<IActionResult> OnPostImg(IFormFile photo)
         {
-            if (ModelState.IsValid)
-            {
+
                 if (HttpContext.Session.Get<int>("prodIdUp") > 0)
                 {
                     prodId = HttpContext.Session.Get<int>("prodIdUp");
-                    nomProd = ProduitLogic.GetNomProduitById(prodId);
+                    nomProd = await ProduitLogic.GetNomProduitById(prodId);
                     var result = await mediaLogic.GetMediasByProdId(prodId);
                     foreach (var item in result)
                     {
@@ -51,7 +49,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
                 else if (HttpContext.Session.Get<int>("prodId") > 0)
                 {
                     prodId = HttpContext.Session.Get<int>("prodId");
-                    nomProd = ProduitLogic.GetNomProduitById(prodId);
+                    nomProd = await ProduitLogic.GetNomProduitById(prodId);
                     var result = await mediaLogic.GetMediasByProdId(prodId);
                     if (result != null)
                     {
@@ -94,8 +92,6 @@ namespace E_Shop.Pages.MaBoutique.Produit
                     }
                 }
                 return Page();
-            }
-            return Page();
         }
         public async Task<IActionResult> OnGet()
         {
@@ -114,7 +110,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
             else if (HttpContext.Session.Get<int>("prodId") > 0)
             {
                 prodId = HttpContext.Session.Get<int>("prodId");
-                nomProd = ProduitLogic.GetNomProduitById(prodId);
+                nomProd = await ProduitLogic.GetNomProduitById(prodId);
             }
             return Page();
         }

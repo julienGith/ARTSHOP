@@ -41,9 +41,9 @@ namespace E_Shop.Logic.ProduitLogic
             return await _produit.GetProduitById(prodId);
         }
         //Nom du produit par id produit
-        public string GetNomProduitById(int prodId)
+        public async Task<string> GetNomProduitById(int prodId)
         {
-            return _produit.GetNomProduitById(prodId);
+            return await _produit.GetNomProduitById(prodId);
         }
     }
 }

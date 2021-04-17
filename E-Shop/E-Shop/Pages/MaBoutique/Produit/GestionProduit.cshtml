@@ -2,10 +2,12 @@
 @model E_Shop.Pages.MaBoutique.Produit.GestionProduitModel
 @{
 }
-<form method="post">
-    <button type="submit" asp-page-handler="CrProduit" class="btn btn-primary">Ajouter un nouveau Produit</button>
-    <a href="/MaBoutique/TableauDeBord" class="btn btn-primary">Retour au tableau de bord</a>
-</form>
+<div class="row">
+    <form method="post">
+        <button type="submit" asp-page-handler="CrProduit" class="btn btn-primary">Ajouter un nouveau Produit</button>
+        <a href="/MaBoutique/TableauDeBord" class="btn btn-primary">Retour au tableau de bord</a>
+    </form>
+</div>
 <div class="d-inline-block mr-5">
     @if (Model.produits.Count == 0)
     {
@@ -21,16 +23,17 @@
             </div>
             <div class="card-body">
                 <table class="table">
-                    <thead class="thead-light"><tr><th>Aperçu</th><th>Nom</th><th>Description</th><th>Prix</th><th>Rabais</th><th>Publier</th><th>Action</th></tr></thead>
+                    <thead class="thead-light"><tr><th>Aperçu</th><th>Nom</th><th>Description</th><th>Prix</th><th>Format</th><th>Rabais</th><th>Publier</th><th>Action</th></tr></thead>
 
                     @foreach (var item in Model.produits)
                     {
+                        var media = item.Media.FirstOrDefault(m => m.Description == "min");
                         <tbody>
                             <tr>
-                                <th scope="row" width="15%">@item.Media.Where(m => m.Description == "min")</th>
-                                <td width="15%">@item.PNom</td>
-                                <td width="15%">@item.PDescriptionC</td>
-                                <td width="15%">
+                                <th scope="row" width="10%"><img class="img-fluid" src="@media.Lien" /></th>
+                                <td width="10%">@item.PNom</td>
+                                <td width="40%">@item.PDescriptionC</td>
+                                <td width="10%">
                                     <ul>
                                         @foreach (var format in item.Formats)
                                         {
@@ -38,32 +41,31 @@
                                         }
                                     </ul>
                                 </td>
-                                <td width="15%">
+                                <td width="10%">
                                     <ul>
                                         @foreach (var format in item.Formats)
                                         {
                                             @if (format.Poids > 0)
                                             {
                                                 <li>@format.Poids</li>
-
                                             }
                                             @if (format.Litre > 0)
                                             {
                                                 <li>@format.Litre</li>
-
                                             }
                                         }
                                     </ul>
                                 </td>
+                                <td width="10%">@item.Rabais</td>
                                 @if (item.Publier == true)
                                 {
-                                    <td width="15%">
+                                    <td width="10%">
                                         "Publié"
                                     </td>
                                 }
                                 @if (item.Publier == false)
                                 {
-                                    <td width="15%">
+                                    <td width="10%">
                                         "Non Publié"
                                     </td>
                                 }
