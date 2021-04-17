@@ -79,15 +79,15 @@ namespace E_Shop.Data.Functions
             }
             return medias;
         }
-        //Get Media d'un produit
-        public async Task<Medium> GetMediaByProdId(int prodId)
+        //Get liste des images d'un produit
+        public async Task<List<Medium>> GetMediasByProdId(int prodId)
         {
-            Medium media = new Medium();
+            List<Medium> medias = new List<Medium>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                media = await context.Media.FirstOrDefaultAsync(m => m.Prodid == prodId);
+                medias = await context.Media.Where(m => m.Prodid == prodId).ToListAsync();
             }
-            return media;
+            return medias;
         }
     }
 }

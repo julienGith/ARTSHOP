@@ -34,10 +34,10 @@ namespace E_Shop.Logic.MediaLogic
         {
             return await _media.GetMediasBoutique(btqId);
         }
-        //Get Media d'un produit
-        public async Task<Medium> GetMediaByProdId(int prodId)
+        //Get liste des images d'un produit
+        public async Task<List<Medium>> GetMediasByProdId(int prodId)
         {
-            return await _media.GetMediaByProdId(prodId);
+            return await _media.GetMediasByProdId(prodId);
         }
     }
 }
