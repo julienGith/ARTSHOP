@@ -53,11 +53,12 @@ namespace E_Shop.Pages.MaBoutique.GestionPointRelais
                     localisation.Num = input.Num;
                     localisation.Rue = input.Rue;
                     localisation.Ville = input.Ville;
-                    localisation.PrNom = input.PrNom
+                    localisation.PrNom = input.PrNom;
                     await LocalisationLogic.UpdateLocalisation(localisation);
                     return Redirect("/MaBoutique/GestionPointRelais/GestionPointRelais");
                 }
             }
+            return Page();
         }
         public async Task<IActionResult> OnGet()
         {

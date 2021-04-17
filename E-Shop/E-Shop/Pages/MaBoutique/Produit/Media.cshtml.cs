@@ -19,7 +19,6 @@ namespace E_Shop.Pages.MaBoutique.Produit
     public class MediaModel : PageModel
     {
         private ProduitLogic ProduitLogic = new ProduitLogic();
-
         private MediaLogic mediaLogic = new MediaLogic();
         private IWebHostEnvironment _webHostEnvironment;
         public MediaModel(IWebHostEnvironment webHostEnvironment)

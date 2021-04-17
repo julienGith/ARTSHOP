@@ -21,16 +21,52 @@
             </div>
             <div class="card-body">
                 <table class="table">
-                    <thead class="thead-light"><tr><th>Nom</th><th>Description</th><th>Prix</th><th>Rabais</th><th>Action</th></tr></thead>
+                    <thead class="thead-light"><tr><th>Aperçu</th><th>Nom</th><th>Description</th><th>Prix</th><th>Rabais</th><th>Publier</th><th>Action</th></tr></thead>
 
                     @foreach (var item in Model.produits)
                     {
                         <tbody>
                             <tr>
-                                <th scope="row" width="50%">@item.PNom</th>
+                                <th scope="row" width="15%">@item.Media.Where(m => m.Description == "min")</th>
+                                <td width="15%">@item.PNom</td>
                                 <td width="15%">@item.PDescriptionC</td>
-                                <td width="15%">@item.Publier</td>
-                                <td width="15%">@item.Rabais</td>
+                                <td width="15%">
+                                    <ul>
+                                        @foreach (var format in item.Formats)
+                                        {
+                                            <li>@format.Prix</li>
+                                        }
+                                    </ul>
+                                </td>
+                                <td width="15%">
+                                    <ul>
+                                        @foreach (var format in item.Formats)
+                                        {
+                                            @if (format.Poids > 0)
+                                            {
+                                                <li>@format.Poids</li>
+
+                                            }
+                                            @if (format.Litre > 0)
+                                            {
+                                                <li>@format.Litre</li>
+
+                                            }
+                                        }
+                                    </ul>
+                                </td>
+                                @if (item.Publier == true)
+                                {
+                                    <td width="15%">
+                                        "Publié"
+                                    </td>
+                                }
+                                @if (item.Publier == false)
+                                {
+                                    <td width="15%">
+                                        "Non Publié"
+                                    </td>
+                                }
                                 <td>
                                     <nav class="navbar navbar-expand-lg navbar-light bg-light">
                                         <a class="navbar-brand" href="#"></a>

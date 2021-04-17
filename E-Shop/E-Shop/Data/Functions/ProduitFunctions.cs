@@ -74,7 +74,7 @@ namespace E_Shop.Data.Functions
             List<Produit> produits = new List<Produit>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                produits = await context.Produits.Where(b=>b.Btqid == btqId).ToListAsync();
+                produits = await context.Produits.Include(m=>m.Media).Include(f=>f.Formats).Where(b=>b.Btqid == btqId).ToListAsync();
             }
             return produits;
         }

@@ -30,6 +30,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
         public List<Entities.Produit> produits = new List<Entities.Produit>();
         [BindProperty]
         public int prodId { get; set; }
+        public string LienProdImgMini { get; set; }
 
         public IActionResult OnPostCrProduit()
         {
@@ -52,8 +53,11 @@ namespace E_Shop.Pages.MaBoutique.Produit
             {
                 await FormatLogic.DeleteFormat(item.Formatid);
             }
-            var imgProd = await mediaLogic.GetMediaByProdId(prodId);
-            await mediaLogic.DeleteMedia(imgProd.Mediaid, _webHostEnvironment);
+            var imgProd = await mediaLogic.GetMediasByProdId(prodId);
+            foreach (var item in imgProd)
+            {
+                await mediaLogic.DeleteMedia(item.Mediaid, _webHostEnvironment);
+            }
             await produitLogic.DeleteProduit(prodId);
             if (HttpContext.Session.Get<int>("btqId") > 0)
             {
