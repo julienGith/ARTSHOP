@@ -5,10 +5,10 @@
 <div class="row">
     <form method="post">
         <button type="submit" asp-page-handler="CrProduit" class="btn btn-primary">Ajouter un nouveau Produit</button>
-        <a href="/MaBoutique/TableauDeBord" class="btn btn-primary">Retour au tableau de bord</a>
+        <a href="/MaBoutique/TableauDeBord" class="btn btn-primary float-right">Retour au tableau de bord</a>
     </form>
 </div>
-<div class="d-inline-block mr-5">
+<div class="d-inline-block">
     @if (Model.produits.Count == 0)
     {
         <div>
