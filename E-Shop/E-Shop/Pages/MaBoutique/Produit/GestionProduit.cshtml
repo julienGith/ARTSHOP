@@ -30,10 +30,10 @@
                         var media = item.Media.FirstOrDefault(m => m.Description == "min");
                         <tbody>
                             <tr>
-                                <th scope="row" width="10%"><img class="img-fluid" src="@media.Lien" /></th>
-                                <td width="10%">@item.PNom</td>
-                                <td width="40%">@item.PDescriptionC</td>
-                                <td width="10%">
+                                <th scope="row"><img class="img-fluid" src="@media.Lien" /></th>
+                                <td>@item.PNom</td>
+                                <td>@item.PDescriptionC</td>
+                                <td>
                                     <ul>
                                         @foreach (var format in item.Formats)
                                         {
@@ -41,7 +41,7 @@
                                         }
                                     </ul>
                                 </td>
-                                <td width="10%">
+                                <td>
                                     <ul>
                                         @foreach (var format in item.Formats)
                                         {
@@ -56,16 +56,16 @@
                                         }
                                     </ul>
                                 </td>
-                                <td width="10%">@item.Rabais</td>
+                                <td>@item.Rabais</td>
                                 @if (item.Publier == true)
                                 {
-                                    <td width="10%">
+                                    <td>
                                         "Publié"
                                     </td>
                                 }
                                 @if (item.Publier == false)
                                 {
-                                    <td width="10%">
+                                    <td>
                                         "Non Publié"
                                     </td>
                                 }
@@ -75,7 +75,7 @@
                                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navCatAct" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                             <span class="navbar-toggler-icon"></span>
                                         </button>
-                                        <div id="navCatAct" class="navbar-collapse collapse d-sm-inline-flex justify-content-between flex-wrap">
+                                        <div id="navCatAct" class="navbar-collapse collapse d-xs-inline-flex justify-content-between flex-wrap">
                                             <ul class="navbar-nav flex-grow-1">
                                                 <li class="nav-item">
                                                     <form method="post">
