@@ -21,7 +21,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
         public Input input { get; set; }
         public class Input
         {
-            [Display(Name = "Poids du format en grammes")]
+            [Display(Name = "Poids du format en Kilogrammes")]
             public decimal? poids { get; set; }
             [Display(Name = "Volume du format en litres")]
             public decimal? litre { get; set; }
