@@ -1,0 +1,73 @@
+﻿@page
+@model E_Shop.Pages.Produits.ListeProduitsModel
+@{
+}
+<div class="d-inline-block">
+    @if (Model.listProduits.Count == 0)
+    {
+        <div>
+            Liste vide
+        </div>
+    }
+    else
+    {
+        <div class="card">
+            <div class="card-header">
+                <div class="d-inline">Liste de vos produits</div>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead class="thead-light"><tr><th>Aperçu</th><th>Nom</th><th>Description</th><th>Prix</th><th>Format</th><th>Rabais</th><th>Publier</th><th>Action</th></tr></thead>
+
+                    @foreach (var item in Model.listProduits)
+                    {
+                        var media = item.Media.FirstOrDefault(m => m.Description == "min");
+                        <tbody>
+                            <tr>
+                                <th scope="row"><img class="img-fluid" src="@media.Lien" /></th>
+                                <td>@item.PNom</td>
+                                <td>@item.PDescriptionC</td>
+                                <td>
+                                    <ul>
+                                        @foreach (var format in item.Formats)
+                                        {
+                                            <li>@format.Prix</li>
+                                        }
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul>
+                                        @foreach (var format in item.Formats)
+                                        {
+                                            @if (format.Poids > 0)
+                                            {
+                                                <li>@format.Poids</li>
+                                            }
+                                            @if (format.Litre > 0)
+                                            {
+                                                <li>@format.Litre</li>
+                                            }
+                                        }
+                                    </ul>
+                                </td>
+                                <td>@item.Rabais</td>
+                                @if (item.Publier == true)
+                                {
+                                    <td>
+                                        "Publié"
+                                    </td>
+                                }
+                                @if (item.Publier == false)
+                                {
+                                    <td>
+                                        "Non Publié"
+                                    </td>
+                                }
+                            </tr>
+                        </tbody>
+                    }
+                </table>
+            </div>
+        </div>
+    }
+</div>

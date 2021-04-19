@@ -45,5 +45,10 @@ namespace E_Shop.Logic.ProduitLogic
         {
             return await _produit.GetNomProduitById(prodId);
         }
+        //Get produits par catégorie
+        public async Task<List<Produit>> GetProduitsByCatId(int catId)
+        {
+            return await _produit.GetProduitsByCatId(catId);
+        }
     }
 }

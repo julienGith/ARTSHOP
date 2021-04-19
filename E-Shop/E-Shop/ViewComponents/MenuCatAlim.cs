@@ -26,7 +26,7 @@ namespace E_Shop.ViewComponents
             return new HtmlContentViewComponentResult(new HtmlString(Code));
         }
         private async Task<string> Menu()
-        {
+        { 
             stringBuilder.Append($"<nav class='navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3'>" +
                 $"<button class='navbar-toggler' type='button' data-toggle='collapse' data-target='.navbar-collapse' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>" +
                 $"<span class='navbar-toggler-icon'></span></button>" +
@@ -35,14 +35,14 @@ namespace E_Shop.ViewComponents
             foreach (var item in CatParentsAlim)
             {
                 CatEnfants1 = await categorieLogic.GetAllCategoriesEnfantsByParentId(item.Categorieid);
-                stringBuilder.Append($"<li class='nav-item dropdown'><a class='nav-link dropdown-toggle'" +
-                    $" href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>{item.Categorienom}</a>");
-                if (CatEnfants1.Count - 1 > 0)
+                stringBuilder.Append($"<li href='/Produits/ListeProduits/?catId={item.Categorieid}' class='nav-item dropdown'><span></span><a class='nav-link dropdown-toggle'" +
+                    $"  id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>{item.Categorienom}</a>");
+                if (CatEnfants1.Count > 0)
                 {
                     stringBuilder.Append($"<div class='dropdown-menu' aria-labelledby='navbarDropdown'>");
                     foreach (var catenfant1 in CatEnfants1)
                     {
-                        stringBuilder.Append($"<a class='dropdown-item' href='#'>{catenfant1.Categorienom}</a>");
+                        stringBuilder.Append($"<a class='dropdown-item' href='/Produits/ListeProduits/?catId={catenfant1.Categorieid}'>{catenfant1.Categorienom}</a>");
                     }
                     stringBuilder.Append($"</div></li>");
                 }

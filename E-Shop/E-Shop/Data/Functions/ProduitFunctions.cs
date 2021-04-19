@@ -98,5 +98,37 @@ namespace E_Shop.Data.Functions
             }
             return produit.PNom;
         }
+        //Get produits par catégorie
+        public async Task<List<Produit>> GetProduitsByCatId(int catId)
+        {
+            List<Produit> produits = new List<Produit>();
+            List<Catnav> CatnavEnfants1 = new List<Catnav>();
+            List<Catnav> CatnavEnfants2 = new List<Catnav>();
+
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                CatnavEnfants1 = await context.Catnavs.Where(n => n.CatCategorieid == catId)
+                    .Include(c => c.Categorie).ThenInclude(c=>c.Produits)
+                    .ThenInclude(p => p.Media).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                    .ThenInclude(p=>p.Formats).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                    .ThenInclude(p => p.Avis).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                    .ThenInclude(p => p.ProdLivraisonTypes).ToListAsync();
+                if (CatnavEnfants1.Count > 0)
+                {
+                        foreach (var item in CatnavEnfants1)
+                        {
+                        produits.AddRange(item.Categorie.Produits);
+                        }
+                }
+                else
+                {
+                    produits = await context.Produits.Include(p=>p.Avis)
+                        .Include(p => p.Formats)
+                        .Include(p => p.Media)
+                        .Where(p => p.Categorieid == catId).ToListAsync();
+                }
+            }
+            return produits;
+        }
     }
 }
