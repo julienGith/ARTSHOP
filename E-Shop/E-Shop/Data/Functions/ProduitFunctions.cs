@@ -112,7 +112,7 @@ namespace E_Shop.Data.Functions
                     .ThenInclude(p => p.Media).Include(c => c.Categorie).ThenInclude(c => c.Produits)
                     .ThenInclude(p=>p.Formats).Include(c => c.Categorie).ThenInclude(c => c.Produits)
                     .ThenInclude(p => p.Avis).Include(c => c.Categorie).ThenInclude(c => c.Produits)
-                    .ThenInclude(p => p.ProdLivraisonTypes).ToListAsync();
+                    .ThenInclude(p => p.Btq).ToListAsync();
                 if (CatnavEnfants1.Count > 0)
                 {
                         foreach (var item in CatnavEnfants1)
@@ -125,6 +125,8 @@ namespace E_Shop.Data.Functions
                     produits = await context.Produits.Include(p=>p.Avis)
                         .Include(p => p.Formats)
                         .Include(p => p.Media)
+                        .Include(p => p.Btq)
+                        .Include(p => p.Avis)
                         .Where(p => p.Categorieid == catId).ToListAsync();
                 }
             }
