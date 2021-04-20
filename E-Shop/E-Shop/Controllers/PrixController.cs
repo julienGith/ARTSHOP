@@ -11,12 +11,18 @@ namespace E_Shop.Controllers
     public class PrixController : Controller
     {
         private FormatLogic formatLogic = new FormatLogic();
-        public async Task<JsonResult> GetPrixByFormatId(int formatId)
+        [HttpPost]
+        public async Task<JsonResult> GetPrixByFormatId([FromQuery]int formatId)
         {
             Format format = new Format();
             format = await formatLogic.GetFormatById(formatId);
 
-            return Json(new { Data = format.Prix });
+            return Json(new { Data = format.Prix.ToString()});
+        }
+        [HttpGet]
+        public ActionResult test()
+        {
+            return Json("HELO BitchL");
         }
     }
 }

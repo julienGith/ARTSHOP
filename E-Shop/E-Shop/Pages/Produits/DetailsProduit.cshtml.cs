@@ -43,6 +43,10 @@ namespace E_Shop.Pages.Produits
 
             return Page();
         }
+        public ActionResult OnGetTest()
+        {
+            return Content("HELO BitchL");
+        }
         public async Task<IActionResult> OnGet()
         {
             produit = await ProduitLogic.GetProduitById(prodId);

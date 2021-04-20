@@ -39,14 +39,13 @@
     <div class="col-sm-8">
         <div class="card">
             <div>
-                <img src="@Model.imgProd" class="float-left" alt="@Model.produit.PNom">
+                <img src="@Model.imgProd" class="float-left img-fluid" alt="@Model.produit.PNom">
                 <h4>@Model.produit.PNom</h4>
                 @if (Model.Formats.Count > 0)
                 {
                     decimal? prix = 0;
                     <p>Choisir une quantité</p>
-                    <form method="post" asp-page-handler="FormatId">
-                        <select class="bootstrap-select" asp-for="@Model.formatId">
+                        <select id="selectFormat" class="bootstrap-select" onchange="GetPrix()">
                             @foreach (var item in Model.Formats)
                             {
                                 if (item.Litre > 0)
@@ -61,9 +60,7 @@
                                 }
                             }
                         </select>
-                        <input type="submit" />
-                    </form>
-                    <p>Prix : @Model.prix € </p>
+                    <p id="prix">@Model.Formats.FirstOrDefault().Prix € </p>
                 }
             </div>
             <div class="card-body">
@@ -91,3 +88,27 @@
         </div>
     </div>
 </div>
+@section scripts{
+
+    <script>
+        function GetPrix() {
+                var selectedFormat = document.getElementById("selectFormat").value;
+                var xhttp = new XMLHttpRequest();
+                xhttp.responseType = 'json';
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log(xhttp.response);
+                        document.getElementById("prix").innerHTML = xhttp.response + "€";
+                    }
+                    else {
+                        console.log(xhttp.status);
+                    }
+                };
+            xhttp.open("get", '/?handler=Test', true);
+            xhttp.send();
+            }
+        document.addEventListener("DOMContentLoaded", function () {
+
+        });
+    </script>
+}
