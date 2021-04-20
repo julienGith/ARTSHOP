@@ -2,72 +2,47 @@
 @model E_Shop.Pages.Produits.ListeProduitsModel
 @{
 }
-<div class="d-inline-block">
+<div class="card-deck">
     @if (Model.listProduits.Count == 0)
     {
         <div>
-            Liste vide
+            Aucun produit
         </div>
     }
     else
     {
-        <div class="card">
-            <div class="card-header">
-                <div class="d-inline">Liste de vos produits</div>
-            </div>
-            <div class="card-body">
-                <table class="table">
-                    <thead class="thead-light"><tr><th>Aperçu</th><th>Nom</th><th>Description</th><th>Prix</th><th>Format</th><th>Rabais</th><th>Publier</th><th>Action</th></tr></thead>
 
-                    @foreach (var item in Model.listProduits)
-                    {
-                        var media = item.Media.FirstOrDefault(m => m.Description == "min");
-                        <tbody>
-                            <tr>
-                                <th scope="row"><img class="img-fluid" src="@media.Lien" /></th>
-                                <td>@item.PNom</td>
-                                <td>@item.PDescriptionC</td>
-                                <td>
-                                    <ul>
-                                        @foreach (var format in item.Formats)
-                                        {
-                                            <li>@format.Prix</li>
-                                        }
-                                    </ul>
-                                </td>
-                                <td>
-                                    <ul>
-                                        @foreach (var format in item.Formats)
-                                        {
-                                            @if (format.Poids > 0)
-                                            {
-                                                <li>@format.Poids</li>
-                                            }
-                                            @if (format.Litre > 0)
-                                            {
-                                                <li>@format.Litre</li>
-                                            }
-                                        }
-                                    </ul>
-                                </td>
-                                <td>@item.Rabais</td>
-                                @if (item.Publier == true)
-                                {
-                                    <td>
-                                        "Publié"
-                                    </td>
-                                }
-                                @if (item.Publier == false)
-                                {
-                                    <td>
-                                        "Non Publié"
-                                    </td>
-                                }
-                            </tr>
-                        </tbody>
-                    }
-                </table>
-            </div>
-        </div>
+        @foreach (var item in Model.listProduits)
+        {
+            var media = item.Media.FirstOrDefault(m => m.Description == "mid");
+            var format = item.Formats.FirstOrDefault();
+            var prixAuKilo = format.Prix / format.Poids;
+                <div class="card" style="max-width: 18rem;">
+                    <img src="@media.Lien" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.PNom</h5>
+                        <p class="card-text">@item.PDescriptionC</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="float-lg-right">@format.Prix €</div>
+                        @if (format.Poids > 0)
+                        {
+                    <div class="float-lg-left">
+                        <div>
+                            @format.Poids Kg
+                        </div>
+                        <div>
+                            @prixAuKilo€/Kg
+                        </div>
+                    </div>
+                        }
+                        @if (format.Litre > 0)
+                        {
+                            <div class="float-lg-left">@format.Litre l</div>
+                        }
+                    </div>
+                </div>
+        }
+
     }
 </div>
