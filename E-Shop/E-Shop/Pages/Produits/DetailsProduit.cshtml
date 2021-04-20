@@ -38,7 +38,34 @@
     </div>
     <div class="col-sm-8">
         <div class="card">
-            <img src="@Model.imgProd" class="card-img-top" alt="@Model.produit.PNom">
+            <div>
+                <img src="@Model.imgProd" class="float-left" alt="@Model.produit.PNom">
+                <h4>@Model.produit.PNom</h4>
+                @if (Model.Formats.Count > 0)
+                {
+                    decimal? prix = 0;
+                    <p>Choisir une quantité</p>
+                    <form method="post" asp-page-handler="FormatId">
+                        <select class="bootstrap-select" asp-for="@Model.formatId">
+                            @foreach (var item in Model.Formats)
+                            {
+                                if (item.Litre > 0)
+                                {
+                                    <option value="@item.Formatid">@item.Litre Litre</option>
+                                    prix = item.Prix;
+                                }
+                                if (item.Poids > 0)
+                                {
+                                    <option type="submit" value="@item.Formatid">@item.Poids Kg</option>
+                                    prix = item.Prix;
+                                }
+                            }
+                        </select>
+                        <input type="submit" />
+                    </form>
+                    <p>Prix : @Model.prix € </p>
+                }
+            </div>
             <div class="card-body">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">

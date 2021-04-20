@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using E_Shop.Entities;
 using E_Shop.Logic.BoutiqueLogic;
+using E_Shop.Logic.FormatLogic;
 using E_Shop.Logic.LocalisationLogic;
 using E_Shop.Logic.MediaLogic;
 using E_Shop.Logic.ProduitLogic;
@@ -18,7 +19,10 @@ namespace E_Shop.Pages.Produits
         private BoutiqueLogic BoutiqueLogic = new BoutiqueLogic();
         private MediaLogic mediaLogic = new MediaLogic();
         private LocalisationLogic LocalisationLogic = new LocalisationLogic();
-        
+        private FormatLogic formatLogic = new FormatLogic();
+
+        public List<Format> Formats = new List<Format>();
+        public Format Format = new Format();
         public Produit produit = new Produit();
         public Entities.Boutique boutique = new Entities.Boutique();
         public List<Medium> mediasBtq = new List<Medium>();
@@ -29,6 +33,16 @@ namespace E_Shop.Pages.Produits
 
         [FromQuery(Name = "prodId")]
         public int prodId { get; set; }
+        [BindProperty]
+        public int formatId { get; set; }
+        public decimal? prix { get; set; }
+        public async Task<IActionResult> OnPostFormatId()
+        {
+            Format = await formatLogic.GetFormatById(formatId);
+            prix = Format.Prix;
+
+            return Page();
+        }
         public async Task<IActionResult> OnGet()
         {
             produit = await ProduitLogic.GetProduitById(prodId);
@@ -49,9 +63,11 @@ namespace E_Shop.Pages.Produits
                     imgProd = item.Lien;
                 }
             }
+            Formats = await formatLogic.GetFormatsByProductId(prodId);
             localisation = await LocalisationLogic.GetLocalisationBoutique(produit.Btqid);
 
             return Page();
         }
+
     }
 }
