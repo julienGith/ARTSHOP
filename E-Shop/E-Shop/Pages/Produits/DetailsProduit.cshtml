@@ -1,0 +1,66 @@
+﻿@page
+@model E_Shop.Pages.Produits.DetailsProduitModel
+@{
+}
+<style>
+    div.imageborder {
+        border-radius: 999em;
+        width: 125px;
+        height: 125px;
+        padding: 1px;
+        line-height: 0;
+        border: 5px solid #808080;
+        background-color: #eee;
+    }
+
+    .imgMiniBout {
+        display: block;
+        background: transparent;
+        padding: 8px;
+        border: 1px solid #ccc;
+        box-shadow: 10px 10px 10px #999;
+        border-radius: 999em;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+    }
+</style>
+<div class="row align-items-center">
+    <div class="col-sm-4 align-self-start">
+        <div class="card" style="width: 18rem;">
+            <div class="imageborder card-img-top">
+                <img class="imgMiniBout card-img-top" src="@Model.imgVignette" />
+            </div>
+            <div class="card-body">
+                <p class="card-text">@Model.localisation.Departement</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="card">
+            <img src="@Model.imgProd" class="card-img-top" alt="@Model.produit.PNom">
+            <div class="card-body">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Description</a>
+                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Avis client</a>
+                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Livraison</a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <p>@Model.produit.PDescriptionL</p>
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <p>Marcel : j'adore ce produit !</p>
+                    </div>
+                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        <p>
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
