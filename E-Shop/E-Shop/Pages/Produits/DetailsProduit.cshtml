@@ -122,7 +122,7 @@
                         console.log(xhttp.response);
                         document.getElementById("prix").innerHTML = xhttp.response + "€";
                         var prixKg = parseFloat(xhttp.response) / poidsFloat;
-                        var prixL = parseFloat(xhttp.response) / litre;
+                        var prixL = parseFloat(xhttp.response) / litreFloat;
                         var element1 = document.getElementById('FprixKg');
                         if (typeof (element1) != 'undefined' && element1 != null) {
                             document.getElementById("FprixKg").innerHTML = "";
