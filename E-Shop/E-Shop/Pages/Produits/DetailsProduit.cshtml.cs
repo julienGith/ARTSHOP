@@ -37,25 +37,15 @@ namespace E_Shop.Pages.Produits
         [BindProperty]
         public int formatId { get; set; }
         public decimal? prix { get; set; }
-        public async Task<IActionResult> OnPostFormatId()
-        {
-            Format = await formatLogic.GetFormatById(formatId);
-            prix = Format.Prix;
 
-            return Page();
-        }
-        public ActionResult OnGetTest2()
-        {
-
-            return new JsonResult("hello");
-        }
-        public async Task<ActionResult> OnGetTest(string formatId)
+        public async Task<JsonResult> OnPostFormat(string formatId)
         {
             int formatId2 = int.Parse(formatId);
             Format format = new Format();
             format = await formatLogic.GetFormatById(formatId2);
             return new JsonResult(format.Prix);
         }
+
         public async Task<IActionResult> OnGet()
         {
             produit = await ProduitLogic.GetProduitById(prodId);

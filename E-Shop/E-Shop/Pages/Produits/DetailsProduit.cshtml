@@ -97,7 +97,7 @@
                 var token = document.querySelector("[name=__RequestVerificationToken]").value;
                 var selectedFormat = document.getElementById("selectFormat").value;
                 console.log("FormatId", selectedFormat);
-
+                var param = JSON.stringify({ "formatId": selectedFormat });
                 var xhttp = new XMLHttpRequest();
                 xhttp.responseType = 'json';
                 xhttp.onreadystatechange = function () {
@@ -109,7 +109,7 @@
                         console.log(xhttp.status);
                     }
                 };
-                xhttp.open("get", '/Produits/DetailsProduit?handler=Test2', true);
+                xhttp.open("post", '/Produits/DetailsProduit?handler=Format&formatId='+selectedFormat, true);
                 xhttp.setRequestHeader("XSRF-TOKEN", token)
                 xhttp.send();
             }
