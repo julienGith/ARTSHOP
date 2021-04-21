@@ -65,11 +65,12 @@
                         @if (FprixKg > 0)
                         {
                             <span id="FprixKg">@FprixKg €/kg</span>
-
+                            <strike id="OprixKg" hidden>@FprixKg €/kg</strike>
                         }
                         if (FprixL > 0)
                         {
-                            <span id="FprixL">@FprixL €/kg</span>
+                            <span id="FprixL">@FprixL €/litre</span>
+                            <strike id="OprixL" hidden>@FprixL €/litre</strike>
                         }
 
                     }
@@ -113,6 +114,11 @@
                 var poidsFloat = parseFloat(poids.replace(",", "."));
                 var litre = document.getElementById(selectedFormat).innerHTML.replace(" Litre", "");
                 var litreFloat = parseFloat(litre.replace(",", "."));
+                var originPrixKg = document.getElementById("OprixKg").innerHTML.replace(" €/kg", "");
+                var originPrixKgFloat = parseFloat(originPrixKg.replace(",", "."));
+                var originPrixL = document.getElementById("OprixL").innerHTML.replace(" €/litre", "");
+                var originPrixLFloat = parseFloat(originPrixL.replace(",", "."));
+
                 console.log("poidsNum", poids)
                 console.log("litreNum", litre)
                 var xhttp = new XMLHttpRequest();
@@ -127,11 +133,17 @@
                         if (typeof (element1) != 'undefined' && element1 != null) {
                             document.getElementById("FprixKg").innerHTML = "";
                             document.getElementById("prixKg").innerHTML = prixKg + " €/kg";
+                            if (prixKg < originPrixKgFloat) {
+                                document.getElementById("OprixKg").hidden = false;
+                            }
                         }
                         var element2 = document.getElementById('FprixL');
                         if (typeof (element2) != 'undefined' && element2 != null) {
                             document.getElementById("FprixL").innerHTML = "";
                             document.getElementById("prixL").innerHTML = prixL + " €/litre";
+                            if (prixL< originPrixLFloat) {
+                                document.getElementById("OprixL").hidden = false;
+                            }
                         }
 
                     }
