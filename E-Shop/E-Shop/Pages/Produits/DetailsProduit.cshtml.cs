@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using E_Shop.Entities;
@@ -43,9 +44,34 @@ namespace E_Shop.Pages.Produits
 
             return Page();
         }
-        public ActionResult OnGetTest()
+        public ActionResult OnGetTest2()
         {
-            return Content("HELO BitchL");
+            using (var reader = new StreamReader(Request.Body))
+            {
+                var body = reader.ReadToEnd();
+
+                // Do something
+            }
+            MemoryStream stream = new MemoryStream();
+            var result = Request.BodyReader.ReadAsync();
+            Request.Body.CopyTo(stream);
+            stream.Position = 0;
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                string requestBody = reader.ReadToEnd();
+            }
+            int formatId = 0;
+            Format format = new Format();
+            return new JsonResult(formatId);
+        }
+        public async Task<ActionResult> OnGetTest([FromBody] int query)
+        {
+            var result = await Request.BodyReader.ReadAsync();
+
+            //int formatId = int.Parse(query);
+            Format format = new Format();
+            format = await formatLogic.GetFormatById(formatId);
+            return new JsonResult(format.Prix);
         }
         public async Task<IActionResult> OnGet()
         {

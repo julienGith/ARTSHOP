@@ -25,6 +25,7 @@
         margin: 0;
     }
 </style>
+<form method="post"></form>
 <div class="row align-items-center">
     <div class="col-sm-4 align-self-start">
         <div class="card" style="width: 18rem;">
@@ -45,21 +46,21 @@
                 {
                     decimal? prix = 0;
                     <p>Choisir une quantité</p>
-                        <select id="selectFormat" class="bootstrap-select" onchange="GetPrix()">
-                            @foreach (var item in Model.Formats)
+                    <select id="selectFormat" class="bootstrap-select" onchange="GetPrix()">
+                        @foreach (var item in Model.Formats)
+                        {
+                            if (item.Litre > 0)
                             {
-                                if (item.Litre > 0)
-                                {
-                                    <option value="@item.Formatid">@item.Litre Litre</option>
-                                    prix = item.Prix;
-                                }
-                                if (item.Poids > 0)
-                                {
-                                    <option type="submit" value="@item.Formatid">@item.Poids Kg</option>
-                                    prix = item.Prix;
-                                }
+                                <option value="@item.Formatid">@item.Litre Litre</option>
+                                prix = item.Prix;
                             }
-                        </select>
+                            if (item.Poids > 0)
+                            {
+                                <option type="submit" value="@item.Formatid">@item.Poids Kg</option>
+                                prix = item.Prix;
+                            }
+                        }
+                    </select>
                     <p id="prix">@Model.Formats.FirstOrDefault().Prix € </p>
                 }
             </div>
@@ -92,21 +93,26 @@
 
     <script>
         function GetPrix() {
-                var selectedFormat = document.getElementById("selectFormat").value;
-                var xhttp = new XMLHttpRequest();
-                xhttp.responseType = 'json';
-                xhttp.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        console.log(xhttp.response);
-                        document.getElementById("prix").innerHTML = xhttp.response + "€";
-                    }
-                    else {
-                        console.log(xhttp.status);
-                    }
-                };
-            xhttp.open("get", '/?handler=Test', true);
-            xhttp.send();
-            }
+            console.log(document.getElementsByName('__RequestVerificationToken').value);
+            var selectedFormat = document.getElementById("selectFormat").value;
+            console.log("para", selectedFormat);
+
+            var param = "formatId="+selectedFormat
+            var xhttp = new XMLHttpRequest();
+            xhttp.responseType = 'json';
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(xhttp.response);
+                    document.getElementById("prix").innerHTML = xhttp.response + "€";
+                }
+                else {
+                    console.log(xhttp.status);
+                }
+            };
+            xhttp.open("get", '/Produits/DetailsProduit?handler=Test', true);
+            xhttp.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val())
+            xhttp.send(JSON.stringify(selectedFormat));
+        }
         document.addEventListener("DOMContentLoaded", function () {
 
         });
