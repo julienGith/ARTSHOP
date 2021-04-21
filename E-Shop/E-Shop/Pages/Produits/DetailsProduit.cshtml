@@ -114,10 +114,6 @@
                 var poidsFloat = parseFloat(poids.replace(",", "."));
                 var litre = document.getElementById(selectedFormat).innerHTML.replace(" Litre", "");
                 var litreFloat = parseFloat(litre.replace(",", "."));
-                var originPrixKg = document.getElementById("OprixKg").innerHTML.replace(" €/kg", "");
-                var originPrixKgFloat = parseFloat(originPrixKg.replace(",", "."));
-                var originPrixL = document.getElementById("OprixL").innerHTML.replace(" €/litre", "");
-                var originPrixLFloat = parseFloat(originPrixL.replace(",", "."));
 
                 console.log("poidsNum", poids)
                 console.log("litreNum", litre)
@@ -129,10 +125,13 @@
                         document.getElementById("prix").innerHTML = xhttp.response + "€";
                         var prixKg = parseFloat(xhttp.response) / poidsFloat;
                         var prixL = parseFloat(xhttp.response) / litreFloat;
+
                         var element1 = document.getElementById('FprixKg');
                         if (typeof (element1) != 'undefined' && element1 != null) {
                             document.getElementById("FprixKg").innerHTML = "";
                             document.getElementById("prixKg").innerHTML = prixKg + " €/kg";
+                            var originPrixKg = document.getElementById("OprixKg").innerHTML.replace(" €/kg", "");
+                            var originPrixKgFloat = parseFloat(originPrixKg.replace(",", "."));
                             if (prixKg < originPrixKgFloat) {
                                 document.getElementById("OprixKg").hidden = false;
                             }
@@ -141,11 +140,12 @@
                         if (typeof (element2) != 'undefined' && element2 != null) {
                             document.getElementById("FprixL").innerHTML = "";
                             document.getElementById("prixL").innerHTML = prixL + " €/litre";
-                            if (prixL< originPrixLFloat) {
+                            var originPrixL = document.getElementById("OprixL").innerHTML.replace(" €/litre", "");
+                            var originPrixLFloat = parseFloat(originPrixL.replace(",", "."));
+                            if (prixL < originPrixLFloat) {
                                 document.getElementById("OprixL").hidden = false;
                             }
                         }
-
                     }
                     else {
                         console.log(xhttp.status);
