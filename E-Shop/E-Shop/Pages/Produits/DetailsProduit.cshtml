@@ -44,24 +44,34 @@
                     <h4>@Model.produit.PNom</h4>
                     @if (Model.Formats.Count > 0)
                     {
-                        decimal? prix = 0;
                         <p>Choisir une quantité</p>
                         <select id="selectFormat" class="bootstrap-select" onchange="GetPrix()">
                             @foreach (var item in Model.Formats)
                             {
                                 if (item.Litre > 0)
                                 {
-                                    <option value="@item.Formatid">@item.Litre Litre</option>
-                                    prix = item.Prix;
+                                    <option type="submit" value="@item.Formatid">@item.Litre Litre</option>
                                 }
                                 if (item.Poids > 0)
                                 {
-                                    <option type="submit" value="@item.Formatid">@item.Poids Kg</option>
-                                    prix = item.Prix;
+                                    <option type="submit" id="@item.Formatid" value="@item.Formatid">@item.Poids Kg</option>
                                 }
                             }
                         </select>
                         <p id="prix">@Model.Formats.FirstOrDefault().Prix € </p>
+                        <p id="prixKg"></p><p id="prixL"></p>
+                        var FprixKg = Model.Formats.FirstOrDefault().Prix / Model.Formats.FirstOrDefault().Poids;
+                        var FprixL = Model.Formats.FirstOrDefault().Prix / Model.Formats.FirstOrDefault().Litre;
+                        @if (FprixKg > 0)
+                        {
+                            <span id="FprixKg">@FprixKg €/kg</span>
+
+                        }
+                        if (FprixL > 0)
+                        {
+                            <span id="FprixL">@FprixL €/kg</span>
+                        }
+
                     }
                 </div>
                 <div class="card-body">
@@ -97,24 +107,46 @@
                 var token = document.querySelector("[name=__RequestVerificationToken]").value;
                 var selectedFormat = document.getElementById("selectFormat").value;
                 console.log("FormatId", selectedFormat);
-                var param = JSON.stringify({ "formatId": selectedFormat });
+                console.log("poids", document.getElementById(selectedFormat).innerHTML)
+
+                var poids = document.getElementById(selectedFormat).innerHTML.replace(" Kg", "");
+                var poidsFloat = parseFloat(poids.replace(",", "."));
+                var litre = document.getElementById(selectedFormat).innerHTML.replace(" Litre", "");
+                var litreFloat = parseFloat(litre.replace(",", "."));
+                console.log("poidsNum", poids)
+                console.log("litreNum", litre)
                 var xhttp = new XMLHttpRequest();
                 xhttp.responseType = 'json';
                 xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
                         console.log(xhttp.response);
                         document.getElementById("prix").innerHTML = xhttp.response + "€";
+                        var prixKg = parseFloat(xhttp.response) / poidsFloat;
+                        var prixL = parseFloat(xhttp.response) / litre;
+                        var element1 = document.getElementById('FprixKg');
+                        if (typeof (element1) != 'undefined' && element1 != null) {
+                            document.getElementById("FprixKg").innerHTML = "";
+                            document.getElementById("prixKg").innerHTML = prixKg + " €/kg";
+                        }
+                        var element2 = document.getElementById('FprixL');
+                        if (typeof (element2) != 'undefined' && element2 != null) {
+                            document.getElementById("FprixL").innerHTML = "";
+                            document.getElementById("prixL").innerHTML = prixL + " €/litre";
+                        }
+
                     }
                     else {
                         console.log(xhttp.status);
                     }
                 };
-                xhttp.open("post", '/Produits/DetailsProduit?handler=Format&formatId='+selectedFormat, true);
+                xhttp.open("post", '/Produits/DetailsProduit?handler=Format&formatId=' + selectedFormat, true);
                 xhttp.setRequestHeader("XSRF-TOKEN", token)
                 xhttp.send();
             }
             document.addEventListener("DOMContentLoaded", function () {
 
+            });
+            document.addEventListener("DOMContentLoaded", function (event) {
             });
         </script>
     }
