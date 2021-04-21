@@ -25,96 +25,96 @@
         margin: 0;
     }
 </style>
-<form method="post"></form>
-<div class="row align-items-center">
-    <div class="col-sm-4 align-self-start">
-        <div class="card" style="width: 18rem;">
-            <div class="imageborder card-img-top">
-                <img class="imgMiniBout card-img-top" src="@Model.imgVignette" />
-            </div>
-            <div class="card-body">
-                <p class="card-text">@Model.localisation.Departement</p>
+<form method="post"><</form>
+    <div class="row align-items-center">
+        <div class="col-sm-4 align-self-start">
+            <div class="card" style="width: 18rem;">
+                <div class="imageborder card-img-top">
+                    <img class="imgMiniBout card-img-top" src="@Model.imgVignette" />
+                </div>
+                <div class="card-body">
+                    <p class="card-text">@Model.localisation.Departement</p>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="card">
-            <div>
-                <img src="@Model.imgProd" class="float-left img-fluid" alt="@Model.produit.PNom">
-                <h4>@Model.produit.PNom</h4>
-                @if (Model.Formats.Count > 0)
-                {
-                    decimal? prix = 0;
-                    <p>Choisir une quantité</p>
-                    <select id="selectFormat" class="bootstrap-select" onchange="GetPrix()">
-                        @foreach (var item in Model.Formats)
-                        {
-                            if (item.Litre > 0)
+        <div class="col-sm-8">
+            <div class="card">
+                <div>
+                    <img src="@Model.imgProd" class="float-left img-fluid" alt="@Model.produit.PNom">
+                    <h4>@Model.produit.PNom</h4>
+                    @if (Model.Formats.Count > 0)
+                    {
+                        decimal? prix = 0;
+                        <p>Choisir une quantité</p>
+                        <select id="selectFormat" class="bootstrap-select" onchange="GetPrix()">
+                            @foreach (var item in Model.Formats)
                             {
-                                <option value="@item.Formatid">@item.Litre Litre</option>
-                                prix = item.Prix;
+                                if (item.Litre > 0)
+                                {
+                                    <option value="@item.Formatid">@item.Litre Litre</option>
+                                    prix = item.Prix;
+                                }
+                                if (item.Poids > 0)
+                                {
+                                    <option type="submit" value="@item.Formatid">@item.Poids Kg</option>
+                                    prix = item.Prix;
+                                }
                             }
-                            if (item.Poids > 0)
-                            {
-                                <option type="submit" value="@item.Formatid">@item.Poids Kg</option>
-                                prix = item.Prix;
-                            }
-                        }
-                    </select>
-                    <p id="prix">@Model.Formats.FirstOrDefault().Prix € </p>
-                }
-            </div>
-            <div class="card-body">
-                <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Description</a>
-                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Avis client</a>
-                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Livraison</a>
-                    </div>
-                </nav>
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                        <p>@Model.produit.PDescriptionL</p>
-                    </div>
-                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                        <p>Marcel : j'adore ce produit !</p>
-                    </div>
-                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                        <p>
+                        </select>
+                        <p id="prix">@Model.Formats.FirstOrDefault().Prix € </p>
+                    }
+                </div>
+                <div class="card-body">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Description</a>
+                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Avis client</a>
+                            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Livraison</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <p>@Model.produit.PDescriptionL</p>
+                        </div>
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <p>Marcel : j'adore ce produit !</p>
+                        </div>
+                        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                            <p>
 
-                        </p>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-@section scripts{
+    @section scripts{
 
-    <script>
-        function GetPrix() {
-            console.log(document.getElementsByName('__RequestVerificationToken').value);
-            var selectedFormat = document.getElementById("selectFormat").value;
-            console.log("para", selectedFormat);
+        <script>
+            function GetPrix() {
+                console.log("token", document.querySelector("[name=__RequestVerificationToken]").value);
+                var token = document.querySelector("[name=__RequestVerificationToken]").value;
+                var selectedFormat = document.getElementById("selectFormat").value;
+                console.log("FormatId", selectedFormat);
 
-            var param = "formatId="+selectedFormat
-            var xhttp = new XMLHttpRequest();
-            xhttp.responseType = 'json';
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    console.log(xhttp.response);
-                    document.getElementById("prix").innerHTML = xhttp.response + "€";
-                }
-                else {
-                    console.log(xhttp.status);
-                }
-            };
-            xhttp.open("get", '/Produits/DetailsProduit?handler=Test', true);
-            xhttp.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val())
-            xhttp.send(JSON.stringify(selectedFormat));
-        }
-        document.addEventListener("DOMContentLoaded", function () {
+                var xhttp = new XMLHttpRequest();
+                xhttp.responseType = 'json';
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log(xhttp.response);
+                        document.getElementById("prix").innerHTML = xhttp.response + "€";
+                    }
+                    else {
+                        console.log(xhttp.status);
+                    }
+                };
+                xhttp.open("get", '/Produits/DetailsProduit?handler=Test2', true);
+                xhttp.setRequestHeader("XSRF-TOKEN", token)
+                xhttp.send();
+            }
+            document.addEventListener("DOMContentLoaded", function () {
 
-        });
-    </script>
-}
+            });
+        </script>
+    }

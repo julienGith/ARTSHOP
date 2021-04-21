@@ -46,31 +46,14 @@ namespace E_Shop.Pages.Produits
         }
         public ActionResult OnGetTest2()
         {
-            using (var reader = new StreamReader(Request.Body))
-            {
-                var body = reader.ReadToEnd();
 
-                // Do something
-            }
-            MemoryStream stream = new MemoryStream();
-            var result = Request.BodyReader.ReadAsync();
-            Request.Body.CopyTo(stream);
-            stream.Position = 0;
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                string requestBody = reader.ReadToEnd();
-            }
-            int formatId = 0;
-            Format format = new Format();
-            return new JsonResult(formatId);
+            return new JsonResult("hello");
         }
-        public async Task<ActionResult> OnGetTest([FromBody] int query)
+        public async Task<ActionResult> OnGetTest(string formatId)
         {
-            var result = await Request.BodyReader.ReadAsync();
-
-            //int formatId = int.Parse(query);
+            int formatId2 = int.Parse(formatId);
             Format format = new Format();
-            format = await formatLogic.GetFormatById(formatId);
+            format = await formatLogic.GetFormatById(formatId2);
             return new JsonResult(format.Prix);
         }
         public async Task<IActionResult> OnGet()
