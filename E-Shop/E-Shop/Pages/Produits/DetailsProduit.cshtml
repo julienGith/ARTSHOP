@@ -50,7 +50,7 @@
                             {
                                 if (item.Litre > 0)
                                 {
-                                    <option type="submit" value="@item.Formatid">@item.Litre Litre</option>
+                                    <option type="submit" id="@item.Formatid" value="@item.Formatid">@item.Litre Litre</option>
                                 }
                                 if (item.Poids > 0)
                                 {
@@ -59,18 +59,17 @@
                             }
                         </select>
                         <p id="prix">@Model.Formats.FirstOrDefault().Prix € </p>
+                        <strike id="prixNorm" hidden> </strike>
                         <p id="prixKg"></p><p id="prixL"></p>
                         var FprixKg = Model.Formats.FirstOrDefault().Prix / Model.Formats.FirstOrDefault().Poids;
                         var FprixL = Model.Formats.FirstOrDefault().Prix / Model.Formats.FirstOrDefault().Litre;
                         @if (FprixKg > 0)
                         {
                             <span id="FprixKg">@FprixKg €/kg</span>
-                            <strike id="OprixKg" hidden>@FprixKg €/kg</strike>
                         }
                         if (FprixL > 0)
                         {
                             <span id="FprixL">@FprixL €/litre</span>
-                            <strike id="OprixL" hidden>@FprixL €/litre</strike>
                         }
 
                     }
@@ -109,7 +108,7 @@
                 var selectedFormat = document.getElementById("selectFormat").value;
                 console.log("FormatId", selectedFormat);
                 console.log("poids", document.getElementById(selectedFormat).innerHTML)
-
+                //Poids/Litre selection
                 var poids = document.getElementById(selectedFormat).innerHTML.replace(" Kg", "");
                 var poidsFloat = parseFloat(poids.replace(",", "."));
                 var litre = document.getElementById(selectedFormat).innerHTML.replace(" Litre", "");
@@ -128,22 +127,35 @@
 
                         var element1 = document.getElementById('FprixKg');
                         if (typeof (element1) != 'undefined' && element1 != null) {
+                            var originPrixKg = document.getElementById("FprixKg").innerHTML.replace(" €/kg", "");
+                            var originPrixKgFloat = parseFloat(originPrixKg.replace(",", "."));
                             document.getElementById("FprixKg").innerHTML = "";
                             document.getElementById("prixKg").innerHTML = prixKg + " €/kg";
-                            var originPrixKg = document.getElementById("OprixKg").innerHTML.replace(" €/kg", "");
-                            var originPrixKgFloat = parseFloat(originPrixKg.replace(",", "."));
+
+                            var PoriginPrix = poidsFloat * originPrixKgFloat;
+
                             if (prixKg < originPrixKgFloat) {
-                                document.getElementById("OprixKg").hidden = false;
+                                console.log(PoriginPrix);
+                                document.getElementById("prixNorm").innerHTML = PoriginPrix + " €";
+                                document.getElementById("prixNorm").hidden = false;
+                            } else {
+                                document.getElementById("prixNorm").hidden = true;
                             }
                         }
                         var element2 = document.getElementById('FprixL');
                         if (typeof (element2) != 'undefined' && element2 != null) {
+                            var originPrixL = document.getElementById("FprixL").innerHTML.replace(" €/litre", "");
+                            var originPrixLFloat = parseFloat(originPrixL.replace(",", "."));
                             document.getElementById("FprixL").innerHTML = "";
                             document.getElementById("prixL").innerHTML = prixL + " €/litre";
-                            var originPrixL = document.getElementById("OprixL").innerHTML.replace(" €/litre", "");
-                            var originPrixLFloat = parseFloat(originPrixL.replace(",", "."));
+
+                            var LoriginPrix = litreFloat * originPrixLFloat;
+
                             if (prixL < originPrixLFloat) {
-                                document.getElementById("OprixL").hidden = false;
+                                document.getElementById("prixNorm").innerHTML = LoriginPrix + " €";
+                                document.getElementById("prixNorm").hidden = false;
+                            } else {
+                                document.getElementById("prixNorm").hidden = true;
                             }
                         }
                     }
