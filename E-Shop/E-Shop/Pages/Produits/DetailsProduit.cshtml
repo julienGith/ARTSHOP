@@ -64,6 +64,7 @@
                         {
                             var prixRabais = Model.Formats.FirstOrDefault().Prix - (Model.Formats.FirstOrDefault().Prix * Model.produit.Rabais / 100);
                             <div>
+                                <strike id="prixNorm2">@Model.Formats.FirstOrDefault().Prix € </strike>
                                 <span id="rabais">@Model.produit.Rabais %</span>
                                 <span id="prixRabais">@prixRabais €</span>
                             </div>
@@ -154,8 +155,7 @@
                                 var prixRabais = parseFloat(xhttp.response) - (parseFloat(xhttp.response) * (@Model.produit.Rabais) / 100) ;
                                 var prixKgRabais = prixRabais / poidsFloat;
                                 var prixLRabais = prixRabais / litreFloat;
-                                document.getElementById("prixNorm").innerHTML = xhttp.response + "€";
-                                document.getElementById("prixNorm").hidden = false;
+                                document.getElementById("prixNorm2").innerHTML = xhttp.response + "€";
                                 document.getElementById("prixRabais").innerHTML = prixRabais + "€";
                                 var FprixKgRabais = document.getElementById('FprixKgRabais');
                                 if (typeof (FprixKgRabais) != 'undefined' && FprixKgRabais != null) {
