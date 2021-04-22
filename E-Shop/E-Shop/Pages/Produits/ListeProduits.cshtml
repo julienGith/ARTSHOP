@@ -17,6 +17,8 @@
             var media = item.Media.FirstOrDefault(m => m.Description == "mid");
             var format = item.Formats.FirstOrDefault();
             var prixAuKilo = format.Prix / format.Poids;
+            var prixAuLitre = format.Prix / format.Litre;
+
                 <div class="card" style="max-width: 18rem;">
                     <img src="@media.Lien" class="card-img-top" alt="...">
                     <div class="card-body">
@@ -25,21 +27,38 @@
                         <p class="card-text">@item.PDescriptionC</p>
                     </div>
                     <div class="card-footer">
-                        <div class="float-lg-right">@format.Prix €</div>
+                        @if (item.Rabais > 0)
+                        {
+                            var prixRabais = format.Prix - (format.Prix * item.Rabais / 100);
+                            <div class="float-lg-right">@prixRabais €</div>
+                            <div class="float-lg-right">-@item.Rabais %</div>
+                            <strike class="float-lg-right">@format.Prix €</strike>
+                        }
+                        @if (item.Rabais == 0)
+                        {
+                            <div class="float-lg-right">@format.Prix €</div>
+                        }
                         @if (format.Poids > 0)
                         {
-                    <div class="float-lg-left">
-                        <div>
-                            @format.Poids Kg
-                        </div>
-                        <div>
-                            @prixAuKilo€/Kg
-                        </div>
-                    </div>
+                            <div class="float-lg-left">
+                                <div>
+                                    @format.Poids Kg
+                                </div>
+                                <div>
+                                    @prixAuKilo€/Kg
+                                </div>
+                            </div>
                         }
                         @if (format.Litre > 0)
                         {
-                            <div class="float-lg-left">@format.Litre l</div>
+                            <div class="float-lg-left">
+                                <div>
+                                    @format.Litre Kg
+                                </div>
+                                <div>
+                                    @prixAuLitre€/Kg
+                                </div>
+                            </div>
                         }
                     </div>
                 </div>
