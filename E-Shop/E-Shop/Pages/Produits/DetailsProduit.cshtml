@@ -25,7 +25,7 @@
         margin: 0;
     }
 </style>
-<form method="post"><</form>
+<form method="post"></form>
     <div class="row align-items-center">
         <div class="col-sm-4 align-self-start">
             <div class="card" style="width: 18rem;">
@@ -58,23 +58,52 @@
                                 }
                             }
                         </select>
-                        <p id="prix">@Model.Formats.FirstOrDefault().Prix € </p>
-                        <strike id="prixNorm" hidden> </strike>
-                        <p id="prixKg"></p><p id="prixL"></p>
-                        var FprixKg = Model.Formats.FirstOrDefault().Prix / Model.Formats.FirstOrDefault().Poids;
-                        var FprixL = Model.Formats.FirstOrDefault().Prix / Model.Formats.FirstOrDefault().Litre;
-                        @if (FprixKg > 0)
-                        {
-                            <span id="FprixKg">@FprixKg €/kg</span>
-                        }
-                        if (FprixL > 0)
-                        {
-                            <span id="FprixL">@FprixL €/litre</span>
-                        }
+                        <strike hidden id="prixNorm">@Model.Formats.FirstOrDefault().Prix € </strike>
 
+                        if (Model.produit.Rabais > 0)
+                        {
+                            var prixRabais = Model.Formats.FirstOrDefault().Prix - (Model.Formats.FirstOrDefault().Prix * Model.produit.Rabais / 100);
+                            <div>
+                                <span id="rabais">@Model.produit.Rabais %</span>
+                                <span id="prixRabais">@prixRabais €</span>
+                            </div>
+                            var FprixKgRabais = prixRabais / Model.Formats.FirstOrDefault().Poids;
+                            var FprixLRabais = prixRabais / Model.Formats.FirstOrDefault().Litre;
+                            @if (FprixKgRabais > 0)
+                            {
+                                <span id="FprixKgRabais">@FprixKgRabais €/kg</span>
+                            }
+                            if (FprixLRabais > 0)
+                            {
+                                <span id="FprixLRabais">@FprixLRabais €/litre</span>
+                            }
+                        }
+                        else
+                        {
+                            <div>
+                                <span id="prix">@Model.Formats.FirstOrDefault().Prix €</span>
+                            </div>
+                            var FprixKg = Model.Formats.FirstOrDefault().Prix / Model.Formats.FirstOrDefault().Poids;
+                            var FprixL = Model.Formats.FirstOrDefault().Prix / Model.Formats.FirstOrDefault().Litre;
+                            @if (FprixKg > 0)
+                            {
+                                <span id="FprixKg">@FprixKg €/kg</span>
+                                <span hidden id="OprixKg">@FprixKg €/kg</span>
+                            }
+                            if (FprixL > 0)
+                            {
+                                <span id="FprixL">@FprixL €/litre</span>
+                                <span hidden id="OprixL">@FprixL €/litre</span>
+                            }
+
+                        }
+                        <div>
+                            <span id="prixKg"></span><span id="prixL"></span>
+                        </div>
                     }
                 </div>
                 <div class="card-body">
+                    <button data="@Model.produit.Prodid" onclick="AddToCart()" class="btn btn-primary btn-lg btn-block">Ajouter au panier</button>
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                             <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Description</a>
@@ -121,43 +150,63 @@
                 xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
                         console.log(xhttp.response);
-                        document.getElementById("prix").innerHTML = xhttp.response + "€";
-                        var prixKg = parseFloat(xhttp.response) / poidsFloat;
-                        var prixL = parseFloat(xhttp.response) / litreFloat;
-
-                        var element1 = document.getElementById('FprixKg');
-                        if (typeof (element1) != 'undefined' && element1 != null) {
-                            var originPrixKg = document.getElementById("FprixKg").innerHTML.replace(" €/kg", "");
-                            var originPrixKgFloat = parseFloat(originPrixKg.replace(",", "."));
-                            document.getElementById("FprixKg").innerHTML = "";
-                            document.getElementById("prixKg").innerHTML = prixKg + " €/kg";
-
-                            var PoriginPrix = poidsFloat * originPrixKgFloat;
-
-                            if (prixKg < originPrixKgFloat) {
-                                console.log(PoriginPrix);
-                                document.getElementById("prixNorm").innerHTML = PoriginPrix + " €";
+                        if (@Model.produit.Rabais > 0) {
+                                var prixRabais = parseFloat(xhttp.response) - (parseFloat(xhttp.response) * (@Model.produit.Rabais) / 100) ;
+                                var prixKgRabais = prixRabais / poidsFloat;
+                                var prixLRabais = prixRabais / litreFloat;
+                                document.getElementById("prixNorm").innerHTML = xhttp.response + "€";
                                 document.getElementById("prixNorm").hidden = false;
-                            } else {
-                                document.getElementById("prixNorm").hidden = true;
-                            }
-                        }
-                        var element2 = document.getElementById('FprixL');
-                        if (typeof (element2) != 'undefined' && element2 != null) {
-                            var originPrixL = document.getElementById("FprixL").innerHTML.replace(" €/litre", "");
-                            var originPrixLFloat = parseFloat(originPrixL.replace(",", "."));
-                            document.getElementById("FprixL").innerHTML = "";
-                            document.getElementById("prixL").innerHTML = prixL + " €/litre";
+                                document.getElementById("prixRabais").innerHTML = prixRabais + "€";
+                                var FprixKgRabais = document.getElementById('FprixKgRabais');
+                                if (typeof (FprixKgRabais) != 'undefined' && FprixKgRabais != null) {
+                                    document.getElementById("FprixKgRabais").innerHTML = prixKgRabais;
+                                }
+                                var FprixLRabais = document.getElementById('FprixLRabais');
+                                if (typeof (FprixLRabais) != 'undefined' && FprixLRabais != null) {
+                                    document.getElementById("FprixLRabais").innerHTML = prixLRabais;
+                                }
+                        } else {
+                            document.getElementById("prix").innerHTML = xhttp.response + "€";
+                            var prixKg = parseFloat(xhttp.response) / poidsFloat;
+                            var prixL = parseFloat(xhttp.response) / litreFloat;
 
-                            var LoriginPrix = litreFloat * originPrixLFloat;
+                            var element1 = document.getElementById('FprixKg');
+                            if (typeof (element1) != 'undefined' && element1 != null) {
+                                var originPrixKg = document.getElementById("OprixKg").innerHTML;
+                                var originPrixKgFloat = parseFloat(originPrixKg.replace(",", "."));
+                                document.getElementById("FprixKg").hidden = true;
+                                document.getElementById("prixKg").innerHTML = prixKg + " €/kg";
 
-                            if (prixL < originPrixLFloat) {
-                                document.getElementById("prixNorm").innerHTML = LoriginPrix + " €";
-                                document.getElementById("prixNorm").hidden = false;
-                            } else {
-                                document.getElementById("prixNorm").hidden = true;
+                                var PoriginPrix = poidsFloat * originPrixKgFloat;
+
+                                if (prixKg < originPrixKgFloat) {
+                                    console.log(PoriginPrix);
+                                    document.getElementById("prixNorm").innerHTML = PoriginPrix + " €";
+                                    document.getElementById("prixNorm").hidden = false;
+                                } else {
+                                    document.getElementById("prixNorm").hidden = true;
+                                }
                             }
+                            var element2 = document.getElementById('FprixL');
+                            if (typeof (element2) != 'undefined' && element2 != null) {
+                                var originPrixL = document.getElementById("OprixL").innerHTML;
+                                var originPrixLFloat = parseFloat(originPrixL.replace(",", "."));
+                                document.getElementById("FprixL").hidden = true;
+                                document.getElementById("prixL").innerHTML = prixL + " €/litre";
+
+                                var LoriginPrix = litreFloat * originPrixLFloat;
+
+                                if (prixL < originPrixLFloat) {
+                                    document.getElementById("prixNorm").innerHTML = LoriginPrix + " €";
+                                    document.getElementById("prixNorm").hidden = false;
+                                } else {
+                                    document.getElementById("prixNorm").hidden = true;
+                                }
+                            }
+
                         }
+
+
                     }
                     else {
                         console.log(xhttp.status);

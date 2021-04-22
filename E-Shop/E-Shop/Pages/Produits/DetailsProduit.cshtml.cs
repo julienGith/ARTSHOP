@@ -31,7 +31,6 @@ namespace E_Shop.Pages.Produits
         public Localisation localisation = new Localisation();
         public string imgVignette { get; set; }
         public string imgProd { get; set; }
-
         [FromQuery(Name = "prodId")]
         public int prodId { get; set; }
         [BindProperty]
