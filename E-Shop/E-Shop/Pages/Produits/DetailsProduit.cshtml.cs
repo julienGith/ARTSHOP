@@ -39,6 +39,12 @@ namespace E_Shop.Pages.Produits
 
         public async Task<JsonResult> OnPostFormat(string formatId)
         {
+            Format format = new Format();
+            format = await formatLogic.GetFormatById(int.Parse(formatId));
+            return new JsonResult(format.Prix);
+        }
+        public async Task<JsonResult> OnPostAddToCart(string formatId,string prodId,string quantity)
+        {
             int formatId2 = int.Parse(formatId);
             Format format = new Format();
             format = await formatLogic.GetFormatById(formatId2);

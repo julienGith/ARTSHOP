@@ -19,12 +19,18 @@ namespace E_Shop.Entities
         [Key]
         [Column("PRODID")]
         public int Prodid { get; set; }
+        [Key]
+        [Column("FORMATID")]
+        public int Formatid { get; set; }
         [Column("P_QTEPROD")]
         public short? PQteprod { get; set; }
 
         [ForeignKey(nameof(Panierid))]
         [InverseProperty("PDetails")]
         public virtual Panier Panier { get; set; }
+        [ForeignKey(nameof(Formatid))]
+        [InverseProperty("PDetails")]
+        public virtual Format Format { get; set; }
         [ForeignKey(nameof(Prodid))]
         [InverseProperty(nameof(Produit.PDetails))]
         public virtual Produit Prod { get; set; }

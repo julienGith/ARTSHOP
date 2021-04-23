@@ -12,6 +12,11 @@ namespace E_Shop.Entities
     [Index(nameof(Prodid), Name = "PESER_FK")]
     public partial class Format
     {
+        public Format()
+        {
+            PDetails = new HashSet<PDetail>();
+
+        }
         [Key]
         [Column("FORMATID")]
         public int Formatid { get; set; }
@@ -27,5 +32,7 @@ namespace E_Shop.Entities
         [ForeignKey(nameof(Prodid))]
         [InverseProperty(nameof(Produit.Formats))]
         public virtual Produit Prod { get; set; }
+        [InverseProperty(nameof(PDetail.Format))]
+        public virtual ICollection<PDetail> PDetails { get; set; }
     }
 }

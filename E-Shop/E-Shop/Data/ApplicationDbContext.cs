@@ -408,7 +408,7 @@ namespace E_Shop.Data
 
             modelBuilder.Entity<PDetail>(entity =>
             {
-                entity.HasKey(e => new { e.Panierid, e.Prodid });
+                entity.HasKey(e => new { e.Panierid, e.Prodid,e.Formatid });
 
                 entity.HasOne(d => d.Panier)
                     .WithMany(p => p.PDetails)
