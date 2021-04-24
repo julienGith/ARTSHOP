@@ -8,9 +8,9 @@ namespace E_Shop.Models
 {
     public class Item
     {
-        public virtual Produit produit { get; set; }
+        public Produit produit { get; set; }
         public int quantity { get; set; }
-        public virtual Format format { get; set; }
+        public Format format { get; set; }
         public decimal? price
         {
             get
