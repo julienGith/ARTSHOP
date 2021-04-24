@@ -37,18 +37,26 @@ namespace E_Shop.Pages.Produits
         public int formatId { get; set; }
         public decimal? prix { get; set; }
 
+
         public async Task<JsonResult> OnPostFormat(string formatId)
         {
             Format format = new Format();
             format = await formatLogic.GetFormatById(int.Parse(formatId));
+
             return new JsonResult(format.Prix);
         }
-        public async Task<JsonResult> OnPostAddToCart(string formatId,string prodId,string quantity)
+        public async Task<JsonResult> OnPostAddToCart(string prodId,string formatId, string quantity)
         {
-            int formatId2 = int.Parse(formatId);
+
             Format format = new Format();
-            format = await formatLogic.GetFormatById(formatId2);
-            return new JsonResult(format.Prix);
+            format = await formatLogic.GetFormatById(int.Parse(formatId));
+            Produit produit = new Produit();
+            produit = await ProduitLogic.GetProduitById(int.Parse(prodId));
+            Cart cart = new Cart
+            {
+
+            };
+            return new JsonResult("hello");
         }
 
         public async Task<IActionResult> OnGet()
