@@ -9,6 +9,7 @@ using E_Shop.Logic.FormatLogic;
 using E_Shop.Logic.LocalisationLogic;
 using E_Shop.Logic.MediaLogic;
 using E_Shop.Logic.ProduitLogic;
+using E_Shop.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -47,14 +48,21 @@ namespace E_Shop.Pages.Produits
         }
         public async Task<JsonResult> OnPostAddToCart(string prodId,string formatId, string quantity)
         {
-
             Format format = new Format();
             format = await formatLogic.GetFormatById(int.Parse(formatId));
             Produit produit = new Produit();
             produit = await ProduitLogic.GetProduitById(int.Parse(prodId));
+            Item item = new Item
+            {
+                format = format,
+                produit = produit,
+                quantity = int.Parse(quantity)
+            };
+            List<Item> items = new List<Item>();
+            items.Add(item);
             Cart cart = new Cart
             {
-
+                items = items
             };
             return new JsonResult("hello");
         }
