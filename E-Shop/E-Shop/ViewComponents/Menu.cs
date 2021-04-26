@@ -19,11 +19,9 @@ namespace E_Shop.ViewComponents
             foreach (var item in menuCat.CatParentsAlim)
             {
                 menuCat.CatEnfants1 = await categorieLogic.GetAllCategoriesEnfantsByParentId(item.Categorieid);
+
             }
-            foreach (var cat in menuCat.CatEnfants1)
-            {
-                menuCat.CatEnfants2 = await categorieLogic.GetAllCategoriesEnfantsByParentId(cat.Categorieid);
-            }
+
             return View("Menu",menuCat);
         }
     }

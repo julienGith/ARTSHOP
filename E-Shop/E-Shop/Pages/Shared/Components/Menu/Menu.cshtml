@@ -4,9 +4,54 @@
 @{
 }
 @using Models
-
+@using Logic.CategorieLogic
+@inject CategorieLogic categorieLogic
 @model MenuCat
-@foreach (var item in Model.CatParentsAlim)
-{
-    var test = item.Categorieid;
-}
+
+<nav class="navbar navbar-light bg-light navbar-expand-lg" id="myNavbar">
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <a href="#" class="navbar-brand">Navbar Brand</a>
+    <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between" id="mainNav">
+        <ul class="navbar-nav ml-auto nav-fill">
+            <li class="nav-item px-4 dropdown">
+                @foreach (var item in Model.CatParentsAlim)
+                {
+                    <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@item.Categorienom</a>
+
+                }
+            <div class="dropdown-menu dropdown" aria-labelledby="servicesDropdown">
+                @foreach (var cat1 in Model.CatEnfants1)
+                {
+
+                    Model.CatEnfants2 = await categorieLogic.GetAllCategoriesEnfantsByParentId(cat1.Categorieid);
+                    if (Model.CatEnfants2.Count > 0)
+                    {
+                        <div class="dropdown-divider"></div>
+                        <div class="d-md-flex align-items-start justify-content-start">
+                            <div>
+                                <div class="dropdown-header">@cat1.Categorienom</div>
+                                @foreach (var cat2 in Model.CatEnfants2)
+                                {
+
+                                    <a class="dropdown-item" href="#">@cat2.Categorienom</a>
+
+                                }
+
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <a class="dropdown-item" href="#">@cat1.Categorienom</a>
+
+                    }
+
+                }
+            </div>
+        </ul>
+    </div>
+</nav>
