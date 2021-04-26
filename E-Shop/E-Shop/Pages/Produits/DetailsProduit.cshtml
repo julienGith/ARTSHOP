@@ -64,7 +64,7 @@
                                 </select>
                             }
                             <select id="quantity" class="form-control">
-                                @for (int i = 1; i < 11; i++)
+                                @for (int i = 1; i < Model.produit.Stock+1; i++)
                                 {
                                     <option value="@i">@i</option>
                                 }
@@ -229,28 +229,15 @@
                 xhttp.setRequestHeader("XSRF-TOKEN", token)
                 xhttp.send();
             }
-            var counter = 0;
             function AddToCart() {
                 var token = document.querySelector("[name=__RequestVerificationToken]").value;
-                console.log("token", token);
-                
-                counter += +1;
-                document.getElementById("counter").innerHTML = counter;
                 var selectFormat = document.getElementById("selectFormat").value;
                 var selectQuantity = document.getElementById("quantity").value;
-                var data = {
-                    formatId: selectFormat,
-                    quantity: selectQuantity,
-                    proId:@Model.produit.Prodid
-                };
-                console.log("data", data);
-                var dataJson = JSON.stringify(data);
-                console.log("dataJson", dataJson);
                 var xhttp = new XMLHttpRequest();
                 xhttp.responseType = 'json';
                 xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
-
+                        document.getElementById("counter").innerHTML = parseInt(xhttp.response) ;
                     }
                     else {
                         console.log(xhttp.status);
@@ -259,7 +246,9 @@
                 xhttp.open("post", '/Produits/DetailsProduit?handler=AddToCart&prodId=' +@Model.produit.Prodid+'&formatId=' + selectFormat + '&quantity=' + selectQuantity, true);
                 xhttp.setRequestHeader("XSRF-TOKEN", token)
                 xhttp.send();
+                
             }
+            
             document.addEventListener("DOMContentLoaded", function () {
 
             });

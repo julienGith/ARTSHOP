@@ -28,30 +28,56 @@ namespace E_Shop.ViewComponents
         private async Task<string> Menu()
         { 
             stringBuilder.Append($"<nav class='navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3'>" +
-                $"<button class='navbar-toggler' type='button' data-toggle='collapse' data-target='.navbar-collapse' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>" +
+                $"<div class='container'><button class='navbar-toggler' type='button' data-toggle='collapse' data-target='.navbar-collapse' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>" +
                 $"<span class='navbar-toggler-icon'></span></button>" +
-                $"<div class='navbar-collapse collapse d-sm-inline-flex justify-content-between'><ul class='navbar-nav flex-grow-1'>");
+                $"<div class='navbar-collapse collapse d-sm-inline-flex justify-content-between'><div class='navbar-nav center'><ul class='navbar-nav flex-grow-1'>" +
+                $"");
             CatParentsAlim = await categorieLogic.GetAllCategoriesParentsAlim();
             foreach (var item in CatParentsAlim)
             {
                 CatEnfants1 = await categorieLogic.GetAllCategoriesEnfantsByParentId(item.Categorieid);
-                stringBuilder.Append($"<li href='/Produits/ListeProduits/?catId={item.Categorieid}' class='nav-item dropdown'><span></span><a class='nav-link dropdown-toggle'" +
+                stringBuilder.Append($"<li class='nav-item dropdown'><a class='nav-link dropdown-toggle'" +
                     $"  id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>{item.Categorienom}</a>");
                 if (CatEnfants1.Count > 0)
                 {
                     stringBuilder.Append($"<div class='dropdown-menu' aria-labelledby='navbarDropdown'>");
                     foreach (var catenfant1 in CatEnfants1)
                     {
-                        stringBuilder.Append($"<a class='dropdown-item' href='/Produits/ListeProduits/?catId={catenfant1.Categorieid}'>{catenfant1.Categorienom}</a>");
+                        CatEnfants2 = await categorieLogic.GetAllCategoriesEnfantsByParentId(catenfant1.Categorieid);
+                        if (CatEnfants2.Count > 0)
+                        {
+                            stringBuilder.Append($"<ul class='navbar-nav flex-grow-1'><li class='nav-item dropdown'><a class='nav-link dropdown-toggle' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>{catenfant1.Categorienom}</a>" +
+                                $"<div class='dropdown-menu' aria-labelledby='navbarDropdown'>");
+                            foreach (var catenfant2 in CatEnfants2)
+                            {
+                                stringBuilder.Append($"<a class='dropdown-item' href='/Produits/ListeProduits/?catId={catenfant2.Categorieid}'>{catenfant2.Categorienom}</a>");
+                            }
+                            stringBuilder.Append($"</div></li></ul>");
+
+                        }
+                        else
+                        {
+                            stringBuilder.Append($"<a class='dropdown-item' href='/Produits/ListeProduits/?catId={catenfant1.Categorieid}'>{catenfant1.Categorienom}</a>");
+
+                        }
                     }
                     stringBuilder.Append($"</div></li>");
                 }
             }
-            foreach (var item in CatEnfants1)
-            {
-                CatEnfants2 = await categorieLogic.GetAllCategoriesEnfantsByParentId(item.Categorieid);
-            }
-            stringBuilder.Append($"</ul></div></nav>");
+            //foreach (var item in CatEnfants1)
+            //{
+            //    CatEnfants2 = await categorieLogic.GetAllCategoriesEnfantsByParentId(item.Categorieid);
+            //    if (CatEnfants2.Count>0)
+            //    {
+            //        stringBuilder.Append($"<div class='dropdown-menu' aria-labelledby='navbarDropdown'>");
+            //        foreach (var catenfant2 in CatEnfants2)
+            //        {
+            //            stringBuilder.Append($"<a class='dropdown-item' href='/Produits/ListeProduits/?catId={catenfant2.Categorieid}'>{catenfant2.Categorienom}</a>");
+            //        }
+            //        stringBuilder.Append($"</div></li>");
+            //    }
+            //}
+            stringBuilder.Append($"</ul></div></div></div></nav>");
             return stringBuilder.ToString();
         }
     }

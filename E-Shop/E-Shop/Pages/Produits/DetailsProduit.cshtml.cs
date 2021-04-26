@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using E_Shop.Entities;
+using E_Shop.Extensions;
 using E_Shop.Logic.BoutiqueLogic;
 using E_Shop.Logic.FormatLogic;
 using E_Shop.Logic.LocalisationLogic;
@@ -58,13 +59,27 @@ namespace E_Shop.Pages.Produits
                 produit = produit,
                 quantity = int.Parse(quantity)
             };
-            List<Item> items = new List<Item>();
-            items.Add(item);
-            Cart cart = new Cart
+            if (HttpContext.Session.Get<Cart>("Cart")==null)
             {
-                items = items
-            };
-            return new JsonResult("hello");
+                List<Item> items = new List<Item>();
+                items.Add(item);
+                Cart cart = new Cart
+                {
+                    items = items
+                };
+                HttpContext.Session.Set<Cart>("Cart", cart);
+                return new JsonResult(cart.items.Count);
+            }
+            else
+            {
+                Cart cart = new Cart();
+                cart = HttpContext.Session.Get<Cart>("Cart");
+                cart.items.Add(item);
+                HttpContext.Session.Set<Cart>("Cart", cart);
+                return new JsonResult(cart.items.Count);
+            }
+
+            
         }
 
         public async Task<IActionResult> OnGet()
