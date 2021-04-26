@@ -46,7 +46,7 @@ namespace E_Shop.ViewComponents
                         CatEnfants2 = await categorieLogic.GetAllCategoriesEnfantsByParentId(catenfant1.Categorieid);
                         if (CatEnfants2.Count > 0)
                         {
-                            stringBuilder.Append($"<ul class='navbar-nav flex-grow-1'><li class='nav-item dropdown'><a class='nav-link dropdown-toggle' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>{catenfant1.Categorienom}</a>" +
+                            stringBuilder.Append($"<ul class='navbar-nav flex-grow-1'><li class='nav-item dropdown-submenu'><a class='nav-link dropdown-toggle' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>{catenfant1.Categorienom}</a>" +
                                 $"<div class='dropdown-menu' aria-labelledby='navbarDropdown'>");
                             foreach (var catenfant2 in CatEnfants2)
                             {

@@ -24,7 +24,7 @@ namespace E_Shop.ViewComponents
             {
                 menuCat.CatEnfants2 = await categorieLogic.GetAllCategoriesEnfantsByParentId(cat.Categorieid);
             }
-            return View(menuCat);
+            return View("Menu",menuCat);
         }
     }
 }

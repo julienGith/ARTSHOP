@@ -4,9 +4,9 @@
 @{
 }
 @using Models
-@inject MenuCat menuCat
-@Model menuCat
-@foreach (var item in menuCat.CatParentsAlim)
+
+@model MenuCat
+@foreach (var item in Model.CatParentsAlim)
 {
-   var test = item.Categorieid;
+    var test = item.Categorieid;
 }
