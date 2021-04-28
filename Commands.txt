@@ -15,3 +15,21 @@ https://www.youtube.com/watch?v=PybhA-Uabbw
 
 Identy propety qui saoulent à pas faire ..:
 https://entityframework.net/knowledge-base/25559878/asp-net-identity-remove-column-from-aspnetusers-table
+
+
+var xhttp = new XMLHttpRequest();
+            xhttp.responseType = 'json';
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(xhttp.response);
+                    document.getElementById("prix").innerHTML = xhttp.response + "€";
+                }
+                else {
+                    console.log(xhttp.status);
+                }
+            };
+            xhttp.open("get", '/Produits/DetailsProduit?handler=Test', true);
+            xhttp.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val())
+            xhttp.send();
+
+onclick="window.location.href='/Produits/ListeProduits/?catId=@item.Categorieid'"

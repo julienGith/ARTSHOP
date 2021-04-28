@@ -7,59 +7,75 @@
 @using Logic.CategorieLogic
 @inject CategorieLogic categorieLogic
 @model MenuCat
-
-<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light navbar-expand-lg" id="myNavbar">
+<style>
+    /*        .dropdown:hover .dropdown-menu {
+            display: block;
+            margin-top: 0;
+        }*/
+</style>
+<nav class="navbar-expand-sm navbar-expand-md navbar-light bg-light navbar-expand-lg navbar-light py-0">
+    <div class="container">
+        <div id="shopBar" class="d-flex flex-row justify-content-around flex-wrap">
+            <div class="d-inline-flex">
+                <i class="nav-brand fas fa-utensils fa-3x"></i>
+            </div>
+            <div class="d-inline-flex">
+                <input id="searchBox" type="text" class="form-control align-self-center" placeholder="Poisson,Boeuf,Légumes" />
+            </div>
+            <div class="d-inline-flex">
+                <i class="fas fa-shopping-cart fa-3x"></i>
+                <a class="nav-link text-dark" id="counter" asp-area="" asp-page=""></a>
+            </div>
+        </div>
+    </div>
+</nav>
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-expand-md navbar-light bg-light navbar-expand-lg" id="myNavbar">
     <div class="container">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div id="mainNav" class='navbar-collapse collapse d-sm-inline-flex justify-content-between'>
             <div class='navbar-nav center'>
-                <ul class="navbar-nav ml-auto nav-fill">
+                <ul class="navbar-nav nav-fill">
                     @foreach (var item in Model.CatParentsAlim)
                     {
                         <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@item.Categorienom</a>
+                            <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@item.Categorienom</a>
                             @{var ListCatEnfant = await categorieLogic.GetAllCategoriesEnfantsByParentId(item.Categorieid);
                             }
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="servicesDropdown">
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="servicesDropdown">
 
-                            @if (ListCatEnfant.Count > 0)
-                            {
-                                @foreach (var catEnfant in ListCatEnfant)
+                                @if (ListCatEnfant.Count > 0)
                                 {
-                                    <div class="d-md-flex align-items-start justify-content-start">
-                                        <div class="p-2">
-                                            <div>
-                                                @{var ListSubCat = await categorieLogic.GetAllCategoriesEnfantsByParentId(catEnfant.Categorieid);}
-                                            </div>
 
-                                            @if (ListSubCat.Count > 0)
-                                            {
-                                                <div class="dropdown-divider"></div>
-                                                <div class="dropdown-header">@catEnfant.Categorienom</div>
-                                                @foreach (var subCat in ListSubCat)
-                                                {
-                                                    <a class="dropdown-item" href="/Produits/ListeProduits/?catId=@subCat.Categorieid">@subCat.Categorienom</a>
-                                                }
-
-                                                <div class="dropdown-divider"></div>
-                                            }
-                                            else
-                                            {
-                                                <a class="dropdown-item" href="/Produits/ListeProduits/?catId=@catEnfant.Categorieid">@catEnfant.Categorienom</a>
-
-                                            }
-
+                                    @foreach (var catEnfant in ListCatEnfant)
+                                    {
+                                        <div>
+                                            @{var ListSubCat = await categorieLogic.GetAllCategoriesEnfantsByParentId(catEnfant.Categorieid);}
                                         </div>
-                                    </div>
+
+                                        @if (ListSubCat.Count > 0)
+                                        {
+                                            <div class="dropdown-divider"></div>
+                                            <div class="dropdown-header">@catEnfant.Categorienom</div>
+                                            @foreach (var subCat in ListSubCat)
+                                            {
+                                                <a class="dropdown-item" href="/Produits/ListeProduits/?catId=@subCat.Categorieid">@subCat.Categorienom</a>
+                                            }
+                                            <div class="dropdown-divider"></div>
+                                        }
+                                        else
+                                        {
+                                            <a class="dropdown-item" href="/Produits/ListeProduits/?catId=@catEnfant.Categorieid">@catEnfant.Categorienom</a>
+                                        }
+                                    }
+
                                 }
-                            }
-                        </div>
+                            </div>
                         </li>
                     }
                 </ul>
             </div>
-            </div>
         </div>
+    </div>
 </nav>
