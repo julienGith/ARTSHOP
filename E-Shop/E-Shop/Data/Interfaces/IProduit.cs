@@ -26,5 +26,7 @@ namespace E_Shop.Data.Interfaces
         Task<string> GetNomProduitById(int prodId);
         //Get produits par catégorie
         Task<List<Produit>> GetProduitsByCatId(int catId);
+        //Recherche partielle produits par nom
+        Task<List<Produit>> GetListProduitByQuery(string query);
     }
 }

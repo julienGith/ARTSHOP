@@ -132,5 +132,15 @@ namespace E_Shop.Data.Functions
             }
             return produits;
         }
+        //Recherche partielle produits par nom
+        public async Task<List<Produit>> GetListProduitByQuery(string query)
+        {
+            List<Produit> Produits = new List<Produit>();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                Produits = await context.Produits.Include(p=>p.Media).Where(p => p.PNom.Contains(query.ToLower())).ToListAsync();
+            }
+            return Produits;
+        }
     }
 }

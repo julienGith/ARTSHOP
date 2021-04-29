@@ -50,5 +50,10 @@ namespace E_Shop.Logic.ProduitLogic
         {
             return await _produit.GetProduitsByCatId(catId);
         }
+        //Recherche partielle produits par nom
+        public async Task<List<Produit>> GetListProduitByQuery(string query)
+        {
+            return await _produit.GetListProduitByQuery(query);
+        }
     }
 }

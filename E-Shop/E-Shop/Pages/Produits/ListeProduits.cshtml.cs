@@ -6,6 +6,7 @@ using E_Shop.Entities;
 using E_Shop.Logic.ProduitLogic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 
 namespace E_Shop.Pages.Produits
 {
@@ -19,6 +20,13 @@ namespace E_Shop.Pages.Produits
         {
             listProduits = await produitLogic.GetProduitsByCatId(catId);
             return Page();
+        }
+        public async Task<JsonResult> OnPostProdList(string query)
+        {
+            listProduits = await produitLogic.GetListProduitByQuery(query);
+            var noms = listProduits.Select(p => p.PNom).ToList();
+            var response = listProduits.Select(p => new { p.PNom, p.Prodid, p.Media.FirstOrDefault(m => m.Description == "min").Lien }).ToList();
+            return new JsonResult(response);
         }
     }
 }

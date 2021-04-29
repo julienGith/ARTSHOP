@@ -114,5 +114,15 @@ namespace E_Shop.Data.Functions
             }
             return allboutiques;
         }
+        //Recherche partielle boutique par nom
+        public async Task<List<Boutique>> GetBoutiquesByQuery(string query)
+        {
+            List<Boutique> boutiques = new List<Boutique>();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                boutiques = await context.Boutiques.Include(b => b.Media).Where(b => b.BtqNom.Contains(query.ToLower())).ToListAsync();
+            }
+            return boutiques;
+        }
     }
 }

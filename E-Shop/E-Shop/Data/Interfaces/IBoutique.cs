@@ -27,5 +27,7 @@ namespace E_Shop.Data.Interfaces
         Task<List<Boutique>> GetAllBoutiques();
         //Get Boutique par Id boutique
         Task<Boutique> GetBoutiqueById(int boutiqueId);
+        //Recherche partielle boutique par nom
+        Task<List<Boutique>> GetBoutiquesByQuery(string query);
     }
 }
