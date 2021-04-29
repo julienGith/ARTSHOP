@@ -1,0 +1,28 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using Models
+@model Cart
+    <style>
+        .fa-shopping-cart:after {
+            content: attr(value);
+            font-size: 12px;
+            color:whitesmoke;
+            padding: 3px;
+            position: relative;
+            left: -22px;
+            top: -10px;
+            opacity: 1;
+        }
+    </style>
+@if (Model.items.Count > 0)
+{
+    <a class="nav-link text-dark" asp-area="" asp-page=""><i class="fas fa-shopping-cart fa-2x" id="counter" value="@Model.items.Count"></i></a>
+}
+@if (Model.items.Count == 0)
+{
+    <a class="nav-link text-dark"  asp-area="" asp-page=""><i class="fas fa-shopping-cart fa-2x" id="counter"></i></a>
+
+}

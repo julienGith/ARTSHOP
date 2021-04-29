@@ -12,16 +12,15 @@
     <div class="container">
         <div id="shopBar" class="d-flex flex-row justify-content-around flex-wrap mt-1">
             <div class="d-inline-flex">
-                <i class="nav-brand fas fa-utensils fa-2x"></i>
+                <i class="nav-brand fas fa-utensils fa-2x mt-2"></i>
             </div>
-            <div id="searchDiv" class="flex-column w-50">
+            <div id="searchDiv" class="flex-column w-50 mt-2">
                 <input id="searchBox" type="text" class="form-control align-self-center" onkeyup="GetListResults(this.value)" placeholder="Poisson,Boeuf,Légumes" />
                 <ul id="searchUl" class='list-group' >
                 </ul>
             </div>
             <div class="d-inline-flex">
-                <i class="fas fa-shopping-cart fa-2x"></i>
-                <a class="nav-link text-dark" id="counter" asp-area="" asp-page=""></a>
+                @await Component.InvokeAsync("Cart")
             </div>
         </div>
     </div>
