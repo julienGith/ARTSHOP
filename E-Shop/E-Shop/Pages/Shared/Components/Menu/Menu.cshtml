@@ -16,7 +16,7 @@
             </div>
             <div id="searchDiv" class="flex-column w-50 mt-2">
                 <input id="searchBox" type="text" class="form-control align-self-center" onkeyup="GetListResults(this.value)" placeholder="Poisson,Boeuf,Légumes" />
-                <ul id="searchUl" class='list-group' >
+                <ul id="searchUl" class='list-group align-self-center' style="position:fixed;z-index:1;">
                 </ul>
             </div>
             <div class="flex-column">
@@ -91,10 +91,17 @@
     </div>
 </nav>
 <script>
+    document.addEventListener("click", function myfunction() {
+        var searchUl = document.getElementById("searchUl");
+        searchUl.hidden = true;
+
+    })
+
     function GetListResults(searchBoxVal) {
 
         var token = document.querySelector("[name=__RequestVerificationToken]").value;
         var searchUl = document.getElementById("searchUl");
+        searchUl.hidden = false;
         if (searchBoxVal.length < 3) {
             if (searchUl.childElementCount > 0) {
                 searchUl.innerHTML = '';
