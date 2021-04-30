@@ -40,6 +40,10 @@ namespace E_Shop.Pages.Produits
         public decimal? prix { get; set; }
 
 
+
+
+
+
         public async Task<JsonResult> OnPostFormat(string formatId)
         {
             Format format = new Format();
@@ -47,39 +51,48 @@ namespace E_Shop.Pages.Produits
 
             return new JsonResult(format.Prix);
         }
-        public async Task<JsonResult> OnPostAddToCart(string prodId,string formatId, string quantity)
+        public async Task<IActionResult> OnPostAddToCart(string prodId,string idformat, string quantity)
         {
             Format format = new Format();
-            format = await formatLogic.GetFormatById(int.Parse(formatId));
+            format = await formatLogic.GetFormatById(int.Parse(idformat));
             Produit produit = new Produit();
             produit = await ProduitLogic.GetProduitById(int.Parse(prodId));
+            List<Medium> medias = new List<Medium>();
+            medias = await mediaLogic.GetMediasByProdId(int.Parse(prodId));
+            string lien = medias.Where(m => m.Description == "min").Select(m => m.Lien).FirstOrDefault();
             Item item = new Item
             {
                 format = format,
                 produit = produit,
+                lien = lien,
                 quantity = int.Parse(quantity)
             };
+            Cart cart = new Cart();
+
             if (HttpContext.Session.Get<Cart>("Cart")==null)
             {
-                List<Item> items = new List<Item>();
-                items.Add(item);
-                Cart cart = new Cart
-                {
-                    items = items
-                };
-                HttpContext.Session.Set<Cart>("Cart", cart);
-                return new JsonResult(cart.items.Count);
+                cart.items.Add(item);
             }
             else
             {
-                Cart cart = new Cart();
+                bool present = false;
                 cart = HttpContext.Session.Get<Cart>("Cart");
-                cart.items.Add(item);
-                HttpContext.Session.Set<Cart>("Cart", cart);
-                return new JsonResult(cart.items.Count);
+                foreach (var i in cart.items)
+                {
+                    if (i.produit.Prodid==item.produit.Prodid && i.format.Formatid==item.format.Formatid)
+                    {
+                        present = true;
+                        i.quantity++;
+                    }
+                }
+                if (present==false)
+                {
+                    cart.items.Add(item);
+                }
             }
+            HttpContext.Session.Set<Cart>("Cart", cart);
+            return new JsonResult(cart.items.Count);
 
-            
         }
 
         public async Task<IActionResult> OnGet()

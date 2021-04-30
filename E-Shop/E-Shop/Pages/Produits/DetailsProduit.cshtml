@@ -2,6 +2,11 @@
 @model E_Shop.Pages.Produits.DetailsProduitModel
 @{
 }
+@*@using Microsoft.AspNetCore.Antiforgery
+@inject IAntiforgery antiforgery
+@{
+    var token = antiforgery.GetAndStoreTokens(HttpContext).RequestToken;
+}*@
 <style>
     div.imageborder {
         border-radius: 999em;
@@ -26,139 +31,133 @@
     }
 </style>
 <form method="post"></form>
-    <div class="row align-items-center">
-        <div class="col-sm-4 align-self-start">
-            <div class="card col mt-2">
-                <div class="imageborder card-img-top">
-                    <img class="imgMiniBout card-img-top" src="@Model.imgVignette" />
-                </div>
-                <div class="card-body">
-                    <p class="card-text">@Model.localisation.Departement</p>
-                </div>
+<div class="row align-items-center">
+    <div class="col-sm-4 align-self-start">
+        <div class="card col mt-2">
+            <div class="imageborder card-img-top">
+                <img class="imgMiniBout card-img-top" src="@Model.imgVignette" />
+            </div>
+            <div class="card-body">
+                <p class="card-text">@Model.localisation.Departement</p>
             </div>
         </div>
-        <div class="col-sm-8">
-            <div class="card mt-2">
-                <div class="row">
-                    <div class="col">
-                        <img src="@Model.imgProd" class="float-left img-fluid" alt="@Model.produit.PNom">
-                    </div>
-                    <div class="col">
-                        <h4>@Model.produit.PNom</h4>
-                        <p class="p-2">Choisir une quantité</p>
-                        <div class="d-flex flex-row">
-                            @if (Model.Formats.Count > 0)
-                            {
-                                <select id="selectFormat" class="form-control" onchange="GetPrix()">
-                                    @foreach (var item in Model.Formats)
-                                    {
-                                        if (item.Litre > 0)
-                                        {
-                                            <option type="submit" id="@item.Formatid" value="@item.Formatid">@String.Format("{0:#,0.##}", item.Litre) l</option>
-                                        }
-                                        if (item.Poids > 0)
-                                        {
-                                            <option type="submit" id="@item.Formatid" value="@item.Formatid">@String.Format("{0:#,0.##}", item.Poids) kg</option>
-                                        }
-                                    }
-                                </select>
-                            }
-                            <select id="quantity" class="form-control">
-                                @for (int i = 1; i < Model.produit.Stock+1; i++)
+    </div>
+    <div class="col-sm-8">
+        <div class="card mt-2">
+            <div class="row">
+                <div class="col">
+                    <img src="@Model.imgProd" class="float-left img-fluid" alt="@Model.produit.PNom">
+                </div>
+                <div class="col">
+                    <h4>@Model.produit.PNom</h4>
+                    <p class="p-2">Choisir une quantité</p>
+                    <div class="d-flex flex-row">
+                        @if (Model.Formats.Count > 0)
+                        {
+                            <select id="selectFormat" class="form-control" onchange="GetPrix()">
+                                @foreach (var item in Model.Formats)
                                 {
-                                    <option value="@i">@i</option>
+                                    if (item.Litre > 0)
+                                    {
+                                        <option type="submit" id="@item.Formatid" value="@item.Formatid">@String.Format("{0:#,0.##}", item.Litre) l</option>
+                                    }
+                                    if (item.Poids > 0)
+                                    {
+                                        <option type="submit" id="@item.Formatid" value="@item.Formatid">@String.Format("{0:#,0.##}", item.Poids) kg</option>
+                                    }
                                 }
                             </select>
-                        </div>
-
-                        <strike hidden id="prixNorm">@Model.Formats.FirstOrDefault().Prix € </strike>
-
-                        @if (Model.produit.Rabais > 0)
-                        {
-                            var prixRabais = Model.Formats.FirstOrDefault().Prix - (Model.Formats.FirstOrDefault().Prix * Model.produit.Rabais / 100);
-                            <div>
-                                <strike id="prixNorm2">@Model.Formats.FirstOrDefault().Prix € </strike>
-                                <span id="rabais">@Model.produit.Rabais %</span>
-                                <span id="prixRabais">@prixRabais €</span>
-                            </div>
-                            var FprixKgRabais = prixRabais / Model.Formats.FirstOrDefault().Poids;
-                            var FprixLRabais = prixRabais / Model.Formats.FirstOrDefault().Litre;
-                            @if (FprixKgRabais > 0)
-                            {
-                                <span id="FprixKgRabais">@FprixKgRabais €/kg</span>
-                            }
-                            if (FprixLRabais > 0)
-                            {
-                                <span id="FprixLRabais">@FprixLRabais €/litre</span>
-                            }
                         }
-                        else
-                        {
-                            <div>
-                                <span id="prix">@Model.Formats.FirstOrDefault().Prix €</span>
-                            </div>
-                            var FprixKg = Model.Formats.FirstOrDefault().Prix / Model.Formats.FirstOrDefault().Poids;
-                            var FprixL = Model.Formats.FirstOrDefault().Prix / Model.Formats.FirstOrDefault().Litre;
-                            @if (FprixKg > 0)
+                        <select id="quantity" class="form-control">
+                            @for (int i = 1; i < Model.produit.Stock + 1; i++)
                             {
-                                <span id="FprixKg">@FprixKg €/kg</span>
-                                <span hidden id="OprixKg">@FprixKg €/kg</span>
+                                <option value="@i">@i</option>
                             }
-                            if (FprixL > 0)
-                            {
-                                <span id="FprixL">@FprixL €/litre</span>
-                                <span hidden id="OprixL">@FprixL €/litre</span>
-                            }
+                        </select>
+                    </div>
 
-                        }
+                    <strike hidden id="prixNorm">@Model.Formats.FirstOrDefault().Prix € </strike>
+
+                    @if (Model.produit.Rabais > 0)
+                    {
+                        var prixRabais = Math.Round((decimal)Model.Formats.FirstOrDefault().Prix, 2) - Math.Round(((decimal)Model.Formats.FirstOrDefault().Prix * ((decimal)Model.produit.Rabais / 100)), 2);
                         <div>
-                            <span id="prixKg"></span><span id="prixL"></span>
+                            <strike id="prixNorm2">@Model.Formats.FirstOrDefault().Prix € </strike>
+                            <span id="rabais">@Model.produit.Rabais %</span>
+                            <span id="prixRabais">@Math.Round((decimal)prixRabais, 2) €</span>
                         </div>
+                        var FprixKgRabais = prixRabais / Model.Formats.FirstOrDefault().Poids;
+                        var FprixLRabais = prixRabais / Model.Formats.FirstOrDefault().Litre;
+                        @if (FprixKgRabais > 0)
+                        {
+                            <span id="FprixKgRabais">@Math.Round((decimal)FprixKgRabais, 2) €/kg</span>
+                        }
+                        if (FprixLRabais > 0)
+                        {
+                            <span id="FprixLRabais">@Math.Round((decimal)FprixLRabais, 2) €/ litre</span>
+                        }
+                    }
+                    else
+                    {
+                        <div>
+                            <span id="prix">@Model.Formats.FirstOrDefault().Prix €</span>
+                        </div>
+                        var FprixKg = Model.Formats.FirstOrDefault().Prix / Model.Formats.FirstOrDefault().Poids;
+                        var FprixL = Model.Formats.FirstOrDefault().Prix / Model.Formats.FirstOrDefault().Litre;
+                        @if (FprixKg > 0)
+                        {
+                            <span id="FprixKg">@Math.Round((decimal)FprixKg, 2) €/kg</span>
+                            <span hidden id="OprixKg">@Math.Round((decimal)FprixKg, 2) €/kg</span>
+                        }
+                        if (FprixL > 0)
+                        {
+                            <span id="FprixL">@Math.Round((decimal)FprixL, 2) €/litre</span>
+                            <span hidden id="OprixL">@Math.Round((decimal)FprixL, 2) €/litre</span>
+                        }
+
+                    }
+                    <div>
+                        <span id="prixKg"></span><span id="prixL"></span>
                     </div>
                 </div>
-                <div class="card-body">
-                    <button data="@Model.produit.Prodid" onclick="AddToCart()" class="btn btn-primary btn-lg btn-block">Ajouter au panier</button>
-                    <nav>
-                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Description</a>
-                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Avis client</a>
-                            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Livraison</a>
-                        </div>
-                    </nav>
-                    <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                            <p>@Model.produit.PDescriptionL</p>
-                        </div>
-                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                            <p>Marcel : j'adore ce produit !</p>
-                        </div>
-                        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                            <p>
+            </div>
+            <div class="card-body">
+                <button data="@Model.produit.Prodid" onclick="AddToCart()" class="btn btn-primary btn-lg btn-block">Ajouter au panier</button>
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Description</a>
+                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Avis client</a>
+                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Livraison</a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <p>@Model.produit.PDescriptionL</p>
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <p>Marcel : j'adore ce produit !</p>
+                    </div>
+                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        <p>
 
-                            </p>
-                        </div>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    @section scripts{
+</div>
+@section scripts{
 
-        <script>
+    <script>
             function GetPrix() {
-                console.log("token", document.querySelector("[name=__RequestVerificationToken]").value);
                 var token = document.querySelector("[name=__RequestVerificationToken]").value;
                 var selectedFormat = document.getElementById("selectFormat").value;
-                console.log("FormatId", selectedFormat);
-                console.log("poids", document.getElementById(selectedFormat).innerHTML)
                 //Poids/Litre selection
                 var poids = document.getElementById(selectedFormat).innerHTML.replace(" Kg", "");
                 var poidsFloat = parseFloat(poids.replace(",", "."));
                 var litre = document.getElementById(selectedFormat).innerHTML.replace(" Litre", "");
                 var litreFloat = parseFloat(litre.replace(",", "."));
-
-                console.log("poidsNum", poids)
-                console.log("litreNum", litre)
                 var xhttp = new XMLHttpRequest();
                 xhttp.responseType = 'json';
                 xhttp.onreadystatechange = function () {
@@ -169,7 +168,7 @@
                                 var prixKgRabais = prixRabais / poidsFloat;
                                 var prixLRabais = prixRabais / litreFloat;
                                 document.getElementById("prixNorm2").innerHTML = xhttp.response + "€";
-                                document.getElementById("prixRabais").innerHTML = prixRabais + "€";
+                                document.getElementById("prixRabais").innerHTML = prixRabais.toFixed(2) + "€";
                                 var FprixKgRabais = document.getElementById('FprixKgRabais');
                                 if (typeof (FprixKgRabais) != 'undefined' && FprixKgRabais != null) {
                                     document.getElementById("FprixKgRabais").innerHTML = prixKgRabais;
@@ -230,9 +229,13 @@
                 xhttp.send();
             }
             function AddToCart() {
+                console.log("token", document.querySelector("[name=__RequestVerificationToken]").value);
                 var token = document.querySelector("[name=__RequestVerificationToken]").value;
+                console.log(token);
                 var selectFormat = document.getElementById("selectFormat").value;
+                console.log("format", selectFormat);
                 var selectQuantity = document.getElementById("quantity").value;
+                console.log("qte", selectQuantity);
                 var xhttp = new XMLHttpRequest();
                 xhttp.responseType = 'json';
                 xhttp.onreadystatechange = function () {
@@ -243,16 +246,16 @@
                         console.log(xhttp.status);
                     }
                 };
-                xhttp.open("post", '/Produits/DetailsProduit?handler=AddToCart&prodId=' +@Model.produit.Prodid+'&formatId=' + selectFormat + '&quantity=' + selectQuantity, true);
+                xhttp.open("post", '/Produits/DetailsProduit?handler=AddToCart&prodId=' +@Model.produit.Prodid+'&idformat=' + selectFormat + '&quantity=' + selectQuantity, true);
                 xhttp.setRequestHeader("XSRF-TOKEN", token)
                 xhttp.send();
-                
+
             }
-            
+
             document.addEventListener("DOMContentLoaded", function () {
 
             });
             document.addEventListener("DOMContentLoaded", function (event) {
             });
-        </script>
-    }
+    </script>
+}

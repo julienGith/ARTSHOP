@@ -29,7 +29,7 @@
                     <div class="card-footer">
                         @if (item.Rabais > 0)
                         {
-                            var prixRabais = format.Prix - (format.Prix * item.Rabais / 100);
+                            var prixRabais = Math.Round((decimal)format.Prix,2) - Math.Round(((decimal)format.Prix * ((decimal)item.Rabais/100)),2);
                             <div class="float-lg-right">@prixRabais €</div>
                             <div class="float-lg-right">-@item.Rabais %</div>
                             <strike class="float-lg-right">@format.Prix €</strike>
