@@ -17,12 +17,16 @@
         opacity: 1;
     }
 </style>
-@if (Model.items.Count > 0)
+@if (Model.Btqs.Count > 0)
 {
-    <a class="nav-link text-dark" onclick="ShowCart()"><i class="fas fa-shopping-cart fa-2x" id="counter" value="@Model.items.Count"></i></a>
+    <a class="nav-link text-dark" onclick="ShowCart()"><i class="fas fa-shopping-cart fa-2x" id="counter" value="@Model.quantityTotal"></i></a>
     <div id="cart" class="flex-column" hidden>
-        <ul id="items" class="list-group">
-            @foreach (var item in Model.items)
+        @foreach (var b in Model.Btqs)
+        {<div class="flex-row list-group-item">@b.nom</div>
+        <ul id="items" class="list-group" onmouseleave="HideCart()" style="position:fixed;z-index:1;">
+            <li class="flex-row list-group-item">@b.nom</li>
+
+            @foreach (var item in b.items)
             {
                 <li class="flex-row list-group-item">
                     <a href="#" class="dropdown-item">
@@ -46,11 +50,17 @@
             <li class="flex-row list-group-item">
                 <div>@Model.prixTotal</div>
             </li>
+            <li class="flex-row list-group-item">
+                <button class="btn btn-primary btn-lg btn-block">Accéder au panier</button>
+            </li>
         </ul>
+        }
+
+
     </div>
 
 }
-@if (Model.items.Count == 0)
+@if (Model.Btqs.Count == 0)
 {
     <a class="nav-link text-dark" onclick="ShowCart()"><i class="fas fa-shopping-cart fa-2x" id="counter"></i></a>
     <div id="cart" class="flex-column" hidden>
@@ -76,11 +86,11 @@
 
     }
     function ShowCart() {
-        if (@Model.items.Count == 0 || @Model!=null) {
+        if (@Model.Btqs.Count == 0) {
             cartdiv.hidden = false;
 
         }
-        if (@Model.items.Count > 0) {
+        if (@Model.Btqs.Count > 0) {
             cartdiv.hidden = false;
         }
     }

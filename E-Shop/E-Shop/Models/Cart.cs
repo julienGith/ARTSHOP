@@ -20,20 +20,53 @@ namespace E_Shop.Models
             }
         }
     }
-    public class Cart
+    public class Btq
     {
-        public Cart()
+        public Btq()
         {
             items = new HashSet<Item>();
+
         }
-        public decimal? prixTotal
+        public int itemQuantity
+        {
+            get
+            {
+                return items.Sum(i => i.quantity);
+            }
+        }
+        public decimal? ItemsTotalprice
         {
             get
             {
                 return items.Sum(i => i.price);
             }
         }
+        public int id { get; set; }
+        public string nom { get; set; }
         public virtual ICollection<Item> items { get; set; }
+
+    }
+    public class Cart
+    {
+        public Cart()
+        {
+            Btqs = new HashSet<Btq>();
+        }
+        public int quantityTotal
+        {
+            get
+            {
+                return Btqs.Sum(i => i.itemQuantity);
+            }
+        }
+        public decimal? prixTotal
+        {
+            get
+            {
+                return Btqs.Sum(i => i.ItemsTotalprice);
+            }
+        }
+        public virtual ICollection<Btq> Btqs { get; set; }
 
     }
 }

@@ -40,10 +40,6 @@ namespace E_Shop.Pages.Produits
         public decimal? prix { get; set; }
 
 
-
-
-
-
         public async Task<JsonResult> OnPostFormat(string formatId)
         {
             Format format = new Format();
@@ -51,14 +47,16 @@ namespace E_Shop.Pages.Produits
 
             return new JsonResult(format.Prix);
         }
-        public async Task<IActionResult> OnPostAddToCart(string prodId,string idformat, string quantity)
+        public async Task<IActionResult> OnPostAddToCart(string prodId, string idformat, string quantity)
         {
-            Format format = new Format();
-            format = await formatLogic.GetFormatById(int.Parse(idformat));
             Produit produit = new Produit();
             produit = await ProduitLogic.GetProduitById(int.Parse(prodId));
+            Format format = new Format();
+            format = await formatLogic.GetFormatById(int.Parse(idformat));
             List<Medium> medias = new List<Medium>();
             medias = await mediaLogic.GetMediasByProdId(int.Parse(prodId));
+            Entities.Boutique boutique = new Entities.Boutique();
+            boutique = await BoutiqueLogic.GetBoutiqueById(produit.Btqid);
             string lien = medias.Where(m => m.Description == "min").Select(m => m.Lien).FirstOrDefault();
             Item item = new Item
             {
@@ -68,30 +66,49 @@ namespace E_Shop.Pages.Produits
                 quantity = int.Parse(quantity)
             };
             Cart cart = new Cart();
-
-            if (HttpContext.Session.Get<Cart>("Cart")==null)
+            Btq btq = new Btq
             {
-                cart.items.Add(item);
+                id = produit.Btqid,
+                nom = boutique.BtqNom
+            };
+            if (HttpContext.Session.Get<Cart>("Cart") == null)
+            {
+                btq.items.Add(item);
+                cart.Btqs.Add(btq);
             }
             else
             {
                 bool present = false;
+                bool btqpresent = false;
                 cart = HttpContext.Session.Get<Cart>("Cart");
-                foreach (var i in cart.items)
+                foreach (var b in cart.Btqs)
                 {
-                    if (i.produit.Prodid==item.produit.Prodid && i.format.Formatid==item.format.Formatid)
+                    if (b.id == btq.id)
                     {
-                        present = true;
-                        i.quantity++;
+                        btqpresent = true;
+                        foreach (var i in b.items)
+                        {
+                            if (i.produit.Prodid == item.produit.Prodid && i.format.Formatid == item.format.Formatid)
+                            {
+                                present = true;
+                                i.quantity++;
+                            }
+                        }
+                        if (present == false)
+                        {
+                            b.items.Add(item);
+                        }
                     }
+
                 }
-                if (present==false)
+                if (btqpresent == false)
                 {
-                    cart.items.Add(item);
+                    btq.items.Add(item);
+                    cart.Btqs.Add(btq);
                 }
             }
             HttpContext.Session.Set<Cart>("Cart", cart);
-            return new JsonResult(cart.items.Count);
+            return new JsonResult(cart.quantityTotal);
 
         }
 
@@ -110,7 +127,7 @@ namespace E_Shop.Pages.Produits
             mediasProd = await mediaLogic.GetMediasByProdId(prodId);
             foreach (var item in mediasProd)
             {
-                if (item.Description==produit.PNom)
+                if (item.Description == produit.PNom)
                 {
                     imgProd = item.Lien;
                 }

@@ -15,8 +15,8 @@
                 <i class="nav-brand fas fa-utensils fa-2x mt-2"></i>
             </div>
             <div id="searchDiv" class="flex-column w-50 mt-2">
-                <input id="searchBox" type="text" class="form-control align-self-center" onkeyup="GetListResults(this.value)" placeholder="Poisson,Boeuf,Légumes" />
-                <ul id="searchUl" class='list-group align-self-center' style="position:fixed;z-index:1;">
+                <input id="searchBox" type="text" class="form-control align-self-center" onmouseover="GetListResults(this.value)" onkeyup="GetListResults(this.value)" placeholder="Poisson,Boeuf,Légumes" />
+                <ul id="searchUl" class='list-group' onmouseleave="HideListResult()" style="position:absolute;z-index:1;">
                 </ul>
             </div>
             <div class="flex-column">
@@ -91,14 +91,15 @@
     </div>
 </nav>
 <script>
-    document.addEventListener("click", function myfunction() {
+    //document.addEventListener("click", function myfunction() {
+    //    var searchUl = document.getElementById("searchUl");
+    //    searchUl.hidden = true;
+    //})
+    function HideListResult() {
         var searchUl = document.getElementById("searchUl");
         searchUl.hidden = true;
-
-    })
-
+    }
     function GetListResults(searchBoxVal) {
-
         var token = document.querySelector("[name=__RequestVerificationToken]").value;
         var searchUl = document.getElementById("searchUl");
         searchUl.hidden = false;
@@ -107,7 +108,6 @@
                 searchUl.innerHTML = '';
             }
         }
-        console.log(searchBoxVal);
         if (searchBoxVal.length > 2) {
             var query = String(searchBoxVal);
             var xhttp = new XMLHttpRequest();
