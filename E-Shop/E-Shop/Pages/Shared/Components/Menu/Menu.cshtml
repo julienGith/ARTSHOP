@@ -19,9 +19,9 @@
                 <ul id="searchUl" class='list-group' onmouseleave="HideListResult()" style="position:absolute;z-index:1;">
                 </ul>
             </div>
-            <div class="flex-column">
+            
                 @await Component.InvokeAsync("Cart")
-            </div>
+            
         </div>
     </div>
 </nav>
@@ -91,10 +91,7 @@
     </div>
 </nav>
 <script>
-    //document.addEventListener("click", function myfunction() {
-    //    var searchUl = document.getElementById("searchUl");
-    //    searchUl.hidden = true;
-    //})
+
     function HideListResult() {
         var searchUl = document.getElementById("searchUl");
         searchUl.hidden = true;

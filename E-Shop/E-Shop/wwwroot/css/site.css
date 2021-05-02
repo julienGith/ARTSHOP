@@ -1,26 +1,5 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
-div.imageborder {
-    border-radius: 999em;
-    width: 125px;
-    height: 125px;
-    padding: 1px;
-    line-height: 0;
-    border: 5px solid #808080;
-    background-color: #eee;
-}
-
-.imgMiniBout {
-    display: block;
-    background: transparent;
-    padding: 8px;
-    border: 1px solid #ccc;
-    box-shadow: 10px 10px 10px #999;
-    border-radius: 999em;
-    height: 100%;
-    width: 100%;
-    margin: 0;
-}
 a.navbar-brand {
     white-space: normal;
     text-align: center;

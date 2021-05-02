@@ -12,10 +12,11 @@
         color: whitesmoke;
         padding: 3px;
         position: relative;
-        left: -22px;
+        left: -18px;
         top: -10px;
         opacity: 1;
     }
+
     div.imageborder {
         border-radius: 999em;
         width: 50px;
@@ -40,72 +41,67 @@
 </style>
 @if (Model.Btqs.Count > 0)
 {
-    <a class="nav-link text-dark" onclick="ShowCart()"><i class="fas fa-shopping-cart fa-2x" id="counter" value="@Model.quantityTotal"></i></a>
-    <div id="cart"hidden>
+    <div class="flex-row">
+        <a href="/MonPanier/Panier" class="nav-link text-dark" onmouseover="ShowCart()" onclick="HideCart()"><i class="fas fa-shopping-cart fa-2x" id="counter" value="@Model.quantityTotal"></i></a>
+    </div>
+    <div id="cart" class="flex-column w-25 flex-wrap" style="position:absolute;z-index:1;" hidden>
         @foreach (var b in Model.Btqs)
         {
-        <div id="items" class="list-group" onmouseleave="HideCart()" style="position:absolute;z-index:1;">
-
-            <div class="d-inline-flex flex-row list-group-item">
-                <div><img class="imgMiniBout" src="@b.lien" />@b.nom</div>
-                <div>@b.nom</div>   
-            </div>
-
-            @foreach (var item in b.items)
-            {
+            <div id="items" class="list-group">
                 <div class="flex-row list-group-item">
-                    <a href="/Produits/DetailsProduit/?prodId=@item.produit.Prodid" class="dropdown-item">
-                        <img src="@item.lien" />
-                        <div class="d-inline-flex">X @item.quantity</div>
-                        @if (item.format.Litre > 0)
-                        {
-                            <div class="d-inline-flex">@String.Format("{0:#,0.##}", item.format.Litre) l</div>
+                    <div>
+                        <div class="imageborder"><img class="imgMiniBout" src="@b.lien" /></div>@b.nom</div>
+                    </div>
+                @foreach (var item in b.items)
+                {
+                    <div class="d-flex flex-sm-row flex-lg-row flex-md-row list-group-item flex-wrap flex-column">
+                        <a href="/Produits/DetailsProduit/?prodId=@item.produit.Prodid" class="dropdown-item">
+                            <img src="@item.lien" />
+                            <div class="d-flex">X @item.quantity</div>
+                            @if (item.format.Litre > 0)
+                            {
+                                <div class="d-inline-flex">@String.Format("{0:#,0.##}", item.format.Litre) l</div>
 
-                        }
-                        @if (item.format.Poids > 0)
-                        {
-                            <div class="d-inline-flex">@String.Format("{0:#,0.##}", item.format.Poids) kg</div>
+                            }
+                            @if (item.format.Poids > 0)
+                            {
+                                <div class="d-inline-flex">@String.Format("{0:#,0.##}", item.format.Poids) kg</div>
 
-                        }
-                        <div class="d-inline-flex">@item.produit.PNom</div>
-                        <div class="d-inline-flex">@item.price €</div>
-                    </a>
+                            }
+                            <div class="d-inline-flex">@item.produit.PNom</div>
+                            <div class="d-inline-flex">@item.price €</div>
+                        </a>
+                    </div>
+                }
+                <div class="flex-row list-group-item">
+                    <div>@Model.prixTotal</div>
                 </div>
-            }
-            <div class="flex-row list-group-item">
-                <div>@Model.prixTotal</div>
+                <div class="flex-row list-group-item">
+                    <button href="/MonPanier/Panier" class="btn btn-primary btn-lg btn-block">Accéder au panier</button>
+                </div>
             </div>
-            <div class="flex-row list-group-item">
-                <button class="btn btn-primary btn-lg btn-block">Accéder au panier</button>
-            </div>
-        </div>
-    }
-
-
+        }
     </div>
-
 }
 @if (Model.Btqs.Count == 0)
-{
-    <a class="nav-link text-dark" onclick="ShowCart()"><i class="fas fa-shopping-cart fa-2x" id="counter"></i></a>
-    <div id="cart" class="flex-column" hidden>
-        <ul id="items" class="list-group" onmouseleave="HideCart()" style="position:fixed;z-index:1;">
-            <li class="flex-row list-group-item">
-                <div>Panier vide</div>
-                <div>Panier vide</div>
-                <div>Panier vide</div>
-                <div>Panier vide</div>
-                <div>Panier vide</div>
-                <div>Panier vide</div>
-                <div>Panier vide</div>
-
-            </li>
-        </ul>
+{<div class="flex-row">
+        <a class="nav-link text-dark" onmouseover="ShowCart()"><i class="fas fa-shopping-cart fa-2x" id="counter"></i></a>
+    </div>
+    <div id="cart" class="flex-column w-25" style="position:absolute;z-index:1;" hidden>
+        <div id="items" class="list-group" onmouseleave="HideCart()">
+            <div class="flex-row list-group-item">
+                <h3>Panier vide</h3>
+            </div>
+        </div>
     </div>
 }
 <script>
+
     var cartdiv = document.getElementById("cart");
     var itemsUl = document.getElementById("items");
+    document.addEventListener("click", function myfunction() {
+        cartdiv.hidden = true;
+    })
     function HideCart() {
         cartdiv.hidden = true;
 
