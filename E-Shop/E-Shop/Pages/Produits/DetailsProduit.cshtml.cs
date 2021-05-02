@@ -53,23 +53,27 @@ namespace E_Shop.Pages.Produits
             produit = await ProduitLogic.GetProduitById(int.Parse(prodId));
             Format format = new Format();
             format = await formatLogic.GetFormatById(int.Parse(idformat));
-            List<Medium> medias = new List<Medium>();
-            medias = await mediaLogic.GetMediasByProdId(int.Parse(prodId));
+            List<Medium> prodmedias = new List<Medium>();
+            List<Medium> btqdmedias = new List<Medium>();
+            prodmedias = await mediaLogic.GetMediasByProdId(int.Parse(prodId));
             Entities.Boutique boutique = new Entities.Boutique();
             boutique = await BoutiqueLogic.GetBoutiqueById(produit.Btqid);
-            string lien = medias.Where(m => m.Description == "min").Select(m => m.Lien).FirstOrDefault();
+            btqdmedias = await mediaLogic.GetMediasBoutique(boutique.Btqid);
+            string prodlien = prodmedias.Where(m => m.Description == "min").Select(m => m.Lien).FirstOrDefault();
+            string btqlien = btqdmedias.Where(m=>m.Description=="vignette").Select(m => m.Lien).FirstOrDefault();
             Item item = new Item
             {
                 format = format,
                 produit = produit,
-                lien = lien,
+                lien = prodlien,
                 quantity = int.Parse(quantity)
             };
             Cart cart = new Cart();
             Btq btq = new Btq
             {
                 id = produit.Btqid,
-                nom = boutique.BtqNom
+                nom = boutique.BtqNom,
+                lien= btqlien
             };
             if (HttpContext.Session.Get<Cart>("Cart") == null)
             {

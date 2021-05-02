@@ -16,20 +16,45 @@
         top: -10px;
         opacity: 1;
     }
+    div.imageborder {
+        border-radius: 999em;
+        width: 50px;
+        height: 50px;
+        padding: 1px;
+        line-height: 0;
+        border: 5px solid #808080;
+        background-color: #eee;
+    }
+
+    .imgMiniBout {
+        display: block;
+        background: transparent;
+        padding: 8px;
+        border: 1px solid #ccc;
+        box-shadow: 1px 1px 1px #999;
+        border-radius: 999em;
+        height: 50px;
+        width: 50px;
+        margin: 0;
+    }
 </style>
 @if (Model.Btqs.Count > 0)
 {
     <a class="nav-link text-dark" onclick="ShowCart()"><i class="fas fa-shopping-cart fa-2x" id="counter" value="@Model.quantityTotal"></i></a>
-    <div id="cart" class="flex-column" hidden>
+    <div id="cart"hidden>
         @foreach (var b in Model.Btqs)
-        {<div class="flex-row list-group-item">@b.nom</div>
-        <ul id="items" class="list-group" onmouseleave="HideCart()" style="position:fixed;z-index:1;">
-            <li class="flex-row list-group-item">@b.nom</li>
+        {
+        <div id="items" class="list-group" onmouseleave="HideCart()" style="position:absolute;z-index:1;">
+
+            <div class="d-inline-flex flex-row list-group-item">
+                <div><img class="imgMiniBout" src="@b.lien" />@b.nom</div>
+                <div>@b.nom</div>   
+            </div>
 
             @foreach (var item in b.items)
             {
-                <li class="flex-row list-group-item">
-                    <a href="#" class="dropdown-item">
+                <div class="flex-row list-group-item">
+                    <a href="/Produits/DetailsProduit/?prodId=@item.produit.Prodid" class="dropdown-item">
                         <img src="@item.lien" />
                         <div class="d-inline-flex">X @item.quantity</div>
                         @if (item.format.Litre > 0)
@@ -45,16 +70,16 @@
                         <div class="d-inline-flex">@item.produit.PNom</div>
                         <div class="d-inline-flex">@item.price €</div>
                     </a>
-                </li>
+                </div>
             }
-            <li class="flex-row list-group-item">
+            <div class="flex-row list-group-item">
                 <div>@Model.prixTotal</div>
-            </li>
-            <li class="flex-row list-group-item">
+            </div>
+            <div class="flex-row list-group-item">
                 <button class="btn btn-primary btn-lg btn-block">Accéder au panier</button>
-            </li>
-        </ul>
-        }
+            </div>
+        </div>
+    }
 
 
     </div>

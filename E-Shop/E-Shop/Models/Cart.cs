@@ -43,6 +43,7 @@ namespace E_Shop.Models
         }
         public int id { get; set; }
         public string nom { get; set; }
+        public string lien { get; set; }
         public virtual ICollection<Item> items { get; set; }
 
     }
