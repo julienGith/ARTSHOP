@@ -95,7 +95,7 @@ namespace E_Shop.Pages.Produits
                             if (i.produit.Prodid == item.produit.Prodid && i.format.Formatid == item.format.Formatid)
                             {
                                 present = true;
-                                i.quantity++;
+                                i.quantity+=int.Parse(quantity);
                             }
                         }
                         if (present == false)
