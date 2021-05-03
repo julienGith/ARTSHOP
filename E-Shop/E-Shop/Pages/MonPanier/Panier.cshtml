@@ -2,51 +2,90 @@
 @model E_Shop.Pages.MonPanier.PanierModel
 @{
 }
+<style>
+    div.imageborder {
+        border-radius: 999em;
+        width: 70px;
+        height: 70px;
+        padding: 1px;
+        line-height: 0;
+        border: 2px solid #808080;
+        background-color: #eee;
+    }
+
+    .imgMiniBout {
+        display: block;
+        background: transparent;
+        padding: 4px;
+        border: 1px solid #ccc;
+        box-shadow: 10px 10px 10px #999;
+        border-radius: 999em;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+    }
+</style>
+<form method="post"></form>
 <div class="row">
-    <div class="col-8">
+    <div class="col-sm-8">
         <div class="card">
             <div class="card-header">
                 Votre Panier
             </div>
             <div class="card-body">
-
                 @foreach (var btq in Model.cart.Btqs)
                 {
                     <div class="card">
-                        <div class="card-header">
-                            Boutique
+                        <div class="card-header d-inline-flex justify-content-around  flex-wrap flex-row">
+                            <div class="imageborder card-img-top">
+                                <img class="imgMiniBout card-img-top" src="@btq.lien" />
+                            </div>
+                            <div><h5>@btq.nom</h5></div>
+                            <div class="text-muted">@btq.ItemsTotalprice €</div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body d-inline-flex justify-content-around flex-wrap flex-row">
                             @foreach (var item in btq.items)
                             {
-                                <a href="/Produits/DetailsProduit/?prodId=@item.produit.Prodid" class="dropdown-item">
+                                <a href="/Produits/DetailsProduit/?prodId=@item.produit.Prodid" class="text-black-50 d-inline-flex">
                                     <img src="@item.lien" />
-                                    <div>X @item.quantity</div>
+                                    <div class="d-inline-flex ml-3 mt-3">@item.produit.PNom</div>
+
+                                </a>
+                                <div class="d-inline-flex justify-content-around mt-3">
                                     @if (item.format.Litre > 0)
                                     {
-                                        <div>@String.Format("{0:#,0.##}", item.format.Litre) l</div>
+                                        <div class="d-inline-flex mr-3">@String.Format("{0:#,0.##}", item.format.Litre) l</div>
 
                                     }
                                     @if (item.format.Poids > 0)
                                     {
-                                        <div>@String.Format("{0:#,0.##}", item.format.Poids) kg</div>
+                                        <div class="d-inline-flex mr-3">@String.Format("{0:#,0.##}", item.format.Poids) kg</div>
 
                                     }
-                                    <div>@item.produit.PNom</div>
-                                    <div>@item.price €</div>
-                                </a>
+                                    <form asp-page-handler="ChangeQuantity" method="post">
+                                        <input name="prodId" value="@item.produit.Prodid" hidden />
+                                        <select name="quantity" onchange="this.form.submit()" class="form-control d-inline-flex mr-3" style="min-width:60px;max-width:60px;">
+                                            <option value="@item.quantity" selected>@item.quantity</option>
+                                            @for (int i = 1; i < 11; i++)
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        </select>
+                                    </form>
+                                    <div class="d-inline-flex">@item.price €</div>
+                                    <form asp-page-handler="DeleteProd" method="post">
+                                        <input name="prodId" value="@item.produit.Prodid" hidden />
+                                        <button onclick="this.form.submit()" class="btn btn-light d-inline-flex ml-3"><i class="fas fa-times"></i></button>
+                                    </form>
+                                </div>
                             }
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        <div class="text-muted">@btq.itemQuantity</div>
-                        <div class="text-muted">@btq.ItemsTotalprice €</div>
                     </div>
                 }
             </div>
         </div>
     </div>
-    <div class="col-4">
+    <div class="col-sm-4">
         <div class="card">
             <div class="card-header">
                 Resumé
@@ -65,3 +104,22 @@
         </div>
     </div>
 </div>
+<script>
+    function ChangeQuantity(quantiy, prodid) {
+        console.log("helleoeoeo");
+        var token = document.querySelector("[name=__RequestVerificationToken]").value;
+        var xhttp = new XMLHttpRequest();
+        xhttp.responseType = 'json';
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+            }
+            else {
+                console.log(xhttp.status);
+            }
+            xhttp.open("get", '/MonPanier/Panier?handler=ChangeQuantity&prodId=' + prodid + '&quantity=' + quantiy, true);
+            xhttp.setRequestHeader("XSRF-TOKEN", token);
+            xhttp.send();
+        }
+    }
+
+</script>
