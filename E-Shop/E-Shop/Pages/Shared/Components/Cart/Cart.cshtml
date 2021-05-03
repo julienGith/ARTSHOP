@@ -34,8 +34,8 @@
         border: 1px solid #ccc;
         box-shadow: 1px 1px 1px #999;
         border-radius: 999em;
-        height: 50px;
-        width: 50px;
+        height: 100%;
+        width: 100%;
         margin: 0;
     }
 </style>
@@ -49,9 +49,11 @@
         {
             <div id="items" class="list-group">
                 <div class="flex-row list-group-item">
+                    <div class="imageborder"><img class="imgMiniBout" src="@b.lien" /></div>
                     <div>
-                        <div class="imageborder"><img class="imgMiniBout" src="@b.lien" /></div>@b.nom</div>
+                        @b.nom
                     </div>
+                </div>
                 @foreach (var item in b.items)
                 {
                     <div class="d-flex flex-sm-row flex-lg-row flex-md-row list-group-item flex-wrap flex-column">

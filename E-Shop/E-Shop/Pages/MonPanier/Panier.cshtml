@@ -9,14 +9,40 @@
                 Votre Panier
             </div>
             <div class="card-body">
-                <div class="card">
-                    <div class="card-header">
-                        Boutique
+
+                @foreach (var btq in Model.cart.Btqs)
+                {
+                    <div class="card">
+                        <div class="card-header">
+                            Boutique
+                        </div>
+                        <div class="card-body">
+                            @foreach (var item in btq.items)
+                            {
+                                <a href="/Produits/DetailsProduit/?prodId=@item.produit.Prodid" class="dropdown-item">
+                                    <img src="@item.lien" />
+                                    <div>X @item.quantity</div>
+                                    @if (item.format.Litre > 0)
+                                    {
+                                        <div>@String.Format("{0:#,0.##}", item.format.Litre) l</div>
+
+                                    }
+                                    @if (item.format.Poids > 0)
+                                    {
+                                        <div>@String.Format("{0:#,0.##}", item.format.Poids) kg</div>
+
+                                    }
+                                    <div>@item.produit.PNom</div>
+                                    <div>@item.price €</div>
+                                </a>
+                            }
+                        </div>
                     </div>
-                    <div class="card-body">
-                        Produit
+                    <div class="card-footer">
+                        <div class="text-muted">@btq.itemQuantity</div>
+                        <div class="text-muted">@btq.ItemsTotalprice €</div>
                     </div>
-                </div>
+                }
             </div>
         </div>
     </div>
