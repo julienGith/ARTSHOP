@@ -23,7 +23,10 @@ namespace E_Shop.Pages.MonPanier
             {
                 foreach (var i in btq.items)
                 {
-                    btq.items.Remove(i);
+                    if (i.produit.Prodid == prodId)
+                    {
+                        btq.items.Remove(i);
+                    }
                 }
             }
             HttpContext.Session.Set<Models.Cart>("Cart", cart);
