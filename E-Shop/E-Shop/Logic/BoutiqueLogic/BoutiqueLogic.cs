@@ -60,5 +60,10 @@ namespace E_Shop.Logic.BoutiqueLogic
         {
             return await _boutique.GetBoutiquesByQuery(query);
         }
+        //Get boutiques par catégorie id
+        public async Task<List<Boutique>> GetBoutiquesByCatId(int catId)
+        {
+            return await _boutique.GetBoutiquesByCatId(catId);
+        }
     }
 }

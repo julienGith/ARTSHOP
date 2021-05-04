@@ -124,5 +124,27 @@ namespace E_Shop.Data.Functions
             }
             return boutiques;
         }
+        //Get boutiques par catégorie id
+        public async Task<List<Boutique>> GetBoutiquesByCatId(int catId)
+        {
+            List<Boutique> boutiques = new List<Boutique>();
+            List<Boutique> boutiquesByCatId = new List<Boutique>();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                boutiques = await context.Boutiques.Include(b=>b.Produits).ThenInclude(p=>p.Media).Include(b => b.Produits).ThenInclude(p=>p.Formats).ToListAsync();
+                foreach (var item in boutiques)
+                {
+                    foreach (var p in item.Produits)
+                    {
+                        if (p.Categorieid == catId)
+                        {
+                            boutiquesByCatId.Add(item);
+                        } 
+                    }
+                }
+            }
+            boutiquesByCatId.Distinct();
+            return boutiquesByCatId.Distinct().ToList();
+        }
     }
 }

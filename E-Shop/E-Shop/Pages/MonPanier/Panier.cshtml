@@ -72,10 +72,14 @@
                                             }
                                             <form asp-page-handler="ChangeQuantity" method="post">
                                                 <input name="prodId" value="@item.produit.Prodid" hidden />
-                                                <select value="'@item.quantity'" name="quantity" onchange="this.form.submit()" class="form-control d-inline-flex mr-3" style="min-width:65px;max-width:65px;">
+                                                <select id="selectQ" name="quantity" onchange="this.form.submit()" class="form-control d-inline-flex mr-3" style="min-width:65px;max-width:65px;">
+                                                    <option value="@item.quantity" selected>@item.quantity</option>
                                                     @for (int i = 1; i < 11; i++)
                                                     {
-                                                        <option value="@i">@i</option>
+                                                        if (i != item.quantity)
+                                                        {
+                                                            <option value="@i">@i</option>
+                                                        }
                                                     }
                                                 </select>
                                             </form>
@@ -100,7 +104,13 @@
                     Resumé
                 </div>
                 <div class="card-body">
-                    montant
+                    @foreach (var btq in Model.cart.Btqs)
+                    {
+                        <div><h5>@btq.nom</h5></div>
+                        <div class="text-muted">@btq.ItemsTotalprice €</div>
+                        <hr class="mt-1 mb-1" />
+                    }
+                    <div>@Model.cart.prixTotal €</div>
                 </div>
             </div>
             <div class="card">
@@ -116,6 +126,10 @@
 }
 
 <script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        var selectQ = document.getElementById("selectQ");
+        var itemQ = document.getElementById("itemQ");
+    });
     function ChangeQuantity(quantiy, prodid) {
         console.log("helleoeoeo");
         var token = document.querySelector("[name=__RequestVerificationToken]").value;

@@ -2,8 +2,10 @@
 @model E_Shop.Pages.Produits.ListeProduitsModel
 @{
 }
-<div class="card-deck mt-3">
-    @if (Model.listProduits.Count == 0)
+@if (Model.byProd == false)
+{
+
+    @if (Model.listBtq.Count == 0)
     {
         <div>
             Aucun produit
@@ -11,13 +13,97 @@
     }
     else
     {
+        <form method="post"><input name="catId" value="@Model.catId" hidden /> <button type="submit" asp-page-handler="ByProd" class="btn btn-primary">Afficher par produits</button></form>
 
-        @foreach (var item in Model.listProduits)
+        @foreach (var btq in Model.listBtq)
         {
-            var media = item.Media.FirstOrDefault(m => m.Description == "mid");
-            var format = item.Formats.FirstOrDefault();
-            var prixAuKilo = format.Prix / format.Poids;
-            var prixAuLitre = format.Prix / format.Litre;
+            <div class="card mt-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4">
+                            Boutique
+                        </div>
+                        <div class="col-8">
+                            <div class="card-group">
+                                @foreach (var p in btq.Produits)
+                                {
+                                    var media = p.Media.FirstOrDefault(m => m.Description == "mid");
+                                    var format = p.Formats.FirstOrDefault();
+                                    var prixAuKilo = format.Prix / format.Poids;
+                                    var prixAuLitre = format.Prix / format.Litre;
+                                    <div class="card" style="max-width: 18rem;">
+                                        <img src="@media.Lien" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <a href="/Produits/DetailsProduit/?prodId=@p.Prodid" class="stretched-link"></a>
+                                            <h5 class="card-title">@p.PNom</h5>
+                                            <p class="card-text">@p.PDescriptionC</p>
+                                        </div>
+                                        <div class="card-footer">
+                                            @if (p.Rabais > 0)
+                                            {
+                                                var prixRabais = Math.Round((decimal)format.Prix, 2) - Math.Round(((decimal)format.Prix * ((decimal)p.Rabais / 100)), 2);
+                                                <div class="float-lg-right">@prixRabais €</div>
+                                                <div class="float-lg-right">-@p.Rabais %</div>
+                                                <strike class="float-lg-right">@format.Prix €</strike>
+                                            }
+                                            @if (p.Rabais == 0)
+                                            {
+                                                <div class="float-lg-right">@format.Prix €</div>
+                                            }
+                                            @if (format.Poids > 0)
+                                            {
+                                                <div class="float-lg-left">
+                                                    <div>
+                                                        @format.Poids Kg
+                                                    </div>
+                                                    <div>
+                                                        @prixAuKilo€/Kg
+                                                    </div>
+                                                </div>
+                                            }
+                                            @if (format.Litre > 0)
+                                            {
+                                                <div class="float-lg-left">
+                                                    <div>
+                                                        @format.Litre Kg
+                                                    </div>
+                                                    <div>
+                                                        @prixAuLitre€/Kg
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+else
+{
+    <form method="get"><input name="catId" value="@Model.id" hidden /> <button type="submit" class="btn btn-primary">Afficher par Boutiques</button></form>
+
+    <div class="card-deck mt-3">
+        @if (Model.listProduits.Count == 0)
+        {
+            <div>
+                Aucun produit
+            </div>
+        }
+        else
+        {
+
+            @foreach (var item in Model.listProduits)
+            {
+                var media = item.Media.FirstOrDefault(m => m.Description == "mid");
+                var format = item.Formats.FirstOrDefault();
+                var prixAuKilo = format.Prix / format.Poids;
+                var prixAuLitre = format.Prix / format.Litre;
 
                 <div class="card" style="max-width: 18rem;">
                     <img src="@media.Lien" class="card-img-top" alt="...">
@@ -29,7 +115,7 @@
                     <div class="card-footer">
                         @if (item.Rabais > 0)
                         {
-                            var prixRabais = Math.Round((decimal)format.Prix,2) - Math.Round(((decimal)format.Prix * ((decimal)item.Rabais/100)),2);
+                            var prixRabais = Math.Round((decimal)format.Prix, 2) - Math.Round(((decimal)format.Prix * ((decimal)item.Rabais / 100)), 2);
                             <div class="float-lg-right">@prixRabais €</div>
                             <div class="float-lg-right">-@item.Rabais %</div>
                             <strike class="float-lg-right">@format.Prix €</strike>
@@ -62,7 +148,8 @@
                         }
                     </div>
                 </div>
-        }
+            }
 
-    }
-</div>
+        }
+    </div>
+}
