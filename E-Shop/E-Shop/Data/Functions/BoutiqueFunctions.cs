@@ -1,5 +1,6 @@
 ﻿using E_Shop.Data.Interfaces;
 using E_Shop.Entities;
+using E_Shop.Logic;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -90,6 +91,7 @@ namespace E_Shop.Data.Functions
             List<Boutique> mesboutiques = new List<Boutique>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 mesboutiques = await context.Boutiques.Where(b => b.Id == UserID).ToListAsync();
             }
             return mesboutiques;
@@ -100,6 +102,7 @@ namespace E_Shop.Data.Functions
             Boutique boutique = new Boutique();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 boutique = await context.Boutiques.FirstOrDefaultAsync(b => b.Btqid == boutiqueId);
             }
             return boutique;
@@ -110,6 +113,7 @@ namespace E_Shop.Data.Functions
             List<Boutique> allboutiques = new List<Boutique>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 allboutiques = await context.Boutiques.ToListAsync();
             }
             return allboutiques;
@@ -120,31 +124,54 @@ namespace E_Shop.Data.Functions
             List<Boutique> boutiques = new List<Boutique>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 boutiques = await context.Boutiques.Include(b => b.Media).Where(b => b.BtqNom.Contains(query.ToLower())).ToListAsync();
             }
             return boutiques;
         }
         //Get boutiques par catégorie id
-        public async Task<List<Boutique>> GetBoutiquesByCatId(int catId)
+        public async Task<PaginatedList<Boutique>> GetBoutiquesByCatId(int catId, int? pageIndex)
         {
-            List<Boutique> boutiques = new List<Boutique>();
-            List<Boutique> boutiquesByCatId = new List<Boutique>();
+            int pageSize = 3;
+            List<Boutique> items = new List<Boutique>();
+            PaginatedList<Boutique> boutiques = new PaginatedList<Boutique>(items, items.Count,pageIndex??1,pageSize);
+            List<Catnav> CatnavEnfants1 = new List<Catnav>();
+            List<Produit> produits = new List<Produit>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                boutiques = await context.Boutiques.Include(b=>b.Produits).ThenInclude(p=>p.Media).Include(b => b.Produits).ThenInclude(p=>p.Formats).ToListAsync();
-                foreach (var item in boutiques)
+                CatnavEnfants1 = await context.Catnavs.Where(n => n.CatCategorieid == catId)
+                     .Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                     .ThenInclude(p => p.Media).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                     .ThenInclude(p => p.Formats).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                     .ThenInclude(p => p.Avis).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                     .ThenInclude(p => p.Btq).ToListAsync();
+
+                boutiques = await PaginatedList<Boutique>.CreateAsync(context.Boutiques.
+                    Include(b=>b.Produits.Where(p=>p.Categorieid==catId)).
+                    ThenInclude(p=>p.Media).Include(b => b.Produits).
+                    ThenInclude(p=>p.Formats).AsNoTracking(), pageIndex ?? 1, pageSize);
+
+                if (CatnavEnfants1.Count > 0)
                 {
-                    foreach (var p in item.Produits)
+                    foreach (var item in CatnavEnfants1)
                     {
-                        if (p.Categorieid == catId)
+                        produits.AddRange(item.Categorie.Produits);
+                    }
+                    foreach (var b in boutiques)
+                    {
+                        foreach (var p in produits)
                         {
-                            boutiquesByCatId.Add(item);
-                        } 
+                            if (p.Btqid==b.Btqid)
+                            {
+                                b.Produits.Add(p);
+                            }
+                        }
                     }
                 }
+
+
             }
-            boutiquesByCatId.Distinct();
-            return boutiquesByCatId.Distinct().ToList();
+            return boutiques;
         }
     }
 }

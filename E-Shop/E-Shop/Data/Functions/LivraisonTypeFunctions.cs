@@ -94,6 +94,7 @@ namespace E_Shop.Data.Functions
             List<Livraisontype> livraisontypes = new List<Livraisontype>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 livraisontypes = await context.Livraisontypes.Where(l => l.Btqid == btqId).ToListAsync();
             }
             return livraisontypes;
@@ -105,6 +106,7 @@ namespace E_Shop.Data.Functions
             Partenaire partenaire = new Partenaire();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 partenaire = await context.Partenaires.Include(p=>p.Boutiques).ThenInclude(b=>b.Livraisontypes).FirstOrDefaultAsync(p => p.Id == userId);
                 livraisontypes =  partenaire.Boutiques.FirstOrDefault().Livraisontypes.ToList();
             }
@@ -116,6 +118,7 @@ namespace E_Shop.Data.Functions
             Livraisontype livraisontype = new Livraisontype();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 livraisontype = await context.Livraisontypes.FirstOrDefaultAsync(l => l.Lvrtypid == lvrTypId);
             }
             return livraisontype;
@@ -128,6 +131,7 @@ namespace E_Shop.Data.Functions
             List<Livraisontype> livraisontypes = new List<Livraisontype>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 prodLvrTypes = await context.ProdLvrTypes.Where(l => l.ProdId == prodId).ToListAsync();
                 foreach (var item in prodLvrTypes)
                 {

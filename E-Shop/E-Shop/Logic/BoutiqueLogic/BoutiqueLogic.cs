@@ -61,9 +61,9 @@ namespace E_Shop.Logic.BoutiqueLogic
             return await _boutique.GetBoutiquesByQuery(query);
         }
         //Get boutiques par catégorie id
-        public async Task<List<Boutique>> GetBoutiquesByCatId(int catId)
+        public async Task<PaginatedList<Boutique>> GetBoutiquesByCatId(int catId, int? pageIndex)
         {
-            return await _boutique.GetBoutiquesByCatId(catId);
+            return await _boutique.GetBoutiquesByCatId(catId,pageIndex);
         }
     }
 }

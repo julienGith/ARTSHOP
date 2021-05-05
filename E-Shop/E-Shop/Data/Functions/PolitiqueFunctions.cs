@@ -69,6 +69,7 @@ namespace E_Shop.Data.Functions
             int politiqueid = 0;
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 politiqueid = context.Boutiques.FirstOrDefault(b=>b.Btqid == boutiqueId).Politiqueid;
                 politique = await context.Politiques.FirstOrDefaultAsync(p => p.Politiqueid == politiqueid);
             }

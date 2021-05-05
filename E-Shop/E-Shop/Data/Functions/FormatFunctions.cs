@@ -66,6 +66,7 @@ namespace E_Shop.Data.Functions
             List<Format> formats = new List<Format>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 formats = await context.Formats.Where(f => f.Prodid == prodId).ToListAsync();
             }
             return formats;
@@ -76,6 +77,7 @@ namespace E_Shop.Data.Functions
             Format format = new Format();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 format = await context.Formats.FirstOrDefaultAsync(f => f.Formatid == formatId);
             }
             return format;

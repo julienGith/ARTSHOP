@@ -1,5 +1,6 @@
 ﻿using E_Shop.Data.Interfaces;
 using E_Shop.Entities;
+using E_Shop.Logic;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,8 @@ namespace E_Shop.Data.Functions
     {
         //CRUD Produit
         //Add New Produit
-        public async Task<Produit> AddProduit(int boutiqueId, int categorieId, string nom, string descriptionC,string descriptionL,
-            short? stock, short? disponibilite,short? rabais,short? preparation,bool publier)
+        public async Task<Produit> AddProduit(int boutiqueId, int categorieId, string nom, string descriptionC, string descriptionL,
+            short? stock, short? disponibilite, short? rabais, short? preparation, bool publier)
         {
             Produit newproduit = new Produit();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
@@ -57,7 +58,7 @@ namespace E_Shop.Data.Functions
                 context.Produits.Remove(produit);
                 await context.SaveChangesAsync();
             }
-            if (produit.Prodid>0)
+            if (produit.Prodid > 0)
             {
                 return false;
             }
@@ -74,7 +75,8 @@ namespace E_Shop.Data.Functions
             List<Produit> produits = new List<Produit>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                produits = await context.Produits.Include(m=>m.Media).Include(f=>f.Formats).Where(b=>b.Btqid == btqId).ToListAsync();
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+                produits = await context.Produits.Include(m => m.Media).Include(f => f.Formats).Where(b => b.Btqid == btqId).ToListAsync();
             }
             return produits;
         }
@@ -84,6 +86,7 @@ namespace E_Shop.Data.Functions
             Produit produit = new Produit();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 produit = await context.Produits.FirstOrDefaultAsync(p => p.Prodid == prodId);
             }
             return produit;
@@ -99,36 +102,35 @@ namespace E_Shop.Data.Functions
             return produit.PNom;
         }
         //Get produits par catégorie
-        public async Task<List<Produit>> GetProduitsByCatId(int catId)
+        public async Task<PaginatedList<Produit>> GetProduitsByCatId(int catId, int? pageIndex)
         {
-            List<Produit> produits = new List<Produit>();
+            PaginatedList<Produit> produits;
             List<Catnav> CatnavEnfants1 = new List<Catnav>();
             List<Catnav> CatnavEnfants2 = new List<Catnav>();
-
+            int pageSize = 2;
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
                 CatnavEnfants1 = await context.Catnavs.Where(n => n.CatCategorieid == catId)
-                    .Include(c => c.Categorie).ThenInclude(c=>c.Produits)
+                    .Include(c => c.Categorie).ThenInclude(c => c.Produits)
                     .ThenInclude(p => p.Media).Include(c => c.Categorie).ThenInclude(c => c.Produits)
-                    .ThenInclude(p=>p.Formats).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                    .ThenInclude(p => p.Formats).Include(c => c.Categorie).ThenInclude(c => c.Produits)
                     .ThenInclude(p => p.Avis).Include(c => c.Categorie).ThenInclude(c => c.Produits)
                     .ThenInclude(p => p.Btq).ToListAsync();
+
+                produits = await PaginatedList<Produit>.CreateAsync(context.Produits.Include(p => p.Avis)
+                    .Include(p => p.Formats)
+                    .Include(p => p.Media)
+                    .Include(p => p.Btq)
+                    .Include(p => p.Avis)
+                    .Where(p => p.Categorieid == catId).AsNoTracking(), pageIndex ?? 1, pageSize);
                 if (CatnavEnfants1.Count > 0)
                 {
-                        foreach (var item in CatnavEnfants1)
-                        {
+                    foreach (var item in CatnavEnfants1)
+                    {
                         produits.AddRange(item.Categorie.Produits);
-                        }
+                    }
                 }
-                else
-                {
-                    produits = await context.Produits.Include(p=>p.Avis)
-                        .Include(p => p.Formats)
-                        .Include(p => p.Media)
-                        .Include(p => p.Btq)
-                        .Include(p => p.Avis)
-                        .Where(p => p.Categorieid == catId).ToListAsync();
-                }
+
             }
             return produits;
         }
@@ -138,7 +140,7 @@ namespace E_Shop.Data.Functions
             List<Produit> Produits = new List<Produit>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                Produits = await context.Produits.Include(p=>p.Media).Where(p => p.PNom.Contains(query.ToLower())).ToListAsync();
+                Produits = await context.Produits.Include(p => p.Media).Where(p => p.PNom.Contains(query.ToLower())).AsNoTracking().ToListAsync();
             }
             return Produits;
         }

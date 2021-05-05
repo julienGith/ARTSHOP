@@ -1,4 +1,5 @@
 ﻿using E_Shop.Entities;
+using E_Shop.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace E_Shop.Data.Interfaces
         //Nom du produit par id produit
         Task<string> GetNomProduitById(int prodId);
         //Get produits par catégorie
-        Task<List<Produit>> GetProduitsByCatId(int catId);
+        Task<PaginatedList<Produit>> GetProduitsByCatId(int catId, int? pageIndex);
         //Recherche partielle produits par nom
         Task<List<Produit>> GetListProduitByQuery(string query);
     }

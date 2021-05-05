@@ -75,6 +75,7 @@ namespace E_Shop.Data.Functions
             List<Medium> medias = new List<Medium>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 medias = await context.Media.Where(m => m.Btqid == btqId).ToListAsync();
             }
             return medias;
@@ -85,6 +86,7 @@ namespace E_Shop.Data.Functions
             List<Medium> medias = new List<Medium>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 medias = await context.Media.Where(m => m.Prodid == prodId).ToListAsync();
             }
             return medias;

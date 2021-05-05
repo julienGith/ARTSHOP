@@ -1,4 +1,5 @@
 ﻿using E_Shop.Entities;
+using E_Shop.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,6 @@ namespace E_Shop.Data.Interfaces
         //Recherche partielle boutique par nom
         Task<List<Boutique>> GetBoutiquesByQuery(string query);
         //Get boutiques par catégorie id
-        Task<List<Boutique>> GetBoutiquesByCatId(int catId);
+        Task<PaginatedList<Boutique>> GetBoutiquesByCatId(int catId, int? pageIndex);
     }
 }

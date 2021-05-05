@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using E_Shop.Entities;
+using E_Shop.Logic;
 using E_Shop.Logic.BoutiqueLogic;
 using E_Shop.Logic.ProduitLogic;
 using Microsoft.AspNetCore.Mvc;
@@ -16,8 +17,8 @@ namespace E_Shop.Pages.Produits
         private ProduitLogic produitLogic = new ProduitLogic();
         private BoutiqueLogic boutiqueLogic = new BoutiqueLogic();
         public List<Produit> listProduits = new List<Produit>();
-        public List<Produit> listProduitsByBtq = new List<Produit>();
-        public List<Entities.Boutique> listBtq = new List<Entities.Boutique>();
+        public PaginatedList<Produit> listProduitsByBtq { get; set; }
+        public List<Entities.Boutique> listBtq { get; set; }
         public bool byProd { get; set; }
 
         [FromQuery(Name = "catId")]
@@ -25,17 +26,17 @@ namespace E_Shop.Pages.Produits
         [BindProperty]
         public int id { get; set; }
 
-        public async Task<IActionResult> OnPostByProd(int catId)
+        public async Task<IActionResult> OnPostByProd(int catId, int? pageIndex)
         {
             id = catId;
             byProd = true;
-            listProduits = await produitLogic.GetProduitsByCatId(catId);
+            listProduits = await produitLogic.GetProduitsByCatId(catId, pageIndex);
             return Page();
         }
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGet(int? pageIndex)
         {
             byProd = false;
-            listBtq = await boutiqueLogic.GetBoutiquesByCatId(catId);
+            listBtq = await boutiqueLogic.GetBoutiquesByCatId(catId, pageIndex);
             return Page();
         }
         public async Task<JsonResult> OnPostProdList(string query)

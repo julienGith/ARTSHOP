@@ -125,6 +125,7 @@ namespace E_Shop.Data.Functions
             Localisation localisation = new Localisation();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 localisation = await context.Localisations.FirstOrDefaultAsync(b => b.Btqid == boutiqueId);
             }
             return localisation;
@@ -135,6 +136,7 @@ namespace E_Shop.Data.Functions
             List<Localisation> localisations = new List<Localisation>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 localisations = await context.Localisations.Where(b => b.Id == Id).ToListAsync();
             }
             return localisations;
@@ -145,6 +147,7 @@ namespace E_Shop.Data.Functions
             List<Localisation> pointRelais = new List<Localisation>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 pointRelais = await context.RelaisLocBs.Include(p => p.Localisation).Where(r => r.Btqid == btqId).Select(l=>l.Localisation).ToListAsync();
             }
             return pointRelais;
@@ -155,6 +158,7 @@ namespace E_Shop.Data.Functions
             Localisation localisation = new Localisation();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 localisation = await context.Localisations.FirstOrDefaultAsync(l => l.Localisationid == localisationId);
             }
             return localisation;
