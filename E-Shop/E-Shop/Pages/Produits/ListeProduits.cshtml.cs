@@ -31,21 +31,32 @@ namespace E_Shop.Pages.Produits
         public int? pageIndex { get; set; }
         [BindProperty]
         public int? page { get; set; }
+        public int totalpage { get; set; }
 
-        public async Task<IActionResult> OnPostByProd(int catId, int? pageIndex)
+
+        public async Task<IActionResult> OnPostByProd()
         {
+            //problème avec les param from query qui ne se bind pas.. 
             pageIndex = page;
             catId = id;
             byProd = true;
-            listProduits = await produitLogic.GetProduitsByCatId(catId, pageIndex);
+            listProduits = await produitLogic.GetProduitsByCatId(id, page);
             return Page();
         }
         public async Task<IActionResult> OnGet(int catId, int? pageIndex)
         {
-            page = pageIndex;
-            id = catId;
+            if (pageIndex!=null)
+            {
+                page = pageIndex;
+                id = catId;
+            }
+            if (pageIndex> totalpage)
+            {
+                page = 1;
+            }
             byProd = false;
-            listBtq = await boutiqueLogic.GetBoutiquesByCatId(catId, pageIndex);
+            listBtq = await boutiqueLogic.GetBoutiquesByCatId(id, page);
+            totalpage = listBtq.TotalPages;
             return Page();
         }
         public async Task<JsonResult> OnPostProdList(string query)
