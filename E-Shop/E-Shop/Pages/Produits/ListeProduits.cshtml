@@ -83,13 +83,46 @@
             </div>
         }
     }
+    @if (Model.listBtq.HasNextPage)
+    {
+        <div>
+            @{int? ind = Model.page + 1;
+            }
+            <form method="get">
+                <input name="id" value="@Model.id" hidden /><input name="page" value="@ind" hidden />
+                <button type="submit" class="btn btn-primary">Suivant</button>
+            </form>
+        </div>
+    }
+    @if (Model.listBtq.HasPreviousPage)
+    {
+        <div>
+            @{int? ind = Model.page - 1;
+            }
+            <form method="get">
+                <input name="id" value="@Model.id" hidden /><input name="page" value="@ind" hidden />
+                <button type="submit" class="btn btn-primary">Précédent</button>
+            </form>
+        </div>
+    }
+    @if (!Model.listBtq.HasNextPage)
+    {
 
+        <button type="submit" class="btn btn-primary" disabled>Suivant</button>
+
+    }
+    @if (!Model.listBtq.HasPreviousPage)
+    {
+
+        <button type="submit" class="btn btn-primary" disabled>Précédent</button>
+
+    }
 }
 else
 {
-<form method="get">
-    <input name="catId" value="@Model.catId" hidden /><input name="pageIndex" value="@Model.pageIndex" hidden /> <button type="submit" class="btn btn-primary">Afficher par Boutiques</button>
-</form>
+    <form method="get">
+        <input name="catId" value="@Model.catId" hidden /><input name="pageIndex" value="@Model.pageIndex" hidden /> <button type="submit" class="btn btn-primary">Afficher par Boutiques</button>
+    </form>
 
     <div class="card-deck mt-3">
         @if (Model.listProduits.Count == 0)
@@ -158,12 +191,35 @@ else
     @if (Model.listProduits.HasNextPage)
     {
         <div>
-    @{int? ind = Model.page+1;
+            @{int? ind = Model.page + 1;
+            }
+            <form method="post">
+                <input name="id" value="@Model.id" hidden /><input name="page" value="@ind" hidden />
+                <button type="submit" asp-page-handler="ByProd" class="btn btn-primary">Suivant</button>
+            </form>
+        </div>
     }
-    <form method="post">
-        <input name="id" value="@Model.id" hidden /><input name="page" value="@ind" hidden />
-        <button type="submit" asp-page-handler="ByProd" class="btn btn-primary">suivant</button>
-    </form>
-</div>
+    @if (Model.listProduits.HasPreviousPage)
+    {
+        <div>
+            @{int? ind = Model.page - 1;
+            }
+            <form method="post">
+                <input name="id" value="@Model.id" hidden /><input name="page" value="@ind" hidden />
+                <button type="submit" asp-page-handler="ByProd" class="btn btn-primary">Précédent</button>
+            </form>
+        </div>
+    }
+    @if (!Model.listProduits.HasNextPage)
+    {
+
+        <button type="submit" asp-page-handler="ByProd" class="btn btn-primary" disabled>Suivant</button>
+
+    }
+    @if (!Model.listProduits.HasPreviousPage)
+    {
+
+        <button type="submit" asp-page-handler="ByProd" class="btn btn-primary" disabled>Précédent</button>
+
     }
 }
