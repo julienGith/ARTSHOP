@@ -13,7 +13,7 @@
     }
     else
     {
-        <form method="post"><input name="catId" value="@Model.catId" hidden /> <button type="submit" asp-page-handler="ByProd" class="btn btn-primary">Afficher par produits</button></form>
+        <form method="post"><input name="id" value="@Model.id" hidden /><input name="page" value="@Model.page" hidden /> <button type="submit" asp-page-handler="ByProd" class="btn btn-primary">Afficher par produits</button></form>
 
         @foreach (var btq in Model.listBtq)
         {
@@ -21,7 +21,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-4">
-                            Boutique
+                            @btq.BtqNom
                         </div>
                         <div class="col-8">
                             <div class="card-group">
@@ -83,11 +83,13 @@
             </div>
         }
     }
-    
+
 }
 else
 {
-    <form method="get"><input name="catId" value="@Model.id" hidden /> <button type="submit" class="btn btn-primary">Afficher par Boutiques</button></form>
+<form method="get">
+    <input name="catId" value="@Model.catId" hidden /><input name="pageIndex" value="@Model.pageIndex" hidden /> <button type="submit" class="btn btn-primary">Afficher par Boutiques</button>
+</form>
 
     <div class="card-deck mt-3">
         @if (Model.listProduits.Count == 0)
@@ -153,4 +155,15 @@ else
 
         }
     </div>
+    @if (Model.listProduits.HasNextPage)
+    {
+        <div>
+    @{int? ind = Model.page+1;
+    }
+    <form method="post">
+        <input name="id" value="@Model.id" hidden /><input name="page" value="@ind" hidden />
+        <button type="submit" asp-page-handler="ByProd" class="btn btn-primary">suivant</button>
+    </form>
+</div>
+    }
 }
