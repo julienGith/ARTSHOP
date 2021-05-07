@@ -219,59 +219,63 @@ else
         }
         else
         {
-
-            @foreach (var item in Model.listProduits)
+            for (int i = 0; i < Model.listProduits.Count; i += 3)
             {
-                var media = item.Media.FirstOrDefault(m => m.Description == "mid");
-                var format = item.Formats.FirstOrDefault();
-                var prixAuKilo = format.Prix / format.Poids;
-                var prixAuLitre = format.Prix / format.Litre;
+                <div class="row">
+                    @foreach (var item in Model.listProduits.Skip(i).Take(3))
+                    {
+                        var media = item.Media.FirstOrDefault(m => m.Description == "mid");
+                        var format = item.Formats.FirstOrDefault();
+                        var prixAuKilo = format.Prix / format.Poids;
+                        var prixAuLitre = format.Prix / format.Litre;
 
-                <div class="card" style="max-width: 18rem;">
-                    <img src="@media.Lien" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <a href="/Produits/DetailsProduit/?prodId=@item.Prodid" class="stretched-link"></a>
-                        <h5 class="card-title">@item.PNom</h5>
-                        <p class="card-text">@item.PDescriptionC</p>
-                    </div>
-                    <div class="card-footer">
-                        @if (item.Rabais > 0)
-                        {
-                            var prixRabais = Math.Round((decimal)format.Prix, 2) - Math.Round(((decimal)format.Prix * ((decimal)item.Rabais / 100)), 2);
-                            <div class="float-lg-right">@prixRabais €</div>
-                            <div class="float-lg-right">-@item.Rabais %</div>
-                            <strike class="float-lg-right">@format.Prix €</strike>
-                        }
-                        @if (item.Rabais == 0)
-                        {
-                            <div class="float-lg-right">@format.Prix €</div>
-                        }
-                        @if (format.Poids > 0)
-                        {
-                            <div class="float-lg-left">
-                                <div>
-                                    @format.Poids Kg
-                                </div>
-                                <div>
-                                    @prixAuKilo€/Kg
-                                </div>
+                        <div class="card" style="max-width: 18rem;">
+                            <img src="@media.Lien" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <a href="/Produits/DetailsProduit/?prodId=@item.Prodid" class="stretched-link"></a>
+                                <h5 class="card-title">@item.PNom</h5>
+                                <p class="card-text">@item.PDescriptionC</p>
                             </div>
-                        }
-                        @if (format.Litre > 0)
-                        {
-                            <div class="float-lg-left">
-                                <div>
-                                    @format.Litre Kg
-                                </div>
-                                <div>
-                                    @prixAuLitre€/Kg
-                                </div>
+                            <div class="card-footer">
+                                @if (item.Rabais > 0)
+                                {
+                                    var prixRabais = Math.Round((decimal)format.Prix, 2) - Math.Round(((decimal)format.Prix * ((decimal)item.Rabais / 100)), 2);
+                                    <div class="float-lg-right">@prixRabais €</div>
+                                    <div class="float-lg-right">-@item.Rabais %</div>
+                                    <strike class="float-lg-right">@format.Prix €</strike>
+                                }
+                                @if (item.Rabais == 0)
+                                {
+                                    <div class="float-lg-right">@format.Prix €</div>
+                                }
+                                @if (format.Poids > 0)
+                                {
+                                    <div class="float-lg-left">
+                                        <div>
+                                            @format.Poids Kg
+                                        </div>
+                                        <div>
+                                            @prixAuKilo€/Kg
+                                        </div>
+                                    </div>
+                                }
+                                @if (format.Litre > 0)
+                                {
+                                    <div class="float-lg-left">
+                                        <div>
+                                            @format.Litre Kg
+                                        </div>
+                                        <div>
+                                            @prixAuLitre€/Kg
+                                        </div>
+                                    </div>
+                                }
                             </div>
-                        }
-                    </div>
+                        </div>
+
+                    }
                 </div>
             }
-
         }
     </div>
     <div class="row justify-content-center">

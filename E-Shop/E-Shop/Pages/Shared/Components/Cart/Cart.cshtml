@@ -17,22 +17,22 @@
         opacity: 1;
     }
 
-    div.imageborder {
+    div.imageborderp {
         border-radius: 999em;
-        width: 50px;
-        height: 50px;
+        width: 70px;
+        height: 70px;
         padding: 1px;
         line-height: 0;
-        border: 5px solid #808080;
+        border: 2px solid #808080;
         background-color: #eee;
     }
 
-    .imgMiniBout {
+    .imgMiniBoutp {
         display: block;
         background: transparent;
-        padding: 8px;
+        padding: 4px;
         border: 1px solid #ccc;
-        box-shadow: 1px 1px 1px #999;
+        box-shadow: 10px 10px 10px #999;
         border-radius: 999em;
         height: 100%;
         width: 100%;
@@ -42,14 +42,14 @@
 @if (Model.Btqs.Count > 0)
 {
     <div class="flex-row">
-        <a href="/MonPanier/Panier" class="nav-link text-dark" onmouseover="ShowCart()" onclick="HideCart()"><i class="fas fa-shopping-cart fa-2x" id="counter" value="@Model.quantityTotal"></i></a>
+        <a id="carticon" href="/MonPanier/Panier" class="nav-link text-dark" onmouseover="ShowCart()"><i class="fas fa-shopping-cart fa-2x" id="counter" value="@Model.quantityTotal"></i></a>
     </div>
-    <div id="cart" class="flex-column w-25 flex-wrap" style="position:absolute;z-index:1;" hidden>
+    <div id="cart" class="flex-column flex-wrap" style="position:absolute;z-index:1;right:15%;top:100px;" hidden>
         @foreach (var b in Model.Btqs)
         {
             <div id="items" class="list-group">
                 <div class="flex-row list-group-item">
-                    <div class="imageborder"><img class="imgMiniBout" src="@b.lien" /></div>
+                    <div class="imageborderp"><img class="imgMiniBoutp" src="@b.lien" /></div>
                     <div>
                         @b.nom
                     </div>
@@ -87,9 +87,9 @@
 }
 @if (Model.Btqs.Count == 0)
 {<div class="flex-row">
-        <a class="nav-link text-dark" onmouseover="ShowCart()"><i class="fas fa-shopping-cart fa-2x" id="counter"></i></a>
+        <a id="carticon" class="nav-link text-dark" onmouseover="ShowCart()"><i class="fas fa-shopping-cart fa-2x" id="counter"></i></a>
     </div>
-    <div id="cart" class="flex-column w-25" style="position:absolute;z-index:1;" hidden>
+    <div id="cart" class="flex-column flex-wrap" style="position:absolute;z-index:1;right:15%;top:100px;" hidden>
         <div id="items" class="list-group" onmouseleave="HideCart()">
             <div class="flex-row list-group-item">
                 <h3>Panier vide</h3>

@@ -129,6 +129,10 @@
     document.addEventListener("DOMContentLoaded", function (event) {
         var selectQ = document.getElementById("selectQ");
         var itemQ = document.getElementById("itemQ");
+        var cartdiv = document.getElementById("cart");
+        var carticon = document.getElementById("carticon");
+        cartdiv.hidden = true;
+        carticon.removeAttribute("onmouseover");
     });
     function ChangeQuantity(quantiy, prodid) {
         console.log("helleoeoeo");
