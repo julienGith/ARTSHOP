@@ -20,6 +20,7 @@ namespace E_Shop.Pages.Produits
 
         public PaginatedList<Produit> listProduits { get; set; }
         public PaginatedList<Entities.Boutique> listBtq { get; set; }
+        public PaginatedList<Entities.Boutique> listBtq1 { get; set; }
         public bool byProd { get; set; }
         [BindProperty]
         [FromQuery(Name = "catId")]
@@ -62,8 +63,8 @@ namespace E_Shop.Pages.Produits
         public async Task<JsonResult> OnPostProdList(string query)
         {
             Produits = await produitLogic.GetListProduitByQuery(query);
-            var noms = listProduits.Select(p => p.PNom).ToList();
-            var response = listProduits.Select(p => new { p.PNom, p.Prodid, p.Media.FirstOrDefault(m => m.Description == "min").Lien }).ToList();
+            var noms = Produits.Select(p => p.PNom).ToList();
+            var response = Produits.Select(p => new { p.PNom, p.Prodid, p.Media.FirstOrDefault(m => m.Description == "min").Lien }).ToList();
             return new JsonResult(response);
         }
     }

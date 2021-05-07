@@ -133,8 +133,8 @@ namespace E_Shop.Data.Functions
         public async Task<PaginatedList<Boutique>> GetBoutiquesByCatId(int catId, int? pageIndex)
         {
             int pageSize = 3;
-            List<Boutique> items = new List<Boutique>();
-            PaginatedList<Boutique> boutiques = new PaginatedList<Boutique>(items, items.Count,pageIndex??1,pageSize);
+            List<Boutique> items=new List<Boutique>();
+            PaginatedList<Boutique> boutiques;
             List<Catnav> CatnavEnfants1 = new List<Catnav>();
             List<Produit> produits = new List<Produit>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
@@ -147,6 +147,8 @@ namespace E_Shop.Data.Functions
                      .ThenInclude(p => p.Btq).ToListAsync();
 
                 boutiques = await PaginatedList<Boutique>.CreateAsync(context.Boutiques.
+                    Include(b=>b.Media).
+                    Include(b => b.Avis).
                     Include(b=>b.Produits.Where(p=>p.Categorieid==catId)).
                     ThenInclude(p=>p.Media).Include(b => b.Produits).
                     ThenInclude(p=>p.Formats).AsNoTracking(), pageIndex ?? 1, pageSize);
@@ -168,8 +170,6 @@ namespace E_Shop.Data.Functions
                         }
                     }
                 }
-
-
             }
             return boutiques;
         }

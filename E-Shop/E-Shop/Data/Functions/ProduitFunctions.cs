@@ -107,6 +107,8 @@ namespace E_Shop.Data.Functions
             PaginatedList<Produit> produits;
             List<Catnav> CatnavEnfants1 = new List<Catnav>();
             List<Catnav> CatnavEnfants2 = new List<Catnav>();
+            List<Catnav> CatnavEnfants = new List<Catnav>();
+            Categorie categorieSubcatenf = new Categorie();
             int pageSize = 2;
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
@@ -115,7 +117,7 @@ namespace E_Shop.Data.Functions
                     .ThenInclude(p => p.Media).Include(c => c.Categorie).ThenInclude(c => c.Produits)
                     .ThenInclude(p => p.Formats).Include(c => c.Categorie).ThenInclude(c => c.Produits)
                     .ThenInclude(p => p.Avis).Include(c => c.Categorie).ThenInclude(c => c.Produits)
-                    .ThenInclude(p => p.Btq).ToListAsync();
+                    .ThenInclude(p => p.Btq).AsNoTracking().ToListAsync();
 
                 produits = await PaginatedList<Produit>.CreateAsync(context.Produits.Include(p => p.Avis)
                     .Include(p => p.Formats)
@@ -127,8 +129,22 @@ namespace E_Shop.Data.Functions
                 {
                     foreach (var item in CatnavEnfants1)
                     {
+                        //CatnavEnfants = await context.Catnavs.Where(n => n.CatCategorieid == item.Categorieid)
+                        //    .Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                        //    .ThenInclude(p => p.Media).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                        //    .ThenInclude(p => p.Formats).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                        //    .ThenInclude(p => p.Avis).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                        //    .ThenInclude(p => p.Btq).AsNoTracking().ToListAsync();
+                        //CatnavEnfants2.AddRange(CatnavEnfants);
                         produits.AddRange(item.Categorie.Produits);
                     }
+                    //if (CatnavEnfants2.Count>0)
+                    //{
+                    //    foreach (var item in CatnavEnfants2)
+                    //    {
+                    //        produits.AddRange(item.Categorie.Produits);
+                    //    }
+                    //}
                 }
 
             }
@@ -140,7 +156,7 @@ namespace E_Shop.Data.Functions
             List<Produit> Produits = new List<Produit>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                Produits = await context.Produits.Include(p => p.Media).Where(p => p.PNom.Contains(query.ToLower())).AsNoTracking().ToListAsync();
+                Produits = await context.Produits.Include(p => p.Media).Where(p => p.PNom.Contains(query.ToLower())).AsNoTracking().Take(5).ToListAsync();
             }
             return Produits;
         }
