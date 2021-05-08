@@ -145,7 +145,7 @@ namespace E_Shop.Data.Functions
                      .ThenInclude(p => p.Media).Include(c => c.Categorie).ThenInclude(c => c.Produits)
                      .ThenInclude(p => p.Formats).Include(c => c.Categorie).ThenInclude(c => c.Produits)
                      .ThenInclude(p => p.Avis).Include(c => c.Categorie).ThenInclude(c => c.Produits)
-                     .ThenInclude(p => p.Btq).ToListAsync();
+                     .ThenInclude(p => p.Btq).ThenInclude(b => b.Media).ToListAsync();
 
                 boutiques = await PaginatedList<Boutique>.CreateAsync(context.Boutiques.
                     Include(b=>b.Media).
