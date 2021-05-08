@@ -40,9 +40,9 @@ namespace E_Shop.Logic.BoutiqueLogic
             return await _boutique.GetPartenaireBoutiques(partenaireID);
         }
         //GET All Boutiques
-        public async Task<List<Boutique>> GetAllBoutiques()
+        public async Task<PaginatedList<Boutique>> GetAllBoutiques(int? pageIndex)
         {
-            return await _boutique.GetAllBoutiques();
+            return await _boutique.GetAllBoutiques(pageIndex);
         }
 
         //Delete boutique

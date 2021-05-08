@@ -108,13 +108,14 @@ namespace E_Shop.Data.Functions
             return boutique;
         }
         //GET All Boutiques
-        public async Task<List<Boutique>> GetAllBoutiques()
+        public async Task<PaginatedList<Boutique>> GetAllBoutiques(int? pageIndex)
         {
-            List<Boutique> allboutiques = new List<Boutique>();
+            PaginatedList<Boutique> allboutiques;
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-                allboutiques = await context.Boutiques.ToListAsync();
+                int pageSize = 3;
+                allboutiques = await PaginatedList<Boutique>.CreateAsync(context.Boutiques.Include(b => b.Media).
+                    Include(b => b.Avis).AsNoTracking(), pageIndex ?? 1, pageSize);
             }
             return allboutiques;
         }

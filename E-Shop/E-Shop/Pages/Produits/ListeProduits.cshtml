@@ -206,11 +206,34 @@
 }
 else
 {
+<style>
+    div.imageborderp {
+        border-radius: 999em;
+        width: 70px;
+        height: 70px;
+        padding: 1px;
+        line-height: 0;
+        border: 2px solid #808080;
+        background-color: #eee;
+    }
+
+    .imgMiniBoutp {
+        display: block;
+        background: transparent;
+        padding: 4px;
+        border: 1px solid #ccc;
+        box-shadow: 10px 10px 10px #999;
+        border-radius: 999em;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+    }
+</style>
     <form method="get">
         <input name="catId" value="@Model.catId" hidden /><input name="pageIndex" value="@Model.pageIndex" hidden /> <button type="submit" class="btn btn-primary">Afficher par Boutiques</button>
     </form>
 
-    <div class="card-deck mt-3">
+    <div class="card-group mt-3">
         @if (Model.listProduits.Count == 0)
         {
             <div>
@@ -225,12 +248,16 @@ else
                     @foreach (var item in Model.listProduits.Skip(i).Take(3))
                     {
                         var media = item.Media.FirstOrDefault(m => m.Description == "mid");
+                        var mediabtq = item.Btq.Media.FirstOrDefault(m => m.Description == "vignette");
                         var format = item.Formats.FirstOrDefault();
                         var prixAuKilo = format.Prix / format.Poids;
                         var prixAuLitre = format.Prix / format.Litre;
 
                         <div class="card" style="max-width: 18rem;">
                             <img src="@media.Lien" class="card-img-top" alt="...">
+                            <div class="imageborderp" style="position: absolute; top: 35%; right: 2%; display: block;">
+                                <img class="imgMiniBoutp" src="@mediabtq.Lien" />
+                            </div>
                             <div class="card-body">
                                 <a href="/Produits/DetailsProduit/?prodId=@item.Prodid" class="stretched-link"></a>
                                 <h5 class="card-title">@item.PNom</h5>

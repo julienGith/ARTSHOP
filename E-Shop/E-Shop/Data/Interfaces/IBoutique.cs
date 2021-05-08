@@ -25,7 +25,7 @@ namespace E_Shop.Data.Interfaces
         //Mes Boutiques
         Task<List<Boutique>> GetPartenaireBoutiques(int partenaireID);
         //GET All Boutiques
-        Task<List<Boutique>> GetAllBoutiques();
+        Task<PaginatedList<Boutique>> GetAllBoutiques(int? pageIndex);
         //Get Boutique par Id boutique
         Task<Boutique> GetBoutiqueById(int boutiqueId);
         //Recherche partielle boutique par nom

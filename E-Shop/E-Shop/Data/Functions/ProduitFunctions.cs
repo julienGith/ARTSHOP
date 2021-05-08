@@ -117,12 +117,12 @@ namespace E_Shop.Data.Functions
                     .ThenInclude(p => p.Media).Include(c => c.Categorie).ThenInclude(c => c.Produits)
                     .ThenInclude(p => p.Formats).Include(c => c.Categorie).ThenInclude(c => c.Produits)
                     .ThenInclude(p => p.Avis).Include(c => c.Categorie).ThenInclude(c => c.Produits)
-                    .ThenInclude(p => p.Btq).AsNoTracking().ToListAsync();
+                    .ThenInclude(p => p.Btq).ThenInclude(b=>b.Media).AsNoTracking().ToListAsync();
 
                 produits = await PaginatedList<Produit>.CreateAsync(context.Produits.Include(p => p.Avis)
                     .Include(p => p.Formats)
                     .Include(p => p.Media)
-                    .Include(p => p.Btq)
+                    .Include(p => p.Btq).ThenInclude(b => b.Media)
                     .Include(p => p.Avis)
                     .Where(p => p.Categorieid == catId).AsNoTracking(), pageIndex ?? 1, pageSize);
                 if (CatnavEnfants1.Count > 0)
