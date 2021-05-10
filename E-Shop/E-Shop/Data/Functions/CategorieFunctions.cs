@@ -138,6 +138,28 @@ namespace E_Shop.Data.Functions
 
             return Options;
         }
+        //Get catégories d'une boutique
+        public async Task<List<Categorie>> GetCategoriesByBtqId(int btqId)
+        {
+            List<Categorie> categories = new List<Categorie>();
+            List<Categorie> categoriesParent = new List<Categorie>();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                categories = await context.Categories.Include(c => c.Produits.Where(p => p.Btqid == btqId))
+                    .Where(c=>c.Produits.Count>0).Include(c => c.CatnavCategories).ThenInclude(c=>c.CatCategorie).AsNoTracking().ToListAsync();
 
+            }
+            return categories;
+        }
+        //Get catégorie par catégorie Id
+        public async Task<Categorie> GetCategorieById(int catid)
+        {
+            Categorie categorie = new Categorie();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                categorie = await context.Categories.FirstOrDefaultAsync(c => c.Categorieid == catid);
+            }
+            return categorie;
+        }
     }
 }

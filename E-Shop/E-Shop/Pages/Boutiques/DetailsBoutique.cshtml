@@ -2,3 +2,97 @@
 @model E_Shop.Pages.Boutiques.DetailsBoutiqueModel
 @{
 }
+
+<style>
+    div.imageborder {
+        border-radius: 999em;
+        width: 125px;
+        height: 125px;
+        padding: 1px;
+        line-height: 0;
+        border: 5px solid #808080;
+        background-color: #eee;
+    }
+
+    .imgMiniBout {
+        display: block;
+        background: transparent;
+        padding: 8px;
+        border: 1px solid #ccc;
+        box-shadow: 10px 10px 10px #999;
+        border-radius: 999em;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+    }
+</style>
+@{
+    var vignette = Model.boutique.Media.FirstOrDefault(m => m.Description == "vignette").Lien;
+    var departement = Model.boutique.Localisations.FirstOrDefault(l => l.PrNom == null).Departement;
+    var pano = Model.boutique.Media.FirstOrDefault(m => m.Description == "pano").Lien;
+ }
+<div class="row align-items-center m-3">
+    <div class="col-sm-4 align-self-start">
+        <div class="card">
+            <div class="imageborder">
+                <img class="imgMiniBout img-fluid" src="@vignette" />
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@Model.boutique.BtqNom</h5>
+                <p class="card-text">@departement</p>
+                <div class="col">
+                    @foreach (var item in Model.categories)
+                    {
+                        <a>@item.Categorienom @item.Produits.Count</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="card">
+            @if (Model.boutique.Media.Any(m=>m.Video==true))
+            {
+                var video = Model.boutique.Media.FirstOrDefault(m => m.Video == true).Lien;
+
+                <iframe width="690" height="330" src="@video" frameborder='0' allowfullscreen='0'></iframe>
+
+            }
+            @if (Model.boutique.Media.Any(m => m.Video == false))
+            {
+                <div class="m-1">
+
+                    <img class="img-fluid" src="@pano" />
+
+                </div>
+
+            }
+            <div class="card-body">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Description</a>
+                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Avis client</a>
+                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Informations administratives</a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <p>@Model.boutique.BDescriptionL</p>
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <p>Marcel : j'adore cette boutique !</p>
+                    </div>
+                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        <p>
+                            Raison sociale : @Model.boutique.Raisonsociale
+                            <br />
+                            N° SIRET : @Model.boutique.Siret
+                            <br />
+                            Inscrit depuis le : @Model.boutique.DateCreation
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

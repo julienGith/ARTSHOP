@@ -40,17 +40,22 @@
         @foreach (var btq in Model.listBtq)
         {
             var mediabtq = btq.Media.FirstOrDefault(m => m.Description == "vignette");
+            var locabtq = btq.Localisations.FirstOrDefault(l => l.PrNom == null);
             @if (btq.Produits.Count > 0)
             {
                 <div class="card mt-3">
                     <div class="card-body">
                         <div class="row row align-items-center">
                             <div class="col-sm-4 align-self-start">
-                                <div>
-                                    <div class="imageborder">
-                                        <img class="imgMiniBout" src="@mediabtq.Lien" />
-                                    </div>
-                                    <div class="d-flex">@btq.BtqNom</div>
+                                <div class="justify-content-center">
+                                    <a class="dropdown-item" href="/Boutiques/DetailsBoutique/?btqid=@btq.Btqid">
+                                        <div class="imageborder">
+                                            <img class="imgMiniBout" src="@mediabtq.Lien" />
+                                        </div>
+                                        <div class="d-flex">@btq.BtqNom</div>
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <div class="d-flex">@locabtq.Departement</div>
+                                    </a>
                                 </div>
                             </div>
                             <div class="col-sm-8">

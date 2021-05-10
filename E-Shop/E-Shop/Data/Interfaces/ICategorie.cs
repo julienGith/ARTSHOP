@@ -26,5 +26,9 @@ namespace E_Shop.Data.Interfaces
         Task<List<SelectListItem>> GetSelectListItemCategoriesParents();
         //Get Categories enfant SelectListItem
         Task<List<SelectListItem>> GetSelectListItemCategoriesEnfants(int categorieParentId);
+        //Get catégories d'une boutique
+        Task<List<Categorie>> GetCategoriesByBtqId(int btqId);
+        //Get catégorie par catégorie Id
+        Task<Categorie> GetCategorieById(int catid);
     }
 }

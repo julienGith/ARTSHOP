@@ -103,7 +103,7 @@ namespace E_Shop.Data.Functions
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
                 context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-                boutique = await context.Boutiques.FirstOrDefaultAsync(b => b.Btqid == boutiqueId);
+                boutique = await context.Boutiques.Include(b => b.Media).Include(b => b.Localisations).FirstOrDefaultAsync(b => b.Btqid == boutiqueId);
             }
             return boutique;
         }
@@ -145,11 +145,11 @@ namespace E_Shop.Data.Functions
                      .ThenInclude(p => p.Media).Include(c => c.Categorie).ThenInclude(c => c.Produits)
                      .ThenInclude(p => p.Formats).Include(c => c.Categorie).ThenInclude(c => c.Produits)
                      .ThenInclude(p => p.Avis).Include(c => c.Categorie).ThenInclude(c => c.Produits)
-                     .ThenInclude(p => p.Btq).ThenInclude(b => b.Media).ToListAsync();
+                     .AsNoTracking().ToListAsync();
 
                 boutiques = await PaginatedList<Boutique>.CreateAsync(context.Boutiques.
                     Include(b=>b.Media).
-                    Include(b => b.Avis).
+                    Include(b => b.Avis).Include(b=>b.Localisations).
                     Include(b=>b.Produits.Where(p=>p.Categorieid==catId)).
                     ThenInclude(p=>p.Media).Include(b => b.Produits).
                     ThenInclude(p=>p.Formats).AsNoTracking(), pageIndex ?? 1, pageSize);
@@ -174,5 +174,6 @@ namespace E_Shop.Data.Functions
             }
             return boutiques;
         }
+
     }
 }

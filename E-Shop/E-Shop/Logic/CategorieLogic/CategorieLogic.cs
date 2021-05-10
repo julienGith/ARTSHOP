@@ -48,5 +48,15 @@ namespace E_Shop.Logic.CategorieLogic
         {
             return await Categorie.GetSelectListItemCategoriesEnfants(categorieParentId);
         }
+        //Get catégories d'une boutique
+        public async Task<List<Categorie>> GetCategoriesByBtqId(int btqId)
+        {
+            return await Categorie.GetCategoriesByBtqId(btqId);
+        }
+        //Get catégorie par catégorie Id
+        public async Task<Categorie> GetCategorieById(int catid)
+        {
+            return await Categorie.GetCategorieById(catid);
+        }
     }
 }
