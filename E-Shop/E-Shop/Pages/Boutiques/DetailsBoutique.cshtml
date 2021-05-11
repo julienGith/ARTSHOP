@@ -30,28 +30,37 @@
     var vignette = Model.boutique.Media.FirstOrDefault(m => m.Description == "vignette").Lien;
     var departement = Model.boutique.Localisations.FirstOrDefault(l => l.PrNom == null).Departement;
     var pano = Model.boutique.Media.FirstOrDefault(m => m.Description == "pano").Lien;
- }
-<div class="row align-items-center m-3">
-    <div class="col-sm-4 align-self-start">
-        <div class="card">
+}
+<div class="row align-items-center">
+    <div class="col-sm-3 align-self-start">
+        <div class="card position-fixed">
             <div class="imageborder">
                 <img class="imgMiniBout img-fluid" src="@vignette" />
             </div>
             <div class="card-body">
                 <h5 class="card-title">@Model.boutique.BtqNom</h5>
                 <p class="card-text">@departement</p>
-                <div class="col">
-                    @foreach (var item in Model.categories)
-                    {
-                        <a>@item.Categorienom @item.Produits.Count</a>
-                    }
-                </div>
+                @foreach (var c in Model.categories)
+                {
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#@c.Categorienom" aria-expanded="false" aria-controls="@c.Categorienom">
+                        @c.Categorienom
+                    </button>
+                    <div class="collapse" id="@c.Categorienom">
+
+                        @foreach (var ce in c.CatnavCatCategories)
+                        {
+                        <p>
+                            @ce.Categorie.Categorienom @ce.Categorie.Produits.Count
+                        </p>
+                        }
+                    </div>
+                }        
             </div>
         </div>
     </div>
-    <div class="col-sm-8">
-        <div class="card">
-            @if (Model.boutique.Media.Any(m=>m.Video==true))
+    <div class="col-sm-9">
+        <div class="card align-items-center">
+            @if (Model.boutique.Media.Any(m => m.Video == true))
             {
                 var video = Model.boutique.Media.FirstOrDefault(m => m.Video == true).Lien;
 
@@ -94,5 +103,77 @@
                 </div>
             </div>
         </div>
+        @foreach (var c in Model.categories)
+        {
+            <p>@c.Categorienom</p>
+
+            @foreach (var ce in c.CatnavCatCategories)
+            {
+                <p>
+                    @ce.Categorie.Categorienom
+                </p>
+                for (int i = 0; i < Model.produits.Count; i+=3)
+                {
+    <div class="row justify-content-center">
+        @foreach (var p in Model.produits.Skip(i).Take(3))
+        {
+        if (p.Categorieid == ce.Categorieid)
+        {
+        var media = p.Media.FirstOrDefault(m => m.Description == "mid");
+        var format = p.Formats.FirstOrDefault();
+        var prixAuKilo = format.Prix / format.Poids;
+        var prixAuLitre = format.Prix / format.Litre;
+
+        <div class="card mr-1" style="max-width: 17rem;">
+            <img src="@media.Lien" class="card-img-top" alt="...">
+            <div class="card-body">
+                <a href="/Produits/DetailsProduit/?prodId=@p.Prodid" class="stretched-link"></a>
+                <h5 class="card-title">@p.PNom</h5>
+                <p class="card-text">@p.PDescriptionC</p>
+            </div>
+            <div class="card-footer">
+                @if (p.Rabais > 0)
+                {
+                    var prixRabais = Math.Round((decimal)format.Prix, 2) - Math.Round(((decimal)format.Prix * ((decimal)p.Rabais / 100)), 2);
+                    <div class="float-lg-right">@prixRabais €</div>
+                    <div class="float-lg-right">-@p.Rabais %</div>
+                    <strike class="float-lg-right">@format.Prix €</strike>
+                }
+                @if (p.Rabais == 0)
+                {
+                    <div class="float-lg-right">@format.Prix €</div>
+                }
+                @if (format.Poids > 0)
+                {
+                    <div class="float-lg-left">
+                        <div>
+                            @format.Poids Kg
+                        </div>
+                        <div>
+                            @prixAuKilo€/Kg
+                        </div>
+                    </div>
+                }
+                @if (format.Litre > 0)
+                {
+                    <div class="float-lg-left">
+                        <div>
+                            @format.Litre Kg
+                        </div>
+                        <div>
+                            @prixAuLitre€/Kg
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        }
+        }
+
+    </div>
+                }
+            }
+
+        }
     </div>
 </div>

@@ -59,6 +59,7 @@ namespace E_Shop.Data.Functions
             List<Categorie> categories = new List<Categorie>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 categories = await context.Categories.ToListAsync();
             }
             return categories;
@@ -70,6 +71,7 @@ namespace E_Shop.Data.Functions
             List<Catnav> Catnavs = new List<Catnav>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 Catnavs = await context.Catnavs.Include(c=>c.Categorie).Where(c=>c.CatCategorieid==3).ToListAsync();
                 foreach (var item in Catnavs)
                 {
@@ -85,6 +87,7 @@ namespace E_Shop.Data.Functions
             List<Catnav> Catnavs = new List<Catnav>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 Catnavs = await context.Catnavs.Include(c => c.Categorie).Where(c => c.CatCategorieid == categorieParentId).ToListAsync();
                 foreach (var item in Catnavs)
                 {
@@ -99,6 +102,7 @@ namespace E_Shop.Data.Functions
         {
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 Options = context.Categories.Select(a =>new SelectListItem{Value = a.Categorieid.ToString(),Text = a.Categorienom}).ToList();
             }
             return Options;
@@ -111,6 +115,7 @@ namespace E_Shop.Data.Functions
 
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 Catnavs = await context.Catnavs.Include(c => c.Categorie).Where(c => c.CatCategorieid == 3).ToListAsync();
                 foreach (var item in Catnavs)
                 {
@@ -128,6 +133,7 @@ namespace E_Shop.Data.Functions
 
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
                 Catnavs = await context.Catnavs.Include(c => c.Categorie).Where(c => c.CatCategorieid == categorieParentId).ToListAsync();
                 foreach (var item in Catnavs)
                 {
@@ -142,12 +148,16 @@ namespace E_Shop.Data.Functions
         public async Task<List<Categorie>> GetCategoriesByBtqId(int btqId)
         {
             List<Categorie> categories = new List<Categorie>();
-            List<Categorie> categoriesParent = new List<Categorie>();
+            List<Catnav> Catnavs = new List<Catnav>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                categories = await context.Categories.Include(c => c.Produits.Where(p => p.Btqid == btqId))
-                    .Where(c=>c.Produits.Count>0).Include(c => c.CatnavCategories).ThenInclude(c=>c.CatCategorie).AsNoTracking().ToListAsync();
 
+                Catnavs = await context.Catnavs.Include(c => c.Categorie).Include(c => c.CatCategorie).Include(c => c.Categorie.Produits).Where(c=>c.Categorie.Produits.Count()>0).ToListAsync();
+                foreach (var item in Catnavs)
+                {
+                    categories.Add(item.CatCategorie);
+                }
+                categories=categories.Distinct().ToList();
             }
             return categories;
         }
