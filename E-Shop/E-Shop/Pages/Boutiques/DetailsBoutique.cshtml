@@ -32,33 +32,34 @@
     var pano = Model.boutique.Media.FirstOrDefault(m => m.Description == "pano").Lien;
 }
 <div class="row align-items-center">
-    <div class="col-sm-3 align-self-start">
-        <div class="card position-fixed">
-            <div class="imageborder">
+    <div class="col-sm-3 align-self-start list-group" id="list-example">
+        <div class="card" style="position:fixed;" id="btqcard">
+            <div class="imageborder align-self-center">
                 <img class="imgMiniBout img-fluid" src="@vignette" />
             </div>
-            <div class="card-body">
+            <div class="card-body text-center">
                 <h5 class="card-title">@Model.boutique.BtqNom</h5>
+                <i class="fas fa-map-marker-alt"></i>
                 <p class="card-text">@departement</p>
                 @foreach (var c in Model.categories)
                 {
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#@c.Categorienom" aria-expanded="false" aria-controls="@c.Categorienom">
+                    <button class="list-group-item btn-block" type="button" data-toggle="collapse" data-target="#@c.Categorienom" aria-expanded="false" aria-controls="@c.Categorienom">
                         @c.Categorienom
                     </button>
                     <div class="collapse" id="@c.Categorienom">
 
                         @foreach (var ce in c.CatnavCatCategories)
                         {
-                        <p>
-                            @ce.Categorie.Categorienom @ce.Categorie.Produits.Count
-                        </p>
+                            <div>
+                                <a class="list-group-item list-group-item-action" href="#@ce.Categorie.Categorieid">@ce.Categorie.Categorienom @ce.Categorie.Produits.Count</a>
+                            </div>
                         }
                     </div>
-                }        
+                }
             </div>
         </div>
     </div>
-    <div class="col-sm-9">
+    <div class="col-sm-9 scrollspy-example" data-spy="scroll" data-target="#list-example" data-offset="0" style="overflow: auto;">
         <div class="card align-items-center">
             @if (Model.boutique.Media.Any(m => m.Video == true))
             {
@@ -109,7 +110,7 @@
 
             @foreach (var ce in c.CatnavCatCategories)
             {
-                <p>
+                <p id="@ce.Categorie.Categorieid">
                     @ce.Categorie.Categorienom
                 </p>
                 for (int i = 0; i < Model.produits.Count; i+=3)
@@ -177,3 +178,12 @@
         }
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        var btqcard = document.getElementById("btqcard");
+        if (screen.width < 800) {
+            btqcard.removeAttribute("style");
+        }
+    });
+
+</script>
