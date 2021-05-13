@@ -31,10 +31,10 @@
     var departement = Model.boutique.Localisations.FirstOrDefault(l => l.PrNom == null).Departement;
     var pano = Model.boutique.Media.FirstOrDefault(m => m.Description == "pano").Lien;
 }
-<div class="row align-items-center">
+<div class="row align-items-center mt-3">
     <div class="col-sm-3 align-self-start list-group" id="list-example">
         <div class="card" style="position:fixed;" id="btqcard">
-            <div class="imageborder align-self-center">
+            <div class="imageborder align-self-center mt-2">
                 <img class="imgMiniBout img-fluid" src="@vignette" />
             </div>
             <div class="card-body text-center">
@@ -60,7 +60,7 @@
         </div>
     </div>
     <div class="col-sm-9 scrollspy-example" data-spy="scroll" data-target="#list-example" data-offset="0" style="overflow: auto;">
-        <div class="card align-items-center">
+        <div class="card pl-2">
             @if (Model.boutique.Media.Any(m => m.Video == true))
             {
                 var video = Model.boutique.Media.FirstOrDefault(m => m.Video == true).Lien;
@@ -70,7 +70,7 @@
             }
             @if (Model.boutique.Media.Any(m => m.Video == false))
             {
-                <div class="m-1">
+                <div class="ml-5 mt-2">
 
                     <img class="img-fluid" src="@pano" />
 
@@ -106,13 +106,14 @@
         </div>
         @foreach (var c in Model.categories)
         {
-            <p>@c.Categorienom</p>
+            <div class="text-center"><h3>@c.Categorienom</h3></div>
+            
 
             @foreach (var ce in c.CatnavCatCategories)
             {
-                <p id="@ce.Categorie.Categorieid">
+                <h5 id="@ce.Categorie.Categorieid">
                     @ce.Categorie.Categorienom
-                </p>
+                </h5>
                 for (int i = 0; i < Model.produits.Count; i+=3)
                 {
     <div class="row justify-content-center">
