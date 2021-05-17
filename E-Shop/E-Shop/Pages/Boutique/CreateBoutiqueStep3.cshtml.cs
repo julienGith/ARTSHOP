@@ -7,12 +7,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using E_Shop.Extensions;
 using E_Shop.Logic.BoutiqueLogic;
-
+using Microsoft.AspNetCore.Identity;
+using E_Shop.Entities;
 
 namespace E_Shop.Pages.Boutique
 {
     public class CreateBoutiqueStep3Model : PageModel
     {
+        private readonly UserManager<Partenaire> _userManager;
+
+        public CreateBoutiqueStep3Model(UserManager<Partenaire> userManager)
+        {
+                _userManager = userManager;
+        }
         
         [BindProperty]
         public Step3 step3 { get; set; }
@@ -56,7 +63,6 @@ namespace E_Shop.Pages.Boutique
             if (ModelState.IsValid)
             {
                 HttpContext.Session.Set<Step3>("step3", step3);
-
                 return Redirect("/boutique/CreateBoutiqueStep4");
             }
             return Page();
