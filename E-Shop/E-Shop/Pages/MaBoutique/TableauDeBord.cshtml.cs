@@ -44,19 +44,22 @@ namespace E_Shop.Pages.MaBoutique
         {
             return Redirect("/MaBoutique/GestionBoutique/GestionBoutique");
         }
-        public async Task OnPostStripe()
+        public async Task<IActionResult> OnPostStripe()
         {
-            await CreateStripeAccount();
+            var result = await CreateStripeAccount();
+            return Redirect(result);
 
         }
         public void OnPostStripeDelete()
         {
             StripeConfiguration.ApiKey = SecretKey;
             var service = new AccountService();
-            service.Delete("acct_1IrytuQRSC3D3Mqe");
+            service.Delete("acct_1Is1Kz4I5DY3p1lw");
+            service.Delete("acct_1Is1KPQTc3c3OAGS");
+
 
         }
-        private async Task<IActionResult> CreateStripeAccount()
+        private async Task<string> CreateStripeAccount()
         {
             var user = await _userManager.FindByEmailAsync(User.Identity.Name);
             StripeConfiguration.ApiKey = SecretKey;
@@ -99,7 +102,7 @@ namespace E_Shop.Pages.MaBoutique
             };
             var LinkService = new AccountLinkService();
             var accountLink = LinkService.Create(LinkOptions);
-            return Redirect(accountLink.Url);
+            return accountLink.Url;
         }
         public async Task OnGetAsync()
         {
