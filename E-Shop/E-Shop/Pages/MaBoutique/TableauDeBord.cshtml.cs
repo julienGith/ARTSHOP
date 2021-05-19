@@ -56,8 +56,6 @@ namespace E_Shop.Pages.MaBoutique
             var service = new AccountService();
             service.Delete("acct_1Is1Kz4I5DY3p1lw");
             service.Delete("acct_1Is1KPQTc3c3OAGS");
-
-
         }
         private async Task<string> CreateStripeAccount()
         {
@@ -68,14 +66,6 @@ namespace E_Shop.Pages.MaBoutique
                 Type = "express",
                 Country = "FR",
                 Email = user.Email,
-                Settings =
-                {
-                    Branding =
-                    {
-                        
-                    },
-                    
-                },
                 Capabilities = new AccountCapabilitiesOptions
                 {
                     CardPayments = new AccountCapabilitiesCardPaymentsOptions

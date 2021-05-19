@@ -24,7 +24,7 @@ namespace E_Shop.Pages.MaCommande
         public DateTime dateChoisie { get; set; }
         public int délaiMaxCommande { get; set; }
         public int délai { get; set; }
-        public List<int> liteDélais = new List<int>();
+        public List<int> listeDélais = new List<int>();
         public Livraisontype livraisontype = new Livraisontype();
         public List<Livraisontype> livraisonstypeProd = new List<Livraisontype>();
         public void OnPost()
@@ -39,11 +39,9 @@ namespace E_Shop.Pages.MaCommande
             cart = HttpContext.Session.Get<Models.Cart>("Cart");
             foreach (var btq in cart.Btqs)
             {
-                foreach (var item in btq.items)
-                {
-                    livraisonstypeProd = await livraisonTypeFunctions.GetLivraisontypeByProdId(item.produit.Prodid);
 
-                }
+                    livraisonstypeProd = await livraisonTypeFunctions.GetLivraisonTypeByBoutique(btq.id);
+
             }
             return Page();
 

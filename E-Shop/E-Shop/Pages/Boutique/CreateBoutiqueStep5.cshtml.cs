@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using E_Shop.Entities;
 using E_Shop.Extensions;
 using E_Shop.Logic.BoutiqueLogic;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Configuration;
+using Stripe;
 using static E_Shop.Pages.Boutique.CreateBoutiqueStep1Model;
 using static E_Shop.Pages.Boutique.CreateBoutiqueStep2Model;
 using static E_Shop.Pages.Boutique.CreateBoutiqueStep3Model;
@@ -16,6 +20,13 @@ namespace E_Shop.Pages.Boutique
 {
     public class CreateBoutiqueStep5Model : PageModel
     {
+        public string SecretKey { get; }
+        private readonly UserManager<Partenaire> _userManager;
+        public CreateBoutiqueStep5Model(UserManager<Partenaire> userManager, IConfiguration config)
+        {
+            SecretKey = config["Stripe:SecretKey"].ToString();
+            _userManager = userManager;
+        }
         private BoutiqueLogic boutiqueLogic = new BoutiqueLogic();
 
         [BindProperty]
@@ -42,7 +53,8 @@ namespace E_Shop.Pages.Boutique
                 Step2 step2 = new Step2();
                 Step3 step3 = new Step3();
                 Step4 step4 = new Step4();
-
+                
+                string StripeAcct = CreateStripeAcct().ToString();
 
                 step2 = HttpContext.Session.Get<Step2>("step2");
                 step3 = HttpContext.Session.Get<Step3>("step3");
@@ -52,7 +64,7 @@ namespace E_Shop.Pages.Boutique
                     step5.BDescriptionL, step2.Raisonsociale,step2.Nom, step2.Siret, step2.Siren, step2.Btqtel,
                     step2.Codenaf, step3.Codebanque, step3.Codeguichet, step3.Numcompte, step3.Clerib, step3.Domiciliation,
                     step3.Iban, step3.Bic, step3.Titulaire, step2.Btqtmail,
-                    null, 0, step2.Nbsalarie, null, step2.Statutjuridique, null, step5.dateCreation);
+                    null, 0, step2.Nbsalarie, null, step2.Statutjuridique, null, step5.dateCreation, StripeAcct);
                 step5.boutiqueId = result.Btqid;
                 HttpContext.Session.Set<Step5>("step5", step5);
 
@@ -61,6 +73,33 @@ namespace E_Shop.Pages.Boutique
             return Page();
 
         }
+
+        private async Task<string> CreateStripeAcct()
+        {
+            var user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            StripeConfiguration.ApiKey = SecretKey;
+            var options = new AccountCreateOptions
+            {
+                Type = "express",
+                Country = "FR",
+                Email = user.Email,
+                Capabilities = new AccountCapabilitiesOptions
+                {
+                    CardPayments = new AccountCapabilitiesCardPaymentsOptions
+                    {
+                        Requested = true,
+                    },
+                    Transfers = new AccountCapabilitiesTransfersOptions
+                    {
+                        Requested = true,
+                    },
+                },
+            };
+            var service = new AccountService();
+            var result = service.Create(options);
+            return result.Id;
+        }
+
         public IActionResult OnPostBack()
         {
             HttpContext.Session.Set<Step5>("step5", step5);

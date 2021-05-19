@@ -18,13 +18,13 @@ namespace E_Shop.Logic.BoutiqueLogic
     string siren, string tel, string codenaf, string codebanque, string codeguichet,
     string numcompte, string clerib, string domiciliation, string iban, string bic,
     string titulaire, string mail, string message, int ca, int nbsalarie, string siteweb,
-    string statutjuridique, string btqseo, string dateCreation)
+    string statutjuridique, string btqseo, string dateCreation, string StripeAcct)
         {
             return await _boutique.AddBoutique(partenaireid, politiqueid, descriptionC, descriptionL, raisonsociale, Nom, siret,
             siren, tel, codenaf, codebanque, codeguichet,
             numcompte, clerib, domiciliation, iban, bic,
             titulaire, mail, message, ca, nbsalarie, siteweb,
-            statutjuridique, btqseo, dateCreation);
+            statutjuridique, btqseo, dateCreation, StripeAcct);
         }
         //Update Boutique
         public async Task<Boolean> UpdateBoutique(Boutique boutique)

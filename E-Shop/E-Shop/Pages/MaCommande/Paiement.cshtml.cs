@@ -28,6 +28,11 @@ namespace E_Shop.Pages.MaCommande
             {
                 Amount = (long)cart.prixTotal * 100,
                 Currency = "eur",
+                ApplicationFeeAmount = 123,
+                TransferData = new PaymentIntentTransferDataOptions
+                {
+                    Destination = "{{CONNECTED_STRIPE_ACCOUNT_ID}}",
+                },
 
             });
 

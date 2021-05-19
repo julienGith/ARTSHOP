@@ -18,7 +18,7 @@ namespace E_Shop.Data.Functions
             string siren, string tel, string codenaf, string codebanque, string codeguichet,
             string numcompte, string clerib, string domiciliation, string iban, string bic,
             string titulaire, string mail, string message, int ca, int nbsalarie, string siteweb,
-            string statutjuridique, string btqseo,string dateCreation)
+            string statutjuridique, string btqseo,string dateCreation, string StripeAcct)
         {
 
             Boutique newboutique = new Boutique
@@ -48,7 +48,8 @@ namespace E_Shop.Data.Functions
                 Siteweb = siteweb,
                 Statutjuridique = statutjuridique,
                 Btqseo = btqseo,
-                DateCreation = dateCreation
+                DateCreation = dateCreation,
+                StripeAcct = StripeAcct
             };
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {

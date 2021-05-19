@@ -99,6 +99,9 @@ namespace E_Shop.Entities
         [Column("DATECREATION")]
         [StringLength(50)]
         public string DateCreation { get; set; }
+        [Column("STRIPEACCT")]
+        [StringLength(255)]
+        public string StripeAcct { get; set; }
 
 
         [ForeignKey(nameof(Id))]
