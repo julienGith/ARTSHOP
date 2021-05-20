@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using E_Shop.Entities;
 using E_Shop.Extensions;
+using E_Shop.Logic.BoutiqueLogic;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -92,15 +93,14 @@ namespace E_Shop.Pages.Boutique
             Step9 step9 = new Step9();
             Step10 step10 = new Step10();
 
-            if (HttpContext.Session.Get<Step2>("step2") != null && HttpContext.Session.Get<Step5>("step5") != null && HttpContext.Session.Get<Step6>("step6") != null &&
-                HttpContext.Session.Get<Step8>("step8") != null && HttpContext.Session.Get<Step9>("step9") != null && HttpContext.Session.Get<Step10>("step10") != null)
+            if (HttpContext.Session.Get<Step2>("step2") != null)
             {
                 step2 = HttpContext.Session.Get<Step2>("step2");
                 step5 = HttpContext.Session.Get<Step5>("step5");
                 step6 = HttpContext.Session.Get<Step6>("step6");
                 step8 = HttpContext.Session.Get<Step8>("step8");
                 step9 = HttpContext.Session.Get<Step9>("step9");
-                step10 = HttpContext.Session.Get<Step10>("step10");
+                
                 step11 = new Step11
                 {
                     BtqDescription = step5.BDescriptionL,
@@ -110,11 +110,15 @@ namespace E_Shop.Pages.Boutique
                     Dept = step6.Departement,
                     RaisonSociale = step2.Raisonsociale,
                     Siret = step2.Siret,
-                    dateCreation = step5.dateCreation,
-                    lienVideo = step10.Lien
+                    dateCreation = step5.dateCreation                    
                 };
+                if (HttpContext.Session.Get<Step10>("step10")!=null)
+                {
+                    step10 = HttpContext.Session.Get<Step10>("step10");
+                    step11.lienVideo = step10.Lien;
+                }
             }
-            else
+            if (HttpContext.Session.Get<Step2>("step2") == null)
             {
                 Entities.Boutique boutique = new Entities.Boutique();
                 List<Entities.Boutique> boutiques = new List<Entities.Boutique>();
@@ -123,8 +127,7 @@ namespace E_Shop.Pages.Boutique
                 boutique = boutiques.FirstOrDefault();
                 step11.lienImg1 = boutique.Media.Where(m => m.Description == "vignette").Select(m=>m.Lien).ToString();
                 step11.lienImg2 = boutique.Media.Where(m => m.Description == "pano").Select(m => m.Lien).ToString();
-                step10.Lien = boutique.Media.Where(m => m.Video == true).Select(m => m.Lien).ToString();
-                step6.Departement = boutique.Localisations.Where(l=>l.PrNom=="").Select(l=>l.Departement).ToString();
+                step6.Departement = boutique.Localisations.Where(l=>l.PrNom==null).Select(l=>l.Departement).ToString();
                 step11 = new Step11
                 {
                     BtqDescription = boutique.BDescriptionL,
@@ -134,9 +137,13 @@ namespace E_Shop.Pages.Boutique
                     Dept = step6.Departement,
                     RaisonSociale = boutique.Raisonsociale,
                     Siret = boutique.Siret,
-                    dateCreation = boutique.DateCreation,
-                    lienVideo = step10.Lien
+                    dateCreation = boutique.DateCreation
                 };
+                if (boutique.Media.Where(m => m.Video == true).Select(m => m.Lien).ToString() != null)
+                {
+                    step10.Lien = boutique.Media.Where(m => m.Video == true).Select(m => m.Lien).ToString();
+                    step11.lienVideo = step10.Lien;
+                }
             }
             return Page();
         }

@@ -54,7 +54,7 @@ namespace E_Shop.Pages.Boutique
                 Step2 step2 = new Step2();
                 Step3 step3 = new Step3();
                 Step4 step4 = new Step4();
-                var SAcct = CreateStripeAcct().ToString();
+                var SAcct = CreateStripeAcct().Result;
                 step5.StripeAcct = SAcct;
 
                 step2 = HttpContext.Session.Get<Step2>("step2");
