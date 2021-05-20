@@ -37,50 +37,50 @@
             </div>
         </div>
     </div>
-        <div class="col-sm-8">
-            <div class="card">
-                @if (Model.step11.lienVideo != null)
-                {
-                    <iframe width="690" height="330" src="@Model.step11.lienVideo" frameborder='0' allowfullscreen='0'></iframe>
+    <div class="col-sm-8">
+        <div class="card">
+            @if (Model.step11.lienVideo != null)
+            {
+                <iframe width="690" height="330" src="@Model.step11.lienVideo" frameborder='0' allowfullscreen='0'></iframe>
 
-                }
-                @if (Model.step11.lienVideo == null)
-                {
-                    <div class="m-1">
+            }
+            @if (Model.step11.lienVideo == null)
+            {
+                <div class="m-1">
 
-                        <img class="img-fluid" src="@Model.step11.lienImg2" />
+                    <img class="img-fluid" src="@Model.step11.lienImg2" />
 
+                </div>
+
+            }
+            <div class="card-body">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Description</a>
+                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Avis client</a>
+                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Informations administratives</a>
                     </div>
-
-                }
-                <div class="card-body">
-                    <nav>
-                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Description</a>
-                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Avis client</a>
-                            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Informations administratives</a>
-                        </div>
-                    </nav>
-                    <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                            <p>@Model.step11.BtqDescription</p>
-                        </div>
-                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                            <p>Marcel : j'adore cette boutique !</p>
-                        </div>
-                        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                            <p>
-                                Raison sociale : @Model.step11.RaisonSociale
-                                <br />
-                                N° SIRET : @Model.step11.Siret
-                                <br />
-                                Inscrit depuis le : @Model.step11.dateCreation
-                            </p>
-                        </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <p>@Model.step11.BtqDescription</p>
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <p>Marcel : j'adore cette boutique !</p>
+                    </div>
+                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        <p>
+                            Raison sociale : @Model.step11.RaisonSociale
+                            <br />
+                            N° SIRET : @Model.step11.Siret
+                            <br />
+                            Inscrit depuis le : @Model.step11.dateCreation
+                        </p>
                     </div>
                 </div>
             </div>
-            <a href="/MaBoutique/TableauDeBord" class="btn btn-primary">Tableau de bord</a>
         </div>
+        <button type="submit" asp-page-handler="Stripe" class="btn btn-primary">Relier votre boutique au service de paiement Stripe</button>
+    </div>
     
 </div>

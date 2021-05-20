@@ -43,6 +43,7 @@ namespace E_Shop.Pages.Boutique
             public string BDescriptionL { get; set; }
             public string dateCreation { get; set; }
             public int boutiqueId { get; set; }
+            public string StripeAcct { get; set; }
 
         }
         public async Task<IActionResult> OnPost()
@@ -53,8 +54,8 @@ namespace E_Shop.Pages.Boutique
                 Step2 step2 = new Step2();
                 Step3 step3 = new Step3();
                 Step4 step4 = new Step4();
-                
-                string StripeAcct = CreateStripeAcct().ToString();
+                var SAcct = CreateStripeAcct().ToString();
+                step5.StripeAcct = SAcct;
 
                 step2 = HttpContext.Session.Get<Step2>("step2");
                 step3 = HttpContext.Session.Get<Step3>("step3");
@@ -64,7 +65,7 @@ namespace E_Shop.Pages.Boutique
                     step5.BDescriptionL, step2.Raisonsociale,step2.Nom, step2.Siret, step2.Siren, step2.Btqtel,
                     step2.Codenaf, step3.Codebanque, step3.Codeguichet, step3.Numcompte, step3.Clerib, step3.Domiciliation,
                     step3.Iban, step3.Bic, step3.Titulaire, step2.Btqtmail,
-                    null, 0, step2.Nbsalarie, null, step2.Statutjuridique, null, step5.dateCreation, StripeAcct);
+                    null, 0, step2.Nbsalarie, null, step2.Statutjuridique, null, step5.dateCreation, step5.StripeAcct);
                 step5.boutiqueId = result.Btqid;
                 HttpContext.Session.Set<Step5>("step5", step5);
 

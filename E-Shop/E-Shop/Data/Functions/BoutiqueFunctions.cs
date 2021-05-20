@@ -93,7 +93,7 @@ namespace E_Shop.Data.Functions
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
                 context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-                mesboutiques = await context.Boutiques.Where(b => b.Id == UserID).ToListAsync();
+                mesboutiques = await context.Boutiques.Include(b => b.Media).Include(b => b.Localisations).Where(b => b.Id == UserID).ToListAsync();
             }
             return mesboutiques;
         }
