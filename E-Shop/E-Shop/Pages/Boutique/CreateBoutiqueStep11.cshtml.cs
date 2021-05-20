@@ -45,12 +45,27 @@ namespace E_Shop.Pages.Boutique
 
 
         }
-        public IActionResult OnPostStripe()
+        public async Task<IActionResult> OnPostStripe()
         {
-            Step5 step5 = new Step5();
-            step5 = HttpContext.Session.Get<Step5>("step5");
-            var result = CreateStripeAccountLink(step5.StripeAcct);
-            return Redirect(result);
+
+            if (HttpContext.Session.Get<Step5>("step5")!=null)
+            {
+                Step5 step5 = new Step5();
+                step5 = HttpContext.Session.Get<Step5>("step5");
+                var result = CreateStripeAccountLink(step5.StripeAcct);
+                return Redirect(result);
+            }
+            else
+            {
+                Entities.Boutique boutique = new Entities.Boutique();
+                List<Entities.Boutique> boutiques = new List<Entities.Boutique>();
+                var user = await _userManager.FindByEmailAsync(User.Identity.Name);
+                boutiques = await _boutiqueLogic.GetPartenaireBoutiques(user.Id);
+                boutique = boutiques.FirstOrDefault();
+                var result = CreateStripeAccountLink(boutique.StripeAcct);
+                return Redirect(result);
+            }
+
         }
 
         private string CreateStripeAccountLink(string StripeAcct)
