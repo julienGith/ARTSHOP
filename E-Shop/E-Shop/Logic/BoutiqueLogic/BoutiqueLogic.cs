@@ -65,5 +65,10 @@ namespace E_Shop.Logic.BoutiqueLogic
         {
             return await _boutique.GetBoutiquesByCatId(catId,pageIndex);
         }
+        //Get Boutique stripe acct
+        public string GetBoutiqueStripeAcct(int btqId)
+        {
+            return _boutique.GetBoutiqueStripeAcct(btqId);
+        }
     }
 }

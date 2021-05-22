@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using E_Shop.Extensions;
+using E_Shop.Logic.BoutiqueLogic;
 using E_Shop.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -13,6 +14,7 @@ namespace E_Shop.Pages.MaCommande
 {
     public class PaiementModel : PageModel
     {
+        BoutiqueLogic boutiqueLogic = new BoutiqueLogic();
         public PaiementModel(IConfiguration config)
         {
             PublicKey = config["Stripe:PublicKey"].ToString();
@@ -23,18 +25,25 @@ namespace E_Shop.Pages.MaCommande
         public IActionResult OnPostCreate()
         {
             cart = HttpContext.Session.Get<Models.Cart>("Cart");
-            var paymentIntents = new PaymentIntentService();
-            var paymentIntent = paymentIntents.Create(new PaymentIntentCreateOptions
+            foreach (var btq in cart.Btqs)
             {
-                Amount = (long)cart.prixTotal * 100,
-                Currency = "eur",
-                ApplicationFeeAmount = 123,
-                TransferData = new PaymentIntentTransferDataOptions
-                {
-                    Destination = "{{CONNECTED_STRIPE_ACCOUNT_ID}}",
-                },
+                string StripeAcct = boutiqueLogic.GetBoutiqueStripeAcct(btq.id);
 
-            });
+                var paymentIntents = new PaymentIntentService();
+                var paymentIntent = paymentIntents.Create(new PaymentIntentCreateOptions
+                {
+                    Amount = (long)btq.ItemsTotalprice * 100,
+                    Currency = "eur",
+                    ApplicationFeeAmount = 123,
+                    TransferData = new PaymentIntentTransferDataOptions
+                    {
+                        Destination = StripeAcct,
+                    },
+
+                });
+                
+            }
+
 
             return new JsonResult(new { clientSecret = paymentIntent.ClientSecret });
         }

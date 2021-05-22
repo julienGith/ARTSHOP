@@ -44,56 +44,6 @@ namespace E_Shop.Pages.MaBoutique
         {
             return Redirect("/MaBoutique/GestionBoutique/GestionBoutique");
         }
-        public async Task<IActionResult> OnPostStripe()
-        {
-            var result = await CreateStripeAccount();
-            return Redirect(result);
-
-        }
-        public void OnPostStripeDelete()
-        {
-            StripeConfiguration.ApiKey = SecretKey;
-            var service = new AccountService();
-            service.Delete("acct_1Is1Kz4I5DY3p1lw");
-            service.Delete("acct_1Is1KPQTc3c3OAGS");
-        }
-        private async Task<string> CreateStripeAccount()
-        {
-            var user = await _userManager.FindByEmailAsync(User.Identity.Name);
-            StripeConfiguration.ApiKey = SecretKey;
-            var options = new AccountCreateOptions
-            {
-                Type = "express",
-                Country = "FR",
-                Email = user.Email,
-                Capabilities = new AccountCapabilitiesOptions
-                {
-                    CardPayments = new AccountCapabilitiesCardPaymentsOptions
-                    {
-                        Requested = true,
-                    },
-                    Transfers = new AccountCapabilitiesTransfersOptions
-                    {
-                        Requested = true,
-                    },
-                },
-            };
-            var service = new AccountService();
-            var result = service.Create(options);
-
-            var LinkOptions = new AccountLinkCreateOptions
-            {
-                Account = result.Id,
-                RefreshUrl = "https://example.com/reauth",
-                ReturnUrl = "https://localhost:44318/MaBoutique/TableauDeBord",
-                Type = "account_onboarding",
-                
-                
-            };
-            var LinkService = new AccountLinkService();
-            var accountLink = LinkService.Create(LinkOptions);
-            return accountLink.Url;
-        }
         public async Task OnGetAsync()
         {
             var user = await _userManager.FindByEmailAsync(User.Identity.Name);

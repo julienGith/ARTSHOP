@@ -32,5 +32,7 @@ namespace E_Shop.Data.Interfaces
         Task<List<Boutique>> GetBoutiquesByQuery(string query);
         //Get boutiques par catégorie id
         Task<PaginatedList<Boutique>> GetBoutiquesByCatId(int catId, int? pageIndex);
+        //Get Boutique stripe acct
+        string GetBoutiqueStripeAcct(int btqId);
     }
 }

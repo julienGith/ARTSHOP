@@ -175,6 +175,15 @@ namespace E_Shop.Data.Functions
             }
             return boutiques;
         }
-
+        //Get Boutique stripe acct
+        public string GetBoutiqueStripeAcct(int btqId)
+        {
+            string StripeAcct;
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                StripeAcct = context.Boutiques.Where(b => b.Btqid == btqId).Select(b => b.StripeAcct).AsNoTracking().ToString();
+            }
+            return StripeAcct;
+        }
     }
 }
