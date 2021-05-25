@@ -37,12 +37,6 @@ namespace E_Shop.Pages.MaCommande
 
             //var user = await _userManager.FindByEmailAsync(User.Identity.Name);
             cart = HttpContext.Session.Get<Models.Cart>("Cart");
-            foreach (var btq in cart.Btqs)
-            {
-
-                    livraisonstypeProd = await livraisonTypeFunctions.GetLivraisonTypeByBoutique(btq.id);
-
-            }
             return Page();
 
         }

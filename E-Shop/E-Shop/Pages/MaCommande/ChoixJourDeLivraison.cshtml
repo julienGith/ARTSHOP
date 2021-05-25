@@ -2,3 +2,31 @@
 @model E_Shop.Pages.MaCommande.ChoixJourDeLivraisonModel
 @{
 }
+<h2>Choisissez vos types de livraison</h2>
+
+<h4> Chaque boutique propose des choix de livraison</h4>
+@foreach (var btq in Model.cart.Btqs)
+{
+    <div class="card" style="width: 18rem;">
+        <div class="card-header">
+            @btq.nom
+        </div>
+        <div class="card-body">
+            <table style="width:100%">
+                <tr>
+                    <th>Livreur</th>
+                    <th>Délai</th>
+                    <th>Prix</th>
+                </tr>
+                @foreach (var lvr in btq.Livraisontypes)
+                {
+                    <tr>
+                        <td>@lvr.Lvrdesignation</td>
+                        <td>@lvr.Lvrdelai</td>
+                        <td>@lvr.Lvrcout</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+}

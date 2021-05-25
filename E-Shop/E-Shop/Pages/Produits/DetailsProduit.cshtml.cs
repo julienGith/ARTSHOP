@@ -7,6 +7,7 @@ using E_Shop.Entities;
 using E_Shop.Extensions;
 using E_Shop.Logic.BoutiqueLogic;
 using E_Shop.Logic.FormatLogic;
+using E_Shop.Logic.LivraisonTypeLogic;
 using E_Shop.Logic.LocalisationLogic;
 using E_Shop.Logic.MediaLogic;
 using E_Shop.Logic.ProduitLogic;
@@ -23,6 +24,7 @@ namespace E_Shop.Pages.Produits
         private MediaLogic mediaLogic = new MediaLogic();
         private LocalisationLogic LocalisationLogic = new LocalisationLogic();
         private FormatLogic formatLogic = new FormatLogic();
+        private LivraisonTypeLogic LivraisontypeLogic = new LivraisonTypeLogic();
 
         public List<Format> Formats = new List<Format>();
         public Format Format = new Format();
@@ -59,6 +61,8 @@ namespace E_Shop.Pages.Produits
             Entities.Boutique boutique = new Entities.Boutique();
             boutique = await BoutiqueLogic.GetBoutiqueById(produit.Btqid);
             btqdmedias = await mediaLogic.GetMediasBoutique(boutique.Btqid);
+            List<Livraisontype> Livraisontypes = new List<Livraisontype>();
+            Livraisontypes = await LivraisontypeLogic.GetLivraisonTypeByBoutique(boutique.Btqid);
             string prodlien = prodmedias.Where(m => m.Description == "min").Select(m => m.Lien).FirstOrDefault();
             string btqlien = btqdmedias.Where(m=>m.Description=="vignette").Select(m => m.Lien).FirstOrDefault();
             Item item = new Item
@@ -73,7 +77,8 @@ namespace E_Shop.Pages.Produits
             {
                 id = produit.Btqid,
                 nom = boutique.BtqNom,
-                lien= btqlien
+                lien= btqlien,
+                Livraisontypes = Livraisontypes
             };
             if (HttpContext.Session.Get<Cart>("Cart") == null)
             {

@@ -22,30 +22,28 @@ namespace E_Shop.Pages.MaCommande
         public Cart cart = new Cart();
 
         public string PublicKey { get; }
-        public IActionResult OnPostCreate()
+        public void OnPostCreate()
         {
-            cart = HttpContext.Session.Get<Models.Cart>("Cart");
-            foreach (var btq in cart.Btqs)
-            {
-                string StripeAcct = boutiqueLogic.GetBoutiqueStripeAcct(btq.id);
+            //cart = HttpContext.Session.Get<Models.Cart>("Cart");
+            //foreach (var btq in cart.Btqs)
+            //{
+            //    string StripeAcct = boutiqueLogic.GetBoutiqueStripeAcct(btq.id);
 
-                var paymentIntents = new PaymentIntentService();
-                var paymentIntent = paymentIntents.Create(new PaymentIntentCreateOptions
-                {
-                    Amount = (long)btq.ItemsTotalprice * 100,
-                    Currency = "eur",
-                    ApplicationFeeAmount = 123,
-                    TransferData = new PaymentIntentTransferDataOptions
-                    {
-                        Destination = StripeAcct,
-                    },
+            //    var paymentIntents = new PaymentIntentService();
+            //    var paymentIntent = paymentIntents.Create(new PaymentIntentCreateOptions
+            //    {
+            //        Amount = (long)btq.ItemsTotalprice * 100,
+            //        Currency = "eur",
+            //        ApplicationFeeAmount = 123,
+            //        TransferData = new PaymentIntentTransferDataOptions
+            //        {
+            //            Destination = StripeAcct,
+            //        },
 
-                });
+            //    });
                 
-            }
-
-
-            return new JsonResult(new { clientSecret = paymentIntent.ClientSecret });
+            //}
+            //return new JsonResult(new { clientSecret = paymentIntent.ClientSecret });
         }
 
         public IActionResult OnGet()
