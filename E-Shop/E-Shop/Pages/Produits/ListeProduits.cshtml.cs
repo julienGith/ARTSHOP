@@ -33,6 +33,8 @@ namespace E_Shop.Pages.Produits
         [BindProperty]
         public int? page { get; set; }
         public int totalpage { get; set; }
+        [BindProperty]
+        public string sortOrder { get; set; }
 
 
         public async Task<IActionResult> OnPostByProd()
@@ -41,7 +43,7 @@ namespace E_Shop.Pages.Produits
             pageIndex = page;
             catId = id;
             byProd = true;
-            listProduits = await produitLogic.GetProduitsByCatId(id, page);
+            listProduits = await produitLogic.GetProduitsByCatId(id, page, sortOrder);
             return Page();
         }
         public async Task<IActionResult> OnGet(int catId, int? pageIndex)

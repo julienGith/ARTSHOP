@@ -26,7 +26,7 @@ namespace E_Shop.Data.Interfaces
         //Nom du produit par id produit
         Task<string> GetNomProduitById(int prodId);
         //Get produits par catégorie
-        Task<PaginatedList<Produit>> GetProduitsByCatId(int catId, int? pageIndex);
+        Task<PaginatedList<Produit>> GetProduitsByCatId(int catId, int? pageIndex, string sortOrder);
         //Recherche partielle produits par nom
         Task<List<Produit>> GetListProduitByQuery(string query);
     }

@@ -46,9 +46,9 @@ namespace E_Shop.Logic.ProduitLogic
             return await _produit.GetNomProduitById(prodId);
         }
         //Get produits par catégorie
-        public async Task<PaginatedList<Produit>> GetProduitsByCatId(int catId, int? pageIndex)
+        public async Task<PaginatedList<Produit>> GetProduitsByCatId(int catId, int? pageIndex, string sortOrder)
         {
-            return await _produit.GetProduitsByCatId(catId, pageIndex);
+            return await _produit.GetProduitsByCatId(catId, pageIndex, sortOrder);
         }
         //Recherche partielle produits par nom
         public async Task<List<Produit>> GetListProduitByQuery(string query)

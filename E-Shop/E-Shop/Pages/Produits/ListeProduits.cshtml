@@ -37,6 +37,7 @@
             }
         </style>
         <form method="post"><input name="id" value="@Model.id" hidden /><input name="page" value="@Model.page" hidden /> <button type="submit" asp-page-handler="ByProd" class="btn btn-primary">Afficher par produits</button></form>
+        
         @foreach (var btq in Model.listBtq)
         {
             var mediabtq = btq.Media.FirstOrDefault(m => m.Description == "vignette");
@@ -265,7 +266,14 @@ else
     <form method="get">
         <input name="catId" value="@Model.catId" hidden /><input name="pageIndex" value="@Model.pageIndex" hidden /> <button type="submit" class="btn btn-primary">Afficher par Boutiques</button>
     </form>
-
+    <form type="submit" asp-page-handler="ByProd">
+        <input name="id" value="@Model.id" hidden /><input name="page" value="@Model.page" hidden />
+			<select name="sortOrder" onchange="this.form.submit()">
+			<option value="default" selected>tri</option>
+			<option value="price_asc">Prix croissants</option>
+			<option value="price_desc">Prix décroissants</option>
+		</select>
+</form>
     <div class="card-group mt-3">
         @if (Model.listProduits.Count == 0)
         {
@@ -345,7 +353,7 @@ else
                 @{int? ind = Model.page - 1;
                 }
                 <form method="post">
-                    <input name="id" value="@Model.id" hidden /><input name="page" value="@ind" hidden />
+                    <input name="id" value="@Model.id" hidden /><input name="page" value="@ind" hidden /><input name="sortOrder" value="@Model.sortOrder" hidden/>
                     <button type="submit" asp-page-handler="ByProd" class="btn btn-primary">Précédent</button>
                 </form>
             </div>
@@ -362,7 +370,7 @@ else
                 @{int? ind = Model.page + 1;
                 }
                 <form method="post">
-                    <input name="id" value="@Model.id" hidden /><input name="page" value="@ind" hidden />
+                    <input name="id" value="@Model.id" hidden /><input name="page" value="@ind" hidden /><input name="sortOrder" value="@Model.sortOrder" hidden/>
                     <button type="submit" asp-page-handler="ByProd" class="btn btn-primary">Suivant</button>
                 </form>
             </div>

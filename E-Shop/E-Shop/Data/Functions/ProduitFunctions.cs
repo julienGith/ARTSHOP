@@ -102,7 +102,7 @@ namespace E_Shop.Data.Functions
             return produit.PNom;
         }
         //Get produits par catégorie
-        public async Task<PaginatedList<Produit>> GetProduitsByCatId(int catId, int? pageIndex)
+        public async Task<PaginatedList<Produit>> GetProduitsByCatId(int catId, int? pageIndex, string sortOrder)
         {
             PaginatedList<Produit> produits;
             List<Catnav> CatnavEnfants1 = new List<Catnav>();
@@ -112,42 +112,63 @@ namespace E_Shop.Data.Functions
             int pageSize = 2;
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                IQueryable<Produit> prods = from p in context.Produits.Include(p => p.Avis)
+                    .Include(p => p.Formats)
+                    .Include(p => p.Media)
+                    .Include(p => p.Btq).ThenInclude(b => b.Media)
+                    .Include(p => p.Avis).Where(p=>p.Categorieid == catId).AsNoTracking()
+                                            select p;
+
                 CatnavEnfants1 = await context.Catnavs.Where(n => n.CatCategorieid == catId)
                     .Include(c => c.Categorie).ThenInclude(c => c.Produits)
                     .ThenInclude(p => p.Media).Include(c => c.Categorie).ThenInclude(c => c.Produits)
                     .ThenInclude(p => p.Formats).Include(c => c.Categorie).ThenInclude(c => c.Produits)
                     .ThenInclude(p => p.Avis).Include(c => c.Categorie).ThenInclude(c => c.Produits)
-                    .ThenInclude(p => p.Btq).ThenInclude(b=>b.Media).AsNoTracking().ToListAsync();
-
-                produits = await PaginatedList<Produit>.CreateAsync(context.Produits.Include(p => p.Avis)
-                    .Include(p => p.Formats)
-                    .Include(p => p.Media)
-                    .Include(p => p.Btq).ThenInclude(b => b.Media)
-                    .Include(p => p.Avis)
-                    .Where(p => p.Categorieid == catId).AsNoTracking(), pageIndex ?? 1, pageSize);
+                    .ThenInclude(p => p.Btq).ThenInclude(b => b.Media).AsNoTracking().ToListAsync();
                 if (CatnavEnfants1.Count > 0)
                 {
                     foreach (var item in CatnavEnfants1)
                     {
-                        //CatnavEnfants = await context.Catnavs.Where(n => n.CatCategorieid == item.Categorieid)
-                        //    .Include(c => c.Categorie).ThenInclude(c => c.Produits)
-                        //    .ThenInclude(p => p.Media).Include(c => c.Categorie).ThenInclude(c => c.Produits)
-                        //    .ThenInclude(p => p.Formats).Include(c => c.Categorie).ThenInclude(c => c.Produits)
-                        //    .ThenInclude(p => p.Avis).Include(c => c.Categorie).ThenInclude(c => c.Produits)
-                        //    .ThenInclude(p => p.Btq).AsNoTracking().ToListAsync();
-                        //CatnavEnfants2.AddRange(CatnavEnfants);
-                        produits.AddRange(item.Categorie.Produits);
+                        foreach (var p in item.Categorie.Produits)
+                        {
+                            prods.Append<Produit>(p);
+                        }
                     }
-                    //if (CatnavEnfants2.Count>0)
-                    //{
-                    //    foreach (var item in CatnavEnfants2)
-                    //    {
-                    //        produits.AddRange(item.Categorie.Produits);
-                    //    }
-                    //}
+                }
+                switch (sortOrder)
+                {
+                    case "price_asc":
+                        prods = prods.OrderByDescending(p => p.Formats.Select(f => f.Prix).First()).Reverse();
+                        break;
+                    case "price_desc":
+                        prods = prods.OrderByDescending(p => p.Formats.Select(f => f.Prix).First());
+                        break;
+
                 }
 
+                produits = await PaginatedList<Produit>.CreateAsync(prods.AsNoTracking(), pageIndex ?? 1, pageSize);
+
+                //produits = await PaginatedList<Produit>.CreateAsync(context.Produits.Include(p => p.Avis)
+                //    .Include(p => p.Formats)
+                //    .Include(p => p.Media)
+                //    .Include(p => p.Btq).ThenInclude(b => b.Media)
+                //    .Include(p => p.Avis)
+                //    .Where(p => p.Categorieid == catId).AsNoTracking(), pageIndex ?? 1, pageSize);
+                //if (CatnavEnfants1.Count > 0)
+                //{
+                //    foreach (var item in CatnavEnfants1)
+                //    {
+                //        foreach (var p in item.Categorie.Produits)
+                //        {
+                //            prods.Append<Produit>(p);
+
+                //        }
+                //        produits.AddRange(item.Categorie.Produits);
+                //    }
+                //}
+
             }
+
             return produits;
         }
         //Recherche partielle produits par nom
