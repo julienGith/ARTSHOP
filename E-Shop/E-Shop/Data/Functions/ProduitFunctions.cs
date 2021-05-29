@@ -105,20 +105,15 @@ namespace E_Shop.Data.Functions
         public async Task<PaginatedList<Produit>> GetProduitsByCatId(int catId, int? pageIndex, string sortOrder)
         {
             PaginatedList<Produit> produits;
+            List<Produit> produits1 = new List<Produit>();
             List<Catnav> CatnavEnfants1 = new List<Catnav>();
             List<Catnav> CatnavEnfants2 = new List<Catnav>();
             List<Catnav> CatnavEnfants = new List<Catnav>();
             Categorie categorieSubcatenf = new Categorie();
+            IQueryable<Produit> prods ;
             int pageSize = 2;
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                IQueryable<Produit> prods = from p in context.Produits.Include(p => p.Avis)
-                    .Include(p => p.Formats)
-                    .Include(p => p.Media)
-                    .Include(p => p.Btq).ThenInclude(b => b.Media)
-                    .Include(p => p.Avis).Where(p=>p.Categorieid == catId).AsNoTracking()
-                                            select p;
-
                 CatnavEnfants1 = await context.Catnavs.Where(n => n.CatCategorieid == catId)
                     .Include(c => c.Categorie).ThenInclude(c => c.Produits)
                     .ThenInclude(p => p.Media).Include(c => c.Categorie).ThenInclude(c => c.Produits)
@@ -129,12 +124,15 @@ namespace E_Shop.Data.Functions
                 {
                     foreach (var item in CatnavEnfants1)
                     {
-                        foreach (var p in item.Categorie.Produits)
-                        {
-                            prods.Append<Produit>(p);
-                        }
+                        produits1.AddRange(item.Categorie.Produits);
                     }
                 }
+                prods = from p in context.Produits.Include(p => p.Avis)
+                    .Include(p => p.Media)
+                    .Include(p => p.Formats)
+                    .Include(p => p.Avis)
+                    .Include(p => p.Btq).ThenInclude(b => b.Media).Where(p=>p.Categorieid == catId || produits1.Contains(p) ).AsNoTracking()
+                                            select p;
                 switch (sortOrder)
                 {
                     case "price_asc":
@@ -146,27 +144,7 @@ namespace E_Shop.Data.Functions
 
                 }
 
-                produits = await PaginatedList<Produit>.CreateAsync(prods.AsNoTracking(), pageIndex ?? 1, pageSize);
-
-                //produits = await PaginatedList<Produit>.CreateAsync(context.Produits.Include(p => p.Avis)
-                //    .Include(p => p.Formats)
-                //    .Include(p => p.Media)
-                //    .Include(p => p.Btq).ThenInclude(b => b.Media)
-                //    .Include(p => p.Avis)
-                //    .Where(p => p.Categorieid == catId).AsNoTracking(), pageIndex ?? 1, pageSize);
-                //if (CatnavEnfants1.Count > 0)
-                //{
-                //    foreach (var item in CatnavEnfants1)
-                //    {
-                //        foreach (var p in item.Categorie.Produits)
-                //        {
-                //            prods.Append<Produit>(p);
-
-                //        }
-                //        produits.AddRange(item.Categorie.Produits);
-                //    }
-                //}
-
+                produits = await PaginatedList<Produit>.CreateAsync(prods, pageIndex ?? 1, pageSize);
             }
 
             return produits;
