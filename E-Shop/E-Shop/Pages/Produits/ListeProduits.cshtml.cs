@@ -39,7 +39,6 @@ namespace E_Shop.Pages.Produits
 
         public async Task<IActionResult> OnPostByProd()
         {
-            //problème avec les param from query qui ne se bind pas.. 
             pageIndex = page;
             catId = id;
             byProd = true;
