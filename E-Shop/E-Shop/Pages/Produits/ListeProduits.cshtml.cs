@@ -6,6 +6,7 @@ using E_Shop.Entities;
 using E_Shop.Logic;
 using E_Shop.Logic.BoutiqueLogic;
 using E_Shop.Logic.ProduitLogic;
+using E_Shop.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
@@ -35,6 +36,7 @@ namespace E_Shop.Pages.Produits
         public int totalpage { get; set; }
         [BindProperty]
         public string sortOrder { get; set; }
+        public Geo geo { get; set; }
 
 
         public async Task<IActionResult> OnPostByProd()
@@ -59,6 +61,7 @@ namespace E_Shop.Pages.Produits
             byProd = false;
             listBtq = await boutiqueLogic.GetBoutiquesByCatId(id, page);
             totalpage = listBtq.TotalPages;
+            geo = boutiqueLogic.GetBoutiqueCountByGeo();
             return Page();
         }
         public async Task<JsonResult> OnPostProdList(string query)

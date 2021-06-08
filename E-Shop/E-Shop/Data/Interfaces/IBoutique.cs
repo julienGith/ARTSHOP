@@ -1,5 +1,6 @@
 ﻿using E_Shop.Entities;
 using E_Shop.Logic;
+using E_Shop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,5 +35,7 @@ namespace E_Shop.Data.Interfaces
         Task<PaginatedList<Boutique>> GetBoutiquesByCatId(int catId, int? pageIndex);
         //Get Boutique stripe acct
         string GetBoutiqueStripeAcct(int btqId);
+        //Get Nombre de boutiques par régions et départements
+        Geo GetBoutiqueCountByGeo();
     }
 }

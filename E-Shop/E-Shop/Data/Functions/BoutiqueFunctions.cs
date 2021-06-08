@@ -1,6 +1,7 @@
 ﻿using E_Shop.Data.Interfaces;
 using E_Shop.Entities;
 using E_Shop.Logic;
+using E_Shop.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -184,6 +185,22 @@ namespace E_Shop.Data.Functions
                 StripeAcct = context.Boutiques.Where(b => b.Btqid == btqId).Select(b => b.StripeAcct).AsNoTracking().ToString();
             }
             return StripeAcct;
+        }
+        //Get Nombre de boutiques par régions et départements
+        public Geo GetBoutiqueCountByGeo()
+        {
+            Geo geo = new Geo();
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                foreach (var region in geo.Regions)
+                {
+                    foreach (var dept in region.departements)
+                    {
+                        dept.btqCount = context.Boutiques.Include(b => b.Localisations.Where(l => l.Departement == dept.nom)).ToList().Count;
+                    }
+                }
+            }
+            return geo;
         }
     }
 }

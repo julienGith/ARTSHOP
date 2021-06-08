@@ -101,7 +101,7 @@ namespace E_Shop.Data.Functions
             }
             return produit.PNom;
         }
-        //Get produits par catégorie
+        //Get produits par catégorie + paginé + tri
         public async Task<PaginatedList<Produit>> GetProduitsByCatId(int catId, int? pageIndex, string sortOrder)
         {
             PaginatedList<Produit> produits;

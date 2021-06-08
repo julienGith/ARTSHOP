@@ -1,6 +1,7 @@
 ﻿using E_Shop.Data.Functions;
 using E_Shop.Data.Interfaces;
 using E_Shop.Entities;
+using E_Shop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,6 +70,11 @@ namespace E_Shop.Logic.BoutiqueLogic
         public string GetBoutiqueStripeAcct(int btqId)
         {
             return _boutique.GetBoutiqueStripeAcct(btqId);
+        }
+        //Get Nombre de boutiques par régions et départements
+        public Geo GetBoutiqueCountByGeo() 
+        {
+            return _boutique.GetBoutiqueCountByGeo();
         }
     }
 }
