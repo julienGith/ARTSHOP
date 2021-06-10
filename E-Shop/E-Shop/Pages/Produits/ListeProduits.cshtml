@@ -36,8 +36,45 @@
                 margin: 0;
             }
         </style>
-        <form method="post"><input name="id" value="@Model.id" hidden /><input name="page" value="@Model.page" hidden /> <button type="submit" asp-page-handler="ByProd" class="btn btn-primary">Afficher par produits</button></form>
-        
+		<form method="post">
+		 <input name="id" value="@Model.id" hidden /><input name="page" value="@Model.page" hidden />
+		 <button type="submit" asp-page-handler="ByProd" class="btn btn-primary">Afficher par produits</button>
+		</form>
+        <form type="submit" method="post" asp-page-handler="Geo">
+            <input name="catId" value="@Model.id" hidden />
+            <input name="pageIndex" value="@Model.page" hidden />
+            @if (Model.regionChoisie == null)
+            {
+                <select name="region" onchange="this.form.submit()" class="form-control">
+                    <option value="default" selected>filtrer par régions</option>
+                    @foreach (var reg in Model.geo.Regions)
+                    {
+                        <option value="@reg.nom">@reg.nom (@reg.btqCount)</option>
+                    }
+                </select>
+            }
+            @if (Model.regionChoisie != null)
+            {
+                <select name="region" onchange="this.form.submit()" class="form-control">
+                    <option value="@Model.regionChoisie.nom" selected>@Model.regionChoisie.nom</option>
+                    @foreach (var reg in Model.geo.Regions)
+                    {
+                        if (reg.nom != Model.regionChoisie.nom)
+                        {
+                            <option value="@reg.nom">@reg.nom (@reg.btqCount)</option>
+                        }
+                    }
+                </select>
+                <select name="departement" onchange="this.form.submit()" class="form-control">
+                    <option value="default">filtrer par départements</option>
+                    @foreach (var dept in Model.regionChoisie.departements)
+                    {
+                        <option value="@dept.nom">@dept.nom (@dept.btqCount)</option>
+                    }
+                </select>
+            }
+        </form>
+       
         @foreach (var btq in Model.listBtq)
         {
             var mediabtq = btq.Media.FirstOrDefault(m => m.Description == "vignette");

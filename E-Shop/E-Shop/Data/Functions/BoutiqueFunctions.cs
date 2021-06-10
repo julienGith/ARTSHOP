@@ -196,7 +196,7 @@ namespace E_Shop.Data.Functions
                 {
                     foreach (var dept in region.departements)
                     {
-                        dept.btqCount = context.Boutiques.Include(b => b.Localisations.Where(l => l.Departement == dept.nom)).ToList().Count;
+                        dept.btqCount = context.Localisations.Where(l=>l.Departement == dept.nom && l.PrNom == null && l.Btqid>0).ToList().Count;
                     }
                 }
             }
