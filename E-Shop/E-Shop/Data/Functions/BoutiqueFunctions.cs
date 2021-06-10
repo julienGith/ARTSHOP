@@ -133,13 +133,14 @@ namespace E_Shop.Data.Functions
             return boutiques;
         }
         //Get boutiques par catégorie id
-        public async Task<PaginatedList<Boutique>> GetBoutiquesByCatId(int catId, int? pageIndex)
+        public async Task<PaginatedList<Boutique>> GetBoutiquesByCatId(int catId, int? pageIndex, string dept, Geo.Region region)
         {
             int pageSize = 3;
             List<Boutique> items=new List<Boutique>();
             PaginatedList<Boutique> boutiques;
             List<Catnav> CatnavEnfants1 = new List<Catnav>();
             List<Produit> produits = new List<Produit>();
+            IQueryable<Boutique> bouts;
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
                 CatnavEnfants1 = await context.Catnavs.Where(n => n.CatCategorieid == catId)
@@ -148,13 +149,13 @@ namespace E_Shop.Data.Functions
                      .ThenInclude(p => p.Formats).Include(c => c.Categorie).ThenInclude(c => c.Produits)
                      .ThenInclude(p => p.Avis).Include(c => c.Categorie).ThenInclude(c => c.Produits)
                      .AsNoTracking().ToListAsync();
-
-                boutiques = await PaginatedList<Boutique>.CreateAsync(context.Boutiques.
-                    Include(b=>b.Media).
-                    Include(b => b.Avis).Include(b=>b.Localisations).
-                    Include(b=>b.Produits.Where(p=>p.Categorieid==catId)).
-                    ThenInclude(p=>p.Media).Include(b => b.Produits).
-                    ThenInclude(p=>p.Formats).AsNoTracking(), pageIndex ?? 1, pageSize);
+                bouts = from b in context.Boutiques.
+                    Include(b => b.Media).
+                    Include(b => b.Avis).Include(b => b.Localisations).
+                    Include(b => b.Produits.Where(p => p.Categorieid == catId)).
+                    ThenInclude(p => p.Media).Include(b => b.Produits).
+                    ThenInclude(p => p.Formats).AsNoTracking()
+                        select b;
 
                 if (CatnavEnfants1.Count > 0)
                 {
@@ -162,7 +163,7 @@ namespace E_Shop.Data.Functions
                     {
                         produits.AddRange(item.Categorie.Produits);
                     }
-                    foreach (var b in boutiques)
+                    foreach (var b in bouts)
                     {
                         foreach (var p in produits)
                         {
@@ -173,6 +174,11 @@ namespace E_Shop.Data.Functions
                         }
                     }
                 }
+                if (region!=null)
+                {
+                    bouts = bouts.Include(b=>b)
+                }
+                boutiques = await PaginatedList<Boutique>.CreateAsync(bouts, pageIndex ?? 1, pageSize);
             }
             return boutiques;
         }
@@ -187,7 +193,7 @@ namespace E_Shop.Data.Functions
             return StripeAcct;
         }
         //Get Nombre de boutiques par régions et départements
-        public Geo GetBoutiqueCountByGeo()
+        public async Task<Geo> GetBoutiqueCountByGeo()
         {
             Geo geo = new Geo();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
@@ -196,7 +202,8 @@ namespace E_Shop.Data.Functions
                 {
                     foreach (var dept in region.departements)
                     {
-                        dept.btqCount = context.Localisations.Where(l=>l.Departement == dept.nom && l.PrNom == null && l.Btqid>0).ToList().Count;
+                        List<Localisation> localisations = await context.Localisations.Where(l=>l.Departement == dept.nom && l.PrNom == null && l.Btqid>0).ToListAsync();
+                        dept.btqCount = localisations.Count;
                     }
                 }
             }

@@ -42,6 +42,7 @@ namespace E_Shop.Pages.Produits
         [BindProperty]
         public string departement { get; set; }
         public Geo.Region regionChoisie { get; set; }
+        public Geo.Departement departementChoisi { get; set; }
 
 
         public async Task<IActionResult> OnPostByProd()
@@ -82,8 +83,9 @@ namespace E_Shop.Pages.Produits
                 page = 1;
             }
             byProd = false;
-            geo = boutiqueLogic.GetBoutiqueCountByGeo();
+            geo = await boutiqueLogic.GetBoutiqueCountByGeo();
             regionChoisie = geo.Regions.FirstOrDefault(r => r.nom == region);
+            departementChoisi = regionChoisie.departements.FirstOrDefault(d => d.nom == departement);
             listBtq = await boutiqueLogic.GetBoutiquesByCatId(id, page);
             totalpage = listBtq.TotalPages;
             return Page();

@@ -36,10 +36,10 @@
                 margin: 0;
             }
         </style>
-		<form method="post">
-		 <input name="id" value="@Model.id" hidden /><input name="page" value="@Model.page" hidden />
-		 <button type="submit" asp-page-handler="ByProd" class="btn btn-primary">Afficher par produits</button>
-		</form>
+        <form method="post">
+            <input name="id" value="@Model.id" hidden /><input name="page" value="@Model.page" hidden />
+            <button type="submit" asp-page-handler="ByProd" class="btn btn-primary">Afficher par produits</button>
+        </form>
         <form type="submit" method="post" asp-page-handler="Geo">
             <input name="catId" value="@Model.id" hidden />
             <input name="pageIndex" value="@Model.page" hidden />
@@ -56,7 +56,7 @@
             @if (Model.regionChoisie != null)
             {
                 <select name="region" onchange="this.form.submit()" class="form-control">
-                    <option value="@Model.regionChoisie.nom" selected>@Model.regionChoisie.nom</option>
+                    <option value="@Model.regionChoisie.nom" selected>@Model.regionChoisie.nom (@Model.regionChoisie.btqCount)</option>
                     @foreach (var reg in Model.geo.Regions)
                     {
                         if (reg.nom != Model.regionChoisie.nom)
@@ -65,16 +65,32 @@
                         }
                     }
                 </select>
-                <select name="departement" onchange="this.form.submit()" class="form-control">
-                    <option value="default">filtrer par départements</option>
-                    @foreach (var dept in Model.regionChoisie.departements)
-                    {
-                        <option value="@dept.nom">@dept.nom (@dept.btqCount)</option>
-                    }
-                </select>
+                @if (Model.departementChoisi == null)
+                {
+                    <select name="departement" onchange="this.form.submit()" class="form-control">
+                        <option value="default">filtrer par départements</option>
+                        @foreach (var dept in Model.regionChoisie.departements)
+                        {
+                            <option value="@dept.nom">@dept.nom (@dept.btqCount)</option>
+                        }
+                    </select>
+                }
+                @if (Model.departementChoisi != null)
+                {
+                    <select name="departement" onchange="this.form.submit()" class="form-control">
+                        <option value="@Model.departementChoisi.nom">@Model.departementChoisi.nom (@Model.departementChoisi.btqCount)</option>
+                        @foreach (var dept in Model.regionChoisie.departements)
+                        {
+                            if (dept.nom != Model.departementChoisi.nom)
+                            {
+                                <option value="@dept.nom">@dept.nom (@dept.btqCount)</option>
+                            }
+                        }
+                    </select>
+                }
             }
         </form>
-       
+
         @foreach (var btq in Model.listBtq)
         {
             var mediabtq = btq.Media.FirstOrDefault(m => m.Description == "vignette");
@@ -85,14 +101,14 @@
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col-sm-2 align-self-start">
-                                    <a class="btn text-center" href="/Boutiques/DetailsBoutique/?btqid=@btq.Btqid">
-                                        <div class="imageborder">
-                                            <img class="imgMiniBout" src="@mediabtq.Lien" />
-                                        </div>
-                                        <div>@btq.BtqNom</div>
-                                        <i class="fas fa-map-marker-alt"></i>
-                                        <div>@locabtq.Departement</div>
-                                    </a>
+                                <a class="btn text-center" href="/Boutiques/DetailsBoutique/?btqid=@btq.Btqid">
+                                    <div class="imageborder">
+                                        <img class="imgMiniBout" src="@mediabtq.Lien" />
+                                    </div>
+                                    <div>@btq.BtqNom</div>
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <div>@locabtq.Departement</div>
+                                </a>
                                 <a class="btn btn-light btn-block" href="/Boutiques/DetailsBoutique/?btqid=@btq.Btqid">Voir tous ses produits</a>
                             </div>
                             <div class="col-sm-10">
@@ -300,27 +316,27 @@ else
             margin: 0;
         }
     </style>
-	<div class="flex-row mt-3">
-	 <div class="d-flex justify-content-start">
-	  <form method="get">
-	   <input name="catId" value="@Model.catId" hidden />
-	   <input name="pageIndex" value="@Model.pageIndex" hidden />
-	   <button type="submit" class="btn btn-primary">Afficher par Boutiques</button>
-	  </form>
- </div>
-	 <div class="d-flex justify-content-end">
-	  <form type="submit" asp-page-handler="ByProd">
-	   <input name="id" value="@Model.id" hidden />
-	   <input name="page" value="@Model.page" hidden />
-	   <select name="sortOrder" onchange="this.form.submit()" class="form-control">
-		<option value="default" selected>tri</option>
-		<option value="price_asc">Prix croissants</option>
-		<option value="price_desc">Prix décroissants</option>
-	   </select>
-	  </form>
-	 
- </div>
-	</div>
+    <div class="flex-row mt-3">
+        <div class="d-flex justify-content-start">
+            <form method="get">
+                <input name="catId" value="@Model.catId" hidden />
+                <input name="pageIndex" value="@Model.pageIndex" hidden />
+                <button type="submit" class="btn btn-primary">Afficher par Boutiques</button>
+            </form>
+        </div>
+        <div class="d-flex justify-content-end">
+            <form type="submit" asp-page-handler="ByProd">
+                <input name="id" value="@Model.id" hidden />
+                <input name="page" value="@Model.page" hidden />
+                <select name="sortOrder" onchange="this.form.submit()" class="form-control">
+                    <option value="default" selected>tri</option>
+                    <option value="price_asc">Prix croissants</option>
+                    <option value="price_desc">Prix décroissants</option>
+                </select>
+            </form>
+
+        </div>
+    </div>
 
     <div class="card-group mt-3 mb-3 justify-items-center">
         @if (Model.listProduits.Count == 0)
@@ -401,7 +417,7 @@ else
                 @{int? ind = Model.page - 1;
                 }
                 <form method="post">
-                    <input name="id" value="@Model.id" hidden /><input name="page" value="@ind" hidden /><input name="sortOrder" value="@Model.sortOrder" hidden/>
+                    <input name="id" value="@Model.id" hidden /><input name="page" value="@ind" hidden /><input name="sortOrder" value="@Model.sortOrder" hidden />
                     <button type="submit" asp-page-handler="ByProd" class="btn btn-primary">Précédent</button>
                 </form>
             </div>
@@ -418,7 +434,7 @@ else
                 @{int? ind = Model.page + 1;
                 }
                 <form method="post">
-                    <input name="id" value="@Model.id" hidden /><input name="page" value="@ind" hidden /><input name="sortOrder" value="@Model.sortOrder" hidden/>
+                    <input name="id" value="@Model.id" hidden /><input name="page" value="@ind" hidden /><input name="sortOrder" value="@Model.sortOrder" hidden />
                     <button type="submit" asp-page-handler="ByProd" class="btn btn-primary">Suivant</button>
                 </form>
             </div>
