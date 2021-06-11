@@ -147,6 +147,7 @@ namespace E_Shop.Data.Functions
             Localisation localisation = new Localisation();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+
                 CatnavEnfants1 = await context.Catnavs.Where(n => n.CatCategorieid == catId)
                      .Include(c => c.Categorie).ThenInclude(c => c.Produits)
                      .ThenInclude(p => p.Media).Include(c => c.Categorie).ThenInclude(c => c.Produits)
@@ -178,6 +179,7 @@ namespace E_Shop.Data.Functions
                         }
                     }
                 }
+
                 if (region!=null && dept==null)
                 {
                     foreach (var depart in region.departements)
@@ -205,6 +207,11 @@ namespace E_Shop.Data.Functions
                     if (localisation!=null)
                     {
                         bouts = bouts.Where(b => b.Btqid == localisation.Btqid);
+                    }
+                    if (localisation==null)
+                    {
+                        bouts = from b in context.Boutiques.Include(b => b.Produits.Where(p => p.Categorieid == 0)).AsNoTracking()
+                                select b;
                     }
                 }
                 boutiques = await PaginatedList<Boutique>.CreateAsync(bouts, pageIndex ?? 1, pageSize);
