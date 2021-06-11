@@ -136,11 +136,15 @@ namespace E_Shop.Data.Functions
         public async Task<PaginatedList<Boutique>> GetBoutiquesByCatId(int catId, int? pageIndex, string dept, Geo.Region region)
         {
             int pageSize = 3;
-            List<Boutique> items=new List<Boutique>();
+            List<Boutique> btqs = new List<Boutique>();
+            Boutique btq = new Boutique();
+            List<int> btqId = new List<int>();
             PaginatedList<Boutique> boutiques;
             List<Catnav> CatnavEnfants1 = new List<Catnav>();
             List<Produit> produits = new List<Produit>();
             IQueryable<Boutique> bouts;
+            List<Localisation> localisations = new List<Localisation>();
+            Localisation localisation = new Localisation();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
                 CatnavEnfants1 = await context.Catnavs.Where(n => n.CatCategorieid == catId)
@@ -174,9 +178,34 @@ namespace E_Shop.Data.Functions
                         }
                     }
                 }
-                if (region!=null)
+                if (region!=null && dept==null)
                 {
-                    bouts = bouts.Include(b=>b)
+                    foreach (var depart in region.departements)
+                    {
+                        localisation = await context.Localisations.FirstOrDefaultAsync(l => l.Departement == depart.nom && l.PrNom == null && l.Btqid > 0);
+                        if (localisation!=null)
+                        {
+                            localisations.Add(localisation);
+                        }
+                    }
+                    foreach (var loca in localisations)
+                    {
+                        btq = await context.Boutiques.FirstOrDefaultAsync(b => b.Btqid == loca.Btqid);
+                        if (btq!=null)
+                        {
+                            btqs.Add(btq);
+                            btqId.Add(btq.Btqid);
+                        }
+                    }
+                    bouts = bouts.Where(b => btqId.Contains(b.Btqid));
+                }
+                if (dept!=null)
+                {
+                    localisation = await context.Localisations.FirstOrDefaultAsync(l => l.Departement == dept && l.PrNom == null && l.Btqid > 0);
+                    if (localisation!=null)
+                    {
+                        bouts = bouts.Where(b => b.Btqid == localisation.Btqid);
+                    }
                 }
                 boutiques = await PaginatedList<Boutique>.CreateAsync(bouts, pageIndex ?? 1, pageSize);
             }

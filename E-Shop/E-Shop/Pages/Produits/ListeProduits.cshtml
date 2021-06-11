@@ -38,6 +38,8 @@
         </style>
         <form method="post">
             <input name="id" value="@Model.id" hidden /><input name="page" value="@Model.page" hidden />
+            <input name="region" value="@Model.region" hidden />
+            <input name="departement" value="@Model.departement" hidden />
             <button type="submit" asp-page-handler="ByProd" class="btn btn-primary">Afficher par produits</button>
         </form>
         <form type="submit" method="post" asp-page-handler="Geo">
@@ -318,12 +320,64 @@ else
     </style>
     <div class="flex-row mt-3">
         <div class="d-flex justify-content-start">
-            <form method="get">
-                <input name="catId" value="@Model.catId" hidden />
-                <input name="pageIndex" value="@Model.pageIndex" hidden />
+            <form type="submit" method="post" asp-page-handler="ByBout">
+                <input name="id" value="@Model.id" hidden /><input name="page" value="@Model.page" hidden />
+                <input name="region" value="@Model.region" hidden />
+                <input name="departement" value="@Model.departement" hidden />
                 <button type="submit" class="btn btn-primary">Afficher par Boutiques</button>
             </form>
         </div>
+        <form type="submit" method="post" asp-page-handler="Geo">
+            <input name="catId" value="@Model.id" hidden />
+            <input name="pageIndex" value="@Model.page" hidden />
+            @if (Model.regionChoisie == null)
+            {
+                <select name="region" onchange="this.form.submit()" class="form-control">
+                    <option value="default" selected>filtrer par régions</option>
+                    @foreach (var reg in Model.geo.Regions)
+                    {
+                        <option value="@reg.nom">@reg.nom (@reg.btqCount)</option>
+                    }
+                </select>
+            }
+            @if (Model.regionChoisie != null)
+            {
+                <select name="region" onchange="this.form.submit()" class="form-control">
+                    <option value="@Model.regionChoisie.nom" selected>@Model.regionChoisie.nom (@Model.regionChoisie.btqCount)</option>
+                    @foreach (var reg in Model.geo.Regions)
+                    {
+                        if (reg.nom != Model.regionChoisie.nom)
+                        {
+                            <option value="@reg.nom">@reg.nom (@reg.btqCount)</option>
+                        }
+                    }
+                </select>
+                @if (Model.departementChoisi == null)
+                {
+                    <select name="departement" onchange="this.form.submit()" class="form-control">
+                        <option value="default">filtrer par départements</option>
+                        @foreach (var dept in Model.regionChoisie.departements)
+                        {
+                            <option value="@dept.nom">@dept.nom (@dept.btqCount)</option>
+                        }
+                    </select>
+                }
+                @if (Model.departementChoisi != null)
+                {
+                    <select name="departement" onchange="this.form.submit()" class="form-control">
+                        <option value="@Model.departementChoisi.nom">@Model.departementChoisi.nom (@Model.departementChoisi.btqCount)</option>
+                        @foreach (var dept in Model.regionChoisie.departements)
+                        {
+                            if (dept.nom != Model.departementChoisi.nom)
+                            {
+                                <option value="@dept.nom">@dept.nom (@dept.btqCount)</option>
+                            }
+                        }
+                    </select>
+                }
+            }
+        </form>
+
         <div class="d-flex justify-content-end">
             <form type="submit" asp-page-handler="ByProd">
                 <input name="id" value="@Model.id" hidden />
@@ -334,7 +388,6 @@ else
                     <option value="price_desc">Prix décroissants</option>
                 </select>
             </form>
-
         </div>
     </div>
 

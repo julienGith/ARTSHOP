@@ -32,7 +32,7 @@ namespace E_Shop.Data.Interfaces
         //Recherche partielle boutique par nom
         Task<List<Boutique>> GetBoutiquesByQuery(string query);
         //Get boutiques par catégorie id
-        Task<PaginatedList<Boutique>> GetBoutiquesByCatId(int catId, int? pageIndex);
+        Task<PaginatedList<Boutique>> GetBoutiquesByCatId(int catId, int? pageIndex, string dept, Geo.Region region);
         //Get Boutique stripe acct
         string GetBoutiqueStripeAcct(int btqId);
         //Get Nombre de boutiques par régions et départements

@@ -50,7 +50,28 @@ namespace E_Shop.Pages.Produits
             pageIndex = page;
             catId = id;
             byProd = true;
+            geo = await boutiqueLogic.GetBoutiqueCountByGeo();
+            if (region!=null)
+            {
+                regionChoisie = geo.Regions.FirstOrDefault(r => r.nom == region);
+                departementChoisi = regionChoisie.departements.FirstOrDefault(d => d.nom == departement);
+            }
             listProduits = await produitLogic.GetProduitsByCatId(id, page, sortOrder);
+            return Page();
+        }
+        public async Task<IActionResult> OnPostByBout()
+        {
+            pageIndex = page;
+            catId = id;
+            byProd = false;
+            geo = await boutiqueLogic.GetBoutiqueCountByGeo();
+            if (region != null)
+            {
+                regionChoisie = geo.Regions.FirstOrDefault(r => r.nom == region);
+                departementChoisi = regionChoisie.departements.FirstOrDefault(d => d.nom == departement);
+            }
+            listBtq = await boutiqueLogic.GetBoutiquesByCatId(id, page, departement, regionChoisie);
+            totalpage = listBtq.TotalPages;
             return Page();
         }
         public async Task<IActionResult> OnGet(int catId, int? pageIndex)
@@ -65,10 +86,9 @@ namespace E_Shop.Pages.Produits
                 page = 1;
             }
             byProd = false;
-            listBtq = await boutiqueLogic.GetBoutiquesByCatId(id, page);
+            geo = await boutiqueLogic.GetBoutiqueCountByGeo();
+            listBtq = await boutiqueLogic.GetBoutiquesByCatId(id, page, departement, regionChoisie);
             totalpage = listBtq.TotalPages;
-            geo = boutiqueLogic.GetBoutiqueCountByGeo();
-            regionChoisie = geo.Regions.FirstOrDefault(r => r.nom == region);
             return Page();
         }
         public async Task<IActionResult> OnPostGeo(int catId, int? pageIndex)
@@ -82,12 +102,18 @@ namespace E_Shop.Pages.Produits
             {
                 page = 1;
             }
-            byProd = false;
             geo = await boutiqueLogic.GetBoutiqueCountByGeo();
             regionChoisie = geo.Regions.FirstOrDefault(r => r.nom == region);
             departementChoisi = regionChoisie.departements.FirstOrDefault(d => d.nom == departement);
-            listBtq = await boutiqueLogic.GetBoutiquesByCatId(id, page);
-            totalpage = listBtq.TotalPages;
+            if (byProd == false)
+            {
+                byProd = false;
+                listBtq = await boutiqueLogic.GetBoutiquesByCatId(id, page, departement, regionChoisie);
+            }
+            if (byProd == true)
+            {
+                listProduits = await produitLogic.GetProduitsByCatId(id, page, sortOrder);
+            }
             return Page();
         }
         public async Task<JsonResult> OnPostProdList(string query)

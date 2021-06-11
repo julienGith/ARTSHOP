@@ -62,9 +62,9 @@ namespace E_Shop.Logic.BoutiqueLogic
             return await _boutique.GetBoutiquesByQuery(query);
         }
         //Get boutiques par catégorie id
-        public async Task<PaginatedList<Boutique>> GetBoutiquesByCatId(int catId, int? pageIndex)
+        public async Task<PaginatedList<Boutique>> GetBoutiquesByCatId(int catId, int? pageIndex, string dept, Geo.Region region)
         {
-            return await _boutique.GetBoutiquesByCatId(catId,pageIndex);
+            return await _boutique.GetBoutiquesByCatId(catId,pageIndex,dept,region);
         }
         //Get Boutique stripe acct
         public string GetBoutiqueStripeAcct(int btqId)
