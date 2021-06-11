@@ -136,7 +136,6 @@ namespace E_Shop.Data.Functions
         public async Task<PaginatedList<Boutique>> GetBoutiquesByCatId(int catId, int? pageIndex, string dept, Geo.Region region)
         {
             int pageSize = 3;
-            List<Boutique> btqs = new List<Boutique>();
             Boutique btq = new Boutique();
             List<int> btqId = new List<int>();
             PaginatedList<Boutique> boutiques;
@@ -195,11 +194,18 @@ namespace E_Shop.Data.Functions
                         btq = await context.Boutiques.FirstOrDefaultAsync(b => b.Btqid == loca.Btqid);
                         if (btq!=null)
                         {
-                            btqs.Add(btq);
                             btqId.Add(btq.Btqid);
                         }
                     }
-                    bouts = bouts.Where(b => btqId.Contains(b.Btqid));
+                    if (localisations.Count>0)
+                    {
+                        bouts = bouts.Where(b => btqId.Contains(b.Btqid));
+                    }
+                    if (localisations.Count==0)
+                    {
+                        bouts = from b in context.Boutiques.Include(b => b.Produits.Where(p => p.Categorieid == 0)).AsNoTracking()
+                                select b;
+                    }
                 }
                 if (dept!=null)
                 {

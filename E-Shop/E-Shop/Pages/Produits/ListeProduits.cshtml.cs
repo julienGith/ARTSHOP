@@ -22,6 +22,7 @@ namespace E_Shop.Pages.Produits
         public PaginatedList<Produit> listProduits { get; set; }
         public PaginatedList<Entities.Boutique> listBtq { get; set; }
         public PaginatedList<Entities.Boutique> listBtq1 { get; set; }
+        [BindProperty]
         public bool byProd { get; set; }
         [BindProperty]
         [FromQuery(Name = "catId")]
@@ -107,7 +108,6 @@ namespace E_Shop.Pages.Produits
             departementChoisi = regionChoisie.departements.FirstOrDefault(d => d.nom == departement);
             if (byProd == false)
             {
-                byProd = false;
                 listBtq = await boutiqueLogic.GetBoutiquesByCatId(id, page, departement, regionChoisie);
             }
             if (byProd == true)
