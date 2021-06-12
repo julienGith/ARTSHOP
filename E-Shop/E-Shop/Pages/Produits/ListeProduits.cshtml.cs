@@ -57,7 +57,7 @@ namespace E_Shop.Pages.Produits
                 regionChoisie = geo.Regions.FirstOrDefault(r => r.nom == region);
                 departementChoisi = regionChoisie.departements.FirstOrDefault(d => d.nom == departement);
             }
-            listProduits = await produitLogic.GetProduitsByCatId(id, page, sortOrder);
+            listProduits = await produitLogic.GetProduitsByCatId(id, page, sortOrder, departement, regionChoisie);
             return Page();
         }
         public async Task<IActionResult> OnPostByBout()
@@ -112,7 +112,7 @@ namespace E_Shop.Pages.Produits
             }
             if (byProd == true)
             {
-                listProduits = await produitLogic.GetProduitsByCatId(id, page, sortOrder);
+                listProduits = await produitLogic.GetProduitsByCatId(id, page, sortOrder, departement, regionChoisie);
             }
             return Page();
         }

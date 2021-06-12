@@ -1,6 +1,7 @@
 ﻿using E_Shop.Data.Functions;
 using E_Shop.Data.Interfaces;
 using E_Shop.Entities;
+using E_Shop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,9 +47,9 @@ namespace E_Shop.Logic.ProduitLogic
             return await _produit.GetNomProduitById(prodId);
         }
         //Get produits par catégorie
-        public async Task<PaginatedList<Produit>> GetProduitsByCatId(int catId, int? pageIndex, string sortOrder)
+        public async Task<PaginatedList<Produit>> GetProduitsByCatId(int catId, int? pageIndex, string sortOrder, string dept, Geo.Region region)
         {
-            return await _produit.GetProduitsByCatId(catId, pageIndex, sortOrder);
+            return await _produit.GetProduitsByCatId(catId, pageIndex, sortOrder, dept, region);
         }
         //Recherche partielle produits par nom
         public async Task<List<Produit>> GetListProduitByQuery(string query)

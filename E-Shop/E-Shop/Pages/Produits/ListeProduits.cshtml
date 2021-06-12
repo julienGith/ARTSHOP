@@ -48,7 +48,7 @@
             @if (Model.regionChoisie == null)
             {
                 <select name="region" onchange="this.form.submit()" class="form-control">
-                    <option value="default" selected>filtrer par régions</option>
+                    <option value="" selected>filtrer par régions</option>
                     @foreach (var reg in Model.geo.Regions)
                     {
                         <option value="@reg.nom">@reg.nom (@reg.btqCount)</option>
@@ -70,7 +70,7 @@
                 @if (Model.departementChoisi == null)
                 {
                     <select name="departement" onchange="this.form.submit()" class="form-control">
-                        <option value="default">filtrer par départements</option>
+                        <option value="">filtrer par départements</option>
                         @foreach (var dept in Model.regionChoisie.departements)
                         {
                             <option value="@dept.nom">@dept.nom (@dept.btqCount)</option>
@@ -340,7 +340,7 @@ else
             @if (Model.regionChoisie == null)
             {
                 <select name="region" onchange="this.form.submit()" class="form-control">
-                    <option value="default" selected>filtrer par régions</option>
+                    <option value="" selected>filtrer par régions</option>
                     @foreach (var reg in Model.geo.Regions)
                     {
                         <option value="@reg.nom">@reg.nom (@reg.btqCount)</option>
@@ -362,7 +362,7 @@ else
                 @if (Model.departementChoisi == null)
                 {
                     <select name="departement" onchange="this.form.submit()" class="form-control">
-                        <option value="default">filtrer par départements</option>
+                        <option value="">filtrer par départements</option>
                         @foreach (var dept in Model.regionChoisie.departements)
                         {
                             <option value="@dept.nom">@dept.nom (@dept.btqCount)</option>
@@ -389,6 +389,8 @@ else
             <form type="submit" asp-page-handler="ByProd">
                 <input name="id" value="@Model.id" hidden />
                 <input name="page" value="@Model.page" hidden />
+                <input name="region" value="@Model.region" hidden />
+                <input name="departement" value="@Model.departement" hidden />
                 <select name="sortOrder" onchange="this.form.submit()" class="form-control">
                     <option value="default" selected>tri</option>
                     <option value="price_asc">Prix croissants</option>

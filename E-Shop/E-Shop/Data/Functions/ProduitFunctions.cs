@@ -1,6 +1,7 @@
 ﻿using E_Shop.Data.Interfaces;
 using E_Shop.Entities;
 using E_Shop.Logic;
+using E_Shop.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -102,7 +103,7 @@ namespace E_Shop.Data.Functions
             return produit.PNom;
         }
         //Get produits par catégorie + paginé + tri
-        public async Task<PaginatedList<Produit>> GetProduitsByCatId(int catId, int? pageIndex, string sortOrder)
+        public async Task<PaginatedList<Produit>> GetProduitsByCatId(int catId, int? pageIndex, string sortOrder, string dept, Geo.Region region)
         {
             PaginatedList<Produit> produits;
             List<Produit> produits1 = new List<Produit>();
@@ -111,6 +112,10 @@ namespace E_Shop.Data.Functions
             List<Catnav> CatnavEnfants = new List<Catnav>();
             Categorie categorieSubcatenf = new Categorie();
             IQueryable<Produit> prods ;
+            List<Localisation> localisations = new List<Localisation>();
+            Localisation localisation = new Localisation();
+            Boutique btq = new Boutique();
+            List<int> btqId = new List<int>();
             int pageSize = 2;
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
@@ -133,6 +138,47 @@ namespace E_Shop.Data.Functions
                     .Include(p => p.Avis)
                     .Include(p => p.Btq).ThenInclude(b => b.Media).Where(p=>p.Categorieid == catId || produits1.Contains(p) ).AsNoTracking()
                                             select p;
+                if (region != null && dept == null)
+                {
+                    foreach (var depart in region.departements)
+                    {
+                        localisation = await context.Localisations.FirstOrDefaultAsync(l => l.Departement == depart.nom && l.PrNom == null && l.Btqid > 0);
+                        if (localisation != null)
+                        {
+                            localisations.Add(localisation);
+                        }
+                    }
+                    foreach (var loca in localisations)
+                    {
+                        btq = await context.Boutiques.FirstOrDefaultAsync(b => b.Btqid == loca.Btqid);
+                        if (btq != null)
+                        {
+                            btqId.Add(btq.Btqid);
+                        }
+                    }
+                    if (localisations.Count > 0)
+                    {
+                        prods = prods.Where(p => btqId.Contains(p.Btqid));
+                    }
+                    if (localisations.Count == 0)
+                    {
+                        prods = from p in context.Produits.Where(p => p.Categorieid == 0).AsNoTracking()
+                                select p;
+                    }
+                }
+                if (dept != null)
+                {
+                    localisation = await context.Localisations.FirstOrDefaultAsync(l => l.Departement == dept && l.PrNom == null && l.Btqid > 0);
+                    if (localisation != null)
+                    {
+                        prods = prods.Where(p => p.Btqid == localisation.Btqid);
+                    }
+                    if (localisation == null)
+                    {
+                        prods = from p in context.Produits.Where(p => p.Categorieid == 0).AsNoTracking()
+                                select p;
+                    }
+                }
                 switch (sortOrder)
                 {
                     case "price_asc":
