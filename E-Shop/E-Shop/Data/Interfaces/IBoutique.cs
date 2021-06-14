@@ -36,6 +36,6 @@ namespace E_Shop.Data.Interfaces
         //Get Boutique stripe acct
         string GetBoutiqueStripeAcct(int btqId);
         //Get Nombre de boutiques par régions et départements
-        Task<Geo> GetBoutiqueCountByGeo();
+        Task<Geo> GetBoutiqueCountByGeo(int catID);
     }
 }

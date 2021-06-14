@@ -23,7 +23,7 @@ namespace E_Shop.Pages.Produits
         public PaginatedList<Entities.Boutique> listBtq { get; set; }
         public PaginatedList<Entities.Boutique> listBtq1 { get; set; }
         [BindProperty]
-        public bool byProd { get; set; }
+        public bool? byProd { get; set; }
         [BindProperty]
         [FromQuery(Name = "catId")]
         public int catId { get; set; }
@@ -48,10 +48,10 @@ namespace E_Shop.Pages.Produits
 
         public async Task<IActionResult> OnPostByProd()
         {
-            pageIndex = page;
+            page = 1;
             catId = id;
             byProd = true;
-            geo = await boutiqueLogic.GetBoutiqueCountByGeo();
+            geo = await boutiqueLogic.GetBoutiqueCountByGeo(catId);
             if (region!=null)
             {
                 regionChoisie = geo.Regions.FirstOrDefault(r => r.nom == region);
@@ -62,11 +62,10 @@ namespace E_Shop.Pages.Produits
         }
         public async Task<IActionResult> OnPostByBout()
         {
-            //pageIndex = page;
             page = 1;
             catId = id;
             byProd = false;
-            geo = await boutiqueLogic.GetBoutiqueCountByGeo();
+            geo = await boutiqueLogic.GetBoutiqueCountByGeo(catId);
             if (region != null)
             {
                 regionChoisie = geo.Regions.FirstOrDefault(r => r.nom == region);
@@ -87,8 +86,8 @@ namespace E_Shop.Pages.Produits
             {
                 page = 1;
             }
+            geo = await boutiqueLogic.GetBoutiqueCountByGeo(catId);
             byProd = false;
-            geo = await boutiqueLogic.GetBoutiqueCountByGeo();
             listBtq = await boutiqueLogic.GetBoutiquesByCatId(id, page, departement, regionChoisie);
             totalpage = listBtq.TotalPages;
             return Page();
@@ -104,7 +103,7 @@ namespace E_Shop.Pages.Produits
             {
                 page = 1;
             }
-            geo = await boutiqueLogic.GetBoutiqueCountByGeo();
+            geo = await boutiqueLogic.GetBoutiqueCountByGeo(catId);
             regionChoisie = geo.Regions.FirstOrDefault(r => r.nom == region);
             departementChoisi = regionChoisie.departements.FirstOrDefault(d => d.nom == departement);
             if (byProd == false)

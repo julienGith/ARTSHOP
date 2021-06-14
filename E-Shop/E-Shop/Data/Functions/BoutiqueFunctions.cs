@@ -214,18 +214,26 @@ namespace E_Shop.Data.Functions
             }
             return StripeAcct;
         }
-        //Get Nombre de boutiques par régions et départements
-        public async Task<Geo> GetBoutiqueCountByGeo()
+        //Get Nombre de boutiques par catégorie, régions et départements
+        public async Task<Geo> GetBoutiqueCountByGeo(int catID)
         {
             Geo geo = new Geo();
+            List<Localisation> localisations = new List<Localisation>();
+            Boutique btq = new Boutique();
+            List<Boutique> boutiques = new List<Boutique>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
                 foreach (var region in geo.Regions)
                 {
                     foreach (var dept in region.departements)
                     {
-                        List<Localisation> localisations = await context.Localisations.Where(l=>l.Departement == dept.nom && l.PrNom == null && l.Btqid>0).ToListAsync();
-                        dept.btqCount = localisations.Count;
+                        localisations = await context.Localisations.Where(l=>l.Departement == dept.nom && l.PrNom == null && l.Btqid>0).ToListAsync();
+                        boutiques = await context.Boutiques
+                            .Include(b => b.Produits)
+                            .Include(b => b.Localisations)
+                            .Where(b => b.Localisations.Any(l => l.Departement.ToUpper() == dept.nom.ToUpper() && b.Produits.Any(p => p.Categorieid == catID)))
+                            .AsNoTracking().ToListAsync();
+                        dept.btqCount = boutiques.Count;
                     }
                 }
             }

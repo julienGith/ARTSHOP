@@ -72,9 +72,9 @@ namespace E_Shop.Logic.BoutiqueLogic
             return _boutique.GetBoutiqueStripeAcct(btqId);
         }
         //Get Nombre de boutiques par régions et départements
-        public async Task<Geo> GetBoutiqueCountByGeo() 
+        public async Task<Geo> GetBoutiqueCountByGeo(int catID) 
         {
-            return await _boutique.GetBoutiqueCountByGeo();
+            return await _boutique.GetBoutiqueCountByGeo(catID);
         }
     }
 }
