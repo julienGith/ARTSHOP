@@ -244,9 +244,9 @@ namespace E_Shop.Data.Functions
                     {
                         localisations = await context.Localisations.Where(l=>l.Departement == dept.nom && l.PrNom == null && l.Btqid>0).ToListAsync();
                         boutiques = await context.Boutiques
-                            .Include(b => b.Produits.Where(p => p.Categorieid == catID || produits.Contains(p)))
                             .Include(b => b.Localisations)
-                            .Where(b => b.Localisations.Any(l => l.Departement.ToUpper() == dept.nom.ToUpper()))
+                            .Include(b => b.Produits)
+                            .Where(b => b.Localisations.Any(l => l.Departement.ToUpper() == dept.nom.ToUpper()) && ( b.Produits.Any(p=>p.Categorieid==catID) || b.Produits.Any(p=>produits.Contains(p))))
                             .AsNoTracking().ToListAsync();
                         dept.btqCount = boutiques.Count;
                     }

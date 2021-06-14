@@ -136,7 +136,8 @@ namespace E_Shop.Data.Functions
                     .Include(p => p.Media)
                     .Include(p => p.Formats)
                     .Include(p => p.Avis)
-                    .Include(p => p.Btq).ThenInclude(b => b.Media).Where(p=>p.Categorieid == catId || produits1.Contains(p) ).AsNoTracking()
+                    .Include(p => p.Btq).ThenInclude(b => b.Media).Where(p=>p.Categorieid == catId || produits1.Contains(p))
+                    .OrderBy(b => b.Categorieid).AsNoTracking()
                                             select p;
                 if (region != null && dept == null)
                 {
@@ -178,7 +179,7 @@ namespace E_Shop.Data.Functions
                         btqId.Add(btq.Btqid);
                     }
                 }
-                prods = prods.Where(b => btqId.Contains(b.Btqid));
+                prods = prods.Where(b => btqId.Contains(b.Btqid)).OrderBy(b=>b.Categorieid);
             }
             if (localisations.Count == 0)
             {
@@ -228,7 +229,7 @@ namespace E_Shop.Data.Functions
                         localisations = await context.Localisations.Where(l => l.Departement == dept.nom && l.PrNom == null && l.Btqid > 0).ToListAsync();
                         produits2 = await context.Produits
                             .Include(p => p.Btq.Localisations)
-                            .Where(p => p.Btq.Localisations.Any(l => l.Departement == dept.nom && l.PrNom == null && l.Btqid > 0) && p.Categorieid == catID || produits1.Contains(p))
+                            .Where(p => p.Btq.Localisations.Any(l => l.Departement.ToUpper() == dept.nom.ToUpper()) && (p.Categorieid == catID || produits1.Contains(p)))
                             .AsNoTracking().ToListAsync();
                         dept.prodCount = produits2.Count;
                     }
