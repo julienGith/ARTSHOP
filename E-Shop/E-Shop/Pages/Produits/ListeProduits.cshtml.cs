@@ -109,26 +109,25 @@ namespace E_Shop.Pages.Produits
                 page = 1;
             }
 
-            if (departementChoisi!=null)
-            {
-                departement = departementChoisi.nom;
-            }
-            if (departementChoisi==null)
-            {
-                departement = null;
-            }
+
             if (byProd == false)
             {
                 geo = await boutiqueLogic.GetBoutiqueCountByGeo(catId);
-                regionChoisie = geo.Regions.FirstOrDefault(r => r.nom == region);
-                departementChoisi = regionChoisie.departements.FirstOrDefault(d => d.nom == departement);
+                if (region != null)
+                {
+                    regionChoisie = geo.Regions.FirstOrDefault(r => r.nom == region);
+                    departementChoisi = regionChoisie.departements.FirstOrDefault(d => d.nom == departement);
+                }
                 listBtq = await boutiqueLogic.GetBoutiquesByCatId(id, page, departement, regionChoisie);
             }
             if (byProd == true)
             {
                 geo = await produitLogic.GetGeoProduitsCountByCatID(catId);
-                regionChoisie = geo.Regions.FirstOrDefault(r => r.nom == region);
-                departementChoisi = regionChoisie.departements.FirstOrDefault(d => d.nom == departement);
+                if (region != null)
+                {
+                    regionChoisie = geo.Regions.FirstOrDefault(r => r.nom == region);
+                    departementChoisi = regionChoisie.departements.FirstOrDefault(d => d.nom == departement);
+                }
                 listProduits = await produitLogic.GetProduitsByCatId(id, page, sortOrder, departement, regionChoisie);
             }
             return Page();
