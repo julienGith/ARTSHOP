@@ -119,15 +119,38 @@ namespace E_Shop.Data.Functions
             int pageSize = 2;
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                CatnavEnfants1 = await context.Catnavs.Where(n => n.CatCategorieid == catId)
+                //CatnavEnfants1 = await context.Catnavs.Where(n => n.CatCategorieid == catId)
+                //    .Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                //    .ThenInclude(p => p.Media).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                //    .ThenInclude(p => p.Formats).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                //    .ThenInclude(p => p.Avis).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                //    .ThenInclude(p => p.Btq).ThenInclude(b => b.Media).AsNoTracking().ToListAsync();
+                CatnavEnfants1 = await context.Catnavs
                     .Include(c => c.Categorie).ThenInclude(c => c.Produits)
                     .ThenInclude(p => p.Media).Include(c => c.Categorie).ThenInclude(c => c.Produits)
                     .ThenInclude(p => p.Formats).Include(c => c.Categorie).ThenInclude(c => c.Produits)
-                    .ThenInclude(p => p.Avis).Include(c => c.Categorie).ThenInclude(c => c.Produits)
-                    .ThenInclude(p => p.Btq).ThenInclude(b => b.Media).AsNoTracking().ToListAsync();
+                    .ThenInclude(p => p.Avis)
+                    .Where(c => c.CatCategorieid == catId)
+                    .AsNoTracking().ToListAsync();
+                foreach (var catnav in CatnavEnfants1)
+                {
+                    CatnavEnfants2 = await context.Catnavs.Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                    .ThenInclude(p => p.Media).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                    .ThenInclude(p => p.Formats).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                    .ThenInclude(p => p.Avis)
+                    .Where(c => c.CatCategorieid == catnav.Categorieid)
+                    .AsNoTracking().ToListAsync();
+                }
                 if (CatnavEnfants1.Count > 0)
                 {
                     foreach (var item in CatnavEnfants1)
+                    {
+                        produits1.AddRange(item.Categorie.Produits);
+                    }
+                }
+                if (CatnavEnfants2.Count > 0)
+                {
+                    foreach (var item in CatnavEnfants2)
                     {
                         produits1.AddRange(item.Categorie.Produits);
                     }
@@ -205,6 +228,8 @@ namespace E_Shop.Data.Functions
             List<Produit> produits1 = new List<Produit>();
             List<Produit> produits2 = new List<Produit>();
             List<Catnav> CatnavEnfants1 = new List<Catnav>();
+            List<Catnav> CatnavEnfants2 = new List<Catnav>();
+
             List<Localisation> localisations = new List<Localisation>();
 
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
@@ -215,9 +240,25 @@ namespace E_Shop.Data.Functions
                     .ThenInclude(p => p.Formats).Include(c => c.Categorie).ThenInclude(c => c.Produits)
                     .ThenInclude(p => p.Avis).Include(c => c.Categorie).ThenInclude(c => c.Produits)
                     .ThenInclude(p => p.Btq).ThenInclude(b => b.Media).AsNoTracking().ToListAsync();
+                foreach (var catnav in CatnavEnfants1)
+                {
+                    CatnavEnfants2 = await context.Catnavs.Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                    .ThenInclude(p => p.Media).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                    .ThenInclude(p => p.Formats).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                    .ThenInclude(p => p.Avis)
+                    .Where(c => c.CatCategorieid == catnav.Categorieid)
+                    .AsNoTracking().ToListAsync();
+                }
                 if (CatnavEnfants1.Count > 0)
                 {
                     foreach (var item in CatnavEnfants1)
+                    {
+                        produits1.AddRange(item.Categorie.Produits);
+                    }
+                }
+                if (CatnavEnfants2.Count > 0)
+                {
+                    foreach (var item in CatnavEnfants2)
                     {
                         produits1.AddRange(item.Categorie.Produits);
                     }

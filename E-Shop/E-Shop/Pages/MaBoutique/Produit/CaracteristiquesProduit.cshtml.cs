@@ -62,7 +62,7 @@ namespace E_Shop.Pages.MaBoutique.Produit
                 else if (HttpContext.Session.Get<Input>("Description") != null)
                 {
                     input.btqId = HttpContext.Session.Get<int>("btqId");
-                    input.catId = HttpContext.Session.Get<int>("catEnfantId1");
+                    input.catId = HttpContext.Session.Get<int>("Cat");
                     var description = HttpContext.Session.Get<Input>("Description");
                     var result = await ProduitLogic.AddProduit(input.btqId, input.catId, description.PNom, description.PDescriptionC, description.PDescriptionL, input.Stock, input.Disponibilite,
                             input.Rabais, input.Preparation, input.Publier);

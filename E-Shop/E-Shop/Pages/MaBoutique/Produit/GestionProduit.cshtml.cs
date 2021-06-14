@@ -34,6 +34,10 @@ namespace E_Shop.Pages.MaBoutique.Produit
 
         public IActionResult OnPostCrProduit()
         {
+            if (HttpContext.Session.Get<int>("prodIdUp")>0)
+            {
+                HttpContext.Session.Set<int>("prodIdUp",0);
+            }
             return Redirect("/MaBoutique/Produit/ChoixCategorieStep1");
         }
         public IActionResult OnPostUpProduit()

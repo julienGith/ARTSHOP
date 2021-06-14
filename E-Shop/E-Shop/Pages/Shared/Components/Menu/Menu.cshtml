@@ -67,10 +67,10 @@
                                             {
                                                 <div class="dropdown-divider"></div>
                                                 <div class="flex-column">
-                                                    <a class="dropdown-item align-self-center" href="/Produits/ListeProduits/?catId=@catEnfant.Categorieid"><h6>@catEnfant.Categorienom</h6></a>
+                                                    <a class="dropdown-item align-self-center" href="/Produits/ListeProduits/?catId=@catEnfant.Categorieid&pageIndex=1"><h6>@catEnfant.Categorienom</h6></a>
                                                     @foreach (var subCat in ListSubCat)
                                                     {
-                                                        <a class="dropdown-item" href="/Produits/ListeProduits/?catId=@subCat.Categorieid">@subCat.Categorienom</a>
+                                                        <a class="dropdown-item" href="/Produits/ListeProduits/?catId=@subCat.Categorieid&pageIndex=1">@subCat.Categorienom</a>
                                                     }
                                                 </div>
                                             }
