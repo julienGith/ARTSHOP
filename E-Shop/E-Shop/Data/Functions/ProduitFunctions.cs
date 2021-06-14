@@ -140,44 +140,13 @@ namespace E_Shop.Data.Functions
                                             select p;
                 if (region != null && dept == null)
                 {
-                    foreach (var depart in region.departements)
-                    {
-                        localisation = await context.Localisations.FirstOrDefaultAsync(l => l.Departement == depart.nom && l.PrNom == null && l.Btqid > 0);
-                        if (localisation != null)
-                        {
-                            localisations.Add(localisation);
-                        }
-                    }
-                    foreach (var loca in localisations)
-                    {
-                        btq = await context.Boutiques.FirstOrDefaultAsync(b => b.Btqid == loca.Btqid);
-                        if (btq != null)
-                        {
-                            btqId.Add(btq.Btqid);
-                        }
-                    }
-                    if (localisations.Count > 0)
-                    {
-                        prods = prods.Where(p => btqId.Contains(p.Btqid));
-                    }
-                    if (localisations.Count == 0)
-                    {
-                        prods = from p in context.Produits.Where(p => p.Categorieid == 0).AsNoTracking()
-                                select p;
-                    }
+                    localisations = await context.Localisations.Where(l => region.departements.Select(d => d.nom).Contains(l.Departement) && l.PrNom == null && l.Btqid > 0).ToListAsync();
+                    prods = await GetProds(localisations, prods, context);
                 }
                 if (dept != null)
                 {
-                    localisation = await context.Localisations.FirstOrDefaultAsync(l => l.Departement == dept && l.PrNom == null && l.Btqid > 0);
-                    if (localisation != null)
-                    {
-                        prods = prods.Where(p => p.Btqid == localisation.Btqid);
-                    }
-                    if (localisation == null)
-                    {
-                        prods = from p in context.Produits.Where(p => p.Categorieid == 0).AsNoTracking()
-                                select p;
-                    }
+                    localisations = await context.Localisations.Where(l => l.Departement.ToUpper() == dept.ToUpper() && l.PrNom == null && l.Btqid > 0).ToListAsync();
+                    prods = await GetProds(localisations, prods, context);
                 }
                 switch (sortOrder)
                 {
@@ -194,6 +163,29 @@ namespace E_Shop.Data.Functions
             }
 
             return produits;
+        }
+        private async Task<IQueryable<Produit>> GetProds(List<Localisation> localisations, IQueryable<Produit> prods, ApplicationDbContext context)
+        {
+            Boutique btq = new Boutique();
+            List<int> btqId = new List<int>();
+            if (localisations.Count > 0)
+            {
+                foreach (var loca in localisations)
+                {
+                    btq = await context.Boutiques.FirstOrDefaultAsync(b => b.Btqid == loca.Btqid);
+                    if (btq != null)
+                    {
+                        btqId.Add(btq.Btqid);
+                    }
+                }
+                prods = prods.Where(b => btqId.Contains(b.Btqid));
+            }
+            if (localisations.Count == 0)
+            {
+                prods = from p in context.Produits.Where(p => p.Categorieid == 0).AsNoTracking()
+                        select p;
+            }
+            return prods;
         }
         //Recherche partielle produits par nom
         public async Task<List<Produit>> GetListProduitByQuery(string query)

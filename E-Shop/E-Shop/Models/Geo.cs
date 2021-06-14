@@ -350,7 +350,7 @@ namespace E_Shop.Models
                 nom = "Limousin",
                 departements = new List<Departement>
                 { new Departement
-                { nom = "Corrèze ",
+                { nom = "Corrèze",
                   num = "19"
                 },
                     new Departement

@@ -136,8 +136,6 @@ namespace E_Shop.Data.Functions
         public async Task<PaginatedList<Boutique>> GetBoutiquesByCatId(int catId, int? pageIndex, string dept, Geo.Region region)
         {
             int pageSize = 3;
-            Boutique btq = new Boutique();
-            List<int> btqId = new List<int>();
             PaginatedList<Boutique> boutiques;
             List<Catnav> CatnavEnfants1 = new List<Catnav>();
             List<Produit> produits = new List<Produit>();
@@ -153,77 +151,59 @@ namespace E_Shop.Data.Functions
                      .ThenInclude(p => p.Formats).Include(c => c.Categorie).ThenInclude(c => c.Produits)
                      .ThenInclude(p => p.Avis).Include(c => c.Categorie).ThenInclude(c => c.Produits)
                      .AsNoTracking().ToListAsync();
-                bouts = from b in context.Boutiques.
-                    Include(b => b.Media).
-                    Include(b => b.Avis).Include(b => b.Localisations).
-                    Include(b => b.Produits.Where(p => p.Categorieid == catId)).
-                    ThenInclude(p => p.Media).Include(b => b.Produits).
-                    ThenInclude(p => p.Formats).AsNoTracking()
-                        select b;
-
                 if (CatnavEnfants1.Count > 0)
                 {
                     foreach (var item in CatnavEnfants1)
                     {
                         produits.AddRange(item.Categorie.Produits);
                     }
-                    foreach (var b in bouts)
-                    {
-                        foreach (var p in produits)
-                        {
-                            if (p.Btqid==b.Btqid)
-                            {
-                                b.Produits.Add(p);
-                            }
-                        }
-                    }
                 }
-
-                if (region!=null && dept==null)
+                bouts = from b in context.Boutiques.
+                    Include(b => b.Media).
+                    Include(b => b.Avis).Include(b => b.Localisations).
+                    Include(b => b.Produits.Where(p => p.Categorieid == catId || produits.Contains(p))).
+                    ThenInclude(p => p.Media).Include(b => b.Produits).
+                    ThenInclude(p => p.Formats).AsNoTracking()
+                        select b;
+                if (region != null && dept == null)
                 {
-                    foreach (var depart in region.departements)
-                    {
-                        localisation = await context.Localisations.FirstOrDefaultAsync(l => l.Departement == depart.nom && l.PrNom == null && l.Btqid > 0);
-                        if (localisation!=null)
-                        {
-                            localisations.Add(localisation);
-                        }
-                    }
-                    foreach (var loca in localisations)
-                    {
-                        btq = await context.Boutiques.FirstOrDefaultAsync(b => b.Btqid == loca.Btqid);
-                        if (btq!=null)
-                        {
-                            btqId.Add(btq.Btqid);
-                        }
-                    }
-                    if (localisations.Count>0)
-                    {
-                        bouts = bouts.Where(b => btqId.Contains(b.Btqid));
-                    }
-                    if (localisations.Count==0)
-                    {
-                        bouts = from b in context.Boutiques.Include(b => b.Produits.Where(p => p.Categorieid == 0)).AsNoTracking()
-                                select b;
-                    }
+                    localisations = await context.Localisations.Where(l => region.departements.Select(d => d.nom).Contains(l.Departement) && l.PrNom == null && l.Btqid > 0).ToListAsync();
+                    bouts = await GetBouts(localisations, bouts,context);
                 }
-                if (dept!=null)
+                if (dept != null)
                 {
-                    localisation = await context.Localisations.FirstOrDefaultAsync(l => l.Departement == dept && l.PrNom == null && l.Btqid > 0);
-                    if (localisation!=null)
-                    {
-                        bouts = bouts.Where(b => b.Btqid == localisation.Btqid);
-                    }
-                    if (localisation==null)
-                    {
-                        bouts = from b in context.Boutiques.Include(b => b.Produits.Where(p => p.Categorieid == 0)).AsNoTracking()
-                                select b;
-                    }
+                    localisations = await context.Localisations.Where(l => l.Departement.ToUpper() == dept.ToUpper() && l.PrNom == null && l.Btqid > 0).ToListAsync();
+                    bouts = await GetBouts(localisations, bouts, context);
                 }
                 boutiques = await PaginatedList<Boutique>.CreateAsync(bouts, pageIndex ?? 1, pageSize);
             }
             return boutiques;
         }
+
+        private async Task<IQueryable<Boutique>> GetBouts(List<Localisation> localisations, IQueryable<Boutique> bouts, ApplicationDbContext context)
+        {
+            Boutique btq = new Boutique();
+            List<int> btqId = new List<int>();
+            if (localisations.Count > 0)
+            {
+                foreach (var loca in localisations)
+                {
+                    btq = await context.Boutiques.FirstOrDefaultAsync(b => b.Btqid == loca.Btqid);
+                    if (btq != null)
+                    {
+                        btqId.Add(btq.Btqid);
+                    }
+                }
+                bouts = bouts.Where(b => btqId.Contains(b.Btqid));
+            }
+            if (localisations.Count == 0)
+            {
+                bouts = from b in context.Boutiques.Include(b => b.Produits.Where(p => p.Categorieid == 0)).AsNoTracking()
+                        select b;
+            }
+            return bouts;
+        }
+
         //Get Boutique stripe acct
         public string GetBoutiqueStripeAcct(int btqId)
         {
