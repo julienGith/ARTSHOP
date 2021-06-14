@@ -214,24 +214,39 @@ namespace E_Shop.Data.Functions
             }
             return StripeAcct;
         }
-        //Get Nombre de boutiques par catégorie, régions et départements
+        //Get Geo Nombre de boutiques par catégorie
         public async Task<Geo> GetBoutiqueCountByGeo(int catID)
         {
             Geo geo = new Geo();
             List<Localisation> localisations = new List<Localisation>();
             Boutique btq = new Boutique();
             List<Boutique> boutiques = new List<Boutique>();
+            List<Catnav> CatnavEnfants1 = new List<Catnav>();
+            List<Produit> produits = new List<Produit>();
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
+                CatnavEnfants1 = await context.Catnavs.Where(n => n.CatCategorieid == catID)
+                    .Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                    .ThenInclude(p => p.Media).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                    .ThenInclude(p => p.Formats).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                    .ThenInclude(p => p.Avis).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                    .AsNoTracking().ToListAsync();
+                if (CatnavEnfants1.Count > 0)
+                {
+                    foreach (var item in CatnavEnfants1)
+                    {
+                        produits.AddRange(item.Categorie.Produits);
+                    }
+                }
                 foreach (var region in geo.Regions)
                 {
                     foreach (var dept in region.departements)
                     {
                         localisations = await context.Localisations.Where(l=>l.Departement == dept.nom && l.PrNom == null && l.Btqid>0).ToListAsync();
                         boutiques = await context.Boutiques
-                            .Include(b => b.Produits)
+                            .Include(b => b.Produits.Where(p => p.Categorieid == catID || produits.Contains(p)))
                             .Include(b => b.Localisations)
-                            .Where(b => b.Localisations.Any(l => l.Departement.ToUpper() == dept.nom.ToUpper() && b.Produits.Any(p => p.Categorieid == catID)))
+                            .Where(b => b.Localisations.Any(l => l.Departement.ToUpper() == dept.nom.ToUpper()))
                             .AsNoTracking().ToListAsync();
                         dept.btqCount = boutiques.Count;
                     }

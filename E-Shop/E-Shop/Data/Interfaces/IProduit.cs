@@ -30,5 +30,7 @@ namespace E_Shop.Data.Interfaces
         Task<PaginatedList<Produit>> GetProduitsByCatId(int catId, int? pageIndex, string sortOrder, string dept, Geo.Region region);
         //Recherche partielle produits par nom
         Task<List<Produit>> GetListProduitByQuery(string query);
+        //Get Geo Nombre de produits par catégorie
+        Task<Geo> GetGeoProduitsCountByCatID(int catID);
     }
 }

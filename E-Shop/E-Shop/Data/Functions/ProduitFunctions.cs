@@ -197,5 +197,44 @@ namespace E_Shop.Data.Functions
             }
             return Produits;
         }
+        //Get Geo Nombre de produits par catégorie
+        public async Task<Geo> GetGeoProduitsCountByCatID(int catID)
+        {
+            Geo geo = new Geo();
+            List<Produit> produits1 = new List<Produit>();
+            List<Produit> produits2 = new List<Produit>();
+            List<Catnav> CatnavEnfants1 = new List<Catnav>();
+            List<Localisation> localisations = new List<Localisation>();
+
+            using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                CatnavEnfants1 = await context.Catnavs.Where(n => n.CatCategorieid == catID)
+                    .Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                    .ThenInclude(p => p.Media).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                    .ThenInclude(p => p.Formats).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                    .ThenInclude(p => p.Avis).Include(c => c.Categorie).ThenInclude(c => c.Produits)
+                    .ThenInclude(p => p.Btq).ThenInclude(b => b.Media).AsNoTracking().ToListAsync();
+                if (CatnavEnfants1.Count > 0)
+                {
+                    foreach (var item in CatnavEnfants1)
+                    {
+                        produits1.AddRange(item.Categorie.Produits);
+                    }
+                }
+                foreach (var region in geo.Regions)
+                {
+                    foreach (var dept in region.departements)
+                    {
+                        localisations = await context.Localisations.Where(l => l.Departement == dept.nom && l.PrNom == null && l.Btqid > 0).ToListAsync();
+                        produits2 = await context.Produits
+                            .Include(p => p.Btq.Localisations)
+                            .Where(p => p.Btq.Localisations.Any(l => l.Departement == dept.nom && l.PrNom == null && l.Btqid > 0) && p.Categorieid == catID || produits1.Contains(p))
+                            .AsNoTracking().ToListAsync();
+                        dept.prodCount = produits2.Count;
+                    }
+                }
+            }
+            return geo;
+        }
     }
 }

@@ -56,5 +56,10 @@ namespace E_Shop.Logic.ProduitLogic
         {
             return await _produit.GetListProduitByQuery(query);
         }
+        //Get Geo Nombre de produits par catégorie
+        public async Task<Geo> GetGeoProduitsCountByCatID(int catID)
+        {
+            return await _produit.GetGeoProduitsCountByCatID(catID);
+        }
     }
 }

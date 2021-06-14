@@ -40,11 +40,13 @@
             <input name="id" value="@Model.id" hidden /><input name="page" value="@Model.page" hidden />
             <input name="region" value="@Model.region" hidden />
             <input name="departement" value="@Model.departement" hidden />
+            <input name="byProd" value="true" hidden />
             <button type="submit" asp-page-handler="ByProd" class="btn btn-primary">Afficher par produits</button>
         </form>
         <form type="submit" method="post" asp-page-handler="Geo">
             <input name="catId" value="@Model.id" hidden />
             <input name="pageIndex" value="@Model.page" hidden />
+            <input name="byProd" value="false" hidden />
             @if (Model.regionChoisie == null)
             {
                 <select name="region" onchange="this.form.submit()" class="form-control">
@@ -329,6 +331,7 @@ else
                 <input name="id" value="@Model.id" hidden /><input name="page" value="@Model.page" hidden />
                 <input name="region" value="@Model.region" hidden />
                 <input name="departement" value="@Model.departement" hidden />
+                <input name="byProd" value="false" hidden />
                 <button type="submit" class="btn btn-primary">Afficher par Boutiques</button>
             </form>
         </div>
@@ -336,25 +339,26 @@ else
             <input name="byProd" value="true" hidden />
             <input name="catId" value="@Model.id" hidden />
             <input name="pageIndex" value="@Model.page" hidden />
+            <input name="byProd" value="true" hidden />
             @if (Model.regionChoisie == null)
             {
                 <select name="region" onchange="this.form.submit()" class="form-control">
                     <option value="" selected>filtrer par régions</option>
                     @foreach (var reg in Model.geo.Regions)
                     {
-                        <option value="@reg.nom">@reg.nom (@reg.btqCount)</option>
+                        <option value="@reg.nom">@reg.nom (@reg.prodCount)</option>
                     }
                 </select>
             }
             @if (Model.regionChoisie != null)
             {
                 <select name="region" onchange="this.form.submit()" class="form-control">
-                    <option value="@Model.regionChoisie.nom" selected>@Model.regionChoisie.nom (@Model.regionChoisie.btqCount)</option>
+                    <option value="@Model.regionChoisie.nom" selected>@Model.regionChoisie.nom (@Model.regionChoisie.prodCount)</option>
                     @foreach (var reg in Model.geo.Regions)
                     {
                         if (reg.nom != Model.regionChoisie.nom)
                         {
-                            <option value="@reg.nom">@reg.nom (@reg.btqCount)</option>
+                            <option value="@reg.nom">@reg.nom (@reg.prodCount)</option>
                         }
                     }
                 </select>
@@ -364,19 +368,19 @@ else
                         <option value="">filtrer par départements</option>
                         @foreach (var dept in Model.regionChoisie.departements)
                         {
-                            <option value="@dept.nom">@dept.nom (@dept.btqCount)</option>
+                            <option value="@dept.nom">@dept.nom (@dept.prodCount)</option>
                         }
                     </select>
                 }
                 @if (Model.departementChoisi != null)
                 {
                     <select name="departement" onchange="this.form.submit()" class="form-control">
-                        <option value="@Model.departementChoisi.nom">@Model.departementChoisi.nom (@Model.departementChoisi.btqCount)</option>
+                        <option value="@Model.departementChoisi.nom">@Model.departementChoisi.nom (@Model.departementChoisi.prodCount)</option>
                         @foreach (var dept in Model.regionChoisie.departements)
                         {
                             if (dept.nom != Model.departementChoisi.nom)
                             {
-                                <option value="@dept.nom">@dept.nom (@dept.btqCount)</option>
+                                <option value="@dept.nom">@dept.nom (@dept.prodCount)</option>
                             }
                         }
                     </select>

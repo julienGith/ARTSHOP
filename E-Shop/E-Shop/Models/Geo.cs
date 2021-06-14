@@ -15,13 +15,18 @@ namespace E_Shop.Models
             { get 
                 { return departements.Sum(d => d.btqCount); } 
             }
-
+            public int prodCount
+            {
+                get
+                { return departements.Sum(d => d.prodCount); }
+            }
         }
         public class Departement
         {
             public string nom { get; set; }
             public string num { get; set; }
             public int btqCount { get; set; }
+            public int prodCount { get; set; }
         }
         public List<Region> Regions = new List<Region>
         {

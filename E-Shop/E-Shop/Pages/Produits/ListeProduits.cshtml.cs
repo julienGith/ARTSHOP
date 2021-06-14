@@ -48,10 +48,12 @@ namespace E_Shop.Pages.Produits
 
         public async Task<IActionResult> OnPostByProd()
         {
-            page = 1;
+            if (byProd==true)
+            {
+                page = 1;
+            }
             catId = id;
-            byProd = true;
-            geo = await boutiqueLogic.GetBoutiqueCountByGeo(catId);
+            geo = await produitLogic.GetGeoProduitsCountByCatID(catId);
             if (region!=null)
             {
                 regionChoisie = geo.Regions.FirstOrDefault(r => r.nom == region);
@@ -62,9 +64,11 @@ namespace E_Shop.Pages.Produits
         }
         public async Task<IActionResult> OnPostByBout()
         {
-            page = 1;
             catId = id;
-            byProd = false;
+            if (byProd==false)
+            {
+                page = 1;
+            }
             geo = await boutiqueLogic.GetBoutiqueCountByGeo(catId);
             if (region != null)
             {
@@ -73,6 +77,7 @@ namespace E_Shop.Pages.Produits
             }
             listBtq = await boutiqueLogic.GetBoutiquesByCatId(id, page, departement, regionChoisie);
             totalpage = listBtq.TotalPages;
+
             return Page();
         }
         public async Task<IActionResult> OnGet(int catId, int? pageIndex)
@@ -103,15 +108,27 @@ namespace E_Shop.Pages.Produits
             {
                 page = 1;
             }
-            geo = await boutiqueLogic.GetBoutiqueCountByGeo(catId);
-            regionChoisie = geo.Regions.FirstOrDefault(r => r.nom == region);
-            departementChoisi = regionChoisie.departements.FirstOrDefault(d => d.nom == departement);
+
+            if (departementChoisi!=null)
+            {
+                departement = departementChoisi.nom;
+            }
+            if (departementChoisi==null)
+            {
+                departement = null;
+            }
             if (byProd == false)
             {
+                geo = await boutiqueLogic.GetBoutiqueCountByGeo(catId);
+                regionChoisie = geo.Regions.FirstOrDefault(r => r.nom == region);
+                departementChoisi = regionChoisie.departements.FirstOrDefault(d => d.nom == departement);
                 listBtq = await boutiqueLogic.GetBoutiquesByCatId(id, page, departement, regionChoisie);
             }
             if (byProd == true)
             {
+                geo = await produitLogic.GetGeoProduitsCountByCatID(catId);
+                regionChoisie = geo.Regions.FirstOrDefault(r => r.nom == region);
+                departementChoisi = regionChoisie.departements.FirstOrDefault(d => d.nom == departement);
                 listProduits = await produitLogic.GetProduitsByCatId(id, page, sortOrder, departement, regionChoisie);
             }
             return Page();
