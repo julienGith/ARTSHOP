@@ -99,12 +99,12 @@
         var token = document.querySelector("[name=__RequestVerificationToken]").value;
         var searchUl = document.getElementById("searchUl");
         searchUl.hidden = false;
-        if (searchBoxVal.length < 3) {
+        if (searchBoxVal.length == 0) {
             if (searchUl.childElementCount > 0) {
                 searchUl.innerHTML = '';
             }
         }
-        if (searchBoxVal.length > 2) {
+        if (searchBoxVal.length > 0) {
             var query = String(searchBoxVal);
             var xhttp = new XMLHttpRequest();
             xhttp.responseType = 'json';

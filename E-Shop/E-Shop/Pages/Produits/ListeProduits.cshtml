@@ -251,52 +251,51 @@
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center">
-                    @if (Model.listBtq.HasPreviousPage)
-                    {
-                        <div class="d-inline-flex">
-                            @{int? ind = Model.page - 1;
-                            }
-                            <form type="submit" method="post" asp-page-handler="Geo">
-                                <input name="byProd" value="false" hidden />
-                                <input name="region" value="@Model.region" hidden />
-                                <input name="departement" value="@Model.departement" hidden />
-                                <input name="id" value="@Model.id" hidden /><input name="page" value="@ind" hidden />
-                                <button type="submit" class="btn btn-primary">Précédent</button>
-                            </form>
-                        </div>
-                    }
-                    @if (!Model.listBtq.HasPreviousPage)
-                    {
-                        <div class="d-inline-flex">
-                            <button type="submit" class="btn btn-primary" disabled>Précédent</button>
-                        </div>
-                    }
-                    @if (Model.listBtq.HasNextPage)
-                    {
-                        <div class="d-inline-flex">
-                            @{int? ind = Model.page + 1;
-                            }
-                            <form type="submit" method="post" asp-page-handler="Geo">
-                                <input name="byProd" value="false" hidden />
-                                <input name="region" value="@Model.region" hidden />
-                                <input name="departement" value="@Model.departement" hidden />
-                                <input name="id" value="@Model.id" hidden /><input name="page" value="@ind" hidden />
-                                <button type="submit" class="btn btn-primary">Suivant</button>
-                            </form>
-                        </div>
-                    }
-                    @if (!Model.listBtq.HasNextPage)
-                    {
-                        <div class="d-inline-flex">
-                            <button type="submit" class="btn btn-primary" disabled>Suivant</button>
-                        </div>
-                    }
-
-                </div>
-
             }
         }
+        <div class="row justify-content-center">
+            @if (Model.listBtq.HasPreviousPage)
+            {
+                <div class="d-inline-flex">
+                    @{int? ind = Model.page - 1;
+                    }
+                    <form type="submit" method="post" asp-page-handler="Geo">
+                        <input name="byProd" value="false" hidden />
+                        <input name="region" value="@Model.region" hidden />
+                        <input name="departement" value="@Model.departement" hidden />
+                        <input name="id" value="@Model.id" hidden /><input name="page" value="@ind" hidden />
+                        <button type="submit" class="btn btn-primary">Précédent</button>
+                    </form>
+                </div>
+            }
+            @if (!Model.listBtq.HasPreviousPage)
+            {
+                <div class="d-inline-flex">
+                    <button type="submit" class="btn btn-primary" disabled>Précédent</button>
+                </div>
+            }
+            @if (Model.listBtq.HasNextPage)
+            {
+                <div class="d-inline-flex">
+                    @{int? ind = Model.page + 1;
+                    }
+                    <form type="submit" method="post" asp-page-handler="Geo">
+                        <input name="byProd" value="false" hidden />
+                        <input name="region" value="@Model.region" hidden />
+                        <input name="departement" value="@Model.departement" hidden />
+                        <input name="id" value="@Model.id" hidden /><input name="page" value="@ind" hidden />
+                        <button type="submit" class="btn btn-primary">Suivant</button>
+                    </form>
+                </div>
+            }
+            @if (!Model.listBtq.HasNextPage)
+            {
+                <div class="d-inline-flex">
+                    <button type="submit" class="btn btn-primary" disabled>Suivant</button>
+                </div>
+            }
+
+        </div>
     }
 }
 else

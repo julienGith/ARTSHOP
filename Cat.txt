@@ -1,5 +1,6 @@
 Boutiques Gastronomiques
 Boutiques Créateurs
+Boutiques Prestations
 
 Maison
 
@@ -44,3 +45,22 @@ Art du Bois
 Art de la Pierre
 
 Insolite
+
+-----
+Découvertes
+Visites
+Initiations
+Dégustations
+
+Bâtiment
+
+Menuiserie
+Plomberie
+Chauffagerie
+Electricité
+
+Photographie
+
+Bien-être
+Massage
+Esthétique

@@ -62,7 +62,8 @@ namespace E_Shop.Pages.Produits
         }
         public async Task<IActionResult> OnPostByBout()
         {
-            pageIndex = page;
+            //pageIndex = page;
+            page = 1;
             catId = id;
             byProd = false;
             geo = await boutiqueLogic.GetBoutiqueCountByGeo();
