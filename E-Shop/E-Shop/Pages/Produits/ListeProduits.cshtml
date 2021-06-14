@@ -390,6 +390,7 @@ else
 
         <div class="d-flex justify-content-end">
             <form type="submit" asp-page-handler="ByProd">
+                <input name="byProd" value="true" hidden />
                 <input name="id" value="@Model.id" hidden />
                 <input name="page" value="@Model.page" hidden />
                 <input name="region" value="@Model.region" hidden />

@@ -108,8 +108,6 @@ namespace E_Shop.Pages.Produits
             {
                 page = 1;
             }
-
-
             if (byProd == false)
             {
                 geo = await boutiqueLogic.GetBoutiqueCountByGeo(catId);
