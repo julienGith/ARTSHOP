@@ -337,10 +337,10 @@ else
         </div>
         <div class="d-flex justify-content-end">
             <form type="submit" method="post" asp-page-handler="Geo">
+                <input name="sortOrder" value="@Model.sortOrder" hidden />
                 <input name="byProd" value="true" hidden />
                 <input name="catId" value="@Model.id" hidden />
                 <input name="pageIndex" value="@Model.page" hidden />
-                <input name="byProd" value="true" hidden />
                 @if (Model.regionChoisie == null)
                 {
                     <select name="region" onchange="this.form.submit()" class="form-control">
