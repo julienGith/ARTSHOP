@@ -335,59 +335,60 @@ else
                 <button type="submit" class="btn btn-primary">Afficher par Boutiques</button>
             </form>
         </div>
-        <form type="submit" method="post" asp-page-handler="Geo">
-            <input name="byProd" value="true" hidden />
-            <input name="catId" value="@Model.id" hidden />
-            <input name="pageIndex" value="@Model.page" hidden />
-            <input name="byProd" value="true" hidden />
-            @if (Model.regionChoisie == null)
-            {
-                <select name="region" onchange="this.form.submit()" class="form-control">
-                    <option value="" selected>filtrer par régions</option>
-                    @foreach (var reg in Model.geo.Regions)
-                    {
-                        <option value="@reg.nom">@reg.nom (@reg.prodCount)</option>
-                    }
-                </select>
-            }
-            @if (Model.regionChoisie != null)
-            {
-                <select name="region" onchange="this.form.submit()" class="form-control">
-                    <option value="@Model.regionChoisie.nom" selected>@Model.regionChoisie.nom (@Model.regionChoisie.prodCount)</option>
-                    @foreach (var reg in Model.geo.Regions)
-                    {
-                        if (reg.nom != Model.regionChoisie.nom)
+        <div class="d-flex justify-content-end">
+            <form type="submit" method="post" asp-page-handler="Geo">
+                <input name="byProd" value="true" hidden />
+                <input name="catId" value="@Model.id" hidden />
+                <input name="pageIndex" value="@Model.page" hidden />
+                <input name="byProd" value="true" hidden />
+                @if (Model.regionChoisie == null)
+                {
+                    <select name="region" onchange="this.form.submit()" class="form-control">
+                        <option value="" selected>filtrer par régions</option>
+                        @foreach (var reg in Model.geo.Regions)
                         {
                             <option value="@reg.nom">@reg.nom (@reg.prodCount)</option>
                         }
-                    }
-                </select>
-                @if (Model.departementChoisi == null)
-                {
-                    <select name="departement" onchange="this.form.submit()" class="form-control">
-                        <option value="">filtrer par départements</option>
-                        @foreach (var dept in Model.regionChoisie.departements)
-                        {
-                            <option value="@dept.nom">@dept.nom (@dept.prodCount)</option>
-                        }
                     </select>
                 }
-                @if (Model.departementChoisi != null)
+                @if (Model.regionChoisie != null)
                 {
-                    <select name="departement" onchange="this.form.submit()" class="form-control">
-                        <option value="@Model.departementChoisi.nom">@Model.departementChoisi.nom (@Model.departementChoisi.prodCount)</option>
-                        @foreach (var dept in Model.regionChoisie.departements)
+                    <select name="region" onchange="this.form.submit()" class="form-control">
+                        <option value="@Model.regionChoisie.nom" selected>@Model.regionChoisie.nom (@Model.regionChoisie.prodCount)</option>
+                        @foreach (var reg in Model.geo.Regions)
                         {
-                            if (dept.nom != Model.departementChoisi.nom)
+                            if (reg.nom != Model.regionChoisie.nom)
                             {
-                                <option value="@dept.nom">@dept.nom (@dept.prodCount)</option>
+                                <option value="@reg.nom">@reg.nom (@reg.prodCount)</option>
                             }
                         }
                     </select>
+                    @if (Model.departementChoisi == null)
+                    {
+                        <select name="departement" onchange="this.form.submit()" class="form-control">
+                            <option value="">filtrer par départements</option>
+                            @foreach (var dept in Model.regionChoisie.departements)
+                            {
+                                <option value="@dept.nom">@dept.nom (@dept.prodCount)</option>
+                            }
+                        </select>
+                    }
+                    @if (Model.departementChoisi != null)
+                    {
+                        <select name="departement" onchange="this.form.submit()" class="form-control">
+                            <option value="@Model.departementChoisi.nom">@Model.departementChoisi.nom (@Model.departementChoisi.prodCount)</option>
+                            @foreach (var dept in Model.regionChoisie.departements)
+                            {
+                                if (dept.nom != Model.departementChoisi.nom)
+                                {
+                                    <option value="@dept.nom">@dept.nom (@dept.prodCount)</option>
+                                }
+                            }
+                        </select>
+                    }
                 }
-            }
-        </form>
-
+            </form>
+        </div>
         <div class="d-flex justify-content-end">
             <form type="submit" asp-page-handler="ByProd">
                 <input name="byProd" value="true" hidden />
@@ -395,11 +396,30 @@ else
                 <input name="page" value="@Model.page" hidden />
                 <input name="region" value="@Model.region" hidden />
                 <input name="departement" value="@Model.departement" hidden />
-                <select name="sortOrder" onchange="this.form.submit()" class="form-control">
-                    <option value="default" selected>tri</option>
-                    <option value="price_asc">Prix croissants</option>
+                @if (Model.sortOrder != null)
+                {
+            <select name="sortOrder" onchange="this.form.submit()" class="form-control">
+                @if (@Model.sortOrder == "price_asc")
+                {
+                    <option value="@Model.sortOrder" selected>Prix croissants</option>
                     <option value="price_desc">Prix décroissants</option>
-                </select>
+                }
+                else
+                {
+                    <option value="@Model.sortOrder" selected>Prix décroissants</option>
+                    <option value="price_asc">Prix croissants</option>
+                }
+            </select>
+                }
+                else
+                {
+                    <select name="sortOrder" onchange="this.form.submit()" class="form-control">
+                        <option value="default" selected>tri</option>
+                        <option value="price_asc">Prix croissants</option>
+                        <option value="price_desc">Prix décroissants</option>
+                    </select>
+                }
+
             </form>
         </div>
     </div>

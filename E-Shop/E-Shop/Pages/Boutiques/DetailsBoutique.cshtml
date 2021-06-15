@@ -43,18 +43,68 @@
                 <p class="card-text">@departement</p>
                 @foreach (var c in Model.categories)
                 {
-                    <button class="list-group-item btn-block" type="button" data-toggle="collapse" data-target="#@c.Categorienom" aria-expanded="false" aria-controls="@c.Categorienom">
-                        @c.Categorienom
-                    </button>
-                    <div class="collapse" id="@c.Categorienom">
-
-                        @foreach (var ce in c.CatnavCatCategories)
+                    @foreach (var item in c.CatnavCategories)
+                    {
+                        var idCatCategorie = item.CatCategorie.Categorienom.Replace(" ", "").Replace("é", "").Replace("&", "");
+                        var idCaten = item.Categorie.Categorienom.Replace(" ", "").Replace("é", "").Replace("&", "");
+                        if (item.CatCategorie.Categorieid > 5)
                         {
-                            <div>
-                                <a class="list-group-item list-group-item-action" href="#@ce.Categorie.Categorieid">@ce.Categorie.Categorienom @ce.Categorie.Produits.Count</a>
+                            <button class="list-group-item btn-block" type="button" data-toggle="collapse" data-target="#@idCatCategorie"
+                                    aria-expanded="false" aria-controls="@idCatCategorie">
+                                @item.CatCategorie.Categorienom
+                            </button>
+                            <div class="collapse" id="@idCatCategorie">
+                                <button class="list-group-item btn-block" type="button" data-toggle="collapse" data-target="#@idCaten"
+                                        aria-expanded="false" aria-controls="@idCaten">
+                                    @item.Categorie.Categorienom
+                                </button>
+                                <div class="collapse" id="@idCaten">
+                                    @foreach (var cat in item.Categorie.CatnavCatCategories)
+                                    {
+                                        if (cat.Categorie.Produits.Count > 0)
+                                        {
+                                            <div>
+                                                <a class="list-group-item list-group-item-action" href="#@cat.Categorie.Categorieid">@cat.Categorie.Categorienom @cat.Categorie.Produits.Count</a>
+                                            </div>
+                                        }
+                                    }
+                                </div>
                             </div>
                         }
+                        else
+                        {
+                                <button class="list-group-item btn-block" type="button" data-toggle="collapse" data-target="#@idCaten"
+                                        aria-expanded="false" aria-controls="@idCaten">
+                                    @item.Categorie.Categorienom
+                                </button>
+                                <div class="collapse" id="@idCaten">
+                                    @foreach (var cat in item.Categorie.CatnavCatCategories)
+                                    {
+                                        if (cat.Categorie.Produits.Count > 0)
+                                        {
+                                            <div>
+                                                <a class="list-group-item list-group-item-action" href="#@cat.Categorie.Categorieid">@cat.Categorie.Categorienom @cat.Categorie.Produits.Count</a>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+
+                        }
+
+                    }
+                    @*<button class="list-group-item btn-block" type="button" data-toggle="collapse" data-target="#@c.Categorienom" aria-expanded="false" aria-controls="@c.Categorienom">
+                @c.Categorienom
+            </button>
+            <div class="collapse" id="@c.Categorienom">
+
+                @foreach (var ce in c.CatnavCatCategories)
+                {
+                    <div>
+                        <a class="list-group-item list-group-item-action" href="#@ce.Categorie.Categorieid">@ce.Categorie.Categorienom @ce.Categorie.Produits.Count</a>
                     </div>
+                }
+            </div>*@
+
                 }
             </div>
         </div>

@@ -148,14 +148,24 @@ namespace E_Shop.Data.Functions
         public async Task<List<Categorie>> GetCategoriesByBtqId(int btqId)
         {
             List<Categorie> categories = new List<Categorie>();
-            List<Catnav> Catnavs = new List<Catnav>();
+            List<Catnav> Catnavs1 = new List<Catnav>();
+            List<Catnav> Catnavs2 = new List<Catnav>();
+
             using (var context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
 
-                Catnavs = await context.Catnavs.Include(c => c.Categorie).Include(c => c.CatCategorie).Include(c => c.Categorie.Produits).Where(c=>c.Categorie.Produits.Count()>0).ToListAsync();
-                foreach (var item in Catnavs)
+                //Catnavs1 = await context.Catnavs
+                //    .Include(c => c.Categorie).ThenInclude(c=>c.CatnavCategories).ThenInclude(c=>c.Categorie)
+                //    .Include(c => c.CatCategorie).Include(c => c.Categorie.Produits)
+                //    .Where(c=>c.Categorie.Produits.Count()>0 && c.Categorie.Produits.Any(p=>p.Btqid==btqId)).ToListAsync();
+                Catnavs1 = await context.Catnavs
+                    .Include(c => c.Categorie).Include(c => c.CatCategorie).ThenInclude(c => c.CatnavCategories).ThenInclude(c=>c.CatCategorie)
+                    .Include(c => c.Categorie.Produits)
+                    .Where(c => c.Categorie.Produits.Any(p => p.Btqid == btqId)).ToListAsync();
+                foreach (var item in Catnavs1)
                 {
                     categories.Add(item.CatCategorie);
+                    
                 }
                 categories=categories.Distinct().ToList();
             }
