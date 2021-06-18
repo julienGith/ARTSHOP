@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using E_Shop.Entities;
 using E_Shop.Extensions;
 using E_Shop.Logic.BoutiqueLogic;
+using E_Shop.Logic.CategorieLogic;
 using E_Shop.Logic.FormatLogic;
 using E_Shop.Logic.LivraisonTypeLogic;
-using E_Shop.Logic.LocalisationLogic;
 using E_Shop.Logic.MediaLogic;
 using E_Shop.Logic.ProduitLogic;
 using E_Shop.Models;
@@ -22,24 +22,25 @@ namespace E_Shop.Pages.Produits
         private ProduitLogic ProduitLogic = new ProduitLogic();
         private BoutiqueLogic BoutiqueLogic = new BoutiqueLogic();
         private MediaLogic mediaLogic = new MediaLogic();
-        private LocalisationLogic LocalisationLogic = new LocalisationLogic();
         private FormatLogic formatLogic = new FormatLogic();
         private LivraisonTypeLogic LivraisontypeLogic = new LivraisonTypeLogic();
+        private CategorieLogic categorieLogic = new CategorieLogic();
 
+        public List<Entities.Categorie> categories = new List<Entities.Categorie>();
+        public List<Produit> produits = new List<Produit>();
         public List<Format> Formats = new List<Format>();
         public Format Format = new Format();
         public Produit produit = new Produit();
         public Entities.Boutique boutique = new Entities.Boutique();
-        public List<Medium> mediasBtq = new List<Medium>();
         public List<Medium> mediasProd = new List<Medium>();
-        public Localisation localisation = new Localisation();
-        public string imgVignette { get; set; }
         public string imgProd { get; set; }
         [FromQuery(Name = "prodId")]
         public int prodId { get; set; }
         [BindProperty]
         public int formatId { get; set; }
         public decimal? prix { get; set; }
+        public int btqid { get; set; }
+
 
 
         public async Task<JsonResult> OnPostFormat(string formatId)
@@ -124,15 +125,10 @@ namespace E_Shop.Pages.Produits
         public async Task<IActionResult> OnGet()
         {
             produit = await ProduitLogic.GetProduitById(prodId);
-            boutique = await BoutiqueLogic.GetBoutiqueById(produit.Btqid);
-            mediasBtq = await mediaLogic.GetMediasBoutique(produit.Btqid);
-            foreach (var item in mediasBtq)
-            {
-                if (item.Description == "vignette")
-                {
-                    imgVignette = item.Lien;
-                }
-            }
+            btqid = produit.Btqid;
+            boutique = await BoutiqueLogic.GetBoutiqueById(btqid);
+            produits = await ProduitLogic.GetBoutiqueProduits(btqid);
+            categories = await categorieLogic.GetCategoriesByBtqId(btqid);
             mediasProd = await mediaLogic.GetMediasByProdId(prodId);
             foreach (var item in mediasProd)
             {
@@ -142,8 +138,6 @@ namespace E_Shop.Pages.Produits
                 }
             }
             Formats = await formatLogic.GetFormatsByProductId(prodId);
-            localisation = await LocalisationLogic.GetLocalisationBoutique(produit.Btqid);
-
             return Page();
         }
 
