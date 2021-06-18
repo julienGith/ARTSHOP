@@ -49,14 +49,22 @@
                         var idCaten = item.Categorie.Categorienom.Replace(" ", "").Replace("é", "").Replace("&", "");
                         if (item.CatCategorie.Categorieid > 5)
                         {
+                            var Totalcount = 0;
+                            @foreach (var cat in item.Categorie.CatnavCatCategories)
+                            {
+                                if (cat.Categorie.Produits.Count > 0)
+                                {
+                                    Totalcount += cat.Categorie.Produits.Where(p => p.Btqid == Model.btqid).Count();
+                                }
+                            }
                             <button class="list-group-item btn-block" type="button" data-toggle="collapse" data-target="#@idCatCategorie"
                                     aria-expanded="false" aria-controls="@idCatCategorie">
-                                @item.CatCategorie.Categorienom
+                                @item.CatCategorie.Categorienom (@Totalcount)
                             </button>
                             <div class="collapse" id="@idCatCategorie">
                                 <button class="list-group-item btn-block" type="button" data-toggle="collapse" data-target="#@idCaten"
                                         aria-expanded="false" aria-controls="@idCaten">
-                                    @item.Categorie.Categorienom
+                                    @item.Categorie.Categorienom (@Totalcount)
                                 </button>
                                 <div class="collapse" id="@idCaten">
                                     @foreach (var cat in item.Categorie.CatnavCatCategories)
@@ -74,10 +82,18 @@
                         }
                         else
                         {
-                            <button class="list-group-item btn-block" type="button" data-toggle="collapse" data-target="#@idCaten"
-                                    aria-expanded="false" aria-controls="@idCaten">
-                                @item.Categorie.Categorienom
-                            </button>
+                            var Totalcount = 0;
+                            @foreach (var cat in item.Categorie.CatnavCatCategories)
+                            {
+                                if (cat.Categorie.Produits.Count > 0)
+                                {
+                                    Totalcount += cat.Categorie.Produits.Where(p => p.Btqid == Model.btqid).Count();
+                                }
+                            }
+            <button class="list-group-item btn-block" type="button" data-toggle="collapse" data-target="#@idCaten"
+                    aria-expanded="false" aria-controls="@idCaten">
+                @item.Categorie.Categorienom (@Totalcount)
+            </button>
                             <div class="collapse" id="@idCaten">
                                 @foreach (var cat in item.Categorie.CatnavCatCategories)
                                 {
@@ -99,49 +115,51 @@
     </div>
     <div class="col-sm-9 scrollspy-example" data-spy="scroll" data-target="#list-example" data-offset="0" style="overflow: auto;">
         <div class="card pl-2">
-            @if (Model.boutique.Media.Any(m => m.Video == true))
-            {
-                var video = Model.boutique.Media.FirstOrDefault(m => m.Video == true).Lien;
+            <div class="m-2">
 
-                <iframe width="690" height="330" src="@video" frameborder='0' allowfullscreen='0'></iframe>
+                @if (Model.boutique.Media.Any(m => m.Video == true))
+                {
+                    var video = Model.boutique.Media.FirstOrDefault(m => m.Video == true).Lien;
 
-            }
-            @if (Model.boutique.Media.Any(m => m.Video == false))
-            {
-                <div class="ml-5 mt-2">
+                    <iframe width="690" height="330" src="@video" frameborder='0' allowfullscreen='0'></iframe>
+
+                }
+                @if (Model.boutique.Media.Any(m => m.Video == false))
+                {
 
                     <img class="img-fluid" src="@pano" />
 
-                </div>
 
-            }
-            <div class="card-body">
-                <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Description</a>
-                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Avis client</a>
-                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Informations administratives</a>
-                    </div>
-                </nav>
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                        <p>@Model.boutique.BDescriptionL</p>
-                    </div>
-                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                        <p>Marcel : j'adore cette boutique !</p>
-                    </div>
-                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                        <p>
-                            Raison sociale : @Model.boutique.Raisonsociale
-                            <br />
-                            N° SIRET : @Model.boutique.Siret
-                            <br />
-                            Inscrit depuis le : @Model.boutique.DateCreation
-                        </p>
+
+                }
+            </div>
+                <div class="card-body">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Description</a>
+                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Avis client</a>
+                            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Informations administratives</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <p>@Model.boutique.BDescriptionL</p>
+                        </div>
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <p>Marcel : j'adore cette boutique !</p>
+                        </div>
+                        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                            <p>
+                                Raison sociale : @Model.boutique.Raisonsociale
+                                <br />
+                                N° SIRET : @Model.boutique.Siret
+                                <br />
+                                Inscrit depuis le : @Model.boutique.DateCreation
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         @foreach (var c in Model.categories)
         {
 
