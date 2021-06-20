@@ -242,26 +242,26 @@ namespace E_Shop.Models
                 }
                 }
             },
-            new Region
-            {
-                nom = "Guadeloupe",
-                departements = new List<Departement>
-                { new Departement
-                { nom ="Guadeloupe",
-                  num = "971"
-                }
-                }
-            },
-            new Region
-            {
-                nom = "Guyane",
-                departements = new List<Departement>
-                { new Departement
-                { nom ="Guyane",
-                  num = "973"
-                }
-                }
-            },
+            //new Region
+            //{
+            //    nom = "Guadeloupe",
+            //    departements = new List<Departement>
+            //    { new Departement
+            //    { nom ="Guadeloupe",
+            //      num = "971"
+            //    }
+            //    }
+            //},
+            //new Region
+            //{
+            //    nom = "Guyane",
+            //    departements = new List<Departement>
+            //    { new Departement
+            //    { nom ="Guyane",
+            //      num = "973"
+            //    }
+            //    }
+            //},
             new Region
             {
                 nom = "Haute-Normandie",
@@ -314,16 +314,16 @@ namespace E_Shop.Models
                 }
                 }
             },
-            new Region
-            {
-                nom = "La Réunion",
-                departements = new List<Departement>
-                { new Departement
-                { nom ="La Réunion",
-                  num = "974"
-                }
-                }
-            },
+            //new Region
+            //{
+            //    nom = "La Réunion",
+            //    departements = new List<Departement>
+            //    { new Departement
+            //    { nom ="La Réunion",
+            //      num = "974"
+            //    }
+            //    }
+            //},
             new Region
             {
                 nom = "Languedoc-Roussillon",
@@ -390,26 +390,26 @@ namespace E_Shop.Models
                 }
                 }
             },
-            new Region
-            {
-                nom = "Martinique",
-                departements = new List<Departement>
-                { new Departement
-                { nom ="Martinique",
-                  num = "972"
-                }
-                }
-            },
-            new Region
-            {
-                nom = "Mayotte",
-                departements = new List<Departement>
-                { new Departement
-                { nom ="Mayotte",
-                  num = "976"
-                }
-                }
-            },
+            //new Region
+            //{
+            //    nom = "Martinique",
+            //    departements = new List<Departement>
+            //    { new Departement
+            //    { nom ="Martinique",
+            //      num = "972"
+            //    }
+            //    }
+            //},
+            //new Region
+            //{
+            //    nom = "Mayotte",
+            //    departements = new List<Departement>
+            //    { new Departement
+            //    { nom ="Mayotte",
+            //      num = "976"
+            //    }
+            //    }
+            //},
             new Region
             {
                 nom = "Midi-Pyrénées",
