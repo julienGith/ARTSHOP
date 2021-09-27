@@ -38,6 +38,11 @@ namespace E_Shop.Logic.CategorieLogic
         {
             return await Categorie.GetAllCategoriesEnfantsByParentId(categorieParentId);
         }
+        //Get All categories parents par id de catégorie enfant
+        public async Task<List<Categorie>> GetAllCategoriesParentsByEnfantId(int categorieEnfantId)
+        {
+            return await Categorie.GetAllCategoriesParentsByEnfantId(categorieEnfantId);
+        }
         //Get Categories parents SelectListItem
         public async Task<List<SelectListItem>> GetSelectListItemCategoriesParents()
         {
